@@ -239,6 +239,66 @@ export default function Home() {
       }`}
     >
       
+      {/* 🌟 ONE SINGLE FIXED CONTINUOUS UNIFIED GPU-OPTIMIZED MOVING GRADIENT BACKGROUND FOR THE ENTIRE WEBSITE */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden transform-gpu">
+        {/* Balanced Animated Moving Gradient Canvas */}
+        <motion.div
+          animate={{
+            backgroundPosition: ["0% 0%", "100% 50%", "50% 100%", "0% 50%", "0% 0%"],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute inset-0 bg-gradient-to-br from-[#2e0707] via-[#5c1212] via-[#8a1c1c] via-[#b34242] to-[#360909] bg-[length:300%_300%] will-change-[background-position]"
+        />
+
+        {/* Lightweight GPU-Accelerated Liquid Glowing Ambient Mesh Orbs */}
+        <motion.div
+          animate={{
+            x: [0, 140, -90, 0],
+            y: [0, -100, 90, 0],
+            scale: [1, 1.3, 0.85, 1],
+          }}
+          transition={{
+            duration: 3.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-[-10%] left-[-10%] w-[650px] sm:w-[900px] h-[650px] sm:h-[900px] bg-rose-400/35 rounded-full blur-[100px] transform-gpu will-change-transform"
+        />
+
+        <motion.div
+          animate={{
+            x: [0, -150, 100, 0],
+            y: [0, 110, -90, 0],
+            scale: [1, 0.8, 1.25, 1],
+          }}
+          transition={{
+            duration: 4.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute bottom-[-10%] right-[-10%] w-[700px] sm:w-[950px] h-[700px] sm:h-[950px] bg-[#570a0a]/80 rounded-full blur-[110px] transform-gpu will-change-transform"
+        />
+
+        <motion.div
+          animate={{
+            x: [0, 90, -100, 0],
+            y: [0, -80, 90, 0],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-[35%] right-[5%] w-[500px] h-[500px] bg-red-800/40 rounded-full blur-[90px] transform-gpu will-change-transform"
+        />
+
+        <div className="absolute inset-0 bg-tech-grid opacity-15" />
+      </div>
+
       {/* Floating Glassmorphic Pill Navbar */}
       <motion.header
         initial={{ y: -80, opacity: 0, x: "-50%" }}
@@ -253,7 +313,7 @@ export default function Home() {
           damping: 20,
           delay: 0.1,
         }}
-        className="fixed top-6 left-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full bg-white/30 backdrop-blur-xl border border-white/70 shadow-lg shadow-black/10 px-4 sm:px-8 flex items-center justify-between pointer-events-auto transform-gpu"
+        className="fixed top-6 left-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full bg-white/30 backdrop-blur-xl border border-white/70 shadow-lg shadow-black/10 px-4 sm:px-8 flex items-center justify-between pointer-events-auto transform-gpu will-change-transform"
       >
         {/* Left Brand Logo (handle.png tinted in Kagada Red tone) */}
         <a href="#hero" className="flex items-center gap-2 select-none py-0">
@@ -332,16 +392,16 @@ export default function Home() {
       </motion.header>
 
       {/* SECTION 1: HERO SECTION */}
-      <section id="hero" className="relative w-full h-screen overflow-hidden flex items-center justify-center">
+      <section id="hero" className="relative w-full h-screen overflow-hidden flex items-center justify-center z-10">
         
-        {/* Background Image Layer */}
+        {/* Hero Background Photo Layer with Soft Blend */}
         <motion.img
           src="/hero-bg.jpg"
           alt="UVCE Building"
           initial={{ opacity: 0 }}
-          animate={{ opacity: isVideoFading ? 1 : 0 }}
+          animate={{ opacity: isVideoFading ? 0.85 : 0 }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 w-full h-full object-cover z-0 transform-gpu"
+          className="absolute inset-0 w-full h-full object-cover z-0 transform-gpu mix-blend-overlay"
         />
 
         {/* Textured White Overlay Screen with Clean Soft White Grid */}
@@ -349,7 +409,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: isVideoFading ? 1 : 0 }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 bg-white/30 bg-tech-grid pointer-events-none z-[1]"
+          className="absolute inset-0 bg-white/20 bg-tech-grid pointer-events-none z-[1]"
         />
 
         {/* Hero Title & Subtitle Glass Box Container - Centered Vertically */}
@@ -442,65 +502,8 @@ export default function Home() {
       {/* SECTION 2: ABOUT US SECTION */}
       <section
         id="about"
-        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-20 overflow-hidden scroll-mt-6"
+        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-24 scroll-mt-6"
       >
-        {/* Ultra-Fast Dynamic Moving Gradient Base */}
-        <motion.div
-          animate={{
-            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute inset-0 bg-gradient-to-br from-[#3b0808] via-[#8a1c1c] via-[#d66b6b] to-[#f0c2c2] bg-[length:300%_300%] pointer-events-none"
-        />
-
-        {/* Ultra-Fast Liquid Floating Glowing Ambient Orbs */}
-        <motion.div
-          animate={{
-            x: [0, 120, -80, 0],
-            y: [0, -90, 80, 0],
-            scale: [1, 1.4, 0.8, 1],
-          }}
-          transition={{
-            duration: 2.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-[-10%] left-[-10%] w-[500px] sm:w-[650px] h-[500px] sm:h-[650px] bg-rose-400/45 rounded-full blur-[120px] pointer-events-none transform-gpu"
-        />
-
-        <motion.div
-          animate={{
-            x: [0, -130, 90, 0],
-            y: [0, 100, -80, 0],
-            scale: [1, 0.75, 1.3, 1],
-          }}
-          transition={{
-            duration: 3.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute bottom-[-10%] right-[-10%] w-[550px] sm:w-[750px] h-[550px] sm:h-[750px] bg-[#6e1414]/85 rounded-full blur-[150px] pointer-events-none transform-gpu"
-        />
-
-        <motion.div
-          animate={{
-            x: [0, 80, -90, 0],
-            y: [0, -70, 90, 0],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-[35%] right-[15%] w-[450px] h-[450px] bg-red-300/40 rounded-full blur-[110px] pointer-events-none transform-gpu"
-        />
-
-        <div className="absolute inset-0 bg-tech-grid opacity-15 pointer-events-none" />
-
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
           
           {/* Section Heading in Saman Font and Pure White Color */}
@@ -543,69 +546,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 3: TRACKS SECTION (Ultra-Fast Liquid Moving Gradient Background - Empty Stage) */}
+      {/* SECTION 3: TRACKS SECTION (Elevated Top Placement) */}
       <section
         id="tracks"
-        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-20 overflow-hidden scroll-mt-6 border-t border-white/20"
+        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-10 sm:pt-16 pb-20 scroll-mt-6"
       >
-        {/* Ultra-Fast Dynamic Moving Gradient Base */}
-        <motion.div
-          animate={{
-            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute inset-0 bg-gradient-to-br from-[#3b0808] via-[#8a1c1c] via-[#d66b6b] to-[#f0c2c2] bg-[length:300%_300%] pointer-events-none"
-        />
-
-        {/* Ultra-Fast Liquid Floating Glowing Ambient Orbs */}
-        <motion.div
-          animate={{
-            x: [0, -110, 80, 0],
-            y: [0, 80, -70, 0],
-            scale: [1, 1.35, 0.85, 1],
-          }}
-          transition={{
-            duration: 2.8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-[-10%] right-[-10%] w-[500px] sm:w-[650px] h-[500px] sm:h-[650px] bg-rose-400/45 rounded-full blur-[120px] pointer-events-none transform-gpu"
-        />
-
-        <motion.div
-          animate={{
-            x: [0, 120, -80, 0],
-            y: [0, -90, 70, 0],
-            scale: [1, 0.8, 1.25, 1],
-          }}
-          transition={{
-            duration: 3.2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute bottom-[-10%] left-[-10%] w-[550px] sm:w-[750px] h-[550px] sm:h-[750px] bg-[#6e1414]/85 rounded-full blur-[150px] pointer-events-none transform-gpu"
-        />
-
-        <div className="absolute inset-0 bg-tech-grid opacity-15 pointer-events-none" />
-
-        <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
-          {/* Section Heading in Saman Font and Pure White Color */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-start text-center">
+          {/* Section Heading in Saman Font and Pure White Color (Shifted Upwards) */}
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none"
+            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-8 sm:mb-12 tracking-tight text-center select-none"
           >
             Tracks
           </motion.h2>
 
           {/* Empty Stage Container */}
-          <div className="w-full max-w-4xl min-h-[360px] rounded-3xl border-2 border-white/40 bg-white/10 backdrop-blur-xl shadow-2xl flex items-center justify-center p-8">
+          <div className="w-full max-w-4xl min-h-[380px] rounded-3xl border-2 border-white/40 bg-white/10 backdrop-blur-xl shadow-2xl flex items-center justify-center p-8">
             <span className="font-roboto-mono text-sm sm:text-base text-white/60 tracking-widest uppercase select-none">
               Tracks Content Coming Soon
             </span>
