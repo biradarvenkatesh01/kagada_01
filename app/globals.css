@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@500;700&display=swap');
 @import url('https://fonts.cdnfonts.com/css/glacial-indifference');
 @import "tailwindcss";
 
@@ -10,8 +10,20 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Smooch Sans';
+  src: url('/fonts/SmoochSans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 .font-saman {
   font-family: 'Saman', cursive, sans-serif;
+}
+
+.font-smooch {
+  font-family: 'Smooch Sans', sans-serif;
 }
 
 .font-glacial {
@@ -20,6 +32,14 @@
 
 .font-roboto-mono {
   font-family: 'Roboto Mono', monospace;
+}
+
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-jakarta {
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 :root {
@@ -46,10 +66,13 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
   --font-saman: 'Saman';
+  --font-smooch: 'Smooch Sans';
   --font-glacial: 'Glacial Indifference';
+  --font-outfit: 'Outfit';
+  --font-jakarta: 'Plus Jakarta Sans';
   --font-roboto-mono: 'Roboto Mono';
 }
 
@@ -64,23 +87,25 @@ html {
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background: #000000;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background: #000000;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
