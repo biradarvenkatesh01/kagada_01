@@ -577,7 +577,7 @@ export default function Home() {
 
         {/* Bottom "Explore Tracks" CTA Indicator */}
         <motion.a
-          href="#about"
+          href="#tracks"
           initial={{ opacity: 0, y: 30, x: "-50%" }}
           animate={{
             opacity: isVideoFading ? 1 : 0,
@@ -678,10 +678,21 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-2 tracking-tight text-center select-none"
+            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-1 tracking-tight text-center select-none"
           >
             Tracks
           </motion.h2>
+
+          {/* Professional White Instruction Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="font-roboto-mono text-xs sm:text-sm md:text-base text-white font-bold tracking-wider sm:tracking-widest uppercase mb-2 sm:mb-4 drop-shadow-md select-none"
+          >
+            Click on any track icon to explore details
+          </motion.p>
 
           {/* Radial Orbital Timeline Component */}
           <div className="w-full flex items-center justify-center">

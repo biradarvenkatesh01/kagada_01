@@ -302,9 +302,7 @@ export default function RadialOrbitalTimeline({
                 >
                   {item.title === "Food for Cause" ? (
                     <>
-                      Food for
-                      <br />
-                      Cause
+                      Food for Cause
                     </>
                   ) : (
                     item.title
