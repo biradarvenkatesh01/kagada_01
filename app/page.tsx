@@ -80,7 +80,7 @@ export default function Home() {
         }`}
       />
 
-      {/* Hero Title & Subtitle Glass Box Container - Centered Vertically (top-[48%] sm:top-1/2) */}
+      {/* Hero Title & Subtitle Glass Box Container - Centered Vertically */}
       <div
         className={`fixed top-[48%] sm:top-1/2 left-1/2 -translate-x-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center transition-all duration-1000 ease-out delay-300 pointer-events-none ${
           isVideoFading
@@ -89,7 +89,7 @@ export default function Home() {
         }`}
       >
         {/* Title Glass Box containing Title + Subtitle */}
-        <div className="w-full px-3 sm:px-10 py-5 sm:py-8 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/50 shadow-xl shadow-black/10 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
+        <div className="w-full px-3 sm:px-10 py-5 sm:py-8 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-xl shadow-black/10 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
           <h1 className="whitespace-nowrap font-saman font-normal text-[3.9rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c]/80 tracking-[-0.015em] drop-shadow-sm select-none leading-none text-center mx-auto">
             K<span className="inline-block ml-[0.03em]">a</span>g<span className="inline-block ml-[0.03em]">a</span>d<span className="inline-block ml-[0.03em]">a</span> 2026
           </h1>
@@ -100,9 +100,9 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Flip Clock Countdown Timer for 10th October 2026 */}
-        <div className="mt-4 sm:mt-6 pointer-events-auto flex flex-col items-center">
-          <div className="px-4 py-3 sm:px-6 sm:py-4 rounded-2xl bg-white/30 backdrop-blur-md border border-white/50 shadow-lg shadow-black/10 text-[#8a1c1c]">
+        {/* Flip Clock Countdown Timer with Crisp White Border */}
+        <div className="mt-4 sm:mt-6 w-full sm:w-auto pointer-events-auto flex flex-col items-center">
+          <div className="w-full sm:w-auto px-3 py-3 sm:px-6 sm:py-4 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-lg shadow-black/10 text-[#8a1c1c] flex items-center justify-center text-center mx-auto">
             <FlipClock
               countdown={true}
               targetDate={KAGADA_EVENT_DATE}
