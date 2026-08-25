@@ -1,23 +1,59 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { Volume2, VolumeX } from "lucide-react";
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoFading, setIsVideoFading] = useState(false);
   const [isVideoHidden, setIsVideoHidden] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [showUnmuteHint, setShowUnmuteHint] = useState(false);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.play().catch(() => {
-        // Fallback to muted autoplay if browser blocks audio autoplay
-        if (videoRef.current) {
-          videoRef.current.muted = true;
-          videoRef.current.play();
-        }
-      });
+    const video = videoRef.current;
+    if (video) {
+      video.muted = false;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsMuted(false);
+            setShowUnmuteHint(false);
+          })
+          .catch(() => {
+            // Autoplay with audio was blocked by browser security policy
+            if (video) {
+              video.muted = true;
+              setIsMuted(true);
+              setShowUnmuteHint(true);
+              video.play();
+            }
+          });
+      }
     }
+
+    // Global listener: First click or touch anywhere on the page instantly enables full audio
+    const enableAudioOnInteraction = () => {
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+        setIsMuted(false);
+        setShowUnmuteHint(false);
+      }
+      window.removeEventListener("click", enableAudioOnInteraction);
+      window.removeEventListener("touchstart", enableAudioOnInteraction);
+      window.removeEventListener("keydown", enableAudioOnInteraction);
+    };
+
+    window.addEventListener("click", enableAudioOnInteraction);
+    window.addEventListener("touchstart", enableAudioOnInteraction);
+    window.addEventListener("keydown", enableAudioOnInteraction);
+
+    return () => {
+      window.removeEventListener("click", enableAudioOnInteraction);
+      window.removeEventListener("touchstart", enableAudioOnInteraction);
+      window.removeEventListener("keydown", enableAudioOnInteraction);
+    };
   }, []);
 
   // Monitor timeline to start crossfade 1.5s BEFORE video finishes for a seamless film dissolve
@@ -42,9 +78,13 @@ export default function Home() {
     }
   };
 
-  const handleTapToUnmute = () => {
-    if (videoRef.current && videoRef.current.muted) {
-      videoRef.current.muted = false;
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      const nextMute = !videoRef.current.muted;
+      videoRef.current.muted = nextMute;
+      setIsMuted(nextMute);
+      setShowUnmuteHint(false);
     }
   };
 
@@ -97,6 +137,26 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Floating Sound Toggle Pill & Unmute Indicator */}
+      {!isVideoHidden && !isVideoFading && (
+        <button
+          onClick={toggleMute}
+          className="fixed top-6 right-6 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-950/60 backdrop-blur-md border border-white/30 text-white text-xs font-semibold shadow-lg hover:bg-slate-900/80 transition-all active:scale-95 cursor-pointer"
+        >
+          {isMuted ? (
+            <>
+              <VolumeX className="w-4 h-4 text-red-400 animate-pulse" />
+              <span>Tap to Unmute Audio</span>
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-4 h-4 text-emerald-400" />
+              <span>Audio On</span>
+            </>
+          )}
+        </button>
+      )}
+
       {/* Video Layer (Solid 100% opacity during playback; dissolves 1.5s before end with 1.8s soft blur-fade) */}
       {!isVideoHidden && (
         <video
@@ -106,7 +166,6 @@ export default function Home() {
           playsInline
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleVideoEnded}
-          onClick={handleTapToUnmute}
           className={`fixed inset-0 w-full h-full object-cover z-20 cursor-pointer transform-gpu transition-all duration-[1800ms] ease-in-out ${
             isVideoFading
               ? "opacity-0 scale-105 filter blur-[3px] pointer-events-none"
