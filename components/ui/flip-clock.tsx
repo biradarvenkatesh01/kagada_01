@@ -16,10 +16,10 @@ const flipUnitVariants = cva(
   {
     variants: {
       size: {
-        sm: "w-7 min-w-7 h-11 text-xl sm:w-10 sm:min-w-10 sm:h-14 sm:text-3xl", // Small
-        md: "w-11 min-w-11 h-15 text-3xl sm:w-14 sm:min-w-14 sm:h-20 sm:text-5xl", // Medium
-        lg: "w-13 min-w-13 h-18 text-4xl sm:w-17 sm:min-w-17 sm:h-24 sm:text-6xl", // Large
-        xl: "w-18 min-w-18 h-26 text-6xl sm:w-22 sm:min-w-22 sm:h-32 sm:text-8xl", // Extra Large
+        sm: "w-8 min-w-8 h-12 text-2xl sm:w-10 sm:min-w-10 sm:h-14 sm:text-3xl", // Small
+        md: "w-12 min-w-12 h-16 text-4xl sm:w-14 sm:min-w-14 sm:h-20 sm:text-5xl", // Medium
+        lg: "w-14 min-w-14 h-20 text-5xl sm:w-17 sm:min-w-17 sm:h-24 sm:text-6xl", // Large
+        xl: "w-20 min-w-20 h-28 text-7xl sm:w-22 sm:min-w-22 sm:h-32 sm:text-8xl", // Extra Large
       },
       variant: {
         default: "bg-[#8a1c1c]/80 text-white",
@@ -147,18 +147,18 @@ interface TimeLeft {
 type FlipClockSize = "sm" | "md" | "lg" | "xl";
 
 const heightMap: Record<FlipClockSize, string> = {
-  sm: "text-xl sm:text-3xl",
-  md: "text-2xl sm:text-5xl",
-  lg: "text-3xl sm:text-6xl",
-  xl: "text-5xl sm:text-8xl",
+  sm: "text-2xl sm:text-3xl",
+  md: "text-3xl sm:text-5xl",
+  lg: "text-4xl sm:text-6xl",
+  xl: "text-6xl sm:text-8xl",
 };
 
 function ClockSeparator({ size = "md" }: { size?: FlipClockSize }) {
   return (
-    <div className="flex h-11 sm:h-14 items-center justify-center">
+    <div className="flex h-12 sm:h-14 items-center justify-center">
       <span
         className={cn(
-          "text-center text-[#8a1c1c]/80 font-bold leading-none px-0 sm:px-0.5 self-center",
+          "text-center text-[#8a1c1c]/80 font-bold leading-none px-0.5 self-center",
           heightMap[size],
         )}
       >
@@ -209,7 +209,7 @@ const FlipClock = ({
 
   return (
     <div
-      className={cn("relative flex items-start justify-center space-x-0.5 sm:space-x-3 font-mono font-medium", className)}
+      className={cn("relative flex items-start justify-center space-x-1 sm:space-x-3 font-mono font-medium", className)}
       aria-live="polite"
       {...props}
     >
@@ -230,7 +230,7 @@ const FlipClock = ({
               />
             ))}
           </div>
-          <span className="font-roboto-mono text-[0.55rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+          <span className="font-roboto-mono text-[0.6rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
             DAYS
           </span>
         </div>
@@ -250,7 +250,7 @@ const FlipClock = ({
             />
           ))}
         </div>
-        <span className="font-roboto-mono text-[0.55rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+        <span className="font-roboto-mono text-[0.6rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
           HOURS
         </span>
       </div>
@@ -269,7 +269,7 @@ const FlipClock = ({
             />
           ))}
         </div>
-        <span className="font-roboto-mono text-[0.55rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+        <span className="font-roboto-mono text-[0.6rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
           MINS
         </span>
       </div>
@@ -288,7 +288,7 @@ const FlipClock = ({
             />
           ))}
         </div>
-        <span className="font-roboto-mono text-[0.55rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+        <span className="font-roboto-mono text-[0.6rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
           SECS
         </span>
       </div>
