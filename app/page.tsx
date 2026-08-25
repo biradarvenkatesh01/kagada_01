@@ -6,6 +6,8 @@ export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoFading, setIsVideoFading] = useState(false);
   const [isVideoHidden, setIsVideoHidden] = useState(false);
+  const [videoProgress, setVideoProgress] = useState(0);
+  const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -20,15 +22,22 @@ export default function Home() {
     }
   }, []);
 
-  // Monitor timeline to start crossfade 1.5s BEFORE video finishes for a seamless film dissolve
+  // Monitor video playback and update small red loading bar
   const handleTimeUpdate = () => {
-    if (videoRef.current && !isVideoFading) {
-      const remainingTime = videoRef.current.duration - videoRef.current.currentTime;
-      if (remainingTime <= 1.5 && remainingTime > 0) {
-        setIsVideoFading(true);
-        setTimeout(() => {
-          setIsVideoHidden(true);
-        }, 1800);
+    if (videoRef.current) {
+      const dur = videoRef.current.duration || 1;
+      const cur = videoRef.current.currentTime || 0;
+      const progress = Math.min((cur / dur) * 100, 100);
+      setVideoProgress(progress);
+
+      if (!isVideoFading) {
+        const remainingTime = dur - cur;
+        if (remainingTime <= 1.5 && remainingTime > 0) {
+          setIsVideoFading(true);
+          setTimeout(() => {
+            setIsVideoHidden(true);
+          }, 1800);
+        }
       }
     }
   };
@@ -51,6 +60,16 @@ export default function Home() {
   return (
     <main className="fixed inset-0 w-screen h-screen overflow-hidden bg-black flex items-center justify-center p-0 m-0">
       
+      {/* Sleek Small Red Video Loading Progress Bar */}
+      {!isVideoHidden && (
+        <div className="fixed top-0 left-0 right-0 z-30 h-1 bg-black/40 overflow-hidden pointer-events-none">
+          <div
+            className="h-full bg-gradient-to-r from-red-700 via-red-600 to-[#8a1c1c] transition-all duration-300 ease-out shadow-[0_0_8px_rgba(220,38,38,0.8)]"
+            style={{ width: `${videoProgress}%` }}
+          />
+        </div>
+      )}
+
       {/* Background Image Layer */}
       <img
         src="/hero-bg.jpg"
@@ -74,7 +93,7 @@ export default function Home() {
         }`}
       />
 
-      {/* Hero Title Container - Reduced Mobile Font Size (text-[3.9rem]) */}
+      {/* Hero Title & Subtitle Glass Box Container */}
       <div
         className={`fixed top-[26%] sm:top-[35%] left-1/2 -translate-x-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center transition-all duration-1000 ease-out delay-300 pointer-events-none ${
           isVideoFading
@@ -102,13 +121,16 @@ export default function Home() {
           src="/video-intro.mp4"
           autoPlay
           playsInline
+          onCanPlay={() => setIsVideoReady(true)}
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleVideoEnded}
           onClick={handleTapToUnmute}
           className={`fixed inset-0 w-full h-full object-cover z-20 cursor-pointer transform-gpu transition-all duration-[1800ms] ease-in-out ${
             isVideoFading
               ? "opacity-0 scale-105 filter blur-[3px] pointer-events-none"
-              : "opacity-100 scale-100 filter blur-0"
+              : isVideoReady
+              ? "opacity-100 scale-100 filter blur-0"
+              : "opacity-95 scale-100 filter blur-0"
           }`}
         />
       )}
