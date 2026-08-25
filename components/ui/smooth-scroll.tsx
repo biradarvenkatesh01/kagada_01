@@ -22,14 +22,14 @@ export default function SmoothScroll({
       touchMultiplier: 1.5,
     });
 
-    lenisRef.current = lenis;
+    let rafId: number;
 
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     // Handle smooth anchor clicks site-wide
     const handleAnchorClick = (e: MouseEvent) => {
@@ -48,6 +48,7 @@ export default function SmoothScroll({
 
     return () => {
       document.removeEventListener("click", handleAnchorClick);
+      cancelAnimationFrame(rafId);
       lenis.destroy();
     };
   }, []);
