@@ -439,7 +439,7 @@ export default function Home() {
         </motion.a>
       </section>
 
-      {/* SECTION 2: ABOUT US SECTION (Ultra-Fast Liquid Moving Gradient Background) */}
+      {/* SECTION 2: ABOUT US SECTION */}
       <section
         id="about"
         className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-20 overflow-hidden scroll-mt-6"
@@ -540,6 +540,76 @@ export default function Home() {
               renderCard={renderAboutCard}
             />
           </motion.div>
+        </div>
+      </section>
+
+      {/* SECTION 3: TRACKS SECTION (Ultra-Fast Liquid Moving Gradient Background - Empty Stage) */}
+      <section
+        id="tracks"
+        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-20 overflow-hidden scroll-mt-6 border-t border-white/20"
+      >
+        {/* Ultra-Fast Dynamic Moving Gradient Base */}
+        <motion.div
+          animate={{
+            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute inset-0 bg-gradient-to-br from-[#3b0808] via-[#8a1c1c] via-[#d66b6b] to-[#f0c2c2] bg-[length:300%_300%] pointer-events-none"
+        />
+
+        {/* Ultra-Fast Liquid Floating Glowing Ambient Orbs */}
+        <motion.div
+          animate={{
+            x: [0, -110, 80, 0],
+            y: [0, 80, -70, 0],
+            scale: [1, 1.35, 0.85, 1],
+          }}
+          transition={{
+            duration: 2.8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-[-10%] right-[-10%] w-[500px] sm:w-[650px] h-[500px] sm:h-[650px] bg-rose-400/45 rounded-full blur-[120px] pointer-events-none transform-gpu"
+        />
+
+        <motion.div
+          animate={{
+            x: [0, 120, -80, 0],
+            y: [0, -90, 70, 0],
+            scale: [1, 0.8, 1.25, 1],
+          }}
+          transition={{
+            duration: 3.2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute bottom-[-10%] left-[-10%] w-[550px] sm:w-[750px] h-[550px] sm:h-[750px] bg-[#6e1414]/85 rounded-full blur-[150px] pointer-events-none transform-gpu"
+        />
+
+        <div className="absolute inset-0 bg-tech-grid opacity-15 pointer-events-none" />
+
+        <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
+          {/* Section Heading in Saman Font and Pure White Color */}
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none"
+          >
+            Tracks
+          </motion.h2>
+
+          {/* Empty Stage Container */}
+          <div className="w-full max-w-4xl min-h-[360px] rounded-3xl border-2 border-white/40 bg-white/10 backdrop-blur-xl shadow-2xl flex items-center justify-center p-8">
+            <span className="font-roboto-mono text-sm sm:text-base text-white/60 tracking-widest uppercase select-none">
+              Tracks Content Coming Soon
+            </span>
+          </div>
         </div>
       </section>
 
