@@ -669,7 +669,7 @@ export default function Home() {
       {/* SECTION 3: TRACKS SECTION (RADIAL ORBITAL TIMELINE INTEGRATION) */}
       <section
         id="tracks"
-        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-10 sm:pt-14 pb-16 scroll-mt-6"
+        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-2 sm:pt-4 pb-12 scroll-mt-6"
       >
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-start text-center">
           {/* Section Heading in Saman Font and Pure White Color */}
