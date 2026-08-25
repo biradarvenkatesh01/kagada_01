@@ -74,7 +74,7 @@ export default function Home() {
         }`}
       />
 
-      {/* Hero Title & Subtitle Glass Box Container */}
+      {/* Hero Title Container - Reduced Mobile Font Size (text-[3.9rem]) */}
       <div
         className={`fixed top-[26%] sm:top-[35%] left-1/2 -translate-x-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center transition-all duration-1000 ease-out delay-300 pointer-events-none ${
           isVideoFading
@@ -84,11 +84,11 @@ export default function Home() {
       >
         {/* Title Glass Box containing Title + Subtitle */}
         <div className="w-full px-3 sm:px-10 py-5 sm:py-8 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/50 shadow-xl shadow-black/10 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
-          <h1 className="whitespace-nowrap font-saman font-normal text-[4.5rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c]/80 tracking-[-0.015em] drop-shadow-sm select-none leading-none text-center mx-auto">
+          <h1 className="whitespace-nowrap font-saman font-normal text-[3.9rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c]/80 tracking-[-0.015em] drop-shadow-sm select-none leading-none text-center mx-auto">
             K<span className="inline-block ml-[0.03em]">a</span>g<span className="inline-block ml-[0.03em]">a</span>d<span className="inline-block ml-[0.03em]">a</span> 2026
           </h1>
 
-          {/* Subtitle in Roboto Mono Font - Wraps cleanly across 2 lines on Mobile */}
+          {/* Subtitle in Roboto Mono Font */}
           <p className="font-roboto-mono text-xs sm:text-base md:text-xl lg:text-2xl text-[#8a1c1c]/95 font-bold tracking-wider sm:tracking-widest mt-4 sm:mt-7 uppercase drop-shadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[90%] sm:max-w-none mx-auto">
             Annual National-Level Technical Student Conference
           </p>
