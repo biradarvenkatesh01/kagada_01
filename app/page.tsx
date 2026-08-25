@@ -1,6 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import FlipClock from "@/components/ui/flip-clock";
+
+// Target Event Date: 10th October 2026
+const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -76,12 +80,12 @@ export default function Home() {
         }`}
       />
 
-      {/* Hero Title & Subtitle Glass Box Container */}
+      {/* Hero Title & Subtitle Glass Box Container - Centered Vertically (top-[48%] sm:top-1/2) */}
       <div
-        className={`fixed top-[26%] sm:top-[35%] left-1/2 -translate-x-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center transition-all duration-1000 ease-out delay-300 pointer-events-none ${
+        className={`fixed top-[48%] sm:top-1/2 left-1/2 -translate-x-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center transition-all duration-1000 ease-out delay-300 pointer-events-none ${
           isVideoFading
             ? "-translate-y-1/2 opacity-100 scale-100"
-            : "translate-y-[20px] opacity-0 scale-95"
+            : "translate-y-[-40%] opacity-0 scale-95"
         }`}
       >
         {/* Title Glass Box containing Title + Subtitle */}
@@ -94,6 +98,19 @@ export default function Home() {
           <p className="font-roboto-mono text-xs sm:text-base md:text-xl lg:text-2xl text-[#8a1c1c]/95 font-bold tracking-wider sm:tracking-widest mt-4 sm:mt-7 uppercase drop-shadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[90%] sm:max-w-none mx-auto">
             Annual National-Level Technical Student Conference
           </p>
+        </div>
+
+        {/* Flip Clock Countdown Timer for 10th October 2026 */}
+        <div className="mt-4 sm:mt-6 pointer-events-auto flex flex-col items-center">
+          <div className="px-4 py-3 sm:px-6 sm:py-4 rounded-2xl bg-white/30 backdrop-blur-md border border-white/50 shadow-lg shadow-black/10 text-[#8a1c1c]">
+            <FlipClock
+              countdown={true}
+              targetDate={KAGADA_EVENT_DATE}
+              size="sm"
+              variant="default"
+              showDays="always"
+            />
+          </div>
         </div>
       </div>
 
@@ -117,7 +134,7 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
 
-          {/* Soft White Screen Overlay over Video (Increased to 18% Opacity) */}
+          {/* Soft White Screen Overlay over Video (18% Opacity) */}
           <div className="absolute inset-0 bg-white/18 pointer-events-none z-[21]" />
         </div>
       )}
