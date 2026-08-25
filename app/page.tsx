@@ -51,11 +51,11 @@ export default function Home() {
   return (
     <main className="fixed inset-0 w-screen h-screen overflow-hidden bg-black flex items-center justify-center p-0 m-0">
       
-      {/* Background Image Layer (100% Invisible during video playback; smoothly fades in during dissolve) */}
+      {/* Background Image Layer (Shifted right on phone viewports via object-[68%_center]) */}
       <img
         src="/hero-bg.jpg"
         alt="UVCE Building"
-        className={`fixed inset-0 w-full h-full object-cover z-0 transform-gpu transition-opacity duration-1000 ease-out ${
+        className={`fixed inset-0 w-full h-full object-cover object-[45%_center] sm:object-center z-0 transform-gpu transition-opacity duration-1000 ease-out ${
           isVideoFading ? "opacity-100" : "opacity-0"
         }`}
       />
