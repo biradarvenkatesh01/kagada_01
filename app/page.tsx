@@ -239,30 +239,30 @@ export default function Home() {
       }`}
     >
       
-      {/* 🌟 ONE SINGLE FIXED CONTINUOUS UNIFIED GPU-OPTIMIZED MOVING GRADIENT BACKGROUND FOR THE ENTIRE WEBSITE */}
+      {/* 🌟 ONE SINGLE FIXED CONTINUOUS UNIFIED GPU-OPTIMIZED FAST MOVING GRADIENT BACKGROUND FOR THE ENTIRE WEBSITE */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden transform-gpu">
-        {/* Balanced Animated Moving Gradient Canvas */}
+        {/* Fast Animated Moving Gradient Canvas */}
         <motion.div
           animate={{
             backgroundPosition: ["0% 0%", "100% 50%", "50% 100%", "0% 50%", "0% 0%"],
           }}
           transition={{
-            duration: 5,
+            duration: 2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute inset-0 bg-gradient-to-br from-[#2e0707] via-[#5c1212] via-[#8a1c1c] via-[#b34242] to-[#360909] bg-[length:300%_300%] will-change-[background-position]"
+          className="absolute inset-0 bg-gradient-to-br from-[#2e0707] via-[#5c1212] via-[#8a1c1c] via-[#b34242] to-[#360909] bg-[length:350%_350%] will-change-[background-position]"
         />
 
-        {/* Lightweight GPU-Accelerated Liquid Glowing Ambient Mesh Orbs */}
+        {/* High-Speed GPU-Accelerated Liquid Glowing Ambient Mesh Orbs */}
         <motion.div
           animate={{
-            x: [0, 140, -90, 0],
-            y: [0, -100, 90, 0],
-            scale: [1, 1.3, 0.85, 1],
+            x: [0, 160, -110, 0],
+            y: [0, -120, 100, 0],
+            scale: [1, 1.35, 0.8, 1],
           }}
           transition={{
-            duration: 3.5,
+            duration: 1.8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -271,12 +271,12 @@ export default function Home() {
 
         <motion.div
           animate={{
-            x: [0, -150, 100, 0],
-            y: [0, 110, -90, 0],
-            scale: [1, 0.8, 1.25, 1],
+            x: [0, -170, 120, 0],
+            y: [0, 130, -100, 0],
+            scale: [1, 0.75, 1.3, 1],
           }}
           transition={{
-            duration: 4.5,
+            duration: 2.4,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -285,11 +285,11 @@ export default function Home() {
 
         <motion.div
           animate={{
-            x: [0, 90, -100, 0],
-            y: [0, -80, 90, 0],
+            x: [0, 110, -120, 0],
+            y: [0, -90, 110, 0],
           }}
           transition={{
-            duration: 4,
+            duration: 2.1,
             repeat: Infinity,
             ease: "easeInOut",
           }}
