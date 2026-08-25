@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "KAGADA 2026 | IEEE UVCE Annual Technical Symposium",
   description: "National Level Student Conference & Project Competition organized by IEEE UVCE",
+  icons: {
+    icon: "/logo1.png",
+    shortcut: "/logo1.png",
+    apple: "/logo1.png",
+  },
 };
 
 export default function RootLayout({
