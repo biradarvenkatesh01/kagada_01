@@ -213,7 +213,7 @@ export default function Home() {
 
       {/* Bottom "Explore Tracks" CTA Indicator with Smooth Floating Physics */}
       <motion.a
-        href="#tracks"
+        href="/"
         initial={{ opacity: 0, y: 30, x: "-50%" }}
         animate={{
           opacity: isVideoFading ? 1 : 0,
