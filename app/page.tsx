@@ -55,7 +55,7 @@ export default function Home() {
       <img
         src="/hero-bg.jpg"
         alt="UVCE Building"
-        className={`fixed inset-0 w-full h-full object-cover object-[49%_center] sm:object-center z-0 transform-gpu transition-opacity duration-1000 ease-out ${
+        className={`fixed inset-0 w-full h-full object-cover object-[49.5%_center] sm:object-center z-0 transform-gpu transition-opacity duration-1000 ease-out ${
           isVideoFading ? "opacity-100" : "opacity-0"
         }`}
       />
