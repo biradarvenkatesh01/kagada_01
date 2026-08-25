@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import SmoothScroll from "@/components/ui/smooth-scroll";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KAGADA 2026 | IEEE UVCE Annual Technical Symposium",
-  description: "National Level Student Conference & Project Competition organized by IEEE UVCE",
+  title: "KAGADA 2026 | Annual National-Level Technical Student Conference",
+  description: "National Level Student Conference & Project Competition organized by IEEE UVCE at University of Visvesvaraya College of Engineering, Bengaluru.",
   icons: {
     icon: "/logo1.png",
     shortcut: "/logo1.png",
@@ -32,8 +33,8 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-white">
-        {children}
+      <body className="min-h-full flex flex-col bg-black text-slate-100 selection:bg-[#8a1c1c] selection:text-white">
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );
