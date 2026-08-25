@@ -100,8 +100,8 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Flip Clock Countdown Timer with Crisp White Border */}
-        <div className="mt-4 sm:mt-6 w-full sm:w-auto pointer-events-auto flex flex-col items-center">
+        {/* Flip Clock Countdown Timer (Shifted downwards strictly on phone: mt-7 sm:mt-6) */}
+        <div className="mt-7 sm:mt-6 w-full sm:w-auto pointer-events-auto flex flex-col items-center">
           <div className="w-full sm:w-auto px-3 py-3 sm:px-6 sm:py-4 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-lg shadow-black/10 text-[#8a1c1c] flex items-center justify-center text-center mx-auto">
             <FlipClock
               countdown={true}
