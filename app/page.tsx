@@ -4,7 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FlipClock from "@/components/ui/flip-clock";
 import { CardStack, CardStackItem } from "@/components/ui/card-stack";
-import { Menu, X, ChevronDown } from "lucide-react";
+import RadialOrbitalTimeline, { TimelineItem } from "@/components/ui/radial-orbital-timeline";
+import { Menu, X, ChevronDown, FileText, Image, Cpu, Heart, Sparkles } from "lucide-react";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -16,12 +17,85 @@ const ABOUT_CARDS: CardStackItem[] = [
   { id: 3, type: "kagada", title: "About KAGADA" },
 ];
 
+// Kagada 2026 Track Orbital Nodes
+const TRACKS_TIMELINE_DATA: TimelineItem[] = [
+  {
+    id: 1,
+    title: "Paper Presentation",
+    date: "Oct 10, 2026",
+    content: "Present original research papers across CSE, AI/ML, ECE, EEE, Mechanical, Civil & Architecture.",
+    category: "Paper",
+    icon: FileText,
+    relatedIds: [2, 3],
+    status: "completed" as const,
+    energy: 95,
+  },
+  {
+    id: 2,
+    title: "Poster Presentation",
+    date: "Oct 10, 2026",
+    content: "Visual research posters, technical infographics, and scientific concept demonstrations.",
+    category: "Poster",
+    icon: Image,
+    relatedIds: [1, 3],
+    status: "completed" as const,
+    energy: 90,
+  },
+  {
+    id: 3,
+    title: "Project Presentation",
+    date: "Oct 10, 2026",
+    content: "Live working hardware prototypes, software solutions, and innovative engineering models.",
+    category: "Project",
+    icon: Cpu,
+    relatedIds: [1, 2],
+    status: "in-progress" as const,
+    energy: 100,
+  },
+  {
+    id: 4,
+    title: "Ottige Kaliyona",
+    date: "Special Outreach",
+    content: "Flagship social initiative empowering government school students through technology education.",
+    category: "Social",
+    icon: Sparkles,
+    relatedIds: [5],
+    status: "completed" as const,
+    energy: 85,
+  },
+  {
+    id: 5,
+    title: "Food For Cause",
+    date: "Charity Drive",
+    content: "Charitable food stall project where 100% of profits are donated directly to orphanages.",
+    category: "Charity",
+    icon: Heart,
+    relatedIds: [4],
+    status: "completed" as const,
+    energy: 88,
+  },
+];
+
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoFading, setIsVideoFading] = useState(false);
   const [isVideoHidden, setIsVideoHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobileScreen, setIsMobileScreen] = useState(false);
+  const [isScrolledPastHero, setIsScrolledPastHero] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.7) {
+        setIsScrolledPastHero(true);
+      } else {
+        setIsScrolledPastHero(false);
+      }
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -179,7 +253,7 @@ export default function Home() {
             {/* Left Text Column */}
             <div className="lg:col-span-7 font-jakarta text-xs sm:text-sm lg:text-base text-slate-900/90 leading-relaxed font-medium space-y-2 sm:space-y-3">
               <p>
-                <strong className="font-extrabold text-slate-950">KAGADA</strong> is our esteemed <strong className="font-bold text-slate-950">Annual National-Level Technical Student Conference</strong>, showcasing <strong className="font-bold text-slate-950">Paper and Poster Presentations alongside Project Exhibitions</strong>. Its 21st edition is set for <strong className="font-bold text-slate-950">October 10, 2026</strong>. At IEEE UVCE, we are dedicated to expanding technical knowledge beyond the classroom. KAGADA, recognized with the <strong className="font-bold text-slate-950">Darrel Chong Student Activity Award</strong> in both 2016 and 2019, aims to inspire students to pursue research during their undergraduate studies. This conference provides an engaging platform for motivated students to <strong className="font-bold text-slate-950">sharpen their technical skills, improve their presentation abilities, and share innovative ideas</strong>.
+                <strong className="font-extrabold text-slate-950">KAGADA</strong> is our esteemed <strong className="font-bold text-slate-950">Annual National-Level Technical Student Conference</strong>, showcasing <strong className="font-bold text-slate-950">Paper, Poster, and Project Presentations</strong>. Its 21st edition is set for <strong className="font-bold text-slate-950">October 10, 2026</strong>. At IEEE UVCE, we are dedicated to expanding technical knowledge beyond the classroom. KAGADA, recognized with the <strong className="font-bold text-slate-950">Darrel Chong Student Activity Award</strong> in both 2016 and 2019, aims to inspire students to pursue research during their undergraduate studies. This conference provides an engaging platform for motivated students to <strong className="font-bold text-slate-950">sharpen their technical skills, improve their presentation abilities, and share innovative ideas</strong>.
               </p>
               <p className="text-slate-800">
                 Additionally, KAGADA features initiatives like &quot;<strong className="font-bold text-slate-950">Ottige Kaliyona</strong>,&quot; which teaches government school students to utilize technology, and &quot;<strong className="font-bold text-slate-950">Food For Cause</strong>,&quot; a charitable project where profits from a food stall are donated to an orphanage.
@@ -239,15 +313,15 @@ export default function Home() {
       }`}
     >
       
-      {/* 🌟 ONE SINGLE FIXED CONTINUOUS UNIFIED GPU-OPTIMIZED FAST MOVING GRADIENT BACKGROUND FOR THE ENTIRE WEBSITE */}
+      {/* 🌟 ONE SINGLE FIXED CONTINUOUS UNIFIED GPU-OPTIMIZED SMOOTH MOVING GRADIENT BACKGROUND FOR THE ENTIRE WEBSITE */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden transform-gpu">
-        {/* Fast Animated Moving Gradient Canvas */}
+        {/* Smooth Animated Moving Gradient Canvas */}
         <motion.div
           animate={{
             backgroundPosition: ["0% 0%", "100% 50%", "50% 100%", "0% 50%", "0% 0%"],
           }}
           transition={{
-            duration: 2,
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -262,7 +336,7 @@ export default function Home() {
             scale: [1, 1.35, 0.8, 1],
           }}
           transition={{
-            duration: 1.8,
+            duration: 5.5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -276,7 +350,7 @@ export default function Home() {
             scale: [1, 0.75, 1.3, 1],
           }}
           transition={{
-            duration: 2.4,
+            duration: 7.2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -289,7 +363,7 @@ export default function Home() {
             y: [0, -90, 110, 0],
           }}
           transition={{
-            duration: 2.1,
+            duration: 6.4,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -313,46 +387,88 @@ export default function Home() {
           damping: 20,
           delay: 0.1,
         }}
-        className="fixed top-6 left-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full bg-white/30 backdrop-blur-xl border border-white/70 shadow-lg shadow-black/10 px-4 sm:px-8 flex items-center justify-between pointer-events-auto transform-gpu will-change-transform"
+        className={`fixed top-6 left-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full backdrop-blur-xl border transition-all duration-500 shadow-xl px-4 sm:px-8 flex items-center justify-between pointer-events-auto transform-gpu will-change-transform ${
+          isScrolledPastHero
+            ? "bg-white/15 border-white/40 shadow-black/20"
+            : "bg-white/30 border-white/70 shadow-black/10"
+        }`}
       >
-        {/* Left Brand Logo (handle.png tinted in Kagada Red tone) */}
+        {/* Left Brand Logo (handle.png: Red in Hero, White in Gradient) */}
         <a href="#hero" className="flex items-center gap-2 select-none py-0">
           <img
             src="/handle.png"
             alt="IEEE UVCE Kagada Logo"
-            className="h-11 sm:h-14 w-auto object-contain transition-transform hover:scale-105 drop-shadow-sm"
-            style={{
-              filter: "invert(18%) sepia(85%) saturate(3000%) hue-rotate(345deg) brightness(85%) contrast(95%)"
-            }}
+            className="h-11 sm:h-14 w-auto object-contain transition-all duration-500 hover:scale-105"
+            style={
+              isScrolledPastHero
+                ? { filter: "brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.4))" }
+                : { filter: "invert(18%) sepia(85%) saturate(3000%) hue-rotate(345deg) brightness(85%) contrast(95%)" }
+            }
           />
         </a>
 
-        {/* Desktop Navigation Links in Kagada Red Tone (#8a1c1c) */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8 font-roboto-mono text-sm font-bold text-[#8a1c1c]/90">
-          <a href="#about" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+        {/* Desktop Navigation Links (Red in Hero, White in Gradient) */}
+        <nav
+          className={`hidden md:flex items-center gap-6 lg:gap-8 font-roboto-mono text-sm font-bold tracking-wider transition-colors duration-500 ${
+            isScrolledPastHero ? "text-white" : "text-[#8a1c1c]/90"
+          }`}
+        >
+          <a
+            href="#about"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
+            }`}
+          >
             About Us
           </a>
-          <a href="#tracks" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+          <a
+            href="#tracks"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
+            }`}
+          >
             Tracks
           </a>
-          <a href="#prizes" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+          <a
+            href="#prizes"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
+            }`}
+          >
             Prize Pool
           </a>
-          <a href="#winners" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+          <a
+            href="#winners"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
+            }`}
+          >
             Winners
           </a>
-          <a href="#gallery" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+          <a
+            href="#gallery"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
+            }`}
+          >
             Gallery
           </a>
-          <a href="#contact" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+          <a
+            href="#contact"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
+            }`}
+          >
             Contact
           </a>
         </nav>
 
-        {/* Mobile Toggle Button */}
+        {/* Mobile Toggle Button (Red in Hero, White in Gradient) */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-[#8a1c1c] hover:text-[#8a1c1c]/80 transition-colors"
+          className={`md:hidden p-2 transition-colors duration-500 ${
+            isScrolledPastHero ? "text-white hover:text-white/80" : "text-[#8a1c1c] hover:text-[#8a1c1c]/80"
+          }`}
           aria-label="Toggle Menu"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -366,24 +482,28 @@ export default function Home() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-20 left-0 right-0 bg-white/95 backdrop-blur-2xl border border-white/80 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c]/90 md:hidden z-40"
+              className={`absolute top-20 left-0 right-0 backdrop-blur-2xl border rounded-3xl p-6 shadow-2xl flex flex-col gap-4 font-roboto-mono text-base font-bold transition-all duration-300 md:hidden z-40 ${
+                isScrolledPastHero
+                  ? "bg-[#2e0707]/95 border-white/30 text-white"
+                  : "bg-white/95 border-white/80 text-[#8a1c1c]"
+              }`}
             >
-              <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 About Us
               </a>
-              <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Tracks
               </a>
-              <a href="#prizes" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              <a href="#prizes" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Prize Pool
               </a>
-              <a href="#winners" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              <a href="#winners" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Winners
               </a>
-              <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Gallery
               </a>
-              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Contact
               </a>
             </motion.div>
@@ -546,28 +666,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 3: TRACKS SECTION (Elevated Top Placement) */}
+      {/* SECTION 3: TRACKS SECTION (RADIAL ORBITAL TIMELINE INTEGRATION) */}
       <section
         id="tracks"
-        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-10 sm:pt-16 pb-20 scroll-mt-6"
+        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-10 sm:pt-14 pb-16 scroll-mt-6"
       >
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-start text-center">
-          {/* Section Heading in Saman Font and Pure White Color (Shifted Upwards) */}
+          {/* Section Heading in Saman Font and Pure White Color */}
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-8 sm:mb-12 tracking-tight text-center select-none"
+            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-2 tracking-tight text-center select-none"
           >
             Tracks
           </motion.h2>
 
-          {/* Empty Stage Container */}
-          <div className="w-full max-w-4xl min-h-[380px] rounded-3xl border-2 border-white/40 bg-white/10 backdrop-blur-xl shadow-2xl flex items-center justify-center p-8">
-            <span className="font-roboto-mono text-sm sm:text-base text-white/60 tracking-widest uppercase select-none">
-              Tracks Content Coming Soon
-            </span>
+          {/* Radial Orbital Timeline Component */}
+          <div className="w-full flex items-center justify-center">
+            <RadialOrbitalTimeline timelineData={TRACKS_TIMELINE_DATA} />
           </div>
         </div>
       </section>

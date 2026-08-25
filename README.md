@@ -1,6 +1,6 @@
 # 🏛️ KAGADA 2026 — IEEE UVCE Technical Symposium
 
-> **Kagada 2026** is the annual national-level technical paper presentation, project exhibition, poster competition, and WIE conference organized by the **IEEE UVCE Student Branch** at UVCE, Bengaluru.
+> **Kagada 2026** is the annual national-level technical paper presentation, project presentation, poster competition, and WIE conference organized by the **IEEE UVCE Student Branch** at UVCE, Bengaluru.
 
 ---
 
@@ -12,7 +12,7 @@
   - Calligraphic **Saman** font for **"Kagada 2026"** with custom letter-kerning.
   - **Roboto Mono** monospace font for the *"Annual National-Level Technical Student Conference"* subtitle.
 - **💎 Floating Glassmorphism Navbar**: Animated floating glass pill navigation header with slide-down entrance physics.
-- **📊 Competition Tracks**: Paper Presentation, Live Project Exhibition, Poster Presentation, and Women in Engineering (WIE) tracks.
+- **📊 Competition Tracks**: Paper Presentation, Live Project Presentation, Poster Presentation, and Women in Engineering (WIE) tracks.
 - **📱 Fully Responsive**: Tailored layouts for both mobile devices and widescreen desktop viewports.
 
 ---

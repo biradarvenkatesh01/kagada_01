@@ -96,7 +96,7 @@ export default function RegistrationSection() {
                     className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 text-sm text-white focus:outline-none transition-colors"
                   >
                     <option value="paper">Paper Presentation</option>
-                    <option value="project">Project Exhibition</option>
+                    <option value="project">Project Presentation</option>
                     <option value="poster">Poster Presentation</option>
                     <option value="wie">WIE Special Track</option>
                   </select>

@@ -16,7 +16,7 @@ export default function EventTracks() {
     },
     {
       id: "project",
-      title: "Project Exhibition",
+      title: "Project Presentation",
       icon: Cpu,
       tag: "Live Demos",
       color: "from-blue-500 to-indigo-600",

@@ -121,7 +121,7 @@ export default function IntroVideo() {
           </h1>
 
           <p className="text-base sm:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
-            National Level Student Conference, Technical Paper & Project Exhibition
+            National Level Student Conference, Technical Paper & Project Presentation
           </p>
         </div>
 
