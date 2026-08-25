@@ -6,8 +6,6 @@ export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoFading, setIsVideoFading] = useState(false);
   const [isVideoHidden, setIsVideoHidden] = useState(false);
-  const [videoProgress, setVideoProgress] = useState(0);
-  const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -22,22 +20,15 @@ export default function Home() {
     }
   }, []);
 
-  // Monitor video playback and update small red loading bar
+  // Monitor timeline to start crossfade 1.5s BEFORE video finishes for a seamless film dissolve
   const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      const dur = videoRef.current.duration || 1;
-      const cur = videoRef.current.currentTime || 0;
-      const progress = Math.min((cur / dur) * 100, 100);
-      setVideoProgress(progress);
-
-      if (!isVideoFading) {
-        const remainingTime = dur - cur;
-        if (remainingTime <= 1.5 && remainingTime > 0) {
-          setIsVideoFading(true);
-          setTimeout(() => {
-            setIsVideoHidden(true);
-          }, 1800);
-        }
+    if (videoRef.current && !isVideoFading) {
+      const remainingTime = videoRef.current.duration - videoRef.current.currentTime;
+      if (remainingTime <= 1.5 && remainingTime > 0) {
+        setIsVideoFading(true);
+        setTimeout(() => {
+          setIsVideoHidden(true);
+        }, 1800);
       }
     }
   };
@@ -60,21 +51,13 @@ export default function Home() {
   return (
     <main className="fixed inset-0 w-screen h-screen overflow-hidden bg-black flex items-center justify-center p-0 m-0">
       
-      {/* Sleek Small Red Video Loading Progress Bar */}
-      {!isVideoHidden && (
-        <div className="fixed top-0 left-0 right-0 z-30 h-1 bg-black/40 overflow-hidden pointer-events-none">
-          <div
-            className="h-full bg-gradient-to-r from-red-700 via-red-600 to-[#8a1c1c] transition-all duration-300 ease-out shadow-[0_0_8px_rgba(220,38,38,0.8)]"
-            style={{ width: `${videoProgress}%` }}
-          />
-        </div>
-      )}
-
-      {/* Background Image Layer */}
+      {/* Background Image Layer (100% Invisible during video playback; smoothly fades in during dissolve) */}
       <img
         src="/hero-bg.jpg"
         alt="UVCE Building"
-        className="fixed inset-0 w-full h-full object-cover z-0 transform-gpu"
+        className={`fixed inset-0 w-full h-full object-cover z-0 transform-gpu transition-opacity duration-1000 ease-out ${
+          isVideoFading ? "opacity-100" : "opacity-0"
+        }`}
       />
 
       {/* Textured White Overlay Screen with Clean Soft White Grid (Fade-in Entrance) */}
@@ -114,23 +97,20 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Video Layer (Dissolves 1.5s before end with 1.8s soft blur-fade) */}
+      {/* Video Layer (Solid 100% opacity during playback; dissolves 1.5s before end with 1.8s soft blur-fade) */}
       {!isVideoHidden && (
         <video
           ref={videoRef}
           src="/video-intro.mp4"
           autoPlay
           playsInline
-          onCanPlay={() => setIsVideoReady(true)}
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleVideoEnded}
           onClick={handleTapToUnmute}
           className={`fixed inset-0 w-full h-full object-cover z-20 cursor-pointer transform-gpu transition-all duration-[1800ms] ease-in-out ${
             isVideoFading
               ? "opacity-0 scale-105 filter blur-[3px] pointer-events-none"
-              : isVideoReady
-              ? "opacity-100 scale-100 filter blur-0"
-              : "opacity-95 scale-100 filter blur-0"
+              : "opacity-100 scale-100 filter blur-0"
           }`}
         />
       )}
