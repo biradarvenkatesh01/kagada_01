@@ -1,4 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/glacial-indifference');
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'Saman';
+  src: url('/fonts/SAMAN___.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-saman {
+  font-family: 'Saman', cursive, sans-serif;
+}
+
+.font-glacial {
+  font-family: 'Glacial Indifference', sans-serif;
+}
+
+.font-roboto-mono {
+  font-family: 'Roboto Mono', monospace;
+}
 
 :root {
   --background: #ffffff;
@@ -10,6 +32,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-saman: 'Saman';
+  --font-glacial: 'Glacial Indifference';
+  --font-roboto-mono: 'Roboto Mono';
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +44,21 @@
   }
 }
 
-body {
-  background: var(--background);
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: #000000;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom Soft White Tech Grid Texture */
+.bg-tech-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
