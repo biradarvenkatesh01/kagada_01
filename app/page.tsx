@@ -97,22 +97,29 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Video Layer (Solid 100% opacity during playback; dissolves 1.5s before end with 1.8s soft blur-fade) */}
+      {/* Video Layer Container with Subtle Soft White Overlay (no grid) */}
       {!isVideoHidden && (
-        <video
-          ref={videoRef}
-          src="/video-intro.mp4"
-          autoPlay
-          playsInline
-          onTimeUpdate={handleTimeUpdate}
-          onEnded={handleVideoEnded}
-          onClick={handleTapToUnmute}
-          className={`fixed inset-0 w-full h-full object-cover z-20 cursor-pointer transform-gpu transition-all duration-[1800ms] ease-in-out ${
+        <div
+          className={`fixed inset-0 z-20 cursor-pointer transform-gpu transition-all duration-[1800ms] ease-in-out ${
             isVideoFading
               ? "opacity-0 scale-105 filter blur-[3px] pointer-events-none"
               : "opacity-100 scale-100 filter blur-0"
           }`}
-        />
+          onClick={handleTapToUnmute}
+        >
+          <video
+            ref={videoRef}
+            src="/video-intro.mp4"
+            autoPlay
+            playsInline
+            onTimeUpdate={handleTimeUpdate}
+            onEnded={handleVideoEnded}
+            className="w-full h-full object-cover"
+          />
+
+          {/* Soft Subtle White Screen Overlay over Video (Reduced Opacity) */}
+          <div className="absolute inset-0 bg-white/12 pointer-events-none z-[21]" />
+        </div>
       )}
     </main>
   );
