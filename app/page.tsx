@@ -321,7 +321,7 @@ export default function Home() {
             backgroundPosition: ["0% 0%", "100% 50%", "50% 100%", "0% 50%", "0% 0%"],
           }}
           transition={{
-            duration: 6,
+            duration: 4.5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -336,7 +336,7 @@ export default function Home() {
             scale: [1, 1.35, 0.8, 1],
           }}
           transition={{
-            duration: 5.5,
+            duration: 4.2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -350,7 +350,7 @@ export default function Home() {
             scale: [1, 0.75, 1.3, 1],
           }}
           transition={{
-            duration: 7.2,
+            duration: 5.4,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -363,7 +363,7 @@ export default function Home() {
             y: [0, -90, 110, 0],
           }}
           transition={{
-            duration: 6.4,
+            duration: 4.8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
