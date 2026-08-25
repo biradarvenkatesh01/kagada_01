@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import FlipClock from "@/components/ui/flip-clock";
 import { Menu, X, ChevronDown } from "lucide-react";
 
@@ -57,36 +58,46 @@ export default function Home() {
   return (
     <main className="fixed inset-0 w-screen h-screen overflow-hidden bg-black flex items-center justify-center p-0 m-0">
       
-      {/* Background Image Layer (100% Invisible during video playback; smoothly fades in during dissolve) */}
-      <img
+      {/* Background Image Layer (Smooth Motion Dissolve) */}
+      <motion.img
         src="/hero-bg.jpg"
         alt="UVCE Building"
-        className={`fixed inset-0 w-full h-full object-cover z-0 transform-gpu transition-opacity duration-1000 ease-out ${
-          isVideoFading ? "opacity-100" : "opacity-0"
-        }`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isVideoFading ? 1 : 0 }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed inset-0 w-full h-full object-cover z-0 transform-gpu"
       />
 
-      {/* Textured White Overlay Screen with Clean Soft White Grid (Fade-in Entrance) */}
-      <div
-        className={`fixed inset-0 bg-white/30 bg-tech-grid pointer-events-none z-[1] transition-opacity duration-1000 ease-out ${
-          isVideoFading ? "opacity-100" : "opacity-0"
-        }`}
+      {/* Textured White Overlay Screen with Clean Soft White Grid */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isVideoFading ? 1 : 0 }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed inset-0 bg-white/30 bg-tech-grid pointer-events-none z-[1]"
       />
 
-      {/* Floating Glassmorphic Pill Navbar */}
-      <header
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full bg-white/30 backdrop-blur-xl border border-white/70 shadow-lg shadow-black/10 transition-all duration-1000 ease-out px-4 sm:px-8 flex items-center justify-between ${
-          isVideoFading
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-16 opacity-0 pointer-events-none"
-        }`}
+      {/* Floating Glassmorphic Pill Navbar with Spring Entrance */}
+      <motion.header
+        initial={{ y: -80, opacity: 0, x: "-50%" }}
+        animate={{
+          y: isVideoFading ? 0 : -80,
+          opacity: isVideoFading ? 1 : 0,
+          x: "-50%",
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 90,
+          damping: 20,
+          delay: 0.1,
+        }}
+        className="fixed top-6 left-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full bg-white/30 backdrop-blur-xl border border-white/70 shadow-lg shadow-black/10 px-4 sm:px-8 flex items-center justify-between pointer-events-auto transform-gpu"
       >
         {/* Left Brand Logo (handle.png tinted in Kagada Red tone) */}
         <a href="#" className="flex items-center gap-2 select-none py-0">
           <img
             src="/handle.png"
             alt="IEEE UVCE Kagada Logo"
-            className="h-11 sm:h-14 w-auto object-contain transition-all drop-shadow-sm"
+            className="h-11 sm:h-14 w-auto object-contain transition-transform hover:scale-105 drop-shadow-sm"
             style={{
               filter: "invert(18%) sepia(85%) saturate(3000%) hue-rotate(345deg) brightness(85%) contrast(95%)"
             }}
@@ -125,37 +136,54 @@ export default function Home() {
         </button>
 
         {/* Mobile Dropdown Navigation */}
-        {mobileMenuOpen && (
-          <div className="absolute top-20 left-0 right-0 bg-white/95 backdrop-blur-2xl border border-white/80 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c]/90 md:hidden z-40">
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
-              About
-            </a>
-            <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
-              Tracks
-            </a>
-            <a href="#prizes" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
-              Prize Pool
-            </a>
-            <a href="#winners" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
-              Winners
-            </a>
-            <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
-              Gallery
-            </a>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
-              Contact
-            </a>
-          </div>
-        )}
-      </header>
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-20 left-0 right-0 bg-white/95 backdrop-blur-2xl border border-white/80 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c]/90 md:hidden z-40"
+            >
+              <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+                About
+              </a>
+              <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+                Tracks
+              </a>
+              <a href="#prizes" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+                Prize Pool
+              </a>
+              <a href="#winners" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+                Winners
+              </a>
+              <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+                Gallery
+              </a>
+              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+                Contact
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.header>
 
-      {/* Hero Title & Subtitle Glass Box Container - Centered Vertically */}
-      <div
-        className={`fixed top-[48%] sm:top-1/2 left-1/2 -translate-x-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center transition-all duration-1000 ease-out delay-300 pointer-events-none ${
-          isVideoFading
-            ? "-translate-y-1/2 opacity-100 scale-100"
-            : "translate-y-[-40%] opacity-0 scale-95"
-        }`}
+      {/* Hero Title & Subtitle Glass Box Container - Centered Vertically with Spring Entrance */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 30, x: "-50%" }}
+        animate={{
+          opacity: isVideoFading ? 1 : 0,
+          scale: isVideoFading ? 1 : 0.95,
+          y: isVideoFading ? "-50%" : "30px",
+          x: "-50%",
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 85,
+          damping: 20,
+          delay: 0.25,
+        }}
+        className="fixed top-[48%] sm:top-1/2 left-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
       >
         {/* Title Glass Box containing Title + Subtitle */}
         <div className="w-full px-3 sm:px-10 py-5 sm:py-8 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-xl shadow-black/10 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
@@ -169,7 +197,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Flip Clock Countdown Timer (Phone width matches Kagada title box width exactly) */}
+        {/* Flip Clock Countdown Timer */}
         <div className="mt-7 sm:mt-6 w-full sm:w-auto pointer-events-auto flex flex-col items-center">
           <div className="w-full sm:w-auto px-3 py-3 sm:px-6 sm:py-4 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-lg shadow-black/10 text-[#8a1c1c] flex items-center justify-center text-center mx-auto">
             <FlipClock
@@ -181,54 +209,82 @@ export default function Home() {
             />
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Bottom "Explore Tracks" CTA Indicator with High-Visibility Glass Box & Increased Gap */}
-      <a
+      {/* Bottom "Explore Tracks" CTA Indicator with Smooth Floating Physics */}
+      <motion.a
         href="#tracks"
-        className={`fixed bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-6 sm:gap-8 group transition-all duration-1000 ease-out delay-500 pointer-events-auto ${
-          isVideoFading
-            ? "translate-y-0 opacity-100"
-            : "translate-y-12 opacity-0 pointer-events-none"
-        }`}
+        initial={{ opacity: 0, y: 30, x: "-50%" }}
+        animate={{
+          opacity: isVideoFading ? 1 : 0,
+          y: isVideoFading ? 0 : 30,
+          x: "-50%",
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 80,
+          damping: 18,
+          delay: 0.4,
+        }}
+        className="fixed bottom-6 sm:bottom-10 left-1/2 z-20 flex flex-col items-center gap-6 sm:gap-8 group pointer-events-auto transform-gpu"
       >
         {/* Glass Box behind Explore Tracks text */}
-        <div className="px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-white/30 backdrop-blur-md border border-white/80 shadow-md shadow-black/10 flex items-center justify-center">
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-white/30 backdrop-blur-md border border-white/80 shadow-md shadow-black/10 flex items-center justify-center"
+        >
           <span className="font-roboto-mono text-xs sm:text-sm font-bold text-[#8a1c1c]/95 tracking-widest uppercase drop-shadow-sm select-none group-hover:text-[#8a1c1c] whitespace-nowrap">
             Explore Tracks
           </span>
-        </div>
+        </motion.div>
 
-        {/* Circular Down Arrow Pill Button with Continuous Popping Animation */}
-        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/40 backdrop-blur-md border border-white/80 shadow-md shadow-black/10 flex items-center justify-center text-[#8a1c1c] animate-bounce group-hover:scale-110 transition-transform">
-          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
-        </div>
-      </a>
-
-      {/* Video Layer Container with Soft White Overlay (no grid) */}
-      {!isVideoHidden && (
-        <div
-          className={`fixed inset-0 z-20 cursor-pointer transform-gpu transition-all duration-[1800ms] ease-in-out ${
-            isVideoFading
-              ? "opacity-0 scale-105 filter blur-[3px] pointer-events-none"
-              : "opacity-100 scale-100 filter blur-0"
-          }`}
-          onClick={handleTapToUnmute}
+        {/* Circular Down Arrow Pill Button with Smooth Floating Animation */}
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{
+            duration: 2.2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          whileHover={{ scale: 1.15 }}
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/40 backdrop-blur-md border border-white/80 shadow-md shadow-black/10 flex items-center justify-center text-[#8a1c1c]"
         >
-          <video
-            ref={videoRef}
-            src="/video-intro.mp4"
-            autoPlay
-            playsInline
-            onTimeUpdate={handleTimeUpdate}
-            onEnded={handleVideoEnded}
-            className="w-full h-full object-cover"
-          />
+          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+        </motion.div>
+      </motion.a>
 
-          {/* Soft White Screen Overlay over Video (18% Opacity) */}
-          <div className="absolute inset-0 bg-white/18 pointer-events-none z-[21]" />
-        </div>
-      )}
+      {/* Video Layer Container with Smooth AnimatePresence Dissolve */}
+      <AnimatePresence>
+        {!isVideoHidden && (
+          <motion.div
+            key="intro-video-container"
+            initial={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            animate={{
+              opacity: isVideoFading ? 0 : 1,
+              scale: isVideoFading ? 1.04 : 1,
+              filter: isVideoFading ? "blur(4px)" : "blur(0px)",
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
+            onClick={handleTapToUnmute}
+            className="fixed inset-0 z-20 cursor-pointer transform-gpu pointer-events-auto"
+          >
+            <video
+              ref={videoRef}
+              src="/video-intro.mp4"
+              autoPlay
+              playsInline
+              onTimeUpdate={handleTimeUpdate}
+              onEnded={handleVideoEnded}
+              className="w-full h-full object-cover"
+            />
+
+            {/* Soft White Screen Overlay over Video (18% Opacity) */}
+            <div className="absolute inset-0 bg-white/18 pointer-events-none z-[21]" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

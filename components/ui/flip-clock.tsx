@@ -12,7 +12,7 @@ import {
 } from "react";
 
 const flipUnitVariants = cva(
-  "relative subpixel-antialiased perspective-[1000px] rounded-md overflow-hidden",
+  "relative subpixel-antialiased perspective-[1000px] rounded-md overflow-hidden transform-gpu will-change-transform",
   {
     variants: {
       size: {
@@ -44,7 +44,7 @@ interface FlipUnitProps
 }
 
 const commonCardStyle = cn(
-  "absolute inset-x-0 overflow-hidden h-1/2 bg-inherit text-inherit",
+  "absolute inset-x-0 overflow-hidden h-1/2 bg-inherit text-inherit backface-hidden transform-gpu",
 );
 
 const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
@@ -68,14 +68,14 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
   }, [digit, prevDigit]);
 
   return (
-    <div className={cn(flipUnitVariants({ size, variant }), className)}>
+    <div className={cn(flipUnitVariants({ size, variant }), className)} suppressHydrationWarning>
       {/* 1. Background Top */}
-      <div className={cn(commonCardStyle, "rounded-t-lg top-0")}>
+      <div className={cn(commonCardStyle, "rounded-t-lg top-0")} suppressHydrationWarning>
         <DigitSpan position="top">{digit}</DigitSpan>
       </div>
 
       {/* 2. Background Bottom */}
-      <div className={cn(commonCardStyle, "rounded-b-lg translate-y-full")}>
+      <div className={cn(commonCardStyle, "rounded-b-lg translate-y-full")} suppressHydrationWarning>
         <DigitSpan position="bottom">{prevDigit}</DigitSpan>
       </div>
 
@@ -83,9 +83,10 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
       <div
         className={cn(
           commonCardStyle,
-          "z-20 origin-bottom backface-hidden rounded-t-lg",
+          "z-20 origin-bottom rounded-t-lg",
           flipping && "animate-flip-top",
         )}
+        suppressHydrationWarning
       >
         <DigitSpan position="top">{prevDigit}</DigitSpan>
       </div>
@@ -94,10 +95,11 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
       <div
         className={cn(
           commonCardStyle,
-          "z-10 origin-top backface-hidden rounded-b-lg translate-y-full",
+          "z-10 origin-top rounded-b-lg translate-y-full",
           flipping && "animate-flip-bottom",
         )}
         style={{ transform: "rotateX(90deg)" }}
+        suppressHydrationWarning
       >
         <DigitSpan position="bottom">{digit}</DigitSpan>
       </div>
@@ -117,11 +119,12 @@ function DigitSpan({ children, position }: DigitSpanProps) {
   return (
     <span
       className={cn(
-        "absolute left-0 right-0 w-full flex items-center justify-center h-[200%]",
+        "absolute left-0 right-0 w-full flex items-center justify-center h-[200%] select-none",
       )}
       style={{
         top: position === "top" ? "0%" : "-100%",
       }}
+      suppressHydrationWarning
     >
       {children}
     </span>
@@ -158,7 +161,7 @@ function ClockSeparator({ size = "md" }: { size?: FlipClockSize }) {
     <div className="flex h-12 sm:h-14 items-center justify-center">
       <span
         className={cn(
-          "text-center text-[#8a1c1c]/80 font-bold leading-none px-0.5 self-center",
+          "text-center text-[#8a1c1c]/80 font-bold leading-none px-0.5 self-center select-none",
           heightMap[size],
         )}
       >
@@ -177,9 +180,11 @@ const FlipClock = ({
   className,
   ...props
 }: FlipClockProps) => {
+  const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState<TimeLeft>(getTime(countdown, targetDate));
 
   useEffect(() => {
+    setMounted(true);
     const timer = setInterval(() => {
       const nextTime = getTime(countdown, targetDate);
 
@@ -211,16 +216,17 @@ const FlipClock = ({
     <div
       className={cn("relative flex items-start justify-center space-x-1 sm:space-x-3 font-mono font-medium", className)}
       aria-live="polite"
+      suppressHydrationWarning
       {...props}
     >
-      <span className="sr-only absolute">
+      <span className="sr-only absolute" suppressHydrationWarning>
         {`${time.days} days ${time.hours}:${time.minutes}:${time.seconds}`}
       </span>
 
       {/* Days Group */}
       {shouldShowDays && (
-        <div className="flex flex-col items-center">
-          <div className="flex items-center space-x-0.5 sm:space-x-1">
+        <div className="flex flex-col items-center" suppressHydrationWarning>
+          <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
             {daysStr.split("").map((digit, i) => (
               <FlipUnit
                 key={`d-${i}`}
@@ -239,8 +245,8 @@ const FlipClock = ({
       {shouldShowDays && <ClockSeparator size={size} />}
 
       {/* Hours Group */}
-      <div className="flex flex-col items-center">
-        <div className="flex items-center space-x-0.5 sm:space-x-1">
+      <div className="flex flex-col items-center" suppressHydrationWarning>
+        <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
           {hoursStr.split("").map((digit, index) => (
             <FlipUnit
               key={`hour-${index}`}
@@ -258,8 +264,8 @@ const FlipClock = ({
       <ClockSeparator size={size} />
 
       {/* Minutes Group */}
-      <div className="flex flex-col items-center">
-        <div className="flex items-center space-x-0.5 sm:space-x-1">
+      <div className="flex flex-col items-center" suppressHydrationWarning>
+        <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
           {minutesStr.split("").map((digit, index) => (
             <FlipUnit
               key={`minute-${index}`}
@@ -277,8 +283,8 @@ const FlipClock = ({
       <ClockSeparator size={size} />
 
       {/* Seconds Group */}
-      <div className="flex flex-col items-center">
-        <div className="flex items-center space-x-0.5 sm:space-x-1">
+      <div className="flex flex-col items-center" suppressHydrationWarning>
+        <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
           {secondsStr.split("").map((digit, index) => (
             <FlipUnit
               key={`second-${index}`}
@@ -293,13 +299,15 @@ const FlipClock = ({
         </span>
       </div>
 
-      {/* Keyframe Animations */}
+      {/* Ultra Smooth 60fps Keyframe Animations */}
       <style jsx global>{`
         .animate-flip-top {
-          animation: flip-top-anim 0.6s ease-in forwards;
+          animation: flip-top-anim 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          will-change: transform;
         }
         .animate-flip-bottom {
-          animation: flip-bottom-anim 0.6s ease-out forwards;
+          animation: flip-bottom-anim 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          will-change: transform;
         }
 
         @keyframes flip-top-anim {
