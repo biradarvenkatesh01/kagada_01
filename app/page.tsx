@@ -1,58 +1,42 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Volume2, VolumeX } from "lucide-react";
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoFading, setIsVideoFading] = useState(false);
   const [isVideoHidden, setIsVideoHidden] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [showUnmuteHint, setShowUnmuteHint] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
       video.muted = false;
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsMuted(false);
-            setShowUnmuteHint(false);
-          })
-          .catch(() => {
-            // Autoplay with audio was blocked by browser security policy
-            if (video) {
-              video.muted = true;
-              setIsMuted(true);
-              setShowUnmuteHint(true);
-              video.play();
-            }
-          });
-      }
+      video.volume = 1;
+      video.play().catch(() => {
+        // Fallback if browser requires touch/click before playing audio
+        if (video) {
+          video.muted = false;
+          video.play();
+        }
+      });
     }
 
-    // Global listener: First click or touch anywhere on the page instantly enables full audio
-    const enableAudioOnInteraction = () => {
+    // Global listener: Ensures unmuted audio plays on any screen interaction
+    const forceAudioOn = () => {
       if (videoRef.current) {
         videoRef.current.muted = false;
-        setIsMuted(false);
-        setShowUnmuteHint(false);
+        videoRef.current.volume = 1;
       }
-      window.removeEventListener("click", enableAudioOnInteraction);
-      window.removeEventListener("touchstart", enableAudioOnInteraction);
-      window.removeEventListener("keydown", enableAudioOnInteraction);
     };
 
-    window.addEventListener("click", enableAudioOnInteraction);
-    window.addEventListener("touchstart", enableAudioOnInteraction);
-    window.addEventListener("keydown", enableAudioOnInteraction);
+    window.addEventListener("click", forceAudioOn);
+    window.addEventListener("touchstart", forceAudioOn);
+    window.addEventListener("keydown", forceAudioOn);
 
     return () => {
-      window.removeEventListener("click", enableAudioOnInteraction);
-      window.removeEventListener("touchstart", enableAudioOnInteraction);
-      window.removeEventListener("keydown", enableAudioOnInteraction);
+      window.removeEventListener("click", forceAudioOn);
+      window.removeEventListener("touchstart", forceAudioOn);
+      window.removeEventListener("keydown", forceAudioOn);
     };
   }, []);
 
@@ -75,16 +59,6 @@ export default function Home() {
       setTimeout(() => {
         setIsVideoHidden(true);
       }, 1800);
-    }
-  };
-
-  const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (videoRef.current) {
-      const nextMute = !videoRef.current.muted;
-      videoRef.current.muted = nextMute;
-      setIsMuted(nextMute);
-      setShowUnmuteHint(false);
     }
   };
 
@@ -137,27 +111,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Floating Sound Toggle Pill & Unmute Indicator */}
-      {!isVideoHidden && !isVideoFading && (
-        <button
-          onClick={toggleMute}
-          className="fixed top-6 right-6 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-950/60 backdrop-blur-md border border-white/30 text-white text-xs font-semibold shadow-lg hover:bg-slate-900/80 transition-all active:scale-95 cursor-pointer"
-        >
-          {isMuted ? (
-            <>
-              <VolumeX className="w-4 h-4 text-red-400 animate-pulse" />
-              <span>Tap to Unmute Audio</span>
-            </>
-          ) : (
-            <>
-              <Volume2 className="w-4 h-4 text-emerald-400" />
-              <span>Audio On</span>
-            </>
-          )}
-        </button>
-      )}
-
-      {/* Video Layer (Solid 100% opacity during playback; dissolves 1.5s before end with 1.8s soft blur-fade) */}
+      {/* Video Layer with Audio Always Enabled */}
       {!isVideoHidden && (
         <video
           ref={videoRef}
