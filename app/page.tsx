@@ -439,11 +439,68 @@ export default function Home() {
         </motion.a>
       </section>
 
-      {/* SECTION 2: ABOUT SECTION */}
+      {/* SECTION 2: ABOUT US SECTION (Ultra-Fast Liquid Moving Gradient Background) */}
       <section
         id="about"
-        className="relative w-full min-h-screen bg-[#ca9999] text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-20 overflow-hidden scroll-mt-6"
+        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-20 overflow-hidden scroll-mt-6"
       >
+        {/* Ultra-Fast Dynamic Moving Gradient Base */}
+        <motion.div
+          animate={{
+            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute inset-0 bg-gradient-to-br from-[#3b0808] via-[#8a1c1c] via-[#d66b6b] to-[#f0c2c2] bg-[length:300%_300%] pointer-events-none"
+        />
+
+        {/* Ultra-Fast Liquid Floating Glowing Ambient Orbs */}
+        <motion.div
+          animate={{
+            x: [0, 120, -80, 0],
+            y: [0, -90, 80, 0],
+            scale: [1, 1.4, 0.8, 1],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-[-10%] left-[-10%] w-[500px] sm:w-[650px] h-[500px] sm:h-[650px] bg-rose-400/45 rounded-full blur-[120px] pointer-events-none transform-gpu"
+        />
+
+        <motion.div
+          animate={{
+            x: [0, -130, 90, 0],
+            y: [0, 100, -80, 0],
+            scale: [1, 0.75, 1.3, 1],
+          }}
+          transition={{
+            duration: 3.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute bottom-[-10%] right-[-10%] w-[550px] sm:w-[750px] h-[550px] sm:h-[750px] bg-[#6e1414]/85 rounded-full blur-[150px] pointer-events-none transform-gpu"
+        />
+
+        <motion.div
+          animate={{
+            x: [0, 80, -90, 0],
+            y: [0, -70, 90, 0],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-[35%] right-[15%] w-[450px] h-[450px] bg-red-300/40 rounded-full blur-[110px] pointer-events-none transform-gpu"
+        />
+
+        <div className="absolute inset-0 bg-tech-grid opacity-15 pointer-events-none" />
+
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
           
           {/* Section Heading in Saman Font and Pure White Color */}
@@ -452,7 +509,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-md mb-6 sm:mb-8 tracking-tight text-center select-none"
+            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none"
           >
             About Us
           </motion.h2>
