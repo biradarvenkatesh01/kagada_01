@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import FlipClock from "@/components/ui/flip-clock";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -10,6 +11,7 @@ export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoFading, setIsVideoFading] = useState(false);
   const [isVideoHidden, setIsVideoHidden] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -73,12 +75,79 @@ export default function Home() {
 
       {/* Floating Glassmorphic Pill Navbar */}
       <header
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-20 w-[92%] max-w-7xl h-16 rounded-2xl sm:rounded-full bg-slate-950/30 backdrop-blur-xl border border-white/70 shadow-lg shadow-white/10 transition-all duration-1000 ease-out delay-100 px-6 sm:px-10 flex items-center justify-between ${
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full bg-white/30 backdrop-blur-xl border border-white/70 shadow-lg shadow-black/10 transition-all duration-1000 ease-out px-4 sm:px-8 flex items-center justify-between ${
           isVideoFading
             ? "translate-y-0 opacity-100"
             : "-translate-y-16 opacity-0 pointer-events-none"
         }`}
-      />
+      >
+        {/* Left Brand Logo (handle.png tinted in Kagada Red tone) */}
+        <a href="#" className="flex items-center gap-2 select-none py-0">
+          <img
+            src="/handle.png"
+            alt="IEEE UVCE Kagada Logo"
+            className="h-11 sm:h-14 w-auto object-contain transition-all drop-shadow-sm"
+            style={{
+              filter: "invert(18%) sepia(85%) saturate(3000%) hue-rotate(345deg) brightness(85%) contrast(95%)"
+            }}
+          />
+        </a>
+
+        {/* Desktop Navigation Links in Kagada Red Tone (#8a1c1c) */}
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8 font-roboto-mono text-sm font-bold text-[#8a1c1c]/90">
+          <a href="#about" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+            About
+          </a>
+          <a href="#tracks" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+            Tracks
+          </a>
+          <a href="#prizes" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+            Prize Pool
+          </a>
+          <a href="#winners" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+            Winners
+          </a>
+          <a href="#gallery" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+            Gallery
+          </a>
+          <a href="#contact" className="hover:text-[#8a1c1c] hover:scale-105 transition-all">
+            Contact
+          </a>
+        </nav>
+
+        {/* Mobile Toggle Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden p-2 text-[#8a1c1c] hover:text-[#8a1c1c]/80 transition-colors"
+          aria-label="Toggle Menu"
+        >
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+
+        {/* Mobile Dropdown Navigation */}
+        {mobileMenuOpen && (
+          <div className="absolute top-20 left-0 right-0 bg-white/95 backdrop-blur-2xl border border-white/80 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c]/90 md:hidden z-40">
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              About
+            </a>
+            <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              Tracks
+            </a>
+            <a href="#prizes" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              Prize Pool
+            </a>
+            <a href="#winners" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              Winners
+            </a>
+            <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              Gallery
+            </a>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#8a1c1c] transition-colors">
+              Contact
+            </a>
+          </div>
+        )}
+      </header>
 
       {/* Hero Title & Subtitle Glass Box Container - Centered Vertically */}
       <div
@@ -100,7 +169,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Flip Clock Countdown Timer (Shifted downwards strictly on phone: mt-7 sm:mt-6) */}
+        {/* Flip Clock Countdown Timer (Phone width matches Kagada title box width exactly) */}
         <div className="mt-7 sm:mt-6 w-full sm:w-auto pointer-events-auto flex flex-col items-center">
           <div className="w-full sm:w-auto px-3 py-3 sm:px-6 sm:py-4 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-lg shadow-black/10 text-[#8a1c1c] flex items-center justify-center text-center mx-auto">
             <FlipClock
@@ -113,6 +182,28 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Bottom "Explore Tracks" CTA Indicator with High-Visibility Glass Box & Increased Gap */}
+      <a
+        href="#tracks"
+        className={`fixed bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-6 sm:gap-8 group transition-all duration-1000 ease-out delay-500 pointer-events-auto ${
+          isVideoFading
+            ? "translate-y-0 opacity-100"
+            : "translate-y-12 opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Glass Box behind Explore Tracks text */}
+        <div className="px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-white/30 backdrop-blur-md border border-white/80 shadow-md shadow-black/10 flex items-center justify-center">
+          <span className="font-roboto-mono text-xs sm:text-sm font-bold text-[#8a1c1c]/95 tracking-widest uppercase drop-shadow-sm select-none group-hover:text-[#8a1c1c] whitespace-nowrap">
+            Explore Tracks
+          </span>
+        </div>
+
+        {/* Circular Down Arrow Pill Button with Continuous Popping Animation */}
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/40 backdrop-blur-md border border-white/80 shadow-md shadow-black/10 flex items-center justify-center text-[#8a1c1c] animate-bounce group-hover:scale-110 transition-transform">
+          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+        </div>
+      </a>
 
       {/* Video Layer Container with Soft White Overlay (no grid) */}
       {!isVideoHidden && (
