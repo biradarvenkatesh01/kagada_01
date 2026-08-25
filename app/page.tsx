@@ -8,36 +8,16 @@ export default function Home() {
   const [isVideoHidden, setIsVideoHidden] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.muted = false;
-      video.volume = 1;
-      video.play().catch(() => {
-        // Fallback if browser requires touch/click before playing audio
-        if (video) {
-          video.muted = false;
-          video.play();
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.play().catch(() => {
+        // Fallback to muted autoplay if browser blocks audio autoplay
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          videoRef.current.play();
         }
       });
     }
-
-    // Global listener: Ensures unmuted audio plays on any screen interaction
-    const forceAudioOn = () => {
-      if (videoRef.current) {
-        videoRef.current.muted = false;
-        videoRef.current.volume = 1;
-      }
-    };
-
-    window.addEventListener("click", forceAudioOn);
-    window.addEventListener("touchstart", forceAudioOn);
-    window.addEventListener("keydown", forceAudioOn);
-
-    return () => {
-      window.removeEventListener("click", forceAudioOn);
-      window.removeEventListener("touchstart", forceAudioOn);
-      window.removeEventListener("keydown", forceAudioOn);
-    };
   }, []);
 
   // Monitor timeline to start crossfade 1.5s BEFORE video finishes for a seamless film dissolve
@@ -59,6 +39,12 @@ export default function Home() {
       setTimeout(() => {
         setIsVideoHidden(true);
       }, 1800);
+    }
+  };
+
+  const handleTapToUnmute = () => {
+    if (videoRef.current && videoRef.current.muted) {
+      videoRef.current.muted = false;
     }
   };
 
@@ -111,7 +97,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Video Layer with Audio Always Enabled */}
+      {/* Video Layer (Solid 100% opacity during playback; dissolves 1.5s before end with 1.8s soft blur-fade) */}
       {!isVideoHidden && (
         <video
           ref={videoRef}
@@ -120,6 +106,7 @@ export default function Home() {
           playsInline
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleVideoEnded}
+          onClick={handleTapToUnmute}
           className={`fixed inset-0 w-full h-full object-cover z-20 cursor-pointer transform-gpu transition-all duration-[1800ms] ease-in-out ${
             isVideoFading
               ? "opacity-0 scale-105 filter blur-[3px] pointer-events-none"
