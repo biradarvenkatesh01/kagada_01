@@ -97,7 +97,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Video Layer Container with Subtle Soft White Overlay (no grid) */}
+      {/* Video Layer Container with Soft White Overlay (no grid) */}
       {!isVideoHidden && (
         <div
           className={`fixed inset-0 z-20 cursor-pointer transform-gpu transition-all duration-[1800ms] ease-in-out ${
@@ -117,8 +117,8 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
 
-          {/* Soft Subtle White Screen Overlay over Video (Reduced Opacity) */}
-          <div className="absolute inset-0 bg-white/12 pointer-events-none z-[21]" />
+          {/* Soft White Screen Overlay over Video (Increased to 18% Opacity) */}
+          <div className="absolute inset-0 bg-white/18 pointer-events-none z-[21]" />
         </div>
       )}
     </main>
