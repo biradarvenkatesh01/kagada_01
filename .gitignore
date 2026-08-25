@@ -40,6 +40,3 @@ Thumbs.db
 # TypeScript & Cache
 *.tsbuildinfo
 next-env.d.ts
-
-# Duplicate root video working drafts (tracked via /public/video-intro.mp4)
-/Video Project *.mp4
