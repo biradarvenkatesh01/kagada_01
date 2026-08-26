@@ -276,39 +276,39 @@ export default function Home() {
             </div>
 
             {/* Right 4-Stat Grid Column */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-2.5 sm:gap-4">
-              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
-                <div className="font-roboto-mono text-xl sm:text-3xl font-extrabold text-[#8a1c1c]">
+            <div className="lg:col-span-5 grid grid-cols-2 gap-2 sm:gap-4">
+              <div className="p-2.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
+                <div className="font-roboto-mono text-lg sm:text-3xl font-extrabold text-[#8a1c1c]">
                   1000+
                 </div>
-                <div className="font-jakarta text-[11px] sm:text-xs font-semibold text-slate-800 mt-1">
+                <div className="font-jakarta text-[10px] sm:text-xs font-semibold text-slate-800 mt-0.5">
                   Participants Expected
                 </div>
               </div>
 
-              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
-                <div className="font-roboto-mono text-xl sm:text-3xl font-extrabold text-[#8a1c1c]">
+              <div className="p-2.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
+                <div className="font-roboto-mono text-lg sm:text-3xl font-extrabold text-[#8a1c1c]">
                   50+
                 </div>
-                <div className="font-jakarta text-[11px] sm:text-xs font-semibold text-slate-800 mt-1">
+                <div className="font-jakarta text-[10px] sm:text-xs font-semibold text-slate-800 mt-0.5">
                   Colleges Participating
                 </div>
               </div>
 
-              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
-                <div className="font-roboto-mono text-xl sm:text-3xl font-extrabold text-[#8a1c1c]">
+              <div className="p-2.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
+                <div className="font-roboto-mono text-lg sm:text-3xl font-extrabold text-[#8a1c1c]">
                   ₹40K+
                 </div>
-                <div className="font-jakarta text-[11px] sm:text-xs font-semibold text-slate-800 mt-1">
+                <div className="font-jakarta text-[10px] sm:text-xs font-semibold text-slate-800 mt-0.5">
                   Total Prizes
                 </div>
               </div>
 
-              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
-                <div className="font-roboto-mono text-xl sm:text-3xl font-extrabold text-[#8a1c1c]">
+              <div className="p-2.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
+                <div className="font-roboto-mono text-lg sm:text-3xl font-extrabold text-[#8a1c1c]">
                   20
                 </div>
-                <div className="font-jakarta text-[11px] sm:text-xs font-semibold text-slate-800 mt-1">
+                <div className="font-jakarta text-[10px] sm:text-xs font-semibold text-slate-800 mt-0.5">
                   Years of Legacy
                 </div>
               </div>
@@ -669,7 +669,7 @@ export default function Home() {
               showDots={false}
               showArrows={true}
               cardWidth={isMobileScreen ? 330 : 960}
-              cardHeight={isMobileScreen ? 690 : 640}
+              cardHeight={isMobileScreen ? 770 : 640}
               maxVisible={3}
               spreadDeg={0}
               tiltXDeg={0}
