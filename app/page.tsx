@@ -9,6 +9,7 @@ import { Menu, X, ChevronDown, FileText, Image, Cpu, Heart, Sparkles, Trophy, Aw
 import { Hero10 } from "@/components/ui/hero-10";
 import GalleryMarquee from "@/components/ui/gallery-marquee";
 import AftermoviesSection from "@/components/ui/aftermovies-section";
+import SponsorsSection from "@/components/ui/sponsors-section";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -480,6 +481,14 @@ export default function Home() {
             Aftermovies
           </a>
           <a
+            href="#sponsors"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
+            }`}
+          >
+            Sponsors
+          </a>
+          <a
             href="#contact"
             className={`transition-all duration-300 hover:scale-105 ${
               isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
@@ -531,6 +540,9 @@ export default function Home() {
               </a>
               <a href="#videos" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Aftermovies
+              </a>
+              <a href="#sponsors" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+                Sponsors
               </a>
               <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Contact
@@ -870,9 +882,17 @@ export default function Home() {
       {/* SECTION 7: AFTERMOVIES / VIDEOS */}
       <section
         id="videos"
-        className="relative w-full mt-2 sm:mt-4 pt-2 sm:pt-4 pb-24 sm:pb-36 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
+        className="relative w-full mt-2 sm:mt-4 pt-2 sm:pt-4 pb-12 sm:pb-16 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
       >
         <AftermoviesSection />
+      </section>
+
+      {/* SECTION 8: SPONSORS */}
+      <section
+        id="sponsors"
+        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-24 sm:pb-36 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
+      >
+        <SponsorsSection />
       </section>
 
       {/* FULLSCREEN STANDALONE INTRO VIDEO OVERLAY */}
