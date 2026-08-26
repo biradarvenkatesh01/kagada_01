@@ -192,11 +192,11 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className="w-full min-h-[480px] sm:min-h-[760px] md:min-h-[840px] flex flex-col items-center justify-start bg-transparent overflow-hidden py-0 sm:py-2 select-none -mt-4 sm:-mt-8"
+      className="w-full min-h-[580px] sm:min-h-[760px] md:min-h-[840px] flex flex-col items-center justify-start bg-transparent overflow-hidden py-0 sm:py-2 select-none -mt-4 sm:-mt-8"
       ref={containerRef}
       onClick={handleContainerClick}
     >
-      <div className="relative w-full max-w-6xl h-[460px] sm:h-[720px] md:h-[780px] flex items-center justify-center">
+      <div className="relative w-full max-w-6xl h-[560px] sm:h-[720px] md:h-[780px] flex items-center justify-center">
         <div
           className="absolute w-full h-full flex items-center justify-center transform-gpu will-change-transform"
           ref={orbitRef}
@@ -323,10 +323,10 @@ export default function RadialOrbitalTimeline({
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.6, y: 15 }}
                       transition={{ type: "spring", stiffness: 320, damping: 24, mass: 0.6 }}
-                      className="absolute top-16 sm:top-24 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[250] pointer-events-auto transform-gpu will-change-transform"
+                      className="absolute top-6 sm:top-20 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[250] pointer-events-auto transform-gpu will-change-transform"
                     >
                       {/* 🌟 Ultra-Premium White Glassmorphic Card Container */}
-                      <div className="relative bg-white/60 backdrop-blur-2xl border-2 border-white shadow-2xl shadow-black/30 rounded-3xl p-5 sm:p-8 text-slate-900 flex flex-col overflow-hidden">
+                      <div className="relative bg-white/60 backdrop-blur-2xl border-2 border-white shadow-2xl shadow-black/30 rounded-3xl p-4 sm:p-8 max-h-[82vh] sm:max-h-none overflow-y-auto text-slate-900 flex flex-col">
                         
                         {/* Top Floating Glass Close Button */}
                         <button
