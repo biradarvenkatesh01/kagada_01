@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, animate } from "framer-motion";
-import { ArrowRight, Link, Zap } from "lucide-react";
+import { ArrowRight, Link, Zap, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -11,6 +11,8 @@ export interface TimelineItem {
   title: string;
   date: string;
   content: string;
+  description?: string;
+  imageSrc?: string;
   category: string;
   icon: React.ElementType;
   relatedIds: number[];
@@ -190,11 +192,11 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className="w-full min-h-[420px] sm:min-h-[700px] flex flex-col items-center justify-start bg-transparent overflow-hidden py-0 sm:py-2 select-none -mt-4 sm:-mt-8"
+      className="w-full min-h-[480px] sm:min-h-[760px] md:min-h-[840px] flex flex-col items-center justify-start bg-transparent overflow-hidden py-0 sm:py-2 select-none -mt-4 sm:-mt-8"
       ref={containerRef}
       onClick={handleContainerClick}
     >
-      <div className="relative w-full max-w-5xl h-[400px] sm:h-[660px] flex items-center justify-center">
+      <div className="relative w-full max-w-6xl h-[460px] sm:h-[720px] md:h-[780px] flex items-center justify-center">
         <div
           className="absolute w-full h-full flex items-center justify-center transform-gpu will-change-transform"
           ref={orbitRef}
@@ -223,7 +225,8 @@ export default function RadialOrbitalTimeline({
           </div>
 
           {/* 🌌 ORBITING CIRCULAR NODES & INSTANT EXPANDING CARDS */}
-          {timelineData.map((item, index) => {
+          {timelineData.map((index_item, index) => {
+            const item = index_item;
             const position = calculateNodePosition(index, timelineData.length);
             const isExpanded = !!expandedItems[item.id];
             const isRelated = isRelatedToActive(item.id);
@@ -263,11 +266,12 @@ export default function RadialOrbitalTimeline({
                   }}
                 />
 
-                {/* 🔴 CIRCULAR NODE BUTTON WITH SVG ICON */}
+                {/* 🔴 CIRCULAR NODE BUTTON WITH SVG ICON (z-20 so it sits in front of hanging string) */}
                 <motion.div
                   whileHover={{ scale: 1.25 }}
                   whileTap={{ scale: 0.95 }}
                   className={`
+                    relative z-20
                     w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center
                     ${
                       isExpanded
@@ -290,10 +294,10 @@ export default function RadialOrbitalTimeline({
                   <Icon className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
                 </motion.div>
 
-                {/* Node Label Title Below Button (Explicit "Food for" on line 1 and "Cause" on line 2) */}
+                {/* Node Label Title Below Button (z-20 so text sits in front of hanging string) */}
                 <div
                   className={`
-                    absolute top-11 sm:top-14 left-1/2 -translate-x-1/2
+                    absolute top-11 sm:top-14 left-1/2 -translate-x-1/2 z-20
                     max-w-[105px] sm:max-w-none text-center leading-tight whitespace-normal sm:whitespace-nowrap
                     font-roboto-mono text-xs sm:text-base font-extrabold tracking-wide
                     transition-all duration-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]
@@ -302,34 +306,69 @@ export default function RadialOrbitalTimeline({
                 >
                   {item.title === "Food for Cause" ? (
                     <>
-                      Food for Cause
+                      Food for
+                      <br />
+                      Cause
                     </>
                   ) : (
                     item.title
                   )}
                 </div>
 
-                {/* ⚡ INSTANTLY OPENING EXPANDABLE CARD THAT GLIDES TO TOP-CENTER */}
+                {/* ⚡ INSTANTLY OPENING EXPANDABLE GLASS CARD HANGING FROM NODE BUTTON */}
                 <AnimatePresence>
                   {isExpanded && (
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.6, y: -10 }}
+                      initial={{ opacity: 0, scale: 0.6, y: 15 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.6, y: -10 }}
+                      exit={{ opacity: 0, scale: 0.6, y: 15 }}
                       transition={{ type: "spring", stiffness: 320, damping: 24, mass: 0.6 }}
-                      className="absolute top-16 sm:top-24 left-1/2 -translate-x-1/2 w-[85vw] max-w-[340px] sm:w-[480px] md:w-[560px] z-[250] pointer-events-auto transform-gpu will-change-transform"
+                      className="absolute top-16 sm:top-24 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[250] pointer-events-auto transform-gpu will-change-transform"
                     >
-                      {/* Responsive Empty White Glassmorphic Card */}
-                      <div className="relative bg-white/60 backdrop-blur-2xl border-2 border-white shadow-2xl shadow-black/40 rounded-3xl p-5 sm:p-10 min-h-[180px] sm:min-h-[320px] text-slate-900 flex flex-col items-center justify-center overflow-hidden">
+                      {/* 🌟 Ultra-Premium White Glassmorphic Card Container */}
+                      <div className="relative bg-white/60 backdrop-blur-2xl border-2 border-white shadow-2xl shadow-black/30 rounded-3xl p-5 sm:p-8 text-slate-900 flex flex-col overflow-hidden">
                         
-                        {/* Pointer Connector Line */}
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-0.5 h-3 bg-white shadow-sm" />
+                        {/* Top Floating Glass Close Button */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleItem(item.id);
+                          }}
+                          className="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-[#8a1c1c] hover:bg-[#8a1c1c] hover:text-white transition-colors flex items-center justify-center shadow-md"
+                          aria-label="Close card"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
 
-                        {/* Top Card Header in Smooch Sans Font (Centered) */}
-                        <div className="flex items-center justify-center border-b border-[#8a1c1c]/20 pb-2 sm:pb-3 mb-1 w-full">
-                          <h3 className="font-smooch text-3xl sm:text-6xl md:text-7xl font-semibold text-[#8a1c1c] tracking-wide whitespace-nowrap text-center leading-none">
+                        {/* Smooch Sans Title Header (Centered at top in Terracotta Red) */}
+                        <div className="flex items-center justify-center border-b border-[#8a1c1c]/20 pb-3 mb-4 sm:mb-6 w-full">
+                          <h3 className="font-smooch text-4xl sm:text-6xl md:text-7xl font-semibold text-[#8a1c1c] tracking-wide whitespace-nowrap text-center leading-none">
                             {item.title}
                           </h3>
+                        </div>
+
+                        {/* Card Content Layout: 2-Column Horizontal Side-by-Side Grid on PC, Stacked on Mobile */}
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 items-center w-full">
+                          
+                          {/* Image Box (Left Column on PC) */}
+                          {item.imageSrc && (
+                            <div className="md:col-span-5 w-full h-48 sm:h-64 md:h-72 rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100/50 relative group">
+                              <img
+                                src={item.imageSrc}
+                                alt={item.title}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              />
+                            </div>
+                          )}
+
+                          {/* Description Paragraph (Right Column on PC) */}
+                          <div className={`${item.imageSrc ? "md:col-span-7" : "md:col-span-12"} flex flex-col space-y-4 text-left`}>
+                            {(item.description || item.content) && (
+                              <p className="font-jakarta text-xs sm:text-sm md:text-base text-slate-800/90 leading-relaxed font-medium">
+                                {item.description || item.content}
+                              </p>
+                            )}
+                          </div>
                         </div>
 
                       </div>

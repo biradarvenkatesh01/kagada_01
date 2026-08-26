@@ -35,6 +35,9 @@ const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     title: "Poster Presentation",
     date: "Oct 10, 2026",
     content: "Visual research posters, technical infographics, and scientific concept demonstrations.",
+    description:
+      "Poster presentation provides an opportunity to present innovative ideas through technical posters to depict how real-life problems can be solved. Participants are free to choose the domain of their choice and the presentation will be held in hybrid mode. This event encourages creativity, critical thinking, and clear communication of technical concepts. Additionally, participants get a chance to engage with judges and peers, receive valuable feedback, and inspire others with their innovative solutions.",
+    imageSrc: "/poster.jpg",
     category: "Poster",
     icon: Image,
     relatedIds: [1, 3],
@@ -669,7 +672,7 @@ export default function Home() {
       {/* SECTION 3: TRACKS SECTION (RADIAL ORBITAL TIMELINE INTEGRATION) */}
       <section
         id="tracks"
-        className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-2 sm:pt-4 pb-12 scroll-mt-6"
+        className="relative w-full min-h-screen sm:min-h-[850px] md:min-h-[950px] text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-2 sm:pt-4 pb-32 sm:pb-44 scroll-mt-6"
       >
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-start text-center">
           {/* Section Heading in Saman Font and Pure White Color */}
