@@ -7,6 +7,7 @@ import { CardStack, CardStackItem } from "@/components/ui/card-stack";
 import RadialOrbitalTimeline, { TimelineItem } from "@/components/ui/radial-orbital-timeline";
 import { Menu, X, ChevronDown, FileText, Image, Cpu, Heart, Sparkles, Trophy, Award } from "lucide-react";
 import { Hero10 } from "@/components/ui/hero-10";
+import GalleryMarquee from "@/components/ui/gallery-marquee";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -787,7 +788,7 @@ export default function Home() {
       {/* SECTION 5: PREVIOUS WINNERS SECTION */}
       <section
         id="winners"
-        className="relative w-full min-h-[650px] sm:min-h-[800px] md:min-h-[900px] text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-6 sm:pt-10 pb-20 sm:pb-32 scroll-mt-6"
+        className="relative w-full text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-6 sm:pt-10 pb-12 sm:pb-16 scroll-mt-6"
       >
         <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
           {/* Section Heading in Saman Font and Pure White Color */}
@@ -796,14 +797,60 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-2 sm:mb-4 tracking-tight text-center select-none"
+            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none"
           >
             Previous Winners
           </motion.h2>
 
+          {/* Subtitle text */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="font-jakarta font-medium text-white/90 text-base sm:text-lg md:text-xl max-w-2xl text-center drop-shadow-sm mb-4 sm:mb-8"
+          >
+            Honoring innovation, creativity, and excellence that shaped KAGADA’s journey.
+          </motion.p>
+
           {/* 3 Interactive Empty Glassmorphic Cards */}
           <div className="w-full flex items-center justify-center">
             <Hero10 animation="subtle" />
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 6: GALLERY */}
+      <section
+        id="gallery"
+        className="relative w-full min-h-screen mt-6 sm:mt-12 pt-8 sm:pt-12 pb-24 sm:pb-36 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
+      >
+        <div className="relative z-10 w-full flex flex-col items-center">
+          {/* Saman Section Title */}
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none mb-3 sm:mb-4 px-4"
+          >
+            Gallery
+          </motion.h2>
+
+          {/* Subtitle text */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="font-jakarta font-medium text-white/90 text-base sm:text-lg md:text-xl max-w-2xl text-center drop-shadow-sm mb-8 sm:mb-12 px-4"
+          >
+            Capturing the essence of innovation, creativity, and celebration from past KAGADA events.
+          </motion.p>
+
+          {/* Dual-Row Continuous Infinite Parallax Marquee */}
+          <div className="w-full">
+            <GalleryMarquee />
           </div>
         </div>
       </section>
