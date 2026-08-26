@@ -24,6 +24,9 @@ const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     title: "Paper Presentation",
     date: "Oct 10, 2026",
     content: "Present original research papers across CSE, AI/ML, ECE, EEE, Mechanical, Civil & Architecture.",
+    description:
+      "Paper presentation competition gives participants a chance to present their technical research papers in their domain of interest and lay an initial stone to engrave one's knowledge to serve society with their innovative ideas including categories UG/PG. Paper presentation will be in online mode, allowing participants to showcase their work. It also provides an opportunity to receive constructive feedback from experts, enhancing their research and presentation skills.",
+    imageSrc: "/paper.png",
     category: "Paper",
     icon: FileText,
     relatedIds: [2, 3],
@@ -49,6 +52,9 @@ const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     title: "Project Presentation",
     date: "Oct 10, 2026",
     content: "Live working hardware prototypes, software solutions, and innovative engineering models.",
+    description:
+      "Project presentation makes way for students to bring out the inventors in them and their creativity to pure reality through working model demonstrations. This also helps them to display their innovative thoughts on different domains, encouraging problem-solving and critical thinking. The event also helps students gain confidence in presenting their projects, while inspiring peers and fostering a culture of learning and innovation.",
+    imageSrc: "/project.jpg",
     category: "Project",
     icon: Cpu,
     relatedIds: [1, 2],
@@ -60,6 +66,9 @@ const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     title: "Ottige Kaliyona",
     date: "Special Outreach",
     content: "Flagship social initiative empowering government school students through technology education.",
+    description:
+      "Ottige Kaliyona, conducted by IEEE WIE during KAGADA 25, is an initiative to contribute in uprising of the society, inviting students from a government school for technical education and fun activities. The program provides hands-on learning experiences, fostering curiosity and creativity among young minds.",
+    imageSrc: "/ottigekaliona.jpg",
     category: "Social",
     icon: Sparkles,
     relatedIds: [5],
@@ -71,6 +80,9 @@ const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     title: "Food For Cause",
     date: "Charity Drive",
     content: "Charitable food stall project where 100% of profits are donated directly to orphanages.",
+    description:
+      "The event is conducted by students of UVCE where food stalls serve a variety of delicious foods to visitors. The profits collected from these stalls are donated to an NGO, supporting a meaningful cause. Along with enjoying good food, attendees also get to engage with the vibrant student community, making the event both fun and impactful.",
+    imageSrc: "/FoodForCause.JPG",
     category: "Charity",
     icon: Heart,
     relatedIds: [4],
