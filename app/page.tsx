@@ -14,6 +14,7 @@ import FAQSection from "@/components/ui/faq-section";
 import ContactSection from "@/components/ui/contact-section";
 import Footer from "@/components/ui/footer";
 import AIChatCard from "@/components/ui/ai-chat";
+import AuroraBackground from "@/components/ui/aurora-background";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -336,65 +337,8 @@ export default function Home() {
       }`}
     >
       
-      {/* 🌟 ONE SINGLE FIXED CONTINUOUS UNIFIED GPU-OPTIMIZED SMOOTH MOVING GRADIENT BACKGROUND FOR THE ENTIRE WEBSITE */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden transform-gpu">
-        {/* Smooth Animated Moving Gradient Canvas */}
-        <motion.div
-          animate={{
-            backgroundPosition: ["0% 0%", "100% 50%", "50% 100%", "0% 50%", "0% 0%"],
-          }}
-          transition={{
-            duration: 4.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute inset-0 bg-gradient-to-br from-[#2e0707] via-[#5c1212] via-[#8a1c1c] via-[#b34242] to-[#360909] bg-[length:350%_350%] will-change-[background-position]"
-        />
-
-        {/* High-Speed GPU-Accelerated Liquid Glowing Ambient Mesh Orbs */}
-        <motion.div
-          animate={{
-            x: [0, 160, -110, 0],
-            y: [0, -120, 100, 0],
-            scale: [1, 1.35, 0.8, 1],
-          }}
-          transition={{
-            duration: 4.2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-[-10%] left-[-10%] w-[650px] sm:w-[900px] h-[650px] sm:h-[900px] bg-rose-400/35 rounded-full blur-[100px] transform-gpu will-change-transform"
-        />
-
-        <motion.div
-          animate={{
-            x: [0, -170, 120, 0],
-            y: [0, 130, -100, 0],
-            scale: [1, 0.75, 1.3, 1],
-          }}
-          transition={{
-            duration: 5.4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute bottom-[-10%] right-[-10%] w-[700px] sm:w-[950px] h-[700px] sm:h-[950px] bg-[#570a0a]/80 rounded-full blur-[110px] transform-gpu will-change-transform"
-        />
-
-        <motion.div
-          animate={{
-            x: [0, 110, -120, 0],
-            y: [0, -90, 110, 0],
-          }}
-          transition={{
-            duration: 4.8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-[35%] right-[5%] w-[500px] h-[500px] bg-red-800/40 rounded-full blur-[90px] transform-gpu will-change-transform"
-        />
-
-        <div className="absolute inset-0 bg-tech-grid opacity-15" />
-      </div>
+      {/* Atmospheric Aurora Fluid Light Rays Background */}
+      <AuroraBackground />
 
       {/* Floating Glassmorphic Pill Navbar */}
       <motion.header
@@ -585,7 +529,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: isVideoFading ? 1 : 0 }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 bg-white/20 bg-tech-grid pointer-events-none z-[1]"
+          className="absolute inset-0 bg-white/20 pointer-events-none z-[1]"
         />
 
         {/* Hero Title & Subtitle Glass Box Container - Centered Vertically */}

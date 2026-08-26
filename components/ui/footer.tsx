@@ -77,10 +77,10 @@ export function Footer() {
       <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 max-w-6xl mx-auto">
         {/* Left side - Developer credit */}
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left gap-3 sm:gap-4">
-          <div className="flex items-center gap-3 text-base sm:text-lg lg:text-xl font-roboto-mono font-bold text-white drop-shadow-sm">
-            <Code className="text-white stroke-[2.5] w-5 h-5 sm:w-6 sm:h-6" />
-            <span>Developed by</span>
-            <span className="font-extrabold text-white">
+          <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2.5 text-xs sm:text-base lg:text-xl font-roboto-mono font-bold text-white drop-shadow-sm whitespace-nowrap">
+            <Code className="text-white stroke-[2.5] w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+            <span className="shrink-0">Developed by</span>
+            <span className="font-extrabold text-white shrink-0">
               Software Development SIG
             </span>
           </div>

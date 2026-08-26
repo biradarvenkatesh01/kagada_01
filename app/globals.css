@@ -111,13 +111,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Soft White Tech Grid Texture */
-.bg-tech-grid {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
+
 
 /* Ultra Smooth Floating Animation */
 @keyframes float-gentle {
