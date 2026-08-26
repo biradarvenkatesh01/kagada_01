@@ -2,27 +2,50 @@
 
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, Mail, Globe } from 'lucide-react'
+import { Phone, Mail } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
-// Clean Inline Social SVGs
-const SocialIcons = {
-  website: () => <Globe className="w-5 h-5" />,
-  instagram: () => (
-    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-    </svg>
-  ),
-  linkedin: () => (
-    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-    </svg>
-  ),
-  youtube: () => (
-    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-      <path d="M23.498 6.186c-.273-.997-1.056-1.77-2.054-2.043-1.815-.494-9.081-.494-9.081-.494s-7.266 0-9.08.494c-.998.273-1.78 1.046-2.054 2.043-.495 1.832-.495 5.655-.495 5.655s0 3.823.495 5.655c.274.997 1.056 1.77 2.054 2.043 1.814.494 9.08.494 9.08.494s7.266 0 9.08-.494c.999-.273 1.781-1.046 2.055-2.043.494-1.832.494-5.655.494-5.655s0-3.823-.494-5.655zm-13.918 8.847v-6.064l5.882 3.032-5.882 3.032z" />
-    </svg>
-  ),
+interface ContactOrganizer {
+  name: string
+  designation: string
+  phone: string
+  phoneLink: string
+  email: string
+  emailLink: string
 }
+
+const ORGANIZERS: ContactOrganizer[] = [
+  {
+    name: "Jyothika V",
+    designation: "Chairperson, IEEE UVCE",
+    phone: "+91 97318 64358",
+    phoneLink: "tel:+919731864358",
+    email: "jyothikav@ieee.org",
+    emailLink: "mailto:jyothikav@ieee.org",
+  },
+  {
+    name: "Hegde Punith Ramesh",
+    designation: "Vice Chairperson, IEEE UVCE",
+    phone: "+91 72041 20818",
+    phoneLink: "tel:+917204120818",
+    email: "hegdepunithramesh@ieee.org",
+    emailLink: "mailto:hegdepunithramesh@ieee.org",
+  },
+  {
+    name: "Sanjay V Guladakoppa",
+    designation: "Treasurer, IEEE UVCE",
+    phone: "+91 96320 91399",
+    phoneLink: "tel:+919632091399",
+    email: "sanjayvgk@ieee.org",
+    emailLink: "mailto:sanjayvgk@ieee.org",
+  },
+]
+
+const UVCE_MAP_EMBED_URL =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.066487504384!2d77.5852431749875!3d12.969640887353985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba357e62a937a89%3A0x6d90049e0134803!2sUniversity%20Visvesvaraya%20College%20of%20Engineering!5e0!3m2!1sen!2sin!4v1699703473522!5m2!1sen!2sin"
+
+const UVCE_DIRECTIONS_URL =
+  "https://www.google.com/maps/dir/?api=1&destination=University+Visvesvaraya+College+of+Engineering"
 
 export function ContactSection() {
   return (
@@ -46,109 +69,121 @@ export function ContactSection() {
         transition={{ duration: 0.7, delay: 0.15 }}
         className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl"
       >
-        Get in touch with the IEEE UVCE KAGADA 2025 organizing committee.
+        For more queries, reach out to our IEEE UVCE organizers or find your way to KAGADA 2025.
       </motion.p>
 
-      {/* 3 Glassmorphic Contact Grid Cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16"
-      >
-        {/* Card 1: Venue / Address */}
-        <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/30 flex flex-col items-center text-center transition-all duration-500 hover:bg-white/40 hover:border-white group">
-          <div className="w-14 h-14 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/80 flex items-center justify-center text-white mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
-            <MapPin className="w-7 h-7 stroke-[2.2]" />
-          </div>
-          <h3 className="font-outfit font-extrabold text-xl text-white mb-2 tracking-wide">
-            Venue Location
-          </h3>
-          <p className="font-jakarta text-sm font-medium text-white/90 leading-relaxed">
-            University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001
-          </p>
-        </div>
-
-        {/* Card 2: Email & Phone */}
-        <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/30 flex flex-col items-center text-center transition-all duration-500 hover:bg-white/40 hover:border-white group">
-          <div className="w-14 h-14 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/80 flex items-center justify-center text-white mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
-            <Mail className="w-7 h-7 stroke-[2.2]" />
-          </div>
-          <h3 className="font-outfit font-extrabold text-xl text-white mb-2 tracking-wide">
-            Email & Inquiries
-          </h3>
-          <a
-            href="mailto:kagada@ieeeuvce.org"
-            className="font-roboto-mono text-sm font-bold text-white hover:underline drop-shadow-sm mb-1"
+      <div className="w-full flex flex-col gap-12 sm:gap-16 mb-6 sm:mb-10">
+        {/* Organizers Section */}
+        <div className="flex flex-col items-center">
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wider mb-8 text-center drop-shadow-md"
           >
-            kagada@ieeeuvce.org
-          </a>
-          <a
-            href="mailto:chair@ieeeuvce.org"
-            className="font-roboto-mono text-sm font-semibold text-white/90 hover:underline drop-shadow-sm"
+            Organisers
+          </motion.h3>
+
+          {/* 3 Glassmorphic Organizers Cards */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
           >
-            chair@ieeeuvce.org
+            {ORGANIZERS.map((item, idx) => (
+              <div
+                key={`organizer-${idx}`}
+                className={cn(
+                  "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between",
+                  "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+                  "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white group"
+                )}
+              >
+                {/* Glass Reflective Interior Shimmer */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
+
+                <div className="relative z-10 w-full flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <Phone className="w-5 h-5 stroke-[2.2]" />
+                  </div>
+                  <h4 className="font-outfit font-extrabold text-xl text-white tracking-wide mb-1 drop-shadow-sm">
+                    {item.name}
+                  </h4>
+                  <p className="font-roboto-mono text-xs font-bold text-red-200 tracking-wider mb-5 uppercase">
+                    {item.designation}
+                  </p>
+                </div>
+
+                <div className="relative z-10 w-full flex flex-col gap-2 pt-4 border-t border-white/40 font-roboto-mono text-xs sm:text-sm font-semibold">
+                  <a
+                    href={item.phoneLink}
+                    className="flex items-center justify-center gap-2 text-white/95 hover:text-white hover:underline transition-colors drop-shadow-sm"
+                  >
+                    <Phone className="w-4 h-4 text-white/80 shrink-0" />
+                    <span>{item.phone}</span>
+                  </a>
+                  <a
+                    href={item.emailLink}
+                    className="flex items-center justify-center gap-2 text-white/95 hover:text-white hover:underline transition-colors drop-shadow-sm truncate max-w-full"
+                  >
+                    <Mail className="w-4 h-4 text-white/80 shrink-0" />
+                    <span className="truncate">{item.email}</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Embedded Map Section Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className={cn(
+            "relative w-full max-w-4xl mx-auto overflow-hidden rounded-3xl p-6 sm:p-8 flex flex-col items-center",
+            "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35"
+          )}
+        >
+          {/* Glass Reflective Interior Shimmer */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
+
+          {/* Perfectly Centered Map Header */}
+          <div className="relative z-10 flex flex-col items-center text-center w-full mb-6">
+            <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wide drop-shadow-sm">
+              Find Us Here
+            </h3>
+            <p className="font-roboto-mono text-xs font-semibold text-white/80 tracking-wider uppercase mt-1">
+              UVCE, KR Circle, Bengaluru
+            </p>
+          </div>
+
+          {/* Embedded Google Map Frame */}
+          <div className="relative z-10 w-full h-[320px] sm:h-[400px] rounded-2xl overflow-hidden border-2 border-white/80 shadow-xl mb-6 bg-black/20">
+            <iframe
+              src={UVCE_MAP_EMBED_URL}
+              className="w-full h-full border-0"
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="University Visvesvaraya College of Engineering Location Map"
+            />
+          </div>
+
+          {/* Clean Get Directions Action Button */}
+          <a
+            href={UVCE_DIRECTIONS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative z-10 w-full sm:w-auto bg-white text-[#8a1c1c] font-outfit font-black text-base py-3.5 px-8 rounded-2xl shadow-xl hover:bg-white/90 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center uppercase tracking-wider"
+          >
+            Get Directions
           </a>
-        </div>
-
-        {/* Card 3: Social Connections */}
-        <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/30 flex flex-col items-center text-center transition-all duration-500 hover:bg-white/40 hover:border-white group">
-          <div className="w-14 h-14 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/80 flex items-center justify-center text-white mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
-            <Globe className="w-7 h-7 stroke-[2.2]" />
-          </div>
-          <h3 className="font-outfit font-extrabold text-xl text-white mb-4 tracking-wide">
-            Connect With Us
-          </h3>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://ieeeuvce.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-white/30 border border-white/80 text-white hover:bg-white/50 hover:scale-110 transition-all shadow-md"
-              title="Official Website"
-            >
-              <SocialIcons.website />
-            </a>
-            <a
-              href="https://www.instagram.com/ieeeuvce/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-white/30 border border-white/80 text-white hover:bg-white/50 hover:scale-110 transition-all shadow-md"
-              title="Instagram"
-            >
-              <SocialIcons.instagram />
-            </a>
-            <a
-              href="https://www.linkedin.com/company/ieee-uvce/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-white/30 border border-white/80 text-white hover:bg-white/50 hover:scale-110 transition-all shadow-md"
-              title="LinkedIn"
-            >
-              <SocialIcons.linkedin />
-            </a>
-            <a
-              href="https://www.youtube.com/@ieeeuvce"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-white/30 border border-white/80 text-white hover:bg-white/50 hover:scale-110 transition-all shadow-md"
-              title="YouTube"
-            >
-              <SocialIcons.youtube />
-            </a>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Footer Bottom Bar */}
-      <div className="w-full pt-8 border-t border-white/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-        <p className="font-roboto-mono text-xs font-semibold text-white/90 tracking-wider">
-          © 2025 IEEE UVCE. All Rights Reserved.
-        </p>
-        <p className="font-outfit text-xs font-bold text-white/80 tracking-widest uppercase">
-          KAGADA 2025 • National Student Conference
-        </p>
+        </motion.div>
       </div>
     </footer>
   )

@@ -12,6 +12,7 @@ import AftermoviesSection from "@/components/ui/aftermovies-section";
 import SponsorsSection from "@/components/ui/sponsors-section";
 import FAQSection from "@/components/ui/faq-section";
 import ContactSection from "@/components/ui/contact-section";
+import Footer from "@/components/ui/footer";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -758,46 +759,46 @@ export default function Home() {
       {/* SECTION 4: PRIZE POOL SECTION */}
       <section
         id="prizes"
-        className="relative w-full text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-0 sm:pt-2 pb-16 sm:pb-24 -mt-16 sm:-mt-28 scroll-mt-6"
+        className="relative w-full text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-0 sm:pt-2 pb-12 sm:pb-16 -mt-16 sm:-mt-24 scroll-mt-6"
       >
-        <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center">
+        <div className="relative z-10 w-full max-w-xl md:max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
           {/* Section Heading in Saman Font and Pure White Color */}
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-8 sm:mb-12 tracking-tight text-center select-none"
+            className="font-saman text-4xl sm:text-6xl md:text-7xl text-white drop-shadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none"
           >
             Prize Pool
           </motion.h2>
 
-          <div className="w-full flex flex-col items-center gap-6 sm:gap-8">
+          <div className="w-full flex flex-col items-center gap-5 sm:gap-6">
             {/* Box 1: Total Prize Money Translucent Glass Card */}
             <motion.div
               initial={{ opacity: 0, y: 30, scale: 0.96 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: "spring", stiffness: 120, damping: 22 }}
-              className="relative w-full bg-white/40 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/20 rounded-3xl p-6 sm:p-12 text-white flex flex-col items-center text-center overflow-hidden transform-gpu"
+              className="relative w-full bg-white/40 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/20 rounded-3xl p-5 sm:p-7 md:p-8 text-white flex flex-col items-center text-center overflow-hidden transform-gpu"
             >
               {/* Circular Trophy SVG Icon Glass Badge */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/40 backdrop-blur-md border-2 border-white/80 text-white flex items-center justify-center mb-4 sm:mb-6 shadow-lg shadow-black/10">
-                <Trophy className="w-8 h-8 sm:w-10 sm:h-10 stroke-[2.2] drop-shadow-sm" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/40 backdrop-blur-md border-2 border-white/80 text-white flex items-center justify-center mb-3 sm:mb-4 shadow-lg shadow-black/10">
+                <Trophy className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.2] drop-shadow-sm" />
               </div>
 
               {/* Card Title in Smooch Sans */}
-              <h3 className="font-smooch text-4xl sm:text-6xl md:text-7xl font-semibold text-white tracking-wide text-center leading-none mb-2 sm:mb-3 drop-shadow-md">
+              <h3 className="font-smooch text-3xl sm:text-4xl md:text-5xl font-semibold text-white tracking-wide text-center leading-none mb-1.5 sm:mb-2 drop-shadow-md">
                 Total Prize Money
               </h3>
 
               {/* Prize Amount in Roboto Mono */}
-              <div className="font-roboto-mono font-black text-5xl sm:text-7xl md:text-8xl text-white tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)] mb-4 sm:mb-6">
+              <div className="font-roboto-mono font-black text-4xl sm:text-5xl md:text-6xl text-white tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)] mb-3 sm:mb-4">
                 ₹40,000
               </div>
 
               {/* Description Paragraph */}
-              <p className="font-jakarta text-xs sm:text-base md:text-lg text-white/95 leading-relaxed font-medium max-w-2xl mx-auto drop-shadow-sm">
+              <p className="font-jakarta text-xs sm:text-sm text-white/95 leading-relaxed font-medium max-w-lg mx-auto drop-shadow-sm">
                 Exciting rewards await at <strong className="font-extrabold text-white">KAGADA 2026</strong>! A total prize pool of <strong className="font-extrabold text-white">₹40,000</strong> will be shared across <strong className="font-extrabold text-white">Paper, Poster, and Project presentations</strong>, celebrating creativity, technical excellence and impactful ideas.
               </p>
             </motion.div>
@@ -808,13 +809,13 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: "spring", stiffness: 120, damping: 22, delay: 0.15 }}
-              className="relative w-full bg-white/40 backdrop-blur-2xl border-2 border-white/80 shadow-xl shadow-black/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 text-white flex items-center justify-center gap-3 sm:gap-4 text-center overflow-hidden transform-gpu"
+              className="relative w-full max-w-lg mx-auto bg-white/40 backdrop-blur-2xl border-2 border-white/80 shadow-xl shadow-black/20 rounded-2xl sm:rounded-3xl py-3 px-5 sm:py-3.5 sm:px-6 text-white flex items-center justify-center gap-2.5 sm:gap-3 text-center overflow-hidden transform-gpu"
             >
               {/* Award SVG Icon */}
-              <Award className="w-6 h-6 sm:w-7 sm:h-7 text-white shrink-0 drop-shadow-sm" />
+              <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0 drop-shadow-sm" />
 
               {/* Banner Text */}
-              <p className="font-jakarta text-xs sm:text-base md:text-lg text-white font-semibold leading-snug drop-shadow-sm">
+              <p className="font-jakarta text-xs sm:text-sm text-white font-semibold leading-snug drop-shadow-sm">
                 Every participant will be awarded a <strong className="font-black text-white">Certificate of Participation</strong>.
               </p>
             </motion.div>
@@ -919,10 +920,13 @@ export default function Home() {
       {/* SECTION 10: CONTACT US */}
       <section
         id="contact"
-        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-20 sm:pb-28 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
+        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-12 sm:pb-16 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
       >
         <ContactSection />
       </section>
+
+      {/* FOOTER */}
+      <Footer />
 
       {/* FULLSCREEN STANDALONE INTRO VIDEO OVERLAY */}
       <AnimatePresence>
