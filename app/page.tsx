@@ -6,6 +6,7 @@ import FlipClock from "@/components/ui/flip-clock";
 import { CardStack, CardStackItem } from "@/components/ui/card-stack";
 import RadialOrbitalTimeline, { TimelineItem } from "@/components/ui/radial-orbital-timeline";
 import { Menu, X, ChevronDown, FileText, Image, Cpu, Heart, Sparkles, Trophy, Award } from "lucide-react";
+import { Hero10 } from "@/components/ui/hero-10";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -779,6 +780,30 @@ export default function Home() {
                 Every participant will be awarded a <strong className="font-black text-white">Certificate of Participation</strong>.
               </p>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5: PREVIOUS WINNERS SECTION */}
+      <section
+        id="winners"
+        className="relative w-full min-h-[650px] sm:min-h-[800px] md:min-h-[900px] text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-6 sm:pt-10 pb-20 sm:pb-32 scroll-mt-6"
+      >
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
+          {/* Section Heading in Saman Font and Pure White Color */}
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-2 sm:mb-4 tracking-tight text-center select-none"
+          >
+            Previous Winners
+          </motion.h2>
+
+          {/* 3 Interactive Empty Glassmorphic Cards */}
+          <div className="w-full flex items-center justify-center">
+            <Hero10 animation="subtle" />
           </div>
         </div>
       </section>

@@ -39,7 +39,7 @@ export default function SmoothScroll({
         const elem = document.querySelector(anchor.hash);
         if (elem) {
           e.preventDefault();
-          lenis.scrollTo(elem as HTMLElement, { offset: -20 });
+          lenis.scrollTo(elem as HTMLElement, { offset: -80 });
         }
       }
     };
