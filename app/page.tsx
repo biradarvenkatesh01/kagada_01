@@ -10,6 +10,8 @@ import { Hero10 } from "@/components/ui/hero-10";
 import GalleryMarquee from "@/components/ui/gallery-marquee";
 import AftermoviesSection from "@/components/ui/aftermovies-section";
 import SponsorsSection from "@/components/ui/sponsors-section";
+import FAQSection from "@/components/ui/faq-section";
+import ContactSection from "@/components/ui/contact-section";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -489,6 +491,14 @@ export default function Home() {
             Sponsors
           </a>
           <a
+            href="#faq"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
+            }`}
+          >
+            FAQ
+          </a>
+          <a
             href="#contact"
             className={`transition-all duration-300 hover:scale-105 ${
               isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
@@ -543,6 +553,9 @@ export default function Home() {
               </a>
               <a href="#sponsors" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Sponsors
+              </a>
+              <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+                FAQ
               </a>
               <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Contact
@@ -890,9 +903,25 @@ export default function Home() {
       {/* SECTION 8: SPONSORS */}
       <section
         id="sponsors"
-        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-24 sm:pb-36 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
+        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-12 sm:pb-16 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
       >
         <SponsorsSection />
+      </section>
+
+      {/* SECTION 9: FREQUENTLY ASKED QUESTIONS (FAQ) */}
+      <section
+        id="faq"
+        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-12 sm:pb-16 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
+      >
+        <FAQSection />
+      </section>
+
+      {/* SECTION 10: CONTACT US */}
+      <section
+        id="contact"
+        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-20 sm:pb-28 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
+      >
+        <ContactSection />
       </section>
 
       {/* FULLSCREEN STANDALONE INTRO VIDEO OVERLAY */}
