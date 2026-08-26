@@ -1,0 +1,245 @@
+'use client'
+
+import * as React from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+interface AftermovieItem {
+  id: string
+  title: string
+  year: string
+  duration: string
+  videoSrc: string
+  description: string
+}
+
+const AFTERMOVIES: AftermovieItem[] = [
+  {
+    id: "kagada-2024",
+    title: "KAGADA 2024",
+    year: "2024",
+    duration: "1:30",
+    videoSrc: "/kagada2024.mp4",
+    description: "Relive the excitement and energy of KAGADA 2024 with highlights from all events, competitions, and celebrations.",
+  },
+  {
+    id: "kagada-2025",
+    title: "KAGADA 2025",
+    year: "2025",
+    duration: "1:35",
+    videoSrc: "/kagada2025.mp4",
+    description: "Relive the excitement and energy of KAGADA 2025 with highlights from all events, competitions, and celebrations.",
+  },
+]
+
+export function AftermoviesSection() {
+  const [activeModalVideo, setActiveModalVideo] = useState<AftermovieItem | null>(null)
+  const modalVideoRef = useRef<HTMLVideoElement>(null)
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [isMuted, setIsMuted] = useState(false)
+
+  const handleOpenModal = (movie: AftermovieItem) => {
+    setActiveModalVideo(movie)
+    setIsPlaying(true)
+    setIsMuted(false)
+  }
+
+  const handleCloseModal = () => {
+    setActiveModalVideo(null)
+  }
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseModal()
+      }
+    }
+    if (activeModalVideo) {
+      window.addEventListener('keydown', handleKeyDown)
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [activeModalVideo])
+
+  const togglePlayPause = () => {
+    if (modalVideoRef.current) {
+      if (isPlaying) {
+        modalVideoRef.current.pause()
+      } else {
+        modalVideoRef.current.play()
+      }
+      setIsPlaying(!isPlaying)
+    }
+  }
+
+  const toggleMute = () => {
+    if (modalVideoRef.current) {
+      modalVideoRef.current.muted = !isMuted
+      setIsMuted(!isMuted)
+    }
+  }
+
+  return (
+    <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center select-none px-4">
+      {/* Main Title: KAGADA - From the previous years! */}
+      <motion.h2
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="font-saman text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4"
+      >
+        KAGADA - <span className="text-white">From the previous years!</span>
+      </motion.h2>
+
+      {/* Subtitle */}
+      <motion.p
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, delay: 0.15 }}
+        className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl"
+      >
+        Experience the magic of KAGADA through our cinematic after movies.
+      </motion.p>
+
+      {/* 2 Video Aftermovie Glassmorphic Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 w-full">
+        {AFTERMOVIES.map((movie, idx) => (
+          <motion.div
+            key={movie.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: idx * 0.2 }}
+            className={cn(
+              "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
+              "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+              "transform-gpu hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-all duration-500"
+            )}
+          >
+            {/* Glass Interior Reflective Shimmer */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none" />
+
+            {/* Video Thumbnail Preview Window with Glowing Glass Play Button */}
+            <div
+              onClick={() => handleOpenModal(movie)}
+              className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-white/80 bg-black/40 group cursor-pointer z-10 shadow-xl"
+            >
+              {/* HTML5 Video Preview */}
+              <video
+                src={movie.videoSrc}
+                muted
+                playsInline
+                loop
+                autoPlay
+                className="w-full h-full object-cover transform-gpu transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+              />
+
+              {/* Dark Ambient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:bg-black/30 transition-colors" />
+
+              {/* Center Glowing Glass Play Button Badge */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-2xl border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300 transform-gpu">
+                  <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white text-white translate-x-0.5 drop-shadow-md" />
+                </div>
+              </div>
+
+              {/* Bottom Right Duration Badge */}
+              <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 backdrop-blur-xl text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
+                {movie.duration}
+              </div>
+            </div>
+
+            {/* Card Content Footer inside Translucent Glass Badge */}
+            <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/60 shadow-inner">
+              <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-white tracking-wide leading-none drop-shadow-md">
+                {movie.title}
+              </h3>
+              <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 leading-relaxed drop-shadow-sm">
+                {movie.description}
+              </p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* FULLSCREEN INTERACTIVE CINEMATIC VIDEO MODAL */}
+      <AnimatePresence>
+        {activeModalVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-8"
+            onClick={handleCloseModal}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl rounded-3xl overflow-hidden border-2 border-white/80 bg-[#3d0b0b]/95 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col"
+            >
+              {/* Modal Header Bar */}
+              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/30 bg-[#8a1c1c]/50 backdrop-blur-md">
+                <h3 className="font-saman text-2xl sm:text-4xl text-white tracking-wide">
+                  {activeModalVideo.title} <span className="font-roboto-mono text-sm text-white/80">({activeModalVideo.year} Aftermovie)</span>
+                </h3>
+                <button
+                  type="button"
+                  onClick={handleCloseModal}
+                  className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/40"
+                  aria-label="Close video"
+                >
+                  <X className="w-5 h-5 stroke-[2.5]" />
+                </button>
+              </div>
+
+              {/* Main Video Viewport */}
+              <div className="relative w-full aspect-video bg-black flex items-center justify-center">
+                <video
+                  ref={modalVideoRef}
+                  src={activeModalVideo.videoSrc}
+                  autoPlay
+                  controls
+                  className="w-full h-full object-contain"
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                />
+              </div>
+
+              {/* Modal Footer Controls Bar */}
+              <div className="p-4 sm:p-6 bg-[#8a1c1c]/50 backdrop-blur-md border-t border-white/30 flex items-center justify-between">
+                <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 max-w-2xl">
+                  {activeModalVideo.description}
+                </p>
+                <div className="flex items-center gap-3 shrink-0">
+                  <button
+                    type="button"
+                    onClick={togglePlayPause}
+                    className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-white border border-white/40 transition-colors cursor-pointer"
+                  >
+                    {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-white" />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={toggleMute}
+                    className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-white border border-white/40 transition-colors cursor-pointer"
+                  >
+                    {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+export default AftermoviesSection

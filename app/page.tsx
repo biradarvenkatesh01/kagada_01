@@ -8,6 +8,7 @@ import RadialOrbitalTimeline, { TimelineItem } from "@/components/ui/radial-orbi
 import { Menu, X, ChevronDown, FileText, Image, Cpu, Heart, Sparkles, Trophy, Award } from "lucide-react";
 import { Hero10 } from "@/components/ui/hero-10";
 import GalleryMarquee from "@/components/ui/gallery-marquee";
+import AftermoviesSection from "@/components/ui/aftermovies-section";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -471,6 +472,14 @@ export default function Home() {
             Gallery
           </a>
           <a
+            href="#videos"
+            className={`transition-all duration-300 hover:scale-105 ${
+              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
+            }`}
+          >
+            Aftermovies
+          </a>
+          <a
             href="#contact"
             className={`transition-all duration-300 hover:scale-105 ${
               isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
@@ -519,6 +528,9 @@ export default function Home() {
               </a>
               <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Gallery
+              </a>
+              <a href="#videos" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+                Aftermovies
               </a>
               <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 Contact
@@ -823,7 +835,7 @@ export default function Home() {
       {/* SECTION 6: GALLERY */}
       <section
         id="gallery"
-        className="relative w-full min-h-screen mt-6 sm:mt-12 pt-8 sm:pt-12 pb-24 sm:pb-36 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
+        className="relative w-full min-h-screen mt-6 sm:mt-12 pt-8 sm:pt-12 pb-6 sm:pb-10 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
       >
         <div className="relative z-10 w-full flex flex-col items-center">
           {/* Saman Section Title */}
@@ -853,6 +865,14 @@ export default function Home() {
             <GalleryMarquee />
           </div>
         </div>
+      </section>
+
+      {/* SECTION 7: AFTERMOVIES / VIDEOS */}
+      <section
+        id="videos"
+        className="relative w-full mt-2 sm:mt-4 pt-2 sm:pt-4 pb-24 sm:pb-36 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
+      >
+        <AftermoviesSection />
       </section>
 
       {/* FULLSCREEN STANDALONE INTRO VIDEO OVERLAY */}
