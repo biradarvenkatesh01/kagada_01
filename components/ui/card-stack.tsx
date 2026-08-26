@@ -201,7 +201,7 @@ export function CardStack<T extends CardStackItem>({
       {/* Stage */}
       <div
         className="relative w-full flex items-center justify-center transition-all duration-500"
-        style={{ height: Math.max(760, cardHeight + 100) }}
+        style={{ height: cardHeight + (cardWidth < 500 ? 40 : 100) }}
         tabIndex={0}
         onKeyDown={onKeyDown}
       >
@@ -268,7 +268,7 @@ export function CardStack<T extends CardStackItem>({
                 <motion.div
                   key={item.id}
                   className={cn(
-                    "absolute rounded-3xl border-2 border-white shadow-2xl backdrop-blur-2xl bg-white/50",
+                    "absolute rounded-3xl border-2 border-white shadow-2xl backdrop-blur-xl bg-white/92",
                     "select-none p-6 sm:p-10 flex flex-col justify-between overflow-hidden transform-gpu",
                     isActive
                       ? "cursor-grab active:cursor-grabbing ring-1 ring-white/80 shadow-black/20"

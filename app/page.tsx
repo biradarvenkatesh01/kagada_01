@@ -205,7 +205,7 @@ export default function Home() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="w-full p-3 sm:p-5 rounded-2xl bg-white/40 backdrop-blur-md border border-white/60 text-center shadow-sm">
+              <div className="w-full p-3 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm">
                 <div className="font-roboto-mono text-2xl sm:text-4xl font-extrabold text-[#8a1c1c]">
                   100+
                 </div>
@@ -277,7 +277,7 @@ export default function Home() {
 
             {/* Right 4-Stat Grid Column */}
             <div className="lg:col-span-5 grid grid-cols-2 gap-2.5 sm:gap-4">
-              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/40 backdrop-blur-md border border-white/60 text-center shadow-sm flex flex-col items-center justify-center">
+              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
                 <div className="font-roboto-mono text-xl sm:text-3xl font-extrabold text-[#8a1c1c]">
                   1000+
                 </div>
@@ -286,7 +286,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/40 backdrop-blur-md border border-white/60 text-center shadow-sm flex flex-col items-center justify-center">
+              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
                 <div className="font-roboto-mono text-xl sm:text-3xl font-extrabold text-[#8a1c1c]">
                   50+
                 </div>
@@ -295,7 +295,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/40 backdrop-blur-md border border-white/60 text-center shadow-sm flex flex-col items-center justify-center">
+              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
                 <div className="font-roboto-mono text-xl sm:text-3xl font-extrabold text-[#8a1c1c]">
                   ₹40K+
                 </div>
@@ -304,7 +304,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/40 backdrop-blur-md border border-white/60 text-center shadow-sm flex flex-col items-center justify-center">
+              <div className="p-3.5 sm:p-5 rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
                 <div className="font-roboto-mono text-xl sm:text-3xl font-extrabold text-[#8a1c1c]">
                   20
                 </div>
@@ -668,8 +668,8 @@ export default function Home() {
               pauseOnHover
               showDots={false}
               showArrows={true}
-              cardWidth={isMobileScreen ? 340 : 960}
-              cardHeight={isMobileScreen ? 740 : 640}
+              cardWidth={isMobileScreen ? 330 : 960}
+              cardHeight={isMobileScreen ? 690 : 640}
               maxVisible={3}
               spreadDeg={0}
               tiltXDeg={0}

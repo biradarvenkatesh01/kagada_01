@@ -326,7 +326,7 @@ export default function RadialOrbitalTimeline({
                       className="absolute top-2 sm:top-16 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[250] pointer-events-auto transform-gpu will-change-transform"
                     >
                       {/* 🌟 Ultra-Premium White Glassmorphic Card Container */}
-                      <div className="relative bg-white/70 backdrop-blur-2xl border-2 border-white shadow-2xl shadow-black/30 rounded-3xl p-5 sm:p-8 text-slate-900 flex flex-col">
+                      <div className="relative bg-white/95 backdrop-blur-xl border-2 border-white shadow-2xl shadow-black/30 rounded-3xl p-5 sm:p-8 text-slate-900 flex flex-col">
                         
                         {/* Top Floating Glass Close Button */}
                         <button
