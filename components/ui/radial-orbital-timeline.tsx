@@ -192,7 +192,7 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className="w-full min-h-[580px] sm:min-h-[760px] md:min-h-[840px] flex flex-col items-center justify-start bg-transparent overflow-hidden py-0 sm:py-2 select-none -mt-4 sm:-mt-8"
+      className="w-full min-h-[580px] sm:min-h-[760px] md:min-h-[840px] flex flex-col items-center justify-start bg-transparent overflow-visible py-0 sm:py-2 select-none -mt-4 sm:-mt-8"
       ref={containerRef}
       onClick={handleContainerClick}
     >
@@ -323,10 +323,10 @@ export default function RadialOrbitalTimeline({
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.6, y: 15 }}
                       transition={{ type: "spring", stiffness: 320, damping: 24, mass: 0.6 }}
-                      className="absolute top-6 sm:top-20 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[250] pointer-events-auto transform-gpu will-change-transform"
+                      className="absolute top-2 sm:top-16 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[250] pointer-events-auto transform-gpu will-change-transform"
                     >
                       {/* 🌟 Ultra-Premium White Glassmorphic Card Container */}
-                      <div className="relative bg-white/60 backdrop-blur-2xl border-2 border-white shadow-2xl shadow-black/30 rounded-3xl p-4 sm:p-8 max-h-[82vh] sm:max-h-none overflow-y-auto text-slate-900 flex flex-col">
+                      <div className="relative bg-white/70 backdrop-blur-2xl border-2 border-white shadow-2xl shadow-black/30 rounded-3xl p-5 sm:p-8 text-slate-900 flex flex-col">
                         
                         {/* Top Floating Glass Close Button */}
                         <button
@@ -334,25 +334,25 @@ export default function RadialOrbitalTimeline({
                             e.stopPropagation();
                             toggleItem(item.id);
                           }}
-                          className="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-[#8a1c1c] hover:bg-[#8a1c1c] hover:text-white transition-colors flex items-center justify-center shadow-md"
+                          className="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-white/80 backdrop-blur-md border border-white/90 text-[#8a1c1c] hover:bg-[#8a1c1c] hover:text-white transition-colors flex items-center justify-center shadow-md"
                           aria-label="Close card"
                         >
                           <X className="w-4 h-4" />
                         </button>
 
                         {/* Smooch Sans Title Header (Centered at top in Terracotta Red) */}
-                        <div className="flex items-center justify-center border-b border-[#8a1c1c]/20 pb-3 mb-4 sm:mb-6 w-full">
+                        <div className="flex items-center justify-center border-b border-[#8a1c1c]/20 pb-2.5 mb-3 sm:mb-6 w-full">
                           <h3 className="font-smooch text-4xl sm:text-6xl md:text-7xl font-semibold text-[#8a1c1c] tracking-wide whitespace-nowrap text-center leading-none">
                             {item.title}
                           </h3>
                         </div>
 
                         {/* Card Content Layout: 2-Column Horizontal Side-by-Side Grid on PC, Stacked on Mobile */}
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 items-center w-full">
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-center w-full">
                           
                           {/* Image Box (Left Column on PC) */}
                           {item.imageSrc && (
-                            <div className="md:col-span-5 w-full h-48 sm:h-64 md:h-72 rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100/50 relative group">
+                            <div className="md:col-span-5 w-full h-40 sm:h-64 md:h-72 rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100/50 relative group">
                               <img
                                 src={item.imageSrc}
                                 alt={item.title}
