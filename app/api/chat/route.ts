@@ -1,0 +1,167 @@
+import { NextResponse } from "next/server";
+
+const KAGADA_SYSTEM_PROMPT = `You are the official AI Assistant for KAGADA 2026 — the 22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE at University Visvesvaraya College of Engineering (UVCE), KR Circle, Bengaluru.
+
+YOUR STRICT DIRECTIVES:
+1. You MUST ONLY answer questions related to KAGADA 2026, IEEE UVCE, presentation tracks, event dates, registration, venue, total prize pool, organizers, and humanitarian activities.
+2. If asked about unrelated topics (e.g., general coding, weather, sports, politics), politely decline and state that you are specifically tuned to assist with KAGADA 2026.
+3. Be helpful, concise, and professional. Do NOT use emojis in your responses.
+
+KAGADA 2026 COMPREHENSIVE KNOWLEDGE BASE:
+- Event Name: KAGADA 2026 (22nd Annual National-Level Technical Student Conference)
+- Provisional Event Date: 10th October, 2026
+- Venue: University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001
+- Organizer: IEEE UVCE (Institute of Electrical and Electronics Engineers - UVCE Student Branch)
+- Total Prize Pool: Overall ₹40,000 cash prizes distributed across Paper, Poster, and Project presentations (provisional).
+- Certificates: Every participant receives an official Certificate of Participation.
+
+PRESENTATION TRACKS (3 Main Category Tracks):
+1. Paper Presentation: Participants present original technical research papers across CSE, AI/ML, ECE, EEE, Mechanical, Civil & Architecture (UG/PG categories). Conducted in hybrid/presentation format with feedback from domain experts.
+2. Poster Presentation: Participants showcase creative technical posters summarizing innovative concepts and societal solutions.
+3. Project Presentation: Live technical working prototype model presentation demonstrating hardware/software innovation to solve real-world problems.
+
+HUMANITARIAN ACTIVITIES:
+- Ottige Kaliyona: Social initiative focused on education and community empowerment.
+- Food for Cause: Social responsibility initiative driving hunger relief and food distribution.
+
+OFFICIAL ORGANIZERS & CONTACTS:
+- Jyothika V (Chairperson, IEEE UVCE): +91 97318 64358 | jyothikav@ieee.org
+- Hegde Punith Ramesh (Vice Chairperson, IEEE UVCE): +91 72041 20818 | hegdepunithramesh@ieee.org
+- Sanjay V Guladakoppa (Treasurer, IEEE UVCE): +91 96320 91399 | sanjayvgk@ieee.org
+- Official Website: https://ieeeuvce.org
+- Email Inquiries: kagada@ieeeuvce.org / chair@ieeeuvce.org
+
+DEVELOPED BY:
+- Software Development Secretaries: Shravya Hegde & Venkatesh Biradar.`;
+
+export async function POST(req: Request) {
+  try {
+    const { messages } = await req.json();
+    const userMessage = messages[messages.length - 1]?.content || "";
+
+    const groqKey = process.env.GROQ_API_KEY;
+    const openRouterKey = process.env.OPENROUTER_API_KEY;
+
+    const fullMessages = [
+      { role: "system", content: KAGADA_SYSTEM_PROMPT },
+      ...(messages || []),
+    ];
+
+    // Priority 1: Groq API
+    if (groqKey && groqKey !== "your_groq_api_key_here") {
+      const availableModels = [
+        "openai/gpt-oss-20b",
+        "qwen/qwen3.8-27b",
+        "qwen/qwen3.6-27b",
+        "groq/compound-mini",
+        "openai/gpt-oss-120b",
+        "groq/compound",
+      ];
+
+      for (const targetModel of availableModels) {
+        try {
+          const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${groqKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: targetModel,
+              messages: fullMessages,
+              temperature: 0.5,
+              max_tokens: 500,
+            }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            const reply = data?.choices?.[0]?.message?.content || "I couldn't retrieve a response.";
+            const modelUsed = `Groq API (${data?.model || targetModel})`;
+
+            // Log to Vercel & Localhost Server Console
+            console.log("--------------------------------------------------");
+            console.log(`🤖 [KAGADA AI] Model Used  : ${modelUsed}`);
+            console.log(`❓ [KAGADA AI] Question    : "${userMessage}"`);
+            console.log(`💡 [KAGADA AI] AI Response : "${reply}"`);
+            console.log("--------------------------------------------------");
+
+            return NextResponse.json({ reply, model: modelUsed });
+          } else {
+            const errText = await response.text();
+            console.warn(`Groq model ${targetModel} failed (${response.status}): ${errText}`);
+          }
+        } catch (e) {
+          console.warn(`Attempt with ${targetModel} failed:`, e);
+        }
+      }
+    }
+
+    // Priority 2: OpenRouter API
+    if (openRouterKey && openRouterKey !== "your_openrouter_api_key_here") {
+      const targetModel = "nvidia/nemotron-3.5-lightning:free";
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${openRouterKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: targetModel,
+          messages: fullMessages,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const reply = data?.choices?.[0]?.message?.content || "I couldn't retrieve a response.";
+        const modelUsed = `OpenRouter API (${data?.model || targetModel})`;
+
+        // Log to Vercel & Localhost Server Console
+        console.log("--------------------------------------------------");
+        console.log(`🤖 [KAGADA AI] Model Used  : ${modelUsed}`);
+        console.log(`❓ [KAGADA AI] Question    : "${userMessage}"`);
+        console.log(`💡 [KAGADA AI] AI Response : "${reply}"`);
+        console.log("--------------------------------------------------");
+
+        return NextResponse.json({ reply, model: modelUsed });
+      } else {
+        const errText = await response.text();
+        console.error("OpenRouter API Error Status:", response.status, errText);
+      }
+    }
+
+    // Fallback: Local Instant KAGADA 2026 Knowledge Engine
+    const lastUserMsgLower = userMessage.toLowerCase();
+    let localReply = "KAGADA 2026 is the 22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE on 10th October, 2026 at UVCE KR Circle, Bengaluru. We have 3 tracks: Paper, Poster, and Project presentations with an overall ₹40,000 total prize pool.";
+
+    if (lastUserMsgLower.includes("when") || lastUserMsgLower.includes("date") || lastUserMsgLower.includes("time")) {
+      localReply = "The provisional date for KAGADA 2026 is 10th October, 2026 at UVCE, KR Circle, Bengaluru.";
+    } else if (lastUserMsgLower.includes("where") || lastUserMsgLower.includes("venue") || lastUserMsgLower.includes("location") || lastUserMsgLower.includes("map")) {
+      localReply = "KAGADA 2026 will take place at University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001.";
+    } else if (lastUserMsgLower.includes("prize") || lastUserMsgLower.includes("money") || lastUserMsgLower.includes("reward") || lastUserMsgLower.includes("cash")) {
+      localReply = "KAGADA 2026 features an overall Total Prize Pool of ₹40,000 cash prizes distributed across Paper, Poster, and Project presentation tracks. All participants receive a Certificate of Participation.";
+    } else if (lastUserMsgLower.includes("track") || lastUserMsgLower.includes("event") || lastUserMsgLower.includes("paper") || lastUserMsgLower.includes("poster") || lastUserMsgLower.includes("project")) {
+      localReply = "KAGADA 2026 has 3 main presentation tracks:\n1. Paper Presentation\n2. Poster Presentation\n3. Project Presentation (Live Prototype Demo)\nPlus 2 humanitarian initiatives: Ottige Kaliyona & Food for Cause.";
+    } else if (lastUserMsgLower.includes("contact") || lastUserMsgLower.includes("chair") || lastUserMsgLower.includes("organizer") || lastUserMsgLower.includes("phone") || lastUserMsgLower.includes("email")) {
+      localReply = "IEEE UVCE KAGADA 2026 Organizers:\n• Jyothika V (Chairperson): +91 97318 64358 | jyothikav@ieee.org\n• Hegde Punith Ramesh (Vice Chairperson): +91 72041 20818 | hegdepunithramesh@ieee.org\n• Sanjay V Guladakoppa (Treasurer): +91 96320 91399 | sanjayvgk@ieee.org";
+    }
+
+    const modelUsed = "Local KAGADA Knowledge Engine (Fallback)";
+
+    // Log to Vercel & Localhost Server Console
+    console.log("--------------------------------------------------");
+    console.log(`🤖 [KAGADA AI] Model Used  : ${modelUsed}`);
+    console.log(`❓ [KAGADA AI] Question    : "${userMessage}"`);
+    console.log(`💡 [KAGADA AI] AI Response : "${localReply}"`);
+    console.log("--------------------------------------------------");
+
+    return NextResponse.json({ reply: localReply, model: modelUsed });
+  } catch (error) {
+    console.error("AI Chat Route Error:", error);
+    return NextResponse.json(
+      { reply: "KAGADA 2026 is provisionally scheduled for 10th October 2026 at UVCE, KR Circle, Bengaluru. Feel free to ask about tracks, prize pool, or venue details.", model: "Error Fallback" },
+      { status: 200 }
+    );
+  }
+}

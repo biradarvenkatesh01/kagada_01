@@ -14,13 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kagada2025.ieeeuvce.org"),
-  title: "KAGADA 2025 | Annual National-Level Technical Student Conference",
+  metadataBase: new URL("https://kagada2026.ieeeuvce.org"),
+  title: "KAGADA 2026 | Annual National-Level Technical Student Conference",
   description:
-    "Official website for KAGADA 2025 - 21st Annual National-Level Technical Student Conference & Competition organized by IEEE UVCE at University Visvesvaraya College of Engineering, Bengaluru.",
+    "Official website for KAGADA 2026 - 22nd Annual National-Level Technical Student Conference & Competition organized by IEEE UVCE at University Visvesvaraya College of Engineering, Bengaluru.",
   keywords: [
     "KAGADA",
-    "KAGADA 2025",
+    "KAGADA 2026",
     "IEEE UVCE",
     "UVCE Conference",
     "Paper Presentation",
@@ -30,17 +30,17 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "IEEE UVCE Software Development SIG" }],
   openGraph: {
-    title: "KAGADA 2025 | IEEE UVCE National Technical Conference",
+    title: "KAGADA 2026 | IEEE UVCE National Technical Conference",
     description:
-      "Annual National-Level Technical Student Conference conducted by IEEE UVCE on 8th November, 2025 at UVCE, KR Circle.",
-    url: "https://kagada2025.ieeeuvce.org",
-    siteName: "KAGADA 2025",
+      "Annual National-Level Technical Student Conference conducted by IEEE UVCE on 10th October, 2026 at UVCE, KR Circle.",
+    url: "https://kagada2026.ieeeuvce.org",
+    siteName: "KAGADA 2026",
     images: [
       {
         url: "/logo1.png",
         width: 1200,
         height: 630,
-        alt: "KAGADA 2025 Banner",
+        alt: "KAGADA 2026 Banner",
       },
     ],
     locale: "en_US",

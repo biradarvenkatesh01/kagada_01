@@ -13,6 +13,7 @@ import SponsorsSection from "@/components/ui/sponsors-section";
 import FAQSection from "@/components/ui/faq-section";
 import ContactSection from "@/components/ui/contact-section";
 import Footer from "@/components/ui/footer";
+import AIChatCard from "@/components/ui/ai-chat";
 
 // Target Event Date: 10th October 2026
 const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00");
@@ -959,6 +960,9 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* KAGADA 2025 AI ASSISTANT CHATBOT */}
+      <AIChatCard isVisible={isVideoHidden} />
     </main>
   );
 }
