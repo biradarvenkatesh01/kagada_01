@@ -354,7 +354,7 @@ export default function Home() {
           damping: 20,
           delay: 0.1,
         }}
-        className="fixed top-6 left-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full bg-white/85 backdrop-blur-2xl border-2 border-white/90 shadow-2xl shadow-black/20 px-4 sm:px-8 flex items-center justify-between pointer-events-auto transform-gpu will-change-transform"
+        className="fixed top-6 left-1/2 z-[999] w-[92%] max-w-7xl h-16 rounded-full bg-white/85 backdrop-blur-2xl border-2 border-white/90 shadow-2xl shadow-black/20 px-4 sm:px-8 flex items-center justify-between pointer-events-auto transform-gpu will-change-transform"
       >
         {/* Left Brand Logo (Constant Kagada Red Filter) */}
         <a href="#hero" className="flex items-center gap-2 select-none py-0">
