@@ -2,20 +2,20 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
 import TracksSection from "@/components/sections/TracksSection";
 import PrizePoolSection from "@/components/sections/PrizePoolSection";
 import WinnersSection from "@/components/sections/WinnersSection";
 import GallerySection from "@/components/sections/GallerySection";
-import AftermoviesSection from "@/components/ui/aftermovies-section";
-import SponsorsSection from "@/components/ui/sponsors-section";
-import FAQSection from "@/components/ui/faq-section";
-import ContactSection from "@/components/ui/contact-section";
-import Footer from "@/components/ui/footer";
-import AIChatCard from "@/components/ui/ai-chat";
-import AuroraBackground from "@/components/ui/aurora-background";
+import VideosSection from "@/components/sections/VideosSection";
+import SponsorsSection from "@/components/sections/SponsorsSection";
+import FAQSection from "@/components/sections/FAQSection";
+import ContactSection from "@/components/sections/ContactSection";
 import IntroVideoOverlay from "@/components/sections/IntroVideoOverlay";
+import AuroraBackground from "@/components/ui/aurora-background";
+import AIChatCard from "@/components/features/AIChatCard";
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,7 +23,7 @@ export default function Home() {
   const [isVideoHidden, setIsVideoHidden] = useState(false);
 
   useEffect(() => {
-    // Lock document scroll while video intro is active
+    // Lock document scroll while intro video is playing
     if (!isVideoHidden) {
       document.body.style.overflow = "hidden";
     } else {
@@ -77,10 +77,10 @@ export default function Home() {
         !isVideoHidden ? "h-screen min-h-[100dvh] overflow-hidden" : "min-h-screen"
       }`}
     >
-      {/* Background Layer */}
+      {/* Dynamic Background Atmosphere */}
       <AuroraBackground />
 
-      {/* Floating Navbar */}
+      {/* Floating Pill Header Navigation */}
       <Navbar isVideoFading={isVideoFading} />
 
       {/* SECTION 1: HERO */}
@@ -98,40 +98,20 @@ export default function Home() {
       {/* SECTION 5: PREVIOUS WINNERS */}
       <WinnersSection />
 
-      {/* SECTION 6: GALLERY */}
+      {/* SECTION 6: GALLERY MARQUEE */}
       <GallerySection />
 
       {/* SECTION 7: AFTERMOVIES */}
-      <section
-        id="videos"
-        className="relative w-full mt-2 sm:mt-4 pt-2 sm:pt-4 pb-12 sm:pb-16 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
-      >
-        <AftermoviesSection />
-      </section>
+      <VideosSection />
 
       {/* SECTION 8: SPONSORS */}
-      <section
-        id="sponsors"
-        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-12 sm:pb-16 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
-      >
-        <SponsorsSection />
-      </section>
+      <SponsorsSection />
 
-      {/* SECTION 9: FAQ */}
-      <section
-        id="faq"
-        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-12 sm:pb-16 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
-      >
-        <FAQSection />
-      </section>
+      {/* SECTION 9: FAQ ACCORDION */}
+      <FAQSection />
 
-      {/* SECTION 10: CONTACT */}
-      <section
-        id="contact"
-        className="relative w-full mt-4 sm:mt-8 pt-4 sm:pt-8 pb-12 sm:pb-16 overflow-hidden z-20 flex flex-col items-center justify-start scroll-mt-24"
-      >
-        <ContactSection />
-      </section>
+      {/* SECTION 10: CONTACT ORGANIZERS & MAP */}
+      <ContactSection />
 
       {/* FOOTER */}
       <Footer />
@@ -146,7 +126,7 @@ export default function Home() {
         videoRef={videoRef}
       />
 
-      {/* AI CHATBOT CARD */}
+      {/* AI CHATBOT ASSISTANT */}
       <AIChatCard isVisible={isVideoHidden} />
     </main>
   );

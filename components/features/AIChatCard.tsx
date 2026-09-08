@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Bot, X, Sparkles } from "lucide-react";
+import { Send, Bot, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AIChatCardProps {

@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -34,7 +34,7 @@ const AFTERMOVIES: AftermovieItem[] = [
   },
 ]
 
-export function AftermoviesSection() {
+export const VideosSection = memo(function VideosSection() {
   const [activeModalVideo, setActiveModalVideo] = useState<AftermovieItem | null>(null)
   const modalVideoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(true)
@@ -81,7 +81,7 @@ export function AftermoviesSection() {
   }
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center select-none px-4">
+    <section id="videos" className="relative w-full max-w-6xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Title: KAGADA - From the previous years! */}
       <motion.h2
         initial={{ opacity: 0, y: 25 }}
@@ -238,8 +238,8 @@ export function AftermoviesSection() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </section>
   )
-}
+});
 
-export default AftermoviesSection
+export default VideosSection;

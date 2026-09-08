@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -15,7 +15,7 @@ const FAQS: FAQItem[] = [
   {
     question: "What is KAGADA and when is it?",
     answer:
-      "KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 8th November, 2025.",
+      "KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026.",
   },
   {
     question: "What can I present in KAGADA?",
@@ -23,7 +23,7 @@ const FAQS: FAQItem[] = [
       "KAGADA has 3 tracks in it viz., Paper Presentation, Poster Presentation and Project Presentation. You can choose any of these tracks.",
   },
   {
-    question: "Why should I participate in KAGADA 2025?",
+    question: "Why should I participate in KAGADA 2026?",
     answer:
       "As KAGADA is a national level technical student conference, one gets a national level platform to exhibit their innovative ideas and thoughts. This also provides an opportunity to showcase their presentation skills.",
   },
@@ -33,20 +33,20 @@ const FAQS: FAQItem[] = [
       "There is no specific domain for presentation but the sole purpose is to come up with ideas for the betterment of society.",
   },
   {
-    question: "Where will KAGADA 2025 take place?",
-    answer: "KAGADA 2025 will take place at UVCE, KR Circle.",
+    question: "Where will KAGADA 2026 take place?",
+    answer: "KAGADA 2026 will take place at UVCE, KR Circle.",
   },
   {
     question: "Can one participate in more than one track?",
     answer: "Yes, participants can take part in more than one track.",
   },
   {
-    question: "What all events are there in KAGADA 2025?",
+    question: "What all events are there in KAGADA 2026?",
     answer: `KAGADA consists of two category events.\n\nThe Presentation tracks:\n• Paper Presentation\n• Poster Presentation\n• Project Presentation\n\nHumanitarian activities:\n• Ottige Kaliyona\n• Food for Cause`,
   },
 ]
 
-export function FAQSection() {
+export const FAQSection = memo(function FAQSection() {
   // All FAQs closed initially
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
@@ -55,7 +55,7 @@ export function FAQSection() {
   }
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-6 sm:py-10">
+    <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-6 sm:py-10 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 25 }}
@@ -141,8 +141,8 @@ export function FAQSection() {
           )
         })}
       </motion.div>
-    </div>
+    </section>
   )
-}
+});
 
-export default FAQSection
+export default FAQSection;

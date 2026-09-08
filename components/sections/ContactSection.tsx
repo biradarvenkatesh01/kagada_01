@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { memo } from 'react'
 import { motion } from 'framer-motion'
 import { User, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -59,9 +60,9 @@ const UVCE_MAP_EMBED_URL =
 const UVCE_DIRECTIONS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=University+Visvesvaraya+College+of+Engineering"
 
-export function ContactSection() {
+export const ContactSection = memo(function ContactSection() {
   return (
-    <footer className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12">
+    <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 25 }}
@@ -81,7 +82,7 @@ export function ContactSection() {
         transition={{ duration: 0.7, delay: 0.15 }}
         className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl"
       >
-        For more queries, reach out to our IEEE UVCE organizers or find your way to KAGADA 2025.
+        For more queries, reach out to our IEEE UVCE organizers or find your way to KAGADA 2026.
       </motion.p>
 
       <div className="w-full flex flex-col gap-12 sm:gap-16 mb-6 sm:mb-10">
@@ -202,8 +203,8 @@ export function ContactSection() {
           </a>
         </motion.div>
       </div>
-    </footer>
+    </section>
   )
-}
+});
 
-export default ContactSection
+export default ContactSection;

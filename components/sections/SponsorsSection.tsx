@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { memo } from 'react'
 import { motion } from 'framer-motion'
 import { Marquee } from '@/components/ui/marquee'
 import { cn } from '@/lib/utils'
@@ -28,9 +29,9 @@ const SPONSORS_ROW_2: SponsorItem[] = [
   { id: 1, src: "/spo1.png", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org", invertWhite: true },
 ]
 
-export function SponsorsSection() {
+export const SponsorsSection = memo(function SponsorsSection() {
   return (
-    <div className="relative w-full flex flex-col items-center select-none py-6 sm:py-10">
+    <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-6 sm:py-10 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 25 }}
@@ -116,8 +117,8 @@ export function SponsorsSection() {
           ))}
         </Marquee>
       </div>
-    </div>
+    </section>
   )
-}
+});
 
-export default SponsorsSection
+export default SponsorsSection;
