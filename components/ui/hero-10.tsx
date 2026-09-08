@@ -112,7 +112,7 @@ function InteractiveCardFan() {
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="w-full flex md:grid md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-4 px-4 py-4 md:mx-0 md:px-0 md:py-0 select-none scrollbar-none"
+        className="w-full flex md:grid md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-4 px-4 pr-8 py-4 md:mx-0 md:px-0 md:py-0 select-none scrollbar-none"
       >
         {cards.map((card, i) => (
           <motion.div

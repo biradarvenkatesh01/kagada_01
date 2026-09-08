@@ -333,7 +333,7 @@ export default function Home() {
   return (
     <main
       className={`relative w-full bg-transparent overflow-x-hidden ${
-        !isVideoHidden ? "h-screen overflow-hidden" : "min-h-screen"
+        !isVideoHidden ? "h-screen min-h-[100dvh] overflow-hidden" : "min-h-screen"
       }`}
     >
       
@@ -476,8 +476,8 @@ export default function Home() {
       </motion.header>
 
       {/* SECTION 1: HERO SECTION */}
-      <section id="hero" className="relative w-full h-screen overflow-hidden flex items-center justify-center z-10">
-        
+      <section id="hero" className="relative w-full h-screen min-h-[100dvh] overflow-hidden flex items-center justify-center z-10">
+
         {/* Hero Background Photo Layer with Soft Blend */}
         <motion.img
           src="/hero-bg.jpg"
@@ -485,7 +485,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: isVideoFading ? 0.85 : 0 }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 w-full h-full object-cover z-0 transform-gpu mix-blend-overlay"
+          className="absolute inset-0 w-full h-full min-h-[100dvh] object-cover z-0 transform-gpu mix-blend-overlay"
         />
 
         {/* Textured White Overlay Screen over Hero Photo */}
@@ -735,9 +735,9 @@ export default function Home() {
       {/* SECTION 5: PREVIOUS WINNERS SECTION */}
       <section
         id="winners"
-        className="relative w-full text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-6 sm:pt-10 pb-12 sm:pb-16 scroll-mt-6"
+        className="relative w-full text-slate-900 flex flex-col items-center justify-start z-10 px-0 sm:px-4 pt-6 sm:pt-10 pb-12 sm:pb-16 scroll-mt-6"
       >
-        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4 sm:px-0">
           {/* Section Heading in Saman Font and Pure White Color */}
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
@@ -851,7 +851,7 @@ export default function Home() {
             exit={{ opacity: 0 }}
             transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
             onClick={handleTapToUnmute}
-            className="fixed inset-0 z-50 bg-black cursor-pointer transform-gpu pointer-events-auto"
+            className="fixed inset-0 w-screen h-screen min-h-[100dvh] z-[9999] bg-black cursor-pointer transform-gpu pointer-events-auto overflow-hidden"
           >
             <video
               ref={videoRef}
@@ -860,7 +860,7 @@ export default function Home() {
               playsInline
               onTimeUpdate={handleTimeUpdate}
               onEnded={handleVideoEnded}
-              className="w-full h-full object-cover"
+              className="w-full h-full min-h-[100dvh] object-cover"
             />
 
             {/* Soft White Screen Overlay over Video (18% Opacity) */}
