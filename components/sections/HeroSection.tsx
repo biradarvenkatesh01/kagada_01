@@ -23,12 +23,25 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
         className="absolute inset-0 w-full h-full min-h-[100dvh] object-cover z-0 transform-gpu mix-blend-overlay"
       />
 
-      {/* Textured White Overlay Screen over Hero Photo */}
+      {/* ⚪ DIM WHITE BASE OVERLAY LAYER (Between Hero Photo & Pixel Overlay) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: isVideoFading ? 1 : 0 }}
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 bg-white/20 pointer-events-none z-[1]"
+        className="absolute inset-0 bg-white/25 sm:bg-white/20 backdrop-blur-[1.5px] pointer-events-none z-[1]"
+      />
+
+      {/* 👾 STATIC TRANSLUCENT WHITE PIXEL GRID OVERLAY */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isVideoFading ? 1 : 0 }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute inset-0 w-full h-full min-h-[100dvh] pointer-events-none z-[2] opacity-40 sm:opacity-25"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Crect x='0' y='0' width='3' height='3' fill='rgba(255,255,255,0.35)'/%3E%3C/svg%3E")`,
+          backgroundSize: "18px 18px",
+          backgroundRepeat: "repeat",
+        }}
       />
 
       {/* Hero Title & Subtitle Glass Box Container */}

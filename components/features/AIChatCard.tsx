@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -20,7 +20,30 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [bottomOffset, setBottomOffset] = useState(20);
   const chatBottomRef = useRef<HTMLDivElement>(null);
+
+  // Footer-aware positioning
+  const handleFooterScroll = useCallback(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const footerRect = footer.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const defaultBottom = 20;
+    const margin = 16;
+    if (footerRect.top < viewportHeight) {
+      const newBottom = viewportHeight - footerRect.top + margin;
+      setBottomOffset(Math.max(newBottom, defaultBottom));
+    } else {
+      setBottomOffset(defaultBottom);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleFooterScroll, { passive: true });
+    handleFooterScroll();
+    return () => window.removeEventListener("scroll", handleFooterScroll);
+  }, [handleFooterScroll]);
 
   useEffect(() => {
     if (isOpen) {
@@ -88,10 +111,11 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         whileTap={{ scale: 0.92 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className={cn(
-          "fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-2xl select-none group",
+          "fixed right-5 sm:right-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-2xl select-none group",
           "bg-[#8a1c1c]/90 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] transition-all duration-300",
           isOpen && "bg-[#8a1c1c] border-white ring-4 ring-white/30"
         )}
+        style={{ bottom: `${bottomOffset}px` }}
         aria-label="Toggle AI Chatbot"
       >
         {isOpen ? (
@@ -110,10 +134,11 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             exit={{ opacity: 0, y: 20, scale: 0.94, transition: { duration: 0.15 } }}
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
             className={cn(
-              "fixed bottom-22 right-4 sm:bottom-28 sm:right-7 z-50 w-[calc(100vw-2rem)] sm:w-[370px] h-[500px] max-h-[calc(100vh-8rem)] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
+              "fixed right-4 sm:right-7 z-50 w-[calc(100vw-2rem)] sm:w-[370px] h-[500px] max-h-[calc(100vh-8rem)] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
               "bg-[#8a1c1c]/80 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/80",
               className
             )}
+            style={{ bottom: `${bottomOffset + 72}px` }}
           >
             {/* Subtle Interior Reflection Shimmer */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/20 pointer-events-none rounded-3xl" />
