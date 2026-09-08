@@ -40,7 +40,7 @@ export const SponsorsSection = memo(function SponsorsSection() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4"
       >
-        Our <span className="text-white">Sponsors</span>
+        Our <span className="text-amber-400 drop-shadow-md">Sponsors</span>
       </motion.h2>
 
       {/* Subtitle */}

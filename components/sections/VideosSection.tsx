@@ -90,7 +90,7 @@ export const VideosSection = memo(function VideosSection() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="font-saman text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4"
       >
-        KAGADA - <span className="text-white">From the previous years!</span>
+        KAGADA - <span className="text-amber-400 drop-shadow-md">From the previous years!</span>
       </motion.h2>
 
       {/* Subtitle */}

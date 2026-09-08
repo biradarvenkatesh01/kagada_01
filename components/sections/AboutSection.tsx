@@ -176,7 +176,7 @@ export const AboutSection = memo(function AboutSection() {
           transition={{ duration: 0.7 }}
           className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-12 sm:mb-16 md:mb-20 tracking-tight text-center select-none"
         >
-          About Us
+          About <span className="text-amber-400 drop-shadow-md">Us</span>
         </motion.h2>
 
         {/* 3D Circular Orbit Card Carousel with 3 Rich Cards */}

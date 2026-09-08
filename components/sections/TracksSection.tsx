@@ -29,7 +29,7 @@ export const TracksSection = memo(function TracksSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="font-roboto-mono text-xs sm:text-sm md:text-base text-white font-bold tracking-wider sm:tracking-widest uppercase mb-2 sm:mb-4 drop-shadow-md select-none"
+          className="font-roboto-mono text-xs sm:text-sm md:text-base text-amber-400 font-bold tracking-wider sm:tracking-widest uppercase mb-2 sm:mb-4 drop-shadow-md select-none"
         >
           Click on any track icon to explore details
         </motion.p>

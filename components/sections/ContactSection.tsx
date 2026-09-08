@@ -71,7 +71,7 @@ export const ContactSection = memo(function ContactSection() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4"
       >
-        Contact <span className="text-white">Us</span>
+        Contact <span className="text-amber-400 drop-shadow-md">Us</span>
       </motion.h2>
 
       {/* Subtitle */}

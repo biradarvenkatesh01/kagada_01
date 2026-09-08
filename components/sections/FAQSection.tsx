@@ -64,7 +64,7 @@ export const FAQSection = memo(function FAQSection() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4"
       >
-        Frequently Asked <span className="text-white">Questions</span>
+        Frequently Asked <span className="text-amber-400 drop-shadow-md">Questions</span>
       </motion.h2>
 
       {/* Subtitle */}
@@ -84,7 +84,7 @@ export const FAQSection = memo(function FAQSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="w-full flex flex-col gap-4 sm:gap-5"
+        className="w-full flex flex-col gap-2.5 sm:gap-3"
       >
         {FAQS.map((faq, idx) => {
           const isOpen = openIndex === idx
@@ -94,28 +94,28 @@ export const FAQSection = memo(function FAQSection() {
               key={`faq-${idx}`}
               onClick={() => toggleAccordion(idx)}
               className={cn(
-                "relative overflow-hidden cursor-pointer rounded-3xl p-5 sm:p-6 border-2 transition-all duration-500 transform-gpu",
-                "bg-white/30 backdrop-blur-2xl border-white/80 shadow-2xl shadow-black/30",
+                "relative overflow-hidden cursor-pointer rounded-2xl py-3 px-4 sm:py-3.5 sm:px-5 border-2 transition-all duration-300 transform-gpu",
+                "bg-white/30 backdrop-blur-2xl border-white/80 shadow-lg shadow-black/20",
                 "hover:bg-white/45 hover:border-white",
-                isOpen && "bg-white/40 border-white shadow-black/40"
+                isOpen && "bg-white/40 border-white shadow-black/30"
               )}
             >
               {/* Glass Reflective Interior Shimmer */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-2xl" />
 
               {/* Accordion Header Row */}
-              <div className="relative z-10 flex items-center justify-between gap-4">
-                <h3 className="font-outfit font-extrabold text-lg sm:text-xl text-white tracking-wide leading-snug drop-shadow-sm text-left">
+              <div className="relative z-10 flex items-center justify-between gap-3">
+                <h3 className="font-outfit font-bold text-base sm:text-lg text-white tracking-wide leading-snug drop-shadow-sm text-left">
                   {faq.question}
                 </h3>
                 <div
                   className={cn(
-                    "w-9 h-9 sm:w-10 sm:h-10 rounded-full shrink-0 flex items-center justify-center",
-                    "bg-white/30 backdrop-blur-xl border border-white/80 text-white shadow-md transition-transform duration-300",
+                    "w-7 h-7 sm:w-8 sm:h-8 rounded-full shrink-0 flex items-center justify-center",
+                    "bg-white/30 backdrop-blur-xl border border-white/80 text-white shadow-sm transition-transform duration-300",
                     isOpen && "rotate-180 bg-white/50 border-white"
                   )}
                 >
-                  <ChevronDown className="w-5 h-5 stroke-[2.5]" />
+                  <ChevronDown className="w-4 h-4 stroke-[2.5]" />
                 </div>
               </div>
 
@@ -129,8 +129,8 @@ export const FAQSection = memo(function FAQSection() {
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                     className="relative z-10 overflow-hidden"
                   >
-                    <div className="pt-4 sm:pt-5 border-t border-white/40 mt-4 sm:mt-5 text-left">
-                      <p className="font-jakarta text-sm sm:text-base font-medium text-white/95 leading-relaxed drop-shadow-sm whitespace-pre-line">
+                    <div className="pt-3 sm:pt-3.5 border-t border-white/40 mt-3 sm:mt-3.5 text-left">
+                      <p className="font-jakarta text-xs sm:text-sm md:text-base font-medium text-white/95 leading-relaxed drop-shadow-sm whitespace-pre-line">
                         {faq.answer}
                       </p>
                     </div>

@@ -19,7 +19,7 @@ export const PrizePoolSection = memo(function PrizePoolSection() {
           transition={{ duration: 0.7 }}
           className="font-saman text-4xl sm:text-6xl md:text-7xl text-white drop-shadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none"
         >
-          Prize Pool
+          Prize <span className="text-amber-400 drop-shadow-md">Pool</span>
         </motion.h2>
 
         <div className="w-full flex flex-col items-center gap-5 sm:gap-6">

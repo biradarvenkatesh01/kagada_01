@@ -108,7 +108,7 @@ export const GallerySection = memo(function GallerySection() {
           transition={{ duration: 0.7 }}
           className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none"
         >
-          Event Gallery
+          Event <span className="text-amber-400 drop-shadow-md">Gallery</span>
         </motion.h2>
 
         <motion.p

@@ -16,6 +16,7 @@ import ContactSection from "@/components/sections/ContactSection";
 import IntroVideoOverlay from "@/components/sections/IntroVideoOverlay";
 import AuroraBackground from "@/components/ui/aurora-background";
 import AIChatCard from "@/components/features/AIChatCard";
+import BackToTop from "@/components/ui/back-to-top";
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -128,6 +129,9 @@ export default function Home() {
 
       {/* AI CHATBOT ASSISTANT */}
       <AIChatCard isVisible={isVideoHidden} />
+
+      {/* FLOATING BACK TO TOP BUTTON */}
+      <BackToTop />
     </main>
   );
 }
