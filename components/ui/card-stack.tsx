@@ -188,6 +188,31 @@ export function CardStack<T extends CardStackItem>({
     next,
   ]);
 
+  const touchStartX = React.useRef<number | null>(null);
+  const touchStartY = React.useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+
+    // Trigger swipe if horizontal displacement exceeds vertical and is at least 40px
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) >= 40) {
+      if (deltaX > 0) {
+        prev();
+      } else {
+        next();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   if (!len) return null;
 
   const activeItem = items[active]!;
@@ -200,10 +225,12 @@ export function CardStack<T extends CardStackItem>({
     >
       {/* Stage */}
       <div
-        className="relative w-full flex items-center justify-center transition-all duration-500"
+        className="relative w-full flex items-center justify-center transition-all duration-500 touch-pan-y"
         style={{ height: `calc(min(90vh, ${cardHeight}px) + ${cardWidth < 500 ? 40 : 80}px)` }}
         tabIndex={0}
         onKeyDown={onKeyDown}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         {/* background wash / spotlight */}
         <div
@@ -248,6 +275,7 @@ export function CardStack<T extends CardStackItem>({
                     drag: "x" as const,
                     dragConstraints: { left: 0, right: 0 },
                     dragElastic: 0.2,
+                    dragSnapToOrigin: true,
                     onDragEnd: (
                       _e: any,
                       info: { offset: { x: number }; velocity: { x: number } },
@@ -255,11 +283,11 @@ export function CardStack<T extends CardStackItem>({
                       if (reduceMotion) return;
                       const travel = info.offset.x;
                       const v = info.velocity.x;
-                      const threshold = Math.min(160, cardWidth * 0.22);
+                      const threshold = Math.min(50, cardWidth * 0.15);
 
                       // swipe logic
-                      if (travel > threshold || v > 650) prev();
-                      else if (travel < -threshold || v < -650) next();
+                      if (travel > threshold || v > 200) prev();
+                      else if (travel < -threshold || v < -200) next();
                     },
                   }
                 : {};
