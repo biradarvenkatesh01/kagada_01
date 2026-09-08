@@ -332,7 +332,7 @@ export default function Home() {
 
   return (
     <main
-      className={`relative w-full bg-black overflow-x-hidden ${
+      className={`relative w-full bg-transparent overflow-x-hidden ${
         !isVideoHidden ? "h-screen overflow-hidden" : "min-h-screen"
       }`}
     >
@@ -354,118 +354,86 @@ export default function Home() {
           damping: 20,
           delay: 0.1,
         }}
-        className={`fixed top-6 left-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full backdrop-blur-xl border transition-all duration-500 shadow-xl px-4 sm:px-8 flex items-center justify-between pointer-events-auto transform-gpu will-change-transform ${
-          isScrolledPastHero
-            ? "bg-white/15 border-white/40 shadow-black/20"
-            : "bg-white/30 border-white/70 shadow-black/10"
-        }`}
+        className="fixed top-6 left-1/2 z-30 w-[92%] max-w-7xl h-16 rounded-full bg-white/85 backdrop-blur-2xl border-2 border-white/90 shadow-2xl shadow-black/20 px-4 sm:px-8 flex items-center justify-between pointer-events-auto transform-gpu will-change-transform"
       >
-        {/* Left Brand Logo (handle.png: Red in Hero, White in Gradient) */}
+        {/* Left Brand Logo (Constant Kagada Red Filter) */}
         <a href="#hero" className="flex items-center gap-2 select-none py-0">
           <img
             src="/handle.png"
             alt="IEEE UVCE Kagada Logo"
-            className="h-11 sm:h-14 w-auto object-contain transition-all duration-500 hover:scale-105"
-            style={
-              isScrolledPastHero
-                ? { filter: "brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.4))" }
-                : { filter: "invert(18%) sepia(85%) saturate(3000%) hue-rotate(345deg) brightness(85%) contrast(95%)" }
-            }
+            className="h-11 sm:h-14 w-auto object-contain transition-all duration-300 hover:scale-105"
+            style={{ filter: "invert(18%) sepia(85%) saturate(3000%) hue-rotate(345deg) brightness(85%) contrast(95%)" }}
           />
         </a>
 
-        {/* Desktop Navigation Links (Red in Hero, White in Gradient) */}
-        <nav
-          className={`hidden md:flex items-center gap-6 lg:gap-8 font-roboto-mono text-sm font-bold tracking-wider transition-colors duration-500 ${
-            isScrolledPastHero ? "text-white" : "text-[#8a1c1c]/90"
-          }`}
-        >
+        {/* Desktop Navigation Links (Constant Kagada Red Color Throughout Movement) */}
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8 font-roboto-mono text-sm font-bold tracking-wider text-[#8a1c1c]">
           <a
             href="#about"
-            className={`transition-all duration-300 hover:scale-105 ${
-              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
-            }`}
+            className="transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
           >
             About Us
           </a>
           <a
             href="#tracks"
-            className={`transition-all duration-300 hover:scale-105 ${
-              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
-            }`}
+            className="transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
           >
             Tracks
           </a>
           <a
             href="#prizes"
-            className={`transition-all duration-300 hover:scale-105 ${
-              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
-            }`}
+            className="transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
           >
             Prize Pool
           </a>
           <a
             href="#winners"
-            className={`transition-all duration-300 hover:scale-105 ${
-              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
-            }`}
+            className="transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
           >
             Winners
           </a>
           <a
             href="#gallery"
-            className={`transition-all duration-300 hover:scale-105 ${
-              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
-            }`}
+            className="transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
           >
             Gallery
           </a>
           <a
             href="#videos"
-            className={`transition-all duration-300 hover:scale-105 ${
-              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
-            }`}
+            className="transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
           >
             Aftermovies
           </a>
           <a
             href="#sponsors"
-            className={`transition-all duration-300 hover:scale-105 ${
-              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
-            }`}
+            className="transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
           >
             Sponsors
           </a>
           <a
             href="#faq"
-            className={`transition-all duration-300 hover:scale-105 ${
-              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
-            }`}
+            className="transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
           >
             FAQ
           </a>
           <a
             href="#contact"
-            className={`transition-all duration-300 hover:scale-105 ${
-              isScrolledPastHero ? "hover:text-white/80 drop-shadow-sm" : "hover:text-[#8a1c1c]"
-            }`}
+            className="transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
           >
             Contact
           </a>
         </nav>
 
-        {/* Mobile Toggle Button (Red in Hero, White in Gradient) */}
+        {/* Mobile Toggle Button (Constant Kagada Red) */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`md:hidden p-2 transition-colors duration-500 ${
-            isScrolledPastHero ? "text-white hover:text-white/80" : "text-[#8a1c1c] hover:text-[#8a1c1c]/80"
-          }`}
+          className="md:hidden p-2 text-[#8a1c1c] hover:text-[#8a1c1c]/70 transition-colors"
           aria-label="Toggle Menu"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
 
-        {/* Mobile Dropdown Navigation */}
+        {/* Mobile Dropdown Navigation (Constant Kagada Red Theme) */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
@@ -473,11 +441,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className={`absolute top-20 left-0 right-0 backdrop-blur-2xl border rounded-3xl p-6 shadow-2xl flex flex-col gap-4 font-roboto-mono text-base font-bold transition-all duration-300 md:hidden z-40 ${
-                isScrolledPastHero
-                  ? "bg-[#2e0707]/95 border-white/30 text-white"
-                  : "bg-white/95 border-white/80 text-[#8a1c1c]"
-              }`}
+              className="absolute top-20 left-0 right-0 bg-white/95 backdrop-blur-2xl border-2 border-white rounded-3xl p-6 shadow-2xl flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c] md:hidden z-40"
             >
               <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
                 About Us
@@ -524,7 +488,7 @@ export default function Home() {
           className="absolute inset-0 w-full h-full object-cover z-0 transform-gpu mix-blend-overlay"
         />
 
-        {/* Textured White Overlay Screen with Clean Soft White Grid */}
+        {/* Textured White Overlay Screen over Hero Photo */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: isVideoFading ? 1 : 0 }}
@@ -551,7 +515,7 @@ export default function Home() {
         >
           {/* Title Glass Box containing Title + Subtitle */}
           <div className="w-full px-3 sm:px-10 py-5 sm:py-8 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-xl shadow-black/10 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
-            <h1 className="whitespace-nowrap font-saman font-normal text-[3.9rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c]/80 tracking-[-0.015em] drop-shadow-sm select-none leading-none text-center mx-auto">
+            <h1 className="whitespace-nowrap font-saman font-normal text-[3.1rem] xs:text-[3.6rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c]/80 tracking-[-0.015em] drop-shadow-sm select-none leading-none text-center mx-auto">
               K<span className="inline-block ml-[0.03em]">a</span>g<span className="inline-block ml-[0.03em]">a</span>d<span className="inline-block ml-[0.03em]">a</span> 2026
             </h1>
 
@@ -632,7 +596,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none"
+            className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-12 sm:mb-16 md:mb-20 tracking-tight text-center select-none"
           >
             About Us
           </motion.h2>

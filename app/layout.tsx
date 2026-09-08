@@ -63,7 +63,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-black text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden">
+      <body className="min-h-full flex flex-col bg-[#8a1c1c] text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

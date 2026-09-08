@@ -64,7 +64,7 @@ export function SponsorsSection() {
               rel="noopener noreferrer"
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-pointer group p-4 sm:p-6 flex items-center justify-center text-center rounded-3xl",
-                "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+                "bg-white/25 backdrop-blur-sm border-2 border-white/90 shadow-md shadow-black/10",
                 "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white",
                 "min-w-[260px] sm:min-w-[320px] h-[120px] sm:h-[140px]"
               )}
@@ -95,7 +95,7 @@ export function SponsorsSection() {
               rel="noopener noreferrer"
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-pointer group p-4 sm:p-6 flex items-center justify-center text-center rounded-3xl",
-                "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+                "bg-white/25 backdrop-blur-sm border-2 border-white/90 shadow-md shadow-black/10",
                 "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white",
                 "min-w-[260px] sm:min-w-[320px] h-[120px] sm:h-[140px]"
               )}

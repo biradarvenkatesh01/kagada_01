@@ -201,7 +201,7 @@ export function CardStack<T extends CardStackItem>({
       {/* Stage */}
       <div
         className="relative w-full flex items-center justify-center transition-all duration-500"
-        style={{ height: cardHeight + (cardWidth < 500 ? 40 : 100) }}
+        style={{ height: `calc(min(90vh, ${cardHeight}px) + ${cardWidth < 500 ? 40 : 80}px)` }}
         tabIndex={0}
         onKeyDown={onKeyDown}
       >
@@ -269,14 +269,14 @@ export function CardStack<T extends CardStackItem>({
                   key={item.id}
                   className={cn(
                     "absolute rounded-3xl border-2 border-white shadow-2xl backdrop-blur-xl bg-white/92",
-                    "select-none p-6 sm:p-10 flex flex-col justify-between overflow-hidden transform-gpu",
+                    "select-none p-4 sm:p-10 flex flex-col justify-between overflow-hidden transform-gpu",
                     isActive
                       ? "cursor-grab active:cursor-grabbing ring-1 ring-white/80 shadow-black/20"
                       : "cursor-pointer opacity-90 shadow-black/10 hover:opacity-100",
                   )}
                   style={{
-                    width: cardWidth,
-                    height: cardHeight,
+                    width: `min(92vw, ${cardWidth}px)`,
+                    height: `min(90vh, ${cardHeight}px)`,
                     zIndex,
                     transformStyle: "preserve-3d",
                     willChange: "transform, opacity",

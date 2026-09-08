@@ -120,7 +120,7 @@ export function AftermoviesSection() {
             )}
           >
             {/* Glass Interior Reflective Shimmer */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
 
             {/* Video Thumbnail Preview Window with Glowing Glass Play Button */}
             <div

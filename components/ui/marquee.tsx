@@ -19,22 +19,28 @@ export function Marquee({
   return (
     <div 
       className={cn(
-        "w-full overflow-hidden z-10 py-2",
+        "w-full overflow-hidden z-10 py-2 select-none",
         className
       )} 
       {...props}
     >
-      <div className="relative flex w-full overflow-hidden py-8 sm:py-10 select-none">
+      <div className="relative flex w-full overflow-hidden py-4 sm:py-6 select-none">
         <div 
           className={cn(
-            "flex w-max animate-marquee gap-6 sm:gap-8 items-center transform-gpu will-change-transform",
+            "flex w-max animate-marquee transform-gpu will-change-transform",
             pauseOnHover && "hover:[animation-play-state:paused]",
             direction === "right" && "animate-marquee-reverse"
           )}
           style={{ "--duration": `${speed}s` } as React.CSSProperties}
         >
-          {children}
-          {children}
+          {/* Block 1: Exactly 50% of the total flex container width */}
+          <div className="flex items-center gap-6 sm:gap-8 pr-6 sm:pr-8 shrink-0">
+            {children}
+          </div>
+          {/* Block 2: Identical 50% duplicate for 100% seamless GPU looping */}
+          <div className="flex items-center gap-6 sm:gap-8 pr-6 sm:pr-8 shrink-0">
+            {children}
+          </div>
         </div>
       </div>
     </div>

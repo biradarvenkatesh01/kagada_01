@@ -2,14 +2,26 @@
 
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { Phone, Mail } from 'lucide-react'
+import { User, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
+
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c-.001 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662a11.87 11.87 0 005.71 1.455h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  )
+}
 
 interface ContactOrganizer {
   name: string
   designation: string
   phone: string
-  phoneLink: string
+  whatsappLink: string
   email: string
   emailLink: string
 }
@@ -19,7 +31,7 @@ const ORGANIZERS: ContactOrganizer[] = [
     name: "Jyothika V",
     designation: "Chairperson, IEEE UVCE",
     phone: "+91 97318 64358",
-    phoneLink: "tel:+919731864358",
+    whatsappLink: "https://wa.me/919731864358",
     email: "jyothikav@ieee.org",
     emailLink: "mailto:jyothikav@ieee.org",
   },
@@ -27,7 +39,7 @@ const ORGANIZERS: ContactOrganizer[] = [
     name: "Hegde Punith Ramesh",
     designation: "Vice Chairperson, IEEE UVCE",
     phone: "+91 72041 20818",
-    phoneLink: "tel:+917204120818",
+    whatsappLink: "https://wa.me/917204120818",
     email: "hegdepunithramesh@ieee.org",
     emailLink: "mailto:hegdepunithramesh@ieee.org",
   },
@@ -35,7 +47,7 @@ const ORGANIZERS: ContactOrganizer[] = [
     name: "Sanjay V Guladakoppa",
     designation: "Treasurer, IEEE UVCE",
     phone: "+91 96320 91399",
-    phoneLink: "tel:+919632091399",
+    whatsappLink: "https://wa.me/919632091399",
     email: "sanjayvgk@ieee.org",
     emailLink: "mailto:sanjayvgk@ieee.org",
   },
@@ -85,7 +97,7 @@ export function ContactSection() {
             Organisers
           </motion.h3>
 
-          {/* 3 Glassmorphic Organizers Cards */}
+          {/* 3 Glassmorphic Organizers Cards Directing to WhatsApp */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -94,20 +106,25 @@ export function ContactSection() {
             className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
           >
             {ORGANIZERS.map((item, idx) => (
-              <div
+              <a
                 key={`organizer-${idx}`}
+                href={item.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`Chat with ${item.name} on WhatsApp`}
                 className={cn(
-                  "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between",
+                  "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between cursor-pointer group",
                   "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
-                  "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white group"
+                  "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white"
                 )}
               >
                 {/* Glass Reflective Interior Shimmer */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
 
                 <div className="relative z-10 w-full flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <Phone className="w-5 h-5 stroke-[2.2]" />
+                  {/* Profile Icon SVG */}
+                  <div className="w-14 h-14 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <User className="w-7 h-7 stroke-[2.2]" />
                   </div>
                   <h4 className="font-outfit font-extrabold text-xl text-white tracking-wide mb-1 drop-shadow-sm">
                     {item.name}
@@ -117,23 +134,23 @@ export function ContactSection() {
                   </p>
                 </div>
 
-                <div className="relative z-10 w-full flex flex-col gap-2 pt-4 border-t border-white/40 font-roboto-mono text-xs sm:text-sm font-semibold">
-                  <a
-                    href={item.phoneLink}
-                    className="flex items-center justify-center gap-2 text-white/95 hover:text-white hover:underline transition-colors drop-shadow-sm"
-                  >
-                    <Phone className="w-4 h-4 text-white/80 shrink-0" />
+                <div className="relative z-10 w-full flex flex-col gap-2.5 pt-4 border-t border-white/40 font-roboto-mono text-xs sm:text-sm font-semibold">
+                  <div className="flex items-center justify-center gap-2 text-white/95 group-hover:text-white transition-colors drop-shadow-sm">
+                    <WhatsAppIcon className="w-4 h-4 text-emerald-400 shrink-0" />
                     <span>{item.phone}</span>
-                  </a>
-                  <a
-                    href={item.emailLink}
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.location.href = item.emailLink
+                    }}
                     className="flex items-center justify-center gap-2 text-white/95 hover:text-white hover:underline transition-colors drop-shadow-sm truncate max-w-full"
                   >
                     <Mail className="w-4 h-4 text-white/80 shrink-0" />
                     <span className="truncate">{item.email}</span>
-                  </a>
+                  </div>
                 </div>
-              </div>
+              </a>
             ))}
           </motion.div>
         </div>

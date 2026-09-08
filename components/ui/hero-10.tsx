@@ -4,7 +4,7 @@ import * as React from 'react'
 import { useState } from 'react'
 import { motion, useReducedMotion, type Variants } from 'framer-motion'
 import Balancer from 'react-wrap-balancer'
-import { ChevronLeft, ChevronRight, FileText, Image as ImageIcon, Cpu, ArrowRight } from 'lucide-react'
+import { FileText, Image as ImageIcon, Cpu, ArrowRight } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
@@ -61,8 +61,7 @@ function Reveal({
 
 function InteractiveCardFan() {
   const [activeCard, setActiveCard] = useState(0)
-  const [exitDir, setExitDir] = useState<'next' | 'prev'>('next')
-  const [animatingCard, setAnimatingCard] = useState<number | null>(null)
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null)
 
   // 3 Winner Track Red-Tinted Glass Cards
   const cards = [
@@ -83,142 +82,99 @@ function InteractiveCardFan() {
     },
   ]
 
-  const handleNext = () => {
-    setExitDir('next')
-    setAnimatingCard(activeCard)
-    setActiveCard((prev) => (prev + 1) % 3)
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return
+    const containerEl = scrollContainerRef.current
+    const firstChild = containerEl.firstElementChild as HTMLElement | null
+    const cardWidth = firstChild?.getBoundingClientRect().width || 300
+    const scrollPosition = containerEl.scrollLeft
+    const index = Math.round(scrollPosition / (cardWidth + 16))
+    if (index >= 0 && index < cards.length) {
+      setActiveCard(index)
+    }
   }
 
-  const handlePrev = () => {
-    setExitDir('prev')
-    setAnimatingCard(activeCard)
-    setActiveCard((prev) => (prev - 1 + 3) % 3)
-  }
-
-  const handleCardClick = (i: number) => {
-    if (i === activeCard) return
-    setExitDir('next')
-    setAnimatingCard(activeCard)
-    setActiveCard(i)
+  const scrollToIndex = (index: number) => {
+    if (!scrollContainerRef.current) return
+    const containerEl = scrollContainerRef.current
+    const firstChild = containerEl.firstElementChild as HTMLElement | null
+    const cardWidth = firstChild?.getBoundingClientRect().width || 300
+    containerEl.scrollTo({
+      left: index * (cardWidth + 16),
+      behavior: 'smooth',
+    })
+    setActiveCard(index)
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-5xl my-2 sm:my-6 px-4">
-      {/* 3D Stack Container */}
-      <div className="relative flex w-full items-center justify-center min-h-[360px] sm:min-h-[440px] md:min-h-[480px]">
-        {cards.map((card, i) => {
-          // Calculate relative position offset in stack (0 = top active, 1 = middle peeking, 2 = bottom peeking)
-          const offset = (i - activeCard + 3) % 3
-          const isActive = offset === 0
-          const isExitingToBack = i === animatingCard && offset === 2
+    <div className="flex flex-col items-center justify-center w-full max-w-6xl my-4 sm:my-8 px-0 sm:px-4">
+      {/* 3 Horizontal Cards Container: Grid in Laptop/Desktop View, Slidable Row in Mobile View */}
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="w-full flex md:grid md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-4 py-4 md:px-0 md:py-0 select-none scrollbar-none"
+      >
+        {cards.map((card, i) => (
+          <motion.div
+            key={card.id}
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ duration: 0.5, delay: i * 0.15 }}
+            className={cn(
+              "shrink-0 snap-center w-[85vw] max-w-[320px] md:w-full md:max-w-none h-[360px] sm:h-[400px] lg:h-[440px]",
+              "rounded-3xl border-2 border-white/80 shadow-2xl backdrop-blur-xl bg-white/25",
+              "p-5 sm:p-8 flex flex-col justify-between items-center overflow-hidden transform-gpu select-none cursor-pointer group",
+              "hover:border-white hover:bg-white/35 transition-all duration-300"
+            )}
+          >
+            {/* Subtle Glass Interior Shimmer */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-transparent to-black/20 pointer-events-none rounded-3xl" />
 
-          const swingDistance = exitDir === 'next' ? 260 : -260
-          const swingRotate = exitDir === 'next' ? 12 : -12
+            {/* Card Header: Title Centered Horizontally */}
+            <div className="flex items-center justify-center w-full z-10 text-center">
+              <h3 className="font-smooch text-4xl sm:text-5xl lg:text-6xl font-semibold text-white tracking-wide drop-shadow-md text-center leading-tight">
+                {card.title}
+              </h3>
+            </div>
 
-          const animateProps = isExitingToBack
-            ? {
-                x: [0, swingDistance, 0],
-                y: [0, 16, 44],
-                rotate: [0, swingRotate, 4],
-                scale: [1, 0.94, 0.88],
-                opacity: [1, 0.95, 0.7],
-                zIndex: [35, 5, 10],
-              }
-            : {
-                x: 0,
-                y: offset * 22,
-                rotate: offset === 1 ? -4 : offset === 2 ? 4 : 0,
-                scale: 1 - offset * 0.06,
-                opacity: 1 - offset * 0.15,
-                zIndex: 30 - offset * 10,
-              }
-
-          const transitionProps = isExitingToBack
-            ? {
-                duration: 0.65,
-                ease: [0.25, 1, 0.5, 1],
-                times: [0, 0.45, 1],
-              }
-            : {
-                type: "spring",
-                stiffness: 260,
-                damping: 24,
-                mass: 0.8,
-              }
-
-          return (
-            <motion.div
-              key={card.id}
-              onClick={() => handleCardClick(i)}
-              initial={false}
-              animate={animateProps as any}
-              transition={transitionProps as any}
-              className={cn(
-                "absolute w-[90vw] max-w-[350px] sm:w-[480px] md:w-[580px] h-[340px] sm:h-[400px] md:h-[440px]",
-                "rounded-3xl border-2 border-white/80 shadow-2xl backdrop-blur-2xl bg-[#8a1c1c]/40",
-                "p-6 sm:p-8 flex flex-col justify-between items-center overflow-hidden transform-gpu select-none cursor-pointer transition-colors duration-300",
-                isActive
-                  ? "ring-2 ring-white/90 shadow-black/45 bg-[#8a1c1c]/55"
-                  : "hover:bg-[#8a1c1c]/50 hover:opacity-100 shadow-black/25"
-              )}
-              style={{
-                willChange: "transform, opacity",
-              }}
-            >
-              {/* Subtle Glass Interior Shimmer */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/30 pointer-events-none" />
-
-              {/* Card Header: Title Centered Horizontally */}
-              <div className="flex items-center justify-center w-full z-10 text-center">
-                <h3 className="font-smooch text-4xl sm:text-5xl md:text-6xl font-semibold text-white tracking-wide drop-shadow-md text-center leading-none">
-                  {card.title}
-                </h3>
+            {/* Center Prominent Red Glass SVG Icon Badge */}
+            <div className="flex-1 my-4 sm:my-6 flex items-center justify-center z-10">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full bg-white/30 backdrop-blur-xl border-2 border-white/80 text-white flex items-center justify-center shadow-2xl shadow-black/30 transform-gpu group-hover:scale-110 transition-transform duration-300">
+                <card.icon className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 stroke-[1.8] text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]" />
               </div>
+            </div>
 
-              {/* Center Prominent Red Glass SVG Icon Badge */}
-              <div className="flex-1 my-3 sm:my-5 flex items-center justify-center z-10">
-                <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full bg-[#8a1c1c]/45 backdrop-blur-xl border-2 border-white/80 text-white flex items-center justify-center shadow-2xl shadow-black/30 transform-gpu hover:scale-105 transition-transform">
-                  <card.icon className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 stroke-[1.8] text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]" />
-                </div>
-              </div>
-
-              {/* Bottom CTA Red Glass Button */}
-              <div className="w-full z-10">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                  }}
-                  className="w-full py-3 sm:py-3.5 px-6 rounded-2xl bg-[#8a1c1c]/45 backdrop-blur-md border border-white/80 text-white font-jakarta text-sm sm:text-base font-extrabold tracking-wide hover:bg-[#8a1c1c]/65 active:scale-[0.98] transition-all shadow-lg shadow-black/20 flex items-center justify-center gap-2 group/btn cursor-pointer"
-                >
-                  <span>Explore Winners</span>
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-1" />
-                </button>
-              </div>
-            </motion.div>
-          )
-        })}
+            {/* Bottom CTA Red Glass Button */}
+            <div className="w-full z-10">
+              <button
+                type="button"
+                className="w-full py-3.5 px-6 rounded-2xl bg-white/30 backdrop-blur-md border border-white/80 text-white font-jakarta text-sm sm:text-base font-extrabold tracking-wide group-hover:bg-white/45 active:scale-[0.98] transition-all shadow-lg shadow-black/20 flex items-center justify-center gap-2 group/btn cursor-pointer"
+              >
+                <span>Explore Winners</span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-1" />
+              </button>
+            </div>
+          </motion.div>
+        ))}
       </div>
 
-      {/* Red Glass Arrow Controls Below */}
-      <div className="flex items-center justify-center gap-4 sm:gap-6 mt-8 sm:mt-12 z-40">
-        <button
-          type="button"
-          onClick={handlePrev}
-          aria-label="Previous Card"
-          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#8a1c1c]/40 backdrop-blur-xl border-2 border-white/80 text-white flex items-center justify-center shadow-xl shadow-black/30 hover:bg-[#8a1c1c]/65 hover:scale-105 active:scale-95 transition-all cursor-pointer transform-gpu"
-        >
-          <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5] drop-shadow-sm" />
-        </button>
-
-        <button
-          type="button"
-          onClick={handleNext}
-          aria-label="Next Card"
-          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#8a1c1c]/40 backdrop-blur-xl border-2 border-white/80 text-white flex items-center justify-center shadow-xl shadow-black/30 hover:bg-[#8a1c1c]/65 hover:scale-105 active:scale-95 transition-all cursor-pointer transform-gpu"
-        >
-          <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5] drop-shadow-sm" />
-        </button>
+      {/* Pagination Indicator Dots for Mobile View */}
+      <div className="flex md:hidden items-center justify-center gap-2 mt-4 z-20">
+        {cards.map((card, i) => (
+          <button
+            key={`dot-${card.id}`}
+            onClick={() => scrollToIndex(i)}
+            className={cn(
+              "h-2.5 rounded-full transition-all duration-300 cursor-pointer",
+              activeCard === i
+                ? "w-8 bg-white"
+                : "w-2.5 bg-white/40 hover:bg-white/70"
+            )}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
       </div>
     </div>
   )
