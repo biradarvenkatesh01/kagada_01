@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { motion } from 'framer-motion'
 import { Code, Mail } from 'lucide-react'
 
 const SOCIALS = [
@@ -22,7 +21,7 @@ const SOCIALS = [
   },
   {
     name: "Email",
-    url: "mailto:ieeeuvce.ac.in",
+    url: "mailto:kagada@ieeeuvce.org",
     iconKey: "email",
   },
   {
@@ -70,7 +69,7 @@ const SocialIcons: Record<string, () => React.JSX.Element> = {
 
 export function Footer() {
   return (
-    <footer className="relative w-full border-t-2 border-white/80 bg-white/20 backdrop-blur-2xl shadow-2xl z-20 py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
+    <footer data-no-lightbox="true" className="relative w-full border-t-2 border-white/80 bg-white/20 backdrop-blur-2xl shadow-2xl z-20 py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
       {/* Subtle Glass Interior Shimmer */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/20 pointer-events-none" />
 

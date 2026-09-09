@@ -44,7 +44,7 @@ export default function Home() {
       videoRef.current.play().catch(() => {
         if (videoRef.current) {
           videoRef.current.muted = true;
-          videoRef.current.play();
+          videoRef.current.play().catch(() => {});
         }
       });
     }

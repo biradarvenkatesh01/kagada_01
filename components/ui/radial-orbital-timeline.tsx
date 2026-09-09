@@ -2,9 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, animate } from "framer-motion";
-import { ArrowRight, Link, Zap, X } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 export interface TimelineItem {
   id: number;
@@ -32,7 +30,6 @@ export default function RadialOrbitalTimeline({
   );
   const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
-  const [pulseEffect, setPulseEffect] = useState<Record<number, boolean>>({});
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
   const [orbitRadius, setOrbitRadius] = useState<number>(240);
   
@@ -69,7 +66,6 @@ export default function RadialOrbitalTimeline({
     if (e.target === containerRef.current || e.target === orbitRef.current) {
       setExpandedItems({});
       setActiveNodeId(null);
-      setPulseEffect({});
       setAutoRotate(true);
     }
   };
@@ -86,7 +82,7 @@ export default function RadialOrbitalTimeline({
 
       const currentAngle = rotationAngleRef.current;
       const normalizedCurrent = ((currentAngle % 360) + 360) % 360;
-      let normalizedTarget = ((rawTargetAngle % 360) + 360) % 360;
+      const normalizedTarget = ((rawTargetAngle % 360) + 360) % 360;
 
       let delta = normalizedTarget - normalizedCurrent;
       if (delta > 180) delta -= 360;
@@ -119,19 +115,11 @@ export default function RadialOrbitalTimeline({
         setActiveNodeId(id);
         setAutoRotate(false);
 
-        const relatedItems = getRelatedItems(id);
-        const newPulseEffect: Record<number, boolean> = {};
-        relatedItems.forEach((relId) => {
-          newPulseEffect[relId] = true;
-        });
-        setPulseEffect(newPulseEffect);
-
         // 🎯 Glide node & open card to top center smoothly right as it pops open
         centerViewOnNode(id);
       } else {
         setActiveNodeId(null);
         setAutoRotate(true);
-        setPulseEffect({});
       }
 
       return newState;

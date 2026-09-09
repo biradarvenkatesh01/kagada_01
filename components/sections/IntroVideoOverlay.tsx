@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, memo } from "react";
+import { memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface IntroVideoOverlayProps {

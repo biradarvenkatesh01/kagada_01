@@ -73,7 +73,7 @@ export default function QueryForm({ className }: { className?: string }) {
       } else {
         setStatus("success");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Submission failed:", err);
       setStatus("error");
       setErrorMessage("Network connection error. Please try again in a moment.");

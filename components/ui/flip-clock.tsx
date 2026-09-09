@@ -58,12 +58,18 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
 
   useEffect(() => {
     if (digit !== prevDigit) {
-      setFlipping(true);
-      const timer = setTimeout(() => {
-        setFlipping(false);
-        setPrevDigit(digit);
-      }, 550);
-      return () => clearTimeout(timer);
+      let timer: NodeJS.Timeout | undefined;
+      const raf = requestAnimationFrame(() => {
+        setFlipping(true);
+        timer = setTimeout(() => {
+          setFlipping(false);
+          setPrevDigit(digit);
+        }, 550);
+      });
+      return () => {
+        cancelAnimationFrame(raf);
+        if (timer) clearTimeout(timer);
+      };
     }
   }, [digit, prevDigit]);
 
@@ -180,11 +186,9 @@ const FlipClock = ({
   className,
   ...props
 }: FlipClockProps) => {
-  const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState<TimeLeft>(getTime(countdown, targetDate));
 
   useEffect(() => {
-    setMounted(true);
     const timer = setInterval(() => {
       const nextTime = getTime(countdown, targetDate);
 

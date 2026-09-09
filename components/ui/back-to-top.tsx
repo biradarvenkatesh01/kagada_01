@@ -44,8 +44,11 @@ export default function BackToTop() {
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    const initialRaf = window.requestAnimationFrame(handleScroll);
+    return () => {
+      window.cancelAnimationFrame(initialRaf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [handleScroll]);
 
   const scrollToTop = () => {

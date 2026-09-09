@@ -73,6 +73,17 @@ export const metadata: Metadata = {
     shortcut: "/logo1.png",
     apple: "/logo1.png",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "KAGADA 2026 | IEEE UVCE National Technical Conference",
+    description:
+      "22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE on 10th October, 2026 at UVCE, Bengaluru.",
+    images: ["/logo1.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -88,8 +99,9 @@ export default function RootLayout({
       <head>
         {/* Preload critical hero background image for instant display */}
         <link rel="preload" as="image" href="/hero-bg.jpg" fetchPriority="high" />
-
-        {/* Google Analytics (gtag.js) */}
+      </head>
+      <body className="min-h-full flex flex-col bg-[#8a1c1c] text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden font-jakarta">
+        {/* Google Analytics (gtag.js) placed in body for optimal Next.js hydration */}
         <Script
           strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-F242B7FH1S"
@@ -106,8 +118,6 @@ export default function RootLayout({
             gtag('config', 'G-F242B7FH1S');
           `}
         </Script>
-      </head>
-      <body className="min-h-full flex flex-col bg-[#8a1c1c] text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden font-jakarta">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

@@ -23,64 +23,64 @@ export default function ImageLightbox() {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      // Strictly ignore clicks inside hero section, tracks section, navigation, header, or elements explicitly marked to bypass lightbox
+      // Ignore interactive controls, navigation, header, hero, contact, footer, and excluded containers
       if (
+        target.closest("footer") ||
+        target.closest("#contact") ||
         target.closest("#hero") ||
         target.closest("#tracks") ||
+        target.closest("#about") ||
         target.closest("header") ||
         target.closest("nav") ||
+        target.closest("button") ||
+        target.closest("a") ||
+        target.closest("form") ||
+        target.closest("input") ||
+        target.closest("textarea") ||
         target.closest("[data-no-lightbox]") ||
         target.closest(".no-lightbox")
       ) {
         return;
       }
 
-      // Check if clicked element is an <img> or has an <img> child/parent
       let imgEl: HTMLImageElement | null = null;
 
+      // Only inspect if the user clicked directly on an <img> or on a designated zoomable wrapper
       if (target.tagName === "IMG") {
         imgEl = target as HTMLImageElement;
       } else {
-        // Handle overlays or wrapper containers (like in gallery or cards)
-        const wrapper =
-          target.closest("[data-lightbox-wrapper]") ||
-          target.closest(".cursor-pointer") ||
-          target.closest(".cursor-zoom-in") ||
-          target.closest("div");
-        const found = wrapper?.querySelector("img");
-        if (
-          found &&
-          !found.closest("#hero") &&
-          !found.closest("#tracks") &&
-          !found.closest("header") &&
-          !found.closest("nav") &&
-          !found.closest("[data-no-lightbox]")
-        ) {
-          imgEl = found;
+        const zoomWrapper = target.closest("[data-lightbox-wrapper], .cursor-zoom-in");
+        if (zoomWrapper) {
+          imgEl = zoomWrapper.querySelector("img");
         }
       }
 
       if (!imgEl) return;
 
-      const src = imgEl.currentSrc || imgEl.src;
-      // Filter out tiny icons, SVGs, hero background images, tracks images, or elements explicitly marked no-lightbox
+      // Ensure the image is not inside an excluded area
       if (
-        !src ||
-        src.endsWith(".svg") ||
-        src.includes("hero-bg") ||
+        imgEl.closest("footer") ||
+        imgEl.closest("#contact") ||
         imgEl.closest("#hero") ||
         imgEl.closest("#tracks") ||
-        imgEl.clientWidth < 40 ||
-        imgEl.clientHeight < 40 ||
+        imgEl.closest("#about") ||
+        imgEl.closest("header") ||
+        imgEl.closest("nav") ||
+        imgEl.closest("[data-no-lightbox]") ||
         imgEl.dataset.noLightbox === "true"
       ) {
         return;
       }
 
-      // If inside an <a> tag linking to an anchor like #hero, prevent anchor jump and open image
-      const anchor = target.closest("a");
-      if (anchor && anchor.getAttribute("href")?.startsWith("#")) {
-        e.preventDefault();
+      const src = imgEl.currentSrc || imgEl.src;
+      if (
+        !src ||
+        src.endsWith(".svg") ||
+        src.includes("hero-bg") ||
+        imgEl.clientWidth < 60 ||
+        imgEl.clientHeight < 60
+      ) {
+        return;
       }
 
       // Open in lightbox

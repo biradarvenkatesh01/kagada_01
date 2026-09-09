@@ -6,10 +6,21 @@ import { Send, Bot, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { marked } from "marked";
 
+function sanitizeHtml(html: string): string {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
+    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, "")
+    .replace(/<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi, "")
+    .replace(/on\w+\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, "")
+    .replace(/href\s*=\s*(?:'javascript:[^']*'|"javascript:[^"]*"|javascript:[^\s>]+)/gi, 'href="#"');
+}
+
 function renderMarkdown(content: string): string {
   try {
     const rawHtml = marked.parse(content, { async: false, breaks: true }) as string;
-    return rawHtml
+    const cleanHtml = sanitizeHtml(rawHtml);
+    return cleanHtml
       .replaceAll("<table>", '<div class="chat-table-scroll" data-lenis-prevent="true"><table>')
       .replaceAll("</table>", "</table></div>");
   } catch {
@@ -86,8 +97,11 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    handleFooterScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    const initialRaf = window.requestAnimationFrame(handleFooterScroll);
+    return () => {
+      window.cancelAnimationFrame(initialRaf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [handleFooterScroll]);
 
   useEffect(() => {
@@ -127,11 +141,9 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
       const aiReply = data?.reply || "KAGADA 2026 is provisionally scheduled for 10th October 2026 at UVCE, KR Circle, Bengaluru!";
       const modelUsed = data?.model || "Unknown Model";
 
-      // Log nicely into Browser DevTools Console
-      console.log("%c🤖 KAGADA AI Chatbot Log", "color: #ff4d4d; font-weight: bold; font-size: 13px;");
-      console.log("%cModel Used    :", "color: #4da6ff; font-weight: bold;", modelUsed);
-      console.log("%cUser Question :", "color: #ffaa00; font-weight: bold;", userText);
-      console.log("%cAI Response    :", "color: #55ff55; font-weight: bold;", aiReply);
+      if (process.env.NODE_ENV !== "production") {
+        console.log(`[KAGADA AI] (${modelUsed}):`, { question: userText, reply: aiReply });
+      }
 
       setMessages((prev) => [...prev, { sender: "ai", text: aiReply }]);
     } catch (error) {

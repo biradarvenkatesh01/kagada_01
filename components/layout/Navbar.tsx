@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, memo } from "react";
+import { useState, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -32,6 +32,7 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
         <img
           src="/kagada-2026-header.png"
           alt="IEEE UVCE Kagada 2026 Logo"
+          data-no-lightbox="true"
           className="h-11 sm:h-14 w-auto object-contain transition-all duration-300 hover:scale-105"
           style={{
             filter:

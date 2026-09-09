@@ -49,19 +49,33 @@ function VideoCard({
     const video = videoRef.current;
     if (!video) return;
 
+    let playPromise: Promise<void> | null = null;
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.play().catch(() => {});
+          playPromise = video.play();
+          if (playPromise) {
+            playPromise.catch(() => {
+              // Autoplay gracefully prevented or aborted
+            });
+          }
         } else {
-          video.pause();
+          if (playPromise) {
+            playPromise.then(() => video.pause()).catch(() => video.pause());
+          } else {
+            video.pause();
+          }
         }
       },
       { threshold: 0.15 }
     );
 
     io.observe(video);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      video.pause();
+    };
   }, []);
 
   return (

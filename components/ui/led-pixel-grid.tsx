@@ -133,6 +133,7 @@ function LEDPixelGridInner({ className }: { className?: string }) {
   }[]>([]);
   const activeWavesRef = useRef<WavePulse[]>([]);
   const activeSweepsRef = useRef<SweepWave[]>([]);
+  const animateRef = useRef<((timestamp: number) => void) | null>(null);
 
   const buildGrid = useCallback((w: number, h: number) => {
     const cols = Math.ceil(w / GRID_SPACING) + 1;
@@ -504,10 +505,13 @@ function LEDPixelGridInner({ className }: { className?: string }) {
       );
     }
 
-    animRef.current = requestAnimationFrame(animate);
+    animRef.current = requestAnimationFrame((t) => {
+      animateRef.current?.(t);
+    });
   }, [returnToBase, animatePixel, triggerCluster, startTravel, startWave, startSweep]);
 
   useEffect(() => {
+    animateRef.current = animate;
     const canvas = canvasRef.current;
     if (!canvas) return;
 

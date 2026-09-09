@@ -92,11 +92,8 @@ export function CardStack<T extends CardStackItem>({
   cardHeight = 640,
 
   overlap = 0.45,
-  spreadDeg = 0,
-
   perspectivePx = 1400,
   depthPx = 200,
-  tiltXDeg = 0,
 
   activeLiftPx = 22,
   activeScale = 1.03,
@@ -123,14 +120,15 @@ export function CardStack<T extends CardStackItem>({
   const [active, setActive] = React.useState(() =>
     wrapIndex(initialIndex, len),
   );
+  const [prevLen, setPrevLen] = React.useState(len);
+  if (prevLen !== len) {
+    setPrevLen(len);
+    setActive((a) => wrapIndex(a, len));
+  }
+
   const [hovering, setHovering] = React.useState(false);
   const [isInView, setIsInView] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
-
-  // keep active in bounds if items change
-  React.useEffect(() => {
-    setActive((a) => wrapIndex(a, len));
-  }, [len]);
 
   React.useEffect(() => {
     if (!len) return;
@@ -278,8 +276,6 @@ export function CardStack<T extends CardStackItem>({
               const x = isMobile ? off * 10 : Math.sin(radiusAngle) * (cardSpacing * 1.35);
               const z = isMobile ? -abs * 35 : (Math.cos(radiusAngle) - 1) * depthPx * 1.8;
               const rotateY = isMobile ? 0 : off * -7;
-              const rotateZ = 0;
-              const rotateX = 0;
               const y = isMobile ? -abs * 10 : 0;
 
               const isActive = off === 0;
@@ -301,7 +297,7 @@ export function CardStack<T extends CardStackItem>({
                     dragElastic: 0.2,
                     dragSnapToOrigin: true,
                     onDragEnd: (
-                      _e: any,
+                      _e: MouseEvent | TouchEvent | PointerEvent,
                       info: { offset: { x: number }; velocity: { x: number } },
                     ) => {
                       if (reduceMotion) return;
