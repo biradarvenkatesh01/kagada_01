@@ -194,11 +194,6 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         style={{ bottom: `${bottomOffset}px` }}
         aria-label="Toggle AI Chatbot"
       >
-        {/* Subtle Attention Ping Ring when not open */}
-        {!isOpen && (
-          <span className="absolute -inset-1 rounded-full bg-white/40 animate-ping pointer-events-none opacity-40 [animation-duration:3.2s]" />
-        )}
-
         {isOpen ? (
           <X className="w-7 h-7 sm:w-8 sm:h-8 text-white stroke-[2.5]" />
         ) : (
