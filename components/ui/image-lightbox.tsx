@@ -23,9 +23,10 @@ export default function ImageLightbox() {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      // Strictly ignore clicks inside hero section, navigation, header, or elements explicitly marked to bypass lightbox
+      // Strictly ignore clicks inside hero section, tracks section, navigation, header, or elements explicitly marked to bypass lightbox
       if (
         target.closest("#hero") ||
+        target.closest("#tracks") ||
         target.closest("header") ||
         target.closest("nav") ||
         target.closest("[data-no-lightbox]") ||
@@ -50,6 +51,7 @@ export default function ImageLightbox() {
         if (
           found &&
           !found.closest("#hero") &&
+          !found.closest("#tracks") &&
           !found.closest("header") &&
           !found.closest("nav") &&
           !found.closest("[data-no-lightbox]")
@@ -61,12 +63,13 @@ export default function ImageLightbox() {
       if (!imgEl) return;
 
       const src = imgEl.currentSrc || imgEl.src;
-      // Filter out tiny icons, SVGs, hero background images, or elements explicitly marked no-lightbox
+      // Filter out tiny icons, SVGs, hero background images, tracks images, or elements explicitly marked no-lightbox
       if (
         !src ||
         src.endsWith(".svg") ||
         src.includes("hero-bg") ||
         imgEl.closest("#hero") ||
+        imgEl.closest("#tracks") ||
         imgEl.clientWidth < 40 ||
         imgEl.clientHeight < 40 ||
         imgEl.dataset.noLightbox === "true"

@@ -218,10 +218,11 @@ html.lenis, html.lenis body {
 }
 
 /* Universal Lightbox Image Hover Affordance */
-img:not(header img):not(nav img):not(#hero img):not([data-no-lightbox="true"]) {
+img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-lightbox="true"]) {
   cursor: zoom-in;
 }
 
-#hero img {
+#hero img,
+#tracks img {
   cursor: default !important;
 }

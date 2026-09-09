@@ -339,11 +339,12 @@ export default function RadialOrbitalTimeline({
                           
                           {/* Image Box (Left Column on PC) */}
                           {item.imageSrc && (
-                            <div className="md:col-span-5 w-full h-40 sm:h-64 md:h-72 rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group">
+                            <div className="md:col-span-5 w-full h-40 sm:h-64 md:h-72 rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group" data-no-lightbox="true">
                               <img
                                 src={item.imageSrc}
                                 alt={item.title}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                data-no-lightbox="true"
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 select-none pointer-events-none"
                               />
                             </div>
                           )}
