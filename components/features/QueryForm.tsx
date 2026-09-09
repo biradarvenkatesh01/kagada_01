@@ -127,7 +127,7 @@ export default function QueryForm({ className }: { className?: string }) {
               </h4>
 
               <p className="font-jakarta text-sm sm:text-base font-medium text-slate-800/90 max-w-md mb-8 leading-relaxed">
-                Thank you, <strong className="text-[#8a1c1c]">{formData.firstName}</strong>. We have received your question and our IEEE UVCE organizing committee will respond to you shortly.
+                Thank you, <strong className="text-[#8a1c1c]">{formData.firstName}</strong>. We have received your query and IEEE UVCE will respond as soon as possible.
               </p>
 
               <button
