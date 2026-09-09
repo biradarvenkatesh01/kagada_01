@@ -59,7 +59,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
       >
         {/* Title Glass Box containing Title + Subtitle */}
         <div className="w-full px-3 sm:px-10 py-5 sm:py-8 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-xl shadow-black/10 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
-          <h1 className="whitespace-nowrap font-saman font-normal text-[3.1rem] xs:text-[3.6rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c]/80 tracking-[-0.015em] drop-shadow-sm select-none leading-none text-center mx-auto">
+          <h1 className="whitespace-nowrap font-saman font-normal text-[3.1rem] xs:text-[3.6rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c] tracking-[-0.015em] drop-shadow-sm select-none leading-none text-center mx-auto">
             K<span className="inline-block ml-[0.03em]">a</span>g<span className="inline-block ml-[0.03em]">a</span>d<span className="inline-block ml-[0.03em]">a</span> 2026
           </h1>
 
