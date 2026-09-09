@@ -5,6 +5,7 @@ import { memo } from 'react'
 import { motion } from 'framer-motion'
 import { User, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import QueryForm from '@/components/features/QueryForm'
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -155,6 +156,9 @@ export const ContactSection = memo(function ContactSection() {
             ))}
           </motion.div>
         </div>
+
+        {/* Working Query Form Section */}
+        <QueryForm />
 
         {/* Embedded Map Section Card */}
         <motion.div

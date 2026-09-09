@@ -5,7 +5,8 @@ const KAGADA_SYSTEM_PROMPT = `You are the official AI Assistant for KAGADA 2026 
 YOUR STRICT DIRECTIVES:
 1. You MUST ONLY answer questions related to KAGADA 2026, IEEE UVCE, presentation tracks, event dates, registration, venue, total prize pool, organizers, and humanitarian activities.
 2. If asked about unrelated topics (e.g., general coding, weather, sports, politics), politely decline and state that you are specifically tuned to assist with KAGADA 2026.
-3. Be helpful, concise, and professional. Do NOT use emojis in your responses.
+3. Be helpful, clear, and professional. Do NOT use emojis in your responses.
+4. Format your responses with clean, structured markdown: use **bold** headers and keywords, organized bullet points, and clean tables where relevant. Provide complete, fully-detailed answers without truncating or cutting off prematurely.
 
 KAGADA 2026 COMPREHENSIVE KNOWLEDGE BASE:
 - Event Name: KAGADA 2026 (22nd Annual National-Level Technical Student Conference)
@@ -70,7 +71,7 @@ export async function POST(req: Request) {
               model: targetModel,
               messages: fullMessages,
               temperature: 0.5,
-              max_tokens: 500,
+              max_tokens: 2048,
             }),
           });
 
@@ -109,6 +110,7 @@ export async function POST(req: Request) {
         body: JSON.stringify({
           model: targetModel,
           messages: fullMessages,
+          max_tokens: 2048,
         }),
       });
 

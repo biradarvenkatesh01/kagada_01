@@ -4,6 +4,18 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { marked } from "marked";
+
+function renderMarkdown(content: string): string {
+  try {
+    const rawHtml = marked.parse(content, { async: false, breaks: true }) as string;
+    return rawHtml
+      .replaceAll("<table>", '<div class="chat-table-scroll" data-lenis-prevent="true"><table>')
+      .replaceAll("</table>", "</table></div>");
+  } catch {
+    return content;
+  }
+}
 
 interface AIChatCardProps {
   className?: string;
@@ -23,7 +35,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   const [bottomOffset, setBottomOffset] = useState(20);
   const [showGreeting, setShowGreeting] = useState(false);
   const hasGreetedRef = useRef(false);
-  const chatBottomRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   // Trigger brief 'Heyy' greeting once user reaches the hero page after initial video
   useEffect(() => {
@@ -79,8 +91,11 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   }, [handleFooterScroll]);
 
   useEffect(() => {
-    if (isOpen) {
-      chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (isOpen && messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [messages, isTyping, isOpen]);
 
@@ -209,8 +224,9 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.94, transition: { duration: 0.15 } }}
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
+            data-lenis-prevent="true"
             className={cn(
-              "fixed right-4 sm:right-7 z-50 w-[calc(100vw-2rem)] sm:w-[370px] h-[500px] max-h-[calc(100vh-8rem)] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
+              "fixed right-4 sm:right-7 z-50 w-[calc(100vw-2rem)] sm:w-[410px] h-[530px] max-h-[calc(100vh-7rem)] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
               "bg-[#8a1c1c]/80 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/80",
               className
             )}
@@ -220,7 +236,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/20 pointer-events-none rounded-3xl" />
 
             {/* Chat Header */}
-            <div className="relative z-10 px-5 py-3.5 border-b border-white/30 flex items-center justify-between bg-white/10 backdrop-blur-md">
+            <div className="relative z-10 px-5 py-3.5 border-b border-white/30 flex items-center justify-between bg-white/10 backdrop-blur-md shrink-0">
               <h2 className="text-base font-outfit font-extrabold text-white tracking-wide leading-tight drop-shadow-sm">
                 KAGADA AI Assistant
               </h2>
@@ -234,35 +250,45 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             </div>
 
             {/* Chat Messages Container */}
-            <div className="relative z-10 flex-1 px-4 py-3.5 overflow-y-auto space-y-3 text-xs sm:text-sm flex flex-col custom-scrollbar">
+            <div
+              ref={messagesContainerRef}
+              data-lenis-prevent="true"
+              className="relative z-10 flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain px-3.5 sm:px-4 py-3.5 space-y-3 text-xs sm:text-sm custom-scrollbar"
+              style={{ touchAction: "pan-y" }}
+            >
               {messages.map((msg, i) => (
                 <div
                   key={i}
                   className={cn(
-                    "px-3.5 py-2.5 rounded-2xl max-w-[85%] leading-relaxed whitespace-pre-wrap font-jakarta drop-shadow-sm",
+                    "px-3.5 py-2.5 rounded-2xl drop-shadow-sm font-jakarta min-w-0 break-words",
                     msg.sender === "ai"
-                      ? "bg-white/20 backdrop-blur-md border border-white/40 text-white self-start rounded-tl-xs"
-                      : "bg-white text-[#8a1c1c] font-bold self-end rounded-tr-xs shadow-md"
+                      ? "bg-white/20 backdrop-blur-md border border-white/40 text-white rounded-tl-xs max-w-[94%] leading-relaxed text-xs sm:text-sm overflow-hidden"
+                      : "bg-white text-[#8a1c1c] font-bold ml-auto rounded-tr-xs shadow-md max-w-[85%] whitespace-pre-wrap text-xs sm:text-sm"
                   )}
                 >
-                  {msg.text}
+                  {msg.sender === "ai" ? (
+                    <div
+                      className="chat-markdown w-full min-w-0 max-w-full overflow-hidden"
+                      dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.text) }}
+                    />
+                  ) : (
+                    msg.text
+                  )}
                 </div>
               ))}
 
               {/* AI Typing Indicator */}
               {isTyping && (
-                <div className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl max-w-[35%] bg-white/20 border border-white/40 self-start">
+                <div className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl max-w-[35%] bg-white/20 border border-white/40">
                   <span className="w-2 h-2 rounded-full bg-white animate-bounce"></span>
                   <span className="w-2 h-2 rounded-full bg-white animate-bounce [animation-delay:0.2s]"></span>
                   <span className="w-2 h-2 rounded-full bg-white animate-bounce [animation-delay:0.4s]"></span>
                 </div>
               )}
-
-              <div ref={chatBottomRef} />
             </div>
 
             {/* Chat Input Section */}
-            <div className="relative z-10 p-3 border-t border-white/30 bg-black/20 backdrop-blur-md flex items-center gap-2">
+            <div className="relative z-10 p-3 border-t border-white/30 bg-black/20 backdrop-blur-md flex items-center gap-2 shrink-0">
               <input
                 className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white/20 backdrop-blur-md rounded-xl border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/80 font-jakarta"
                 placeholder="Ask about tracks, date, prizes..."
