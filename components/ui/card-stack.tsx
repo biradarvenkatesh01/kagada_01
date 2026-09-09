@@ -124,6 +124,8 @@ export function CardStack<T extends CardStackItem>({
     wrapIndex(initialIndex, len),
   );
   const [hovering, setHovering] = React.useState(false);
+  const [isInView, setIsInView] = React.useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   // keep active in bounds if items change
   React.useEffect(() => {
@@ -135,6 +137,20 @@ export function CardStack<T extends CardStackItem>({
     onChangeIndex?.(active, items[active]!);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
+
+  // Track visibility with IntersectionObserver to sleep autoAdvance when off-screen
+  React.useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const maxOffset = Math.max(1, Math.floor(maxVisible / 2));
 
@@ -161,11 +177,12 @@ export function CardStack<T extends CardStackItem>({
     if (e.key === "ArrowRight") next();
   };
 
-  // 6-second auto cycle
+  // 6-second auto cycle (pauses when off-screen or user hovering)
   React.useEffect(() => {
     if (!autoAdvance) return;
     if (reduceMotion) return;
     if (!len) return;
+    if (!isInView) return;
     if (pauseOnHover && hovering) return;
 
     const id = window.setInterval(
@@ -180,6 +197,7 @@ export function CardStack<T extends CardStackItem>({
     autoAdvance,
     intervalMs,
     hovering,
+    isInView,
     pauseOnHover,
     reduceMotion,
     len,
@@ -219,6 +237,7 @@ export function CardStack<T extends CardStackItem>({
 
   return (
     <div
+      ref={containerRef}
       className={cn("w-full flex flex-col items-center justify-center", className)}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
@@ -253,18 +272,23 @@ export function CardStack<T extends CardStackItem>({
               // hide far-away cards cleanly
               if (!visible) return null;
 
-              // 3D Ultra-Smooth Circular Ring Orbit Geometry
+              // 3D Geometry: on mobile (<500px), cards stack cleanly behind without overflowing screen edges
+              const isMobile = cardWidth < 500;
               const radiusAngle = (off / maxOffset) * (Math.PI / 3.4);
-              const x = Math.sin(radiusAngle) * (cardSpacing * 1.35);
-              const z = (Math.cos(radiusAngle) - 1) * depthPx * 1.8;
-              const rotateY = off * -7;
+              const x = isMobile ? off * 10 : Math.sin(radiusAngle) * (cardSpacing * 1.35);
+              const z = isMobile ? -abs * 35 : (Math.cos(radiusAngle) - 1) * depthPx * 1.8;
+              const rotateY = isMobile ? 0 : off * -7;
               const rotateZ = 0;
               const rotateX = 0;
-              const y = 0;
+              const y = isMobile ? -abs * 10 : 0;
 
               const isActive = off === 0;
 
-              const scale = isActive ? activeScale : inactiveScale;
+              const scale = isActive
+                ? activeScale
+                : isMobile
+                ? Math.max(0.85, 0.94 - (abs - 1) * 0.06)
+                : inactiveScale;
               const lift = isActive ? -activeLiftPx : 0;
 
               const zIndex = 100 - abs;

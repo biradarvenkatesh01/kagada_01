@@ -31,7 +31,7 @@ const SPONSORS_ROW_2: SponsorItem[] = [
 
 export const SponsorsSection = memo(function SponsorsSection() {
   return (
-    <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-6 sm:py-10 scroll-mt-6 z-10">
+    <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-6 sm:py-10 scroll-mt-6 z-10 cv-auto">
       {/* Main Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 25 }}
@@ -74,6 +74,8 @@ export const SponsorsSection = memo(function SponsorsSection() {
               <img
                 src={item.src}
                 alt={item.alt}
+                loading="lazy"
+                decoding="async"
                 className={cn(
                   "max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-md transform-gpu transition-transform duration-500 group-hover:scale-105",
                   item.invertWhite && "brightness-0 invert drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
@@ -105,6 +107,8 @@ export const SponsorsSection = memo(function SponsorsSection() {
               <img
                 src={item.src}
                 alt={item.alt}
+                loading="lazy"
+                decoding="async"
                 className={cn(
                   "max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-md transform-gpu transition-transform duration-500 group-hover:scale-105",
                   item.invertWhite && "brightness-0 invert drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"

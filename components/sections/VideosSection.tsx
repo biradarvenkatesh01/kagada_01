@@ -34,6 +34,96 @@ const AFTERMOVIES: AftermovieItem[] = [
   },
 ]
 
+function VideoCard({
+  movie,
+  idx,
+  onOpenModal,
+}: {
+  movie: AftermovieItem;
+  idx: number;
+  onOpenModal: (movie: AftermovieItem) => void;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    io.observe(video);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: idx * 0.2 }}
+      className={cn(
+        "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
+        "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+        "transform-gpu hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-all duration-500"
+      )}
+    >
+      {/* Glass Interior Reflective Shimmer */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
+
+      {/* Video Thumbnail Preview Window with Glowing Glass Play Button */}
+      <div
+        onClick={() => onOpenModal(movie)}
+        className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-white/80 bg-black/40 group cursor-pointer z-10 shadow-xl"
+      >
+        {/* HTML5 Video Preview */}
+        <video
+          ref={videoRef}
+          src={movie.videoSrc}
+          muted
+          playsInline
+          loop
+          preload="metadata"
+          className="w-full h-full object-cover transform-gpu transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+        />
+
+        {/* Dark Ambient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:bg-black/30 transition-colors" />
+
+        {/* Center Glowing Glass Play Button Badge */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-2xl border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300 transform-gpu">
+            <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white text-white translate-x-0.5 drop-shadow-md" />
+          </div>
+        </div>
+
+        {/* Bottom Right Duration Badge */}
+        <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 backdrop-blur-xl text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
+          {movie.duration}
+        </div>
+      </div>
+
+      {/* Card Content Footer inside Translucent Glass Badge */}
+      <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/60 shadow-inner">
+        <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-white tracking-wide leading-none drop-shadow-md">
+          {movie.title}
+        </h3>
+        <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 leading-relaxed drop-shadow-sm">
+          {movie.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
 export const VideosSection = memo(function VideosSection() {
   const [activeModalVideo, setActiveModalVideo] = useState<AftermovieItem | null>(null)
   const modalVideoRef = useRef<HTMLVideoElement>(null)
@@ -107,62 +197,12 @@ export const VideosSection = memo(function VideosSection() {
       {/* 2 Video Aftermovie Glassmorphic Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 w-full">
         {AFTERMOVIES.map((movie, idx) => (
-          <motion.div
+          <VideoCard
             key={movie.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: idx * 0.2 }}
-            className={cn(
-              "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
-              "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
-              "transform-gpu hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-all duration-500"
-            )}
-          >
-            {/* Glass Interior Reflective Shimmer */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
-
-            {/* Video Thumbnail Preview Window with Glowing Glass Play Button */}
-            <div
-              onClick={() => handleOpenModal(movie)}
-              className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-white/80 bg-black/40 group cursor-pointer z-10 shadow-xl"
-            >
-              {/* HTML5 Video Preview */}
-              <video
-                src={movie.videoSrc}
-                muted
-                playsInline
-                loop
-                autoPlay
-                className="w-full h-full object-cover transform-gpu transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
-              />
-
-              {/* Dark Ambient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:bg-black/30 transition-colors" />
-
-              {/* Center Glowing Glass Play Button Badge */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-2xl border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300 transform-gpu">
-                  <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white text-white translate-x-0.5 drop-shadow-md" />
-                </div>
-              </div>
-
-              {/* Bottom Right Duration Badge */}
-              <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 backdrop-blur-xl text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
-                {movie.duration}
-              </div>
-            </div>
-
-            {/* Card Content Footer inside Translucent Glass Badge */}
-            <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/60 shadow-inner">
-              <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-white tracking-wide leading-none drop-shadow-md">
-                {movie.title}
-              </h3>
-              <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 leading-relaxed drop-shadow-sm">
-                {movie.description}
-              </p>
-            </div>
-          </motion.div>
+            movie={movie}
+            idx={idx}
+            onOpenModal={handleOpenModal}
+          />
         ))}
       </div>
 

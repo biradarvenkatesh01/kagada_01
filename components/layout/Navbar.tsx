@@ -30,8 +30,8 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
       {/* Left Brand Logo (Constant Kagada Red Filter) */}
       <a href="#hero" className="flex items-center gap-2 select-none py-0">
         <img
-          src="/handle.png"
-          alt="IEEE UVCE Kagada Logo"
+          src="/kagada-2026-header.png"
+          alt="IEEE UVCE Kagada 2026 Logo"
           className="h-11 sm:h-14 w-auto object-contain transition-all duration-300 hover:scale-105"
           style={{
             filter:

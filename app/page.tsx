@@ -15,8 +15,10 @@ import FAQSection from "@/components/sections/FAQSection";
 import ContactSection from "@/components/sections/ContactSection";
 import IntroVideoOverlay from "@/components/sections/IntroVideoOverlay";
 import AuroraBackground from "@/components/ui/aurora-background";
+import BurgundyTexturedBackground from "@/components/ui/burgundy-textured-background";
 import AIChatCard from "@/components/features/AIChatCard";
 import BackToTop from "@/components/ui/back-to-top";
+import ImageLightbox from "@/components/ui/image-lightbox";
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -78,44 +80,49 @@ export default function Home() {
         !isVideoHidden ? "h-screen min-h-[100dvh] overflow-hidden" : "min-h-screen"
       }`}
     >
-      {/* Dynamic Background Atmosphere */}
+      {/* Dynamic Background Atmosphere (Hero) */}
       <AuroraBackground />
 
       {/* Floating Pill Header Navigation */}
       <Navbar isVideoFading={isVideoFading} />
 
-      {/* SECTION 1: HERO */}
+      {/* SECTION 1: HERO (Untouched, with original background) */}
       <HeroSection isVideoFading={isVideoFading} />
 
-      {/* SECTION 2: ABOUT US */}
-      <AboutSection />
+      {/* CONTINUOUS NON-HERO BURGUNDY TEXTURED CANVAS */}
+      <div className="relative w-full overflow-hidden z-10">
+        <BurgundyTexturedBackground />
 
-      {/* SECTION 3: TRACKS */}
-      <TracksSection />
+        {/* SECTION 2: ABOUT US */}
+        <AboutSection />
 
-      {/* SECTION 4: PRIZE POOL */}
-      <PrizePoolSection />
+        {/* SECTION 3: TRACKS */}
+        <TracksSection />
 
-      {/* SECTION 5: PREVIOUS WINNERS */}
-      <WinnersSection />
+        {/* SECTION 4: PRIZE POOL */}
+        <PrizePoolSection />
 
-      {/* SECTION 6: GALLERY MARQUEE */}
-      <GallerySection />
+        {/* SECTION 5: PREVIOUS WINNERS */}
+        <WinnersSection />
 
-      {/* SECTION 7: AFTERMOVIES */}
-      <VideosSection />
+        {/* SECTION 6: GALLERY MARQUEE */}
+        <GallerySection />
 
-      {/* SECTION 8: SPONSORS */}
-      <SponsorsSection />
+        {/* SECTION 7: AFTERMOVIES */}
+        <VideosSection />
 
-      {/* SECTION 9: FAQ ACCORDION */}
-      <FAQSection />
+        {/* SECTION 8: SPONSORS */}
+        <SponsorsSection />
 
-      {/* SECTION 10: CONTACT ORGANIZERS & MAP */}
-      <ContactSection />
+        {/* SECTION 9: FAQ ACCORDION */}
+        <FAQSection />
 
-      {/* FOOTER */}
-      <Footer />
+        {/* SECTION 10: CONTACT ORGANIZERS & MAP */}
+        <ContactSection />
+
+        {/* FOOTER */}
+        <Footer />
+      </div>
 
       {/* INTRO VIDEO OVERLAY */}
       <IntroVideoOverlay
@@ -128,10 +135,13 @@ export default function Home() {
       />
 
       {/* AI CHATBOT ASSISTANT */}
-      <AIChatCard isVisible={isVideoHidden} />
+      <AIChatCard isVisible={isVideoHidden || isVideoFading} />
 
       {/* FLOATING BACK TO TOP BUTTON */}
       <BackToTop />
+
+      {/* FULLSCREEN IMAGE LIGHTBOX MODAL */}
+      <ImageLightbox />
     </main>
   );
 }

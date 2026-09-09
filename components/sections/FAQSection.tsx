@@ -55,7 +55,7 @@ export const FAQSection = memo(function FAQSection() {
   }
 
   return (
-    <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-6 sm:py-10 scroll-mt-6 z-10">
+    <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-6 sm:py-10 scroll-mt-6 z-10 cv-auto">
       {/* Main Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 25 }}

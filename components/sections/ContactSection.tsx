@@ -62,7 +62,7 @@ const UVCE_DIRECTIONS_URL =
 
 export const ContactSection = memo(function ContactSection() {
   return (
-    <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
+    <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10 cv-auto">
       {/* Main Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 25 }}

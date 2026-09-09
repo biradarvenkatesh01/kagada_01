@@ -21,7 +21,28 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [bottomOffset, setBottomOffset] = useState(20);
+  const [showGreeting, setShowGreeting] = useState(false);
+  const hasGreetedRef = useRef(false);
   const chatBottomRef = useRef<HTMLDivElement>(null);
+
+  // Trigger brief 'Heyy' greeting once user reaches the hero page after initial video
+  useEffect(() => {
+    if (isVisible && !hasGreetedRef.current) {
+      hasGreetedRef.current = true;
+      const showTimer = setTimeout(() => {
+        setShowGreeting(true);
+      }, 900);
+
+      const hideTimer = setTimeout(() => {
+        setShowGreeting(false);
+      }, 6500);
+
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
+    }
+  }, [isVisible]);
 
   // Footer-aware positioning
   const handleFooterScroll = useCallback(() => {
@@ -40,9 +61,21 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleFooterScroll, { passive: true });
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleFooterScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     handleFooterScroll();
-    return () => window.removeEventListener("scroll", handleFooterScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [handleFooterScroll]);
 
   useEffect(() => {
@@ -102,9 +135,52 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
 
   return (
     <>
-      {/* Pure Circular Glassmorphic Launcher Button */}
+      {/* Welcome Speech Bubble Tooltip ("Heyy from the bot") */}
+      <AnimatePresence>
+        {showGreeting && !isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.88 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.88, transition: { duration: 0.25 } }}
+            transition={{ type: "spring", stiffness: 320, damping: 24 }}
+            onClick={() => {
+              setShowGreeting(false);
+              setIsOpen(true);
+            }}
+            className="fixed right-5 sm:right-7 z-50 cursor-pointer select-none"
+            style={{ bottom: `${bottomOffset + 76}px` }}
+          >
+            <div className="relative bg-white/95 backdrop-blur-2xl text-[#8a1c1c] border-2 border-white px-4 py-3 rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs hover:scale-[1.03] transition-all duration-200 group">
+              <div className="w-8 h-8 rounded-full bg-[#8a1c1c]/10 flex items-center justify-center shrink-0 border border-[#8a1c1c]/20 text-[#8a1c1c]">
+                <Bot className="w-5 h-5 stroke-[2.2]" />
+              </div>
+              <p className="text-xs sm:text-sm font-bold font-jakarta text-[#2d080e] leading-snug flex-1">
+                Heyy! Have questions about Kagada 2026?
+              </p>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowGreeting(false);
+                }}
+                className="p-1 rounded-full text-[#8a1c1c]/50 hover:text-[#8a1c1c] hover:bg-black/5 transition-colors self-center -mr-1"
+                aria-label="Dismiss greeting"
+              >
+                <X className="w-3.5 h-3.5 stroke-[2.5]" />
+              </button>
+
+              {/* Speech bubble downward triangular pointer pointing toward launcher button */}
+              <div className="absolute -bottom-2 right-6 sm:right-7 w-3.5 h-3.5 bg-white border-r-2 border-b-2 border-white rotate-45 shadow-sm" />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Pure Circular Glassmorphic Launcher Button (Matched in size to BackToTop) */}
       <motion.button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setShowGreeting(false);
+          setIsOpen(!isOpen);
+        }}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         whileHover={{ scale: 1.1 }}
@@ -112,16 +188,21 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className={cn(
           "fixed right-5 sm:right-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-2xl select-none group",
-          "bg-[#8a1c1c]/90 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] transition-all duration-300",
+          "bg-[#8a1c1c]/90 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] hover:border-white transition-all duration-300",
           isOpen && "bg-[#8a1c1c] border-white ring-4 ring-white/30"
         )}
         style={{ bottom: `${bottomOffset}px` }}
         aria-label="Toggle AI Chatbot"
       >
+        {/* Subtle Attention Ping Ring when not open */}
+        {!isOpen && (
+          <span className="absolute -inset-1 rounded-full bg-white/40 animate-ping pointer-events-none opacity-40 [animation-duration:3.2s]" />
+        )}
+
         {isOpen ? (
-          <X className="w-6 h-6 sm:w-7 sm:h-7 text-white stroke-[2.5]" />
+          <X className="w-7 h-7 sm:w-8 sm:h-8 text-white stroke-[2.5]" />
         ) : (
-          <Bot className="w-7 h-7 sm:w-8 sm:h-8 text-white stroke-[2.2] drop-shadow-md group-hover:rotate-12 transition-transform duration-300" />
+          <Bot className="w-8 h-8 sm:w-9 sm:h-9 text-white stroke-[2.2] drop-shadow-md group-hover:rotate-12 transition-transform duration-300" />
         )}
       </motion.button>
 
@@ -138,7 +219,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
               "bg-[#8a1c1c]/80 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/80",
               className
             )}
-            style={{ bottom: `${bottomOffset + 72}px` }}
+            style={{ bottom: `${bottomOffset + 80}px` }}
           >
             {/* Subtle Interior Reflection Shimmer */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/20 pointer-events-none rounded-3xl" />

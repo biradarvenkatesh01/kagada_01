@@ -54,7 +54,7 @@ function MarqueeRow({
             <div
               key={`b1-${item.id}-${idx}`}
               className={cn(
-                "relative shrink-0 overflow-hidden cursor-pointer group rounded-3xl",
+                "relative shrink-0 overflow-hidden cursor-zoom-in group rounded-3xl",
                 "bg-white/25 backdrop-blur-sm border-2 border-white/90 shadow-md shadow-black/10",
                 "transition-all duration-500 transform-gpu hover:scale-[1.03] hover:bg-white/45 hover:border-white",
                 item.shape
@@ -63,7 +63,9 @@ function MarqueeRow({
               <img
                 src={item.src}
                 alt="Kagada Event Photo"
-                className="w-full h-full object-cover transform-gpu transition-transform duration-500 group-hover:scale-105 select-none pointer-events-none"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover transform-gpu transition-transform duration-500 group-hover:scale-105 select-none cursor-zoom-in pointer-events-auto"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/30 pointer-events-none rounded-3xl" />
             </div>
@@ -76,7 +78,7 @@ function MarqueeRow({
             <div
               key={`b2-${item.id}-${idx}`}
               className={cn(
-                "relative shrink-0 overflow-hidden cursor-pointer group rounded-3xl",
+                "relative shrink-0 overflow-hidden cursor-zoom-in group rounded-3xl",
                 "bg-white/25 backdrop-blur-sm border-2 border-white/90 shadow-md shadow-black/10",
                 "transition-all duration-500 transform-gpu hover:scale-[1.03] hover:bg-white/45 hover:border-white",
                 item.shape
@@ -85,7 +87,9 @@ function MarqueeRow({
               <img
                 src={item.src}
                 alt="Kagada Event Photo"
-                className="w-full h-full object-cover transform-gpu transition-transform duration-500 group-hover:scale-105 select-none pointer-events-none"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover transform-gpu transition-transform duration-500 group-hover:scale-105 select-none cursor-zoom-in pointer-events-auto"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/30 pointer-events-none rounded-3xl" />
             </div>
@@ -98,7 +102,7 @@ function MarqueeRow({
 
 export const GallerySection = memo(function GallerySection() {
   return (
-    <section id="gallery" className="relative w-full overflow-hidden py-4 sm:py-8 flex flex-col gap-6 sm:gap-10 select-none min-h-[480px] scroll-mt-6 z-10">
+    <section id="gallery" className="relative w-full overflow-hidden py-4 sm:py-8 flex flex-col gap-6 sm:gap-10 select-none min-h-[480px] scroll-mt-6 z-10 cv-auto">
       {/* Section Title */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4">
         <motion.h2

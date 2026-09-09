@@ -13,15 +13,20 @@ export default function SmoothScroll({
   useEffect(() => {
     // Initialize Lenis smooth momentum scrolling for butter-smooth navigation
     const lenis = new Lenis({
-      lerp: 0.1,
-      duration: 1.2,
+      lerp: 0.09,
+      duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.2,
+      touchMultiplier: 1.4,
     });
+
+    lenisRef.current = lenis;
+    if (typeof window !== "undefined") {
+      (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+    }
 
     let rafId: number;
 
@@ -40,7 +45,7 @@ export default function SmoothScroll({
         const elem = document.querySelector(anchor.hash);
         if (elem) {
           e.preventDefault();
-          lenis.scrollTo(elem as HTMLElement, { offset: -80 });
+          lenis.scrollTo(elem as HTMLElement, { offset: -80, duration: 1.2 });
         }
       }
     };
@@ -51,6 +56,9 @@ export default function SmoothScroll({
       document.removeEventListener("click", handleAnchorClick);
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      if (typeof window !== "undefined") {
+        delete (window as unknown as { __lenis?: Lenis }).__lenis;
+      }
     };
   }, []);
 

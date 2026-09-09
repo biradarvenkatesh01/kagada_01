@@ -31,16 +31,33 @@ export default function BackToTop() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [handleScroll]);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (target: number, opts?: { duration?: number }) => void } }).__lenis;
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -54,11 +71,11 @@ export default function BackToTop() {
           whileHover={{ scale: 1.15 }}
           whileTap={{ scale: 0.92 }}
           transition={{ type: "spring", stiffness: 280, damping: 20 }}
-          className="fixed left-5 sm:left-7 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-[#8a1c1c]/90 backdrop-blur-2xl border-2 border-white/80 text-white shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] transition-all duration-300 group select-none cursor-pointer"
+          className="fixed left-5 sm:left-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center bg-[#8a1c1c]/90 backdrop-blur-2xl border-2 border-white/80 text-white shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] hover:border-white transition-all duration-300 group select-none cursor-pointer"
           style={{ bottom: `${bottomOffset}px` }}
           aria-label="Back to Top"
         >
-          <ArrowUp className="w-5 h-5 sm:w-6 sm:h-6 text-white stroke-[3] group-hover:-translate-y-0.5 transition-transform duration-300 drop-shadow-md" />
+          <ArrowUp className="w-6 h-6 sm:w-7 sm:h-7 text-white stroke-[3] group-hover:-translate-y-1 transition-transform duration-300 drop-shadow-md" />
         </motion.button>
       )}
     </AnimatePresence>

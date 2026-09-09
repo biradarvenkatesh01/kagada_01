@@ -1,9 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export function AuroraBackground({ className }: { className?: string }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className={cn("fixed inset-0 pointer-events-none overflow-hidden z-0 select-none", className)}>
       {/* Signature UVCE Red Brick Building Base Atmosphere (#8a1c1c) */}
@@ -14,7 +16,7 @@ export function AuroraBackground({ className }: { className?: string }) {
 
       {/* 🌟 1. Top-Left Sweeping Gold Light Orb (Traverses to Top-Right & Center) */}
       <motion.div
-        animate={{
+        animate={reduceMotion ? undefined : {
           scale: [1, 1.25, 0.95, 1.18, 1],
           opacity: [0.28, 0.48, 0.3, 0.45, 0.28],
           x: [0, 380, 200, -80, 0],
@@ -30,7 +32,7 @@ export function AuroraBackground({ className }: { className?: string }) {
 
       {/* 🌟 2. Top-Right Sweeping Amber Gold Orb (Traverses to Top-Left & Bottom) */}
       <motion.div
-        animate={{
+        animate={reduceMotion ? undefined : {
           scale: [1, 1.2, 0.9, 1.15, 1],
           opacity: [0.25, 0.45, 0.28, 0.4, 0.25],
           x: [0, -420, -220, 100, 0],
@@ -46,7 +48,7 @@ export function AuroraBackground({ className }: { className?: string }) {
 
       {/* 🌟 3. Bottom-Right Sweeping Gold Orb (Traverses to Bottom-Left & Top) */}
       <motion.div
-        animate={{
+        animate={reduceMotion ? undefined : {
           scale: [0.95, 1.25, 0.9, 1.12, 0.95],
           opacity: [0.22, 0.42, 0.25, 0.38, 0.22],
           x: [0, -380, -180, 80, 0],
@@ -62,7 +64,7 @@ export function AuroraBackground({ className }: { className?: string }) {
 
       {/* 🌟 4. Bottom-Left Sweeping Crimson & Gold Core Orb (Traverses to Center & Top-Right) */}
       <motion.div
-        animate={{
+        animate={reduceMotion ? undefined : {
           scale: [1, 1.22, 0.92, 1.15, 1],
           opacity: [0.3, 0.5, 0.32, 0.45, 0.3],
           x: [0, 420, 220, -60, 0],
@@ -79,15 +81,7 @@ export function AuroraBackground({ className }: { className?: string }) {
       {/* Balanced Golden Radial Texture Layer */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.1)_0%,rgba(245,158,11,0.04)_30%,transparent_55%)] pointer-events-none" />
 
-      {/* 👾 GLOBAL TRANSLUCENT WHITE PIXEL GRID OVERLAY */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-30 sm:opacity-20"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Crect x='0' y='0' width='3' height='3' fill='rgba(255,255,255,0.35)'/%3E%3C/svg%3E")`,
-          backgroundSize: "18px 18px",
-          backgroundRepeat: "repeat",
-        }}
-      />
+
 
       {/* Soft Top/Bottom Depth Shimmer Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/25 pointer-events-none" />
