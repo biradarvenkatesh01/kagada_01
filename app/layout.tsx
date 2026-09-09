@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, Outfit, Roboto_Mono } from "next/font/google";
 import SmoothScroll from "@/components/ui/smooth-scroll";
 import "./globals.css";
@@ -35,7 +36,7 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kagada2026.ieeeuvce.org"),
+  metadataBase: new URL("https://kagada2026.live"),
   title: "KAGADA 2026 | Annual National-Level Technical Student Conference",
   description:
     "Official website for KAGADA 2026 - 22nd Annual National-Level Technical Student Conference & Competition organized by IEEE UVCE at University Visvesvaraya College of Engineering, Bengaluru.",
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
     title: "KAGADA 2026 | IEEE UVCE National Technical Conference",
     description:
       "Annual National-Level Technical Student Conference conducted by IEEE UVCE on 10th October, 2026 at UVCE, KR Circle.",
-    url: "https://kagada2026.ieeeuvce.org",
+    url: "https://kagada2026.live",
     siteName: "KAGADA 2026",
     images: [
       {
@@ -87,6 +88,24 @@ export default function RootLayout({
       <head>
         {/* Preload critical hero background image for instant display */}
         <link rel="preload" as="image" href="/hero-bg.jpg" fetchPriority="high" />
+
+        {/* Google Analytics (gtag.js) */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-F242B7FH1S"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+        >
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-F242B7FH1S');
+          `}
+        </Script>
       </head>
       <body className="min-h-full flex flex-col bg-[#8a1c1c] text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden font-jakarta">
         <SmoothScroll>{children}</SmoothScroll>
