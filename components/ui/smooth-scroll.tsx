@@ -13,14 +13,13 @@ export default function SmoothScroll({
   useEffect(() => {
     // Initialize Lenis smooth momentum scrolling for butter-smooth navigation
     const lenis = new Lenis({
-      lerp: 0.09,
-      duration: 1.1,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.4,
+      touchMultiplier: 1.2,
     });
 
     lenisRef.current = lenis;

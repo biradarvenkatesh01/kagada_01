@@ -18,9 +18,10 @@ export const BurgundyTexturedBackground = memo(function BurgundyTexturedBackgrou
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden z-0"
+      className="absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden z-0 transform-gpu"
       style={{
         backgroundColor: "#520d1a",
+        transform: "translate3d(0, 0, 0)",
       }}
     >
       {/* ── Layer A: Base Rich Burgundy Surface ────────────────────── */}

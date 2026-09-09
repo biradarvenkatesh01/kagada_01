@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -43,7 +43,6 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [bottomOffset, setBottomOffset] = useState(20);
   const [showGreeting, setShowGreeting] = useState(false);
   const hasGreetedRef = useRef(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -66,43 +65,6 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
       };
     }
   }, [isVisible]);
-
-  // Footer-aware positioning
-  const handleFooterScroll = useCallback(() => {
-    const footer = document.querySelector("footer");
-    if (!footer) return;
-    const footerRect = footer.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const defaultBottom = 20;
-    const margin = 16;
-    if (footerRect.top < viewportHeight) {
-      const newBottom = viewportHeight - footerRect.top + margin;
-      setBottomOffset(Math.max(newBottom, defaultBottom));
-    } else {
-      setBottomOffset(defaultBottom);
-    }
-  }, []);
-
-  useEffect(() => {
-    let ticking = false;
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleFooterScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const initialRaf = window.requestAnimationFrame(handleFooterScroll);
-    return () => {
-      window.cancelAnimationFrame(initialRaf);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [handleFooterScroll]);
 
   useEffect(() => {
     if (isOpen && messagesContainerRef.current) {
@@ -174,8 +136,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
               setShowGreeting(false);
               setIsOpen(true);
             }}
-            className="fixed right-5 sm:right-7 z-50 cursor-pointer select-none"
-            style={{ bottom: `${bottomOffset + 76}px` }}
+            className="fixed bottom-22 sm:bottom-25 right-5 sm:right-7 z-50 cursor-pointer select-none"
           >
             <div className="relative bg-white/95 backdrop-blur-2xl text-[#8a1c1c] border-2 border-white px-4 py-3 rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs hover:scale-[1.03] transition-all duration-200 group">
               <div className="w-8 h-8 rounded-full bg-[#8a1c1c]/10 flex items-center justify-center shrink-0 border border-[#8a1c1c]/20 text-[#8a1c1c]">
@@ -214,11 +175,10 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         whileTap={{ scale: 0.92 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className={cn(
-          "fixed right-5 sm:right-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-2xl select-none group",
+          "fixed bottom-5 sm:bottom-7 right-5 sm:right-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-2xl select-none group",
           "bg-[#8a1c1c]/90 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] hover:border-white transition-all duration-300",
           isOpen && "bg-[#8a1c1c] border-white ring-4 ring-white/30"
         )}
-        style={{ bottom: `${bottomOffset}px` }}
         aria-label="Toggle AI Chatbot"
       >
         {isOpen ? (
@@ -238,11 +198,10 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
             data-lenis-prevent="true"
             className={cn(
-              "fixed right-4 sm:right-7 z-50 w-[calc(100vw-2rem)] sm:w-[410px] h-[530px] max-h-[calc(100vh-7rem)] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
+              "fixed bottom-22 sm:bottom-26 right-4 sm:right-7 z-50 w-[calc(100vw-2rem)] sm:w-[410px] h-[530px] max-h-[calc(100vh-7rem)] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
               "bg-[#8a1c1c]/80 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/80",
               className
             )}
-            style={{ bottom: `${bottomOffset + 80}px` }}
           >
             {/* Subtle Interior Reflection Shimmer */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/20 pointer-events-none rounded-3xl" />

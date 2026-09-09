@@ -2,9 +2,9 @@
 
 import * as React from 'react'
 import { memo } from 'react'
-import { motion } from 'framer-motion'
 import { Marquee } from '@/components/ui/marquee'
 import { cn } from '@/lib/utils'
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface SponsorItem {
   id: number
@@ -33,26 +33,18 @@ export const SponsorsSection = memo(function SponsorsSection() {
   return (
     <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-6 sm:py-10 scroll-mt-6 z-10 cv-auto">
       {/* Main Section Title */}
-      <motion.h2
-        initial={{ opacity: 0, y: 25 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4"
-      >
-        Our <span className="text-amber-400 drop-shadow-md">Sponsors</span>
-      </motion.h2>
+      <ScrollReveal direction="up" duration={500}>
+        <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4">
+          Our <span className="text-amber-400 drop-shadow-md">Sponsors</span>
+        </h2>
+      </ScrollReveal>
 
       {/* Subtitle */}
-      <motion.p
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.15 }}
-        className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-8 sm:mb-12 max-w-2xl"
-      >
-        Honoring the partners and organizations supporting KAGADA’s legacy.
-      </motion.p>
+      <ScrollReveal direction="up" delay={60} duration={500}>
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-8 sm:mb-12 max-w-2xl">
+          Honoring the partners and organizations supporting KAGADA’s legacy.
+        </p>
+      </ScrollReveal>
 
       {/* Glassmorphic Sponsor Image Marquee Loop Row 1 */}
       <div className="w-full flex flex-col gap-6 sm:gap-10">

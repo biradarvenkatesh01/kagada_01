@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect, memo } from "react";
-import { motion } from "framer-motion";
 import { CardStack, CardStackItem } from "@/components/ui/card-stack";
 import { ABOUT_CARDS } from "@/data/kagada-data";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 export const AboutSection = memo(function AboutSection() {
   const [isMobileScreen, setIsMobileScreen] = useState(false);
@@ -171,24 +171,14 @@ export const AboutSection = memo(function AboutSection() {
     >
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
-        <motion.h2
-          initial={{ opacity: 0, y: -15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1, margin: "100px 0px 0px 0px" }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-12 sm:mb-16 md:mb-20 tracking-tight text-center select-none"
-        >
-          About <span className="text-amber-400 drop-shadow-md">Us</span>
-        </motion.h2>
+        <ScrollReveal direction="down" duration={450}>
+          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-12 sm:mb-16 md:mb-20 tracking-tight text-center select-none">
+            About <span className="text-amber-400 drop-shadow-md">Us</span>
+          </h2>
+        </ScrollReveal>
 
         {/* 3D Circular Orbit Card Carousel with 3 Rich Cards */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.05, margin: "150px 0px 0px 0px" }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full flex items-center justify-center"
-        >
+        <ScrollReveal direction="scale" duration={400} delay={40} className="w-full flex items-center justify-center">
           <CardStack
             items={ABOUT_CARDS}
             initialIndex={0}
@@ -206,7 +196,7 @@ export const AboutSection = memo(function AboutSection() {
             springDamping={24}
             renderCard={renderAboutCard}
           />
-        </motion.div>
+        </ScrollReveal>
       </div>
     </section>
   );

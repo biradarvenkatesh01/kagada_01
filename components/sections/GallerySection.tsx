@@ -2,8 +2,8 @@
 
 import * as React from 'react'
 import { memo } from 'react'
-import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface GalleryItem {
   id: number
@@ -105,25 +105,17 @@ export const GallerySection = memo(function GallerySection() {
     <section id="gallery" className="relative w-full overflow-hidden py-4 sm:py-8 flex flex-col gap-6 sm:gap-10 select-none min-h-[480px] scroll-mt-6 z-10 cv-auto">
       {/* Section Title */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none"
-        >
-          Event <span className="text-amber-400 drop-shadow-md">Gallery</span>
-        </motion.h2>
+        <ScrollReveal direction="down" duration={500}>
+          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none">
+            Event <span className="text-amber-400 drop-shadow-md">Gallery</span>
+          </h2>
+        </ScrollReveal>
 
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-6 sm:mb-10 max-w-2xl"
-        >
-          Capturing unforgettable moments across KAGADA editions.
-        </motion.p>
+        <ScrollReveal direction="up" delay={60} duration={500}>
+          <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-6 sm:mb-10 max-w-2xl">
+            Capturing unforgettable moments across KAGADA editions.
+          </p>
+        </ScrollReveal>
       </div>
 
       {/* ROW 1: Moves Continuously to the RIGHT at smooth speed */}

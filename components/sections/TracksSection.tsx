@@ -1,7 +1,7 @@
 "use client";
 
 import { memo } from "react";
-import { motion } from "framer-motion";
+import ScrollReveal from "@/components/ui/scroll-reveal";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { TRACKS_TIMELINE_DATA } from "@/data/kagada-data";
 
@@ -13,26 +13,14 @@ export const TracksSection = memo(function TracksSection() {
     >
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-start text-center">
         {/* Section Heading */}
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-1 tracking-tight text-center select-none"
-        >
+        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-1 tracking-tight text-center select-none">
           Tracks
-        </motion.h2>
+        </ScrollReveal>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="font-roboto-mono text-xs sm:text-sm md:text-base text-amber-400 font-bold tracking-wider sm:tracking-widest uppercase mb-2 sm:mb-4 drop-shadow-md select-none"
-        >
+        <ScrollReveal as="p" y={12} delay={60} duration={0.4} className="font-roboto-mono text-xs sm:text-sm md:text-base text-amber-400 font-bold tracking-wider sm:tracking-widest uppercase mb-2 sm:mb-4 drop-shadow-md select-none">
           Click on any track icon to explore details
-        </motion.p>
+        </ScrollReveal>
 
         {/* Radial Orbital Timeline Component */}
         <div className="w-full flex items-center justify-center">

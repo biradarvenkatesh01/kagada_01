@@ -1,7 +1,7 @@
 "use client";
 
 import { memo } from "react";
-import { motion } from "framer-motion";
+import ScrollReveal from "@/components/ui/scroll-reveal";
 import { Trophy, Award } from "lucide-react";
 
 export const PrizePoolSection = memo(function PrizePoolSection() {
@@ -12,23 +12,16 @@ export const PrizePoolSection = memo(function PrizePoolSection() {
     >
       <div className="relative z-10 w-full max-w-xl md:max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="font-saman text-4xl sm:text-6xl md:text-7xl text-white drop-shadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none"
-        >
+        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-4xl sm:text-6xl md:text-7xl text-white drop-shadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none">
           Prize <span className="text-amber-400 drop-shadow-md">Pool</span>
-        </motion.h2>
+        </ScrollReveal>
 
         <div className="w-full flex flex-col items-center gap-5 sm:gap-6">
           {/* Box 1: Total Prize Money Translucent Glass Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.96 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 120, damping: 22 }}
+          <ScrollReveal
+            y={20}
+            scale={0.98}
+            duration={0.45}
             className="relative w-full bg-white/40 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/20 rounded-3xl p-5 sm:p-7 md:p-8 text-white flex flex-col items-center text-center overflow-hidden transform-gpu"
           >
             {/* Circular Trophy SVG Icon Glass Badge */}
@@ -50,21 +43,20 @@ export const PrizePoolSection = memo(function PrizePoolSection() {
             <p className="font-jakarta text-xs sm:text-sm text-white/95 leading-relaxed font-medium max-w-lg mx-auto drop-shadow-sm">
               Exciting rewards await at <strong className="font-extrabold text-white">KAGADA 2026</strong>! A total prize pool of <strong className="font-extrabold text-white">₹40,000</strong> will be shared across <strong className="font-extrabold text-white">Paper, Poster, and Project presentations</strong>, celebrating creativity, technical excellence and impactful ideas.
             </p>
-          </motion.div>
+          </ScrollReveal>
 
           {/* Box 2: Certificate Participation Translucent Glass Banner */}
-          <motion.div
-            initial={{ opacity: 0, y: 25, scale: 0.96 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 120, damping: 22, delay: 0.15 }}
+          <ScrollReveal
+            y={16}
+            delay={80}
+            duration={0.45}
             className="relative w-full max-w-lg mx-auto bg-white/40 backdrop-blur-2xl border-2 border-white/80 shadow-xl shadow-black/20 rounded-2xl sm:rounded-3xl py-3 px-5 sm:py-3.5 sm:px-6 text-white flex items-center justify-center gap-2.5 sm:gap-3 text-center overflow-hidden transform-gpu"
           >
             <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0 drop-shadow-sm" />
             <p className="font-jakarta text-xs sm:text-sm text-white font-semibold leading-snug drop-shadow-sm">
               Every participant will be awarded a <strong className="font-black text-white">Certificate of Participation</strong>.
             </p>
-          </motion.div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

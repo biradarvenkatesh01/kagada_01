@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
+
 export default function QueryForm({ className }: { className?: string }) {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -92,19 +94,16 @@ export default function QueryForm({ className }: { className?: string }) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={cn(
-        "relative w-full max-w-3xl mx-auto overflow-hidden rounded-3xl p-6 sm:p-10",
-        "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35 transform-gpu",
-        className
-      )}
-    >
-      {/* Glass Reflective Interior Shimmer */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
+    <ScrollReveal direction="up" delay={80} className="w-full max-w-3xl mx-auto">
+      <div
+        className={cn(
+          "relative w-full overflow-hidden rounded-3xl p-6 sm:p-10",
+          "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35 transform-gpu",
+          className
+        )}
+      >
+        {/* Glass Reflective Interior Shimmer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
 
       <div className="relative z-10 w-full flex flex-col items-center">
         <AnimatePresence mode="wait">
@@ -280,6 +279,7 @@ export default function QueryForm({ className }: { className?: string }) {
           )}
         </AnimatePresence>
       </div>
-    </motion.div>
-  );
+    </div>
+  </ScrollReveal>
+);
 }

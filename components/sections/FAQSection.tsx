@@ -5,6 +5,7 @@ import { useState, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface FAQItem {
   question: string
@@ -57,35 +58,22 @@ export const FAQSection = memo(function FAQSection() {
   return (
     <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-6 sm:py-10 scroll-mt-6 z-10 cv-auto">
       {/* Main Section Title */}
-      <motion.h2
-        initial={{ opacity: 0, y: 25 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4"
-      >
-        Frequently Asked <span className="text-amber-400 drop-shadow-md">Questions</span>
-      </motion.h2>
+      <ScrollReveal direction="up" duration={500}>
+        <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4">
+          Frequently Asked <span className="text-amber-400 drop-shadow-md">Questions</span>
+        </h2>
+      </ScrollReveal>
 
       {/* Subtitle */}
-      <motion.p
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.15 }}
-        className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl"
-      >
-        Everything you need to know about KAGADA conference, tracks, and events.
-      </motion.p>
+      <ScrollReveal direction="up" delay={60} duration={500}>
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl">
+          Everything you need to know about KAGADA conference, tracks, and events.
+        </p>
+      </ScrollReveal>
 
       {/* Glassmorphic FAQ Accordion Container */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="w-full flex flex-col gap-2.5 sm:gap-3"
-      >
+      <ScrollReveal direction="up" delay={100} duration={500} className="w-full">
+        <div className="w-full flex flex-col gap-2.5 sm:gap-3">
         {FAQS.map((faq, idx) => {
           const isOpen = openIndex === idx
 
@@ -138,9 +126,10 @@ export const FAQSection = memo(function FAQSection() {
                 )}
               </AnimatePresence>
             </div>
-          )
+          );
         })}
-      </motion.div>
+        </div>
+      </ScrollReveal>
     </section>
   )
 });

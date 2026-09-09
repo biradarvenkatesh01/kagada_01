@@ -2,10 +2,10 @@
 
 import * as React from 'react'
 import { memo } from 'react'
-import { motion } from 'framer-motion'
 import { User, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import QueryForm from '@/components/features/QueryForm'
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -65,147 +65,128 @@ export const ContactSection = memo(function ContactSection() {
   return (
     <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10 cv-auto">
       {/* Main Section Title */}
-      <motion.h2
-        initial={{ opacity: 0, y: 25 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4"
-      >
-        Contact <span className="text-amber-400 drop-shadow-md">Us</span>
-      </motion.h2>
+      <ScrollReveal direction="up" duration={500}>
+        <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4">
+          Contact <span className="text-amber-400 drop-shadow-md">Us</span>
+        </h2>
+      </ScrollReveal>
 
       {/* Subtitle */}
-      <motion.p
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.15 }}
-        className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl"
-      >
-        For more queries, reach out to our IEEE UVCE organizers or find your way to KAGADA 2026.
-      </motion.p>
+      <ScrollReveal direction="up" delay={60} duration={500}>
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl">
+          For more queries, reach out to our IEEE UVCE organizers or find your way to KAGADA 2026.
+        </p>
+      </ScrollReveal>
 
       <div className="w-full flex flex-col gap-12 sm:gap-16 mb-6 sm:mb-10">
         {/* Organizers Section */}
         <div className="flex flex-col items-center">
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wider mb-8 text-center drop-shadow-md"
-          >
-            Organisers
-          </motion.h3>
+          <ScrollReveal direction="up" duration={450}>
+            <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wider mb-8 text-center drop-shadow-md">
+              Organisers
+            </h3>
+          </ScrollReveal>
 
           {/* 3 Glassmorphic Organizers Cards Directing to WhatsApp */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
-          >
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {ORGANIZERS.map((item, idx) => (
-              <a
-                key={`organizer-${idx}`}
-                href={item.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={`Chat with ${item.name} on WhatsApp`}
-                className={cn(
-                  "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between cursor-pointer group",
-                  "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
-                  "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white"
-                )}
-              >
-                {/* Glass Reflective Interior Shimmer */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
+              <ScrollReveal key={`organizer-${idx}`} direction="up" delay={idx * 80} className="h-full">
+                <a
+                  href={item.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`Chat with ${item.name} on WhatsApp`}
+                  className={cn(
+                    "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between cursor-pointer group h-full",
+                    "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+                    "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white"
+                  )}
+                >
+                  {/* Glass Reflective Interior Shimmer */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
 
-                <div className="relative z-10 w-full flex flex-col items-center">
-                  {/* Profile Icon SVG */}
-                  <div className="w-14 h-14 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <User className="w-7 h-7 stroke-[2.2]" />
+                  <div className="relative z-10 w-full flex flex-col items-center">
+                    {/* Profile Icon SVG */}
+                    <div className="w-14 h-14 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
+                      <User className="w-7 h-7 stroke-[2.2]" />
+                    </div>
+                    <h4 className="font-outfit font-extrabold text-xl text-white tracking-wide mb-1 drop-shadow-sm">
+                      {item.name}
+                    </h4>
+                    <p className="font-roboto-mono text-xs font-bold text-red-200 tracking-wider mb-5 uppercase">
+                      {item.designation}
+                    </p>
                   </div>
-                  <h4 className="font-outfit font-extrabold text-xl text-white tracking-wide mb-1 drop-shadow-sm">
-                    {item.name}
-                  </h4>
-                  <p className="font-roboto-mono text-xs font-bold text-red-200 tracking-wider mb-5 uppercase">
-                    {item.designation}
-                  </p>
-                </div>
 
-                <div className="relative z-10 w-full flex flex-col gap-2.5 pt-4 border-t border-white/40 font-roboto-mono text-xs sm:text-sm font-semibold">
-                  <div className="flex items-center justify-center gap-2 text-white/95 group-hover:text-white transition-colors drop-shadow-sm">
-                    <WhatsAppIcon className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>{item.phone}</span>
+                  <div className="relative z-10 w-full flex flex-col gap-2.5 pt-4 border-t border-white/40 font-roboto-mono text-xs sm:text-sm font-semibold">
+                    <div className="flex items-center justify-center gap-2 text-white/95 group-hover:text-white transition-colors drop-shadow-sm">
+                      <WhatsAppIcon className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>{item.phone}</span>
+                    </div>
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        window.location.href = item.emailLink
+                      }}
+                      className="flex items-center justify-center gap-2 text-white/95 hover:text-white hover:underline transition-colors drop-shadow-sm truncate max-w-full"
+                    >
+                      <Mail className="w-4 h-4 text-white/80 shrink-0" />
+                      <span className="truncate">{item.email}</span>
+                    </div>
                   </div>
-                  <div
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      window.location.href = item.emailLink
-                    }}
-                    className="flex items-center justify-center gap-2 text-white/95 hover:text-white hover:underline transition-colors drop-shadow-sm truncate max-w-full"
-                  >
-                    <Mail className="w-4 h-4 text-white/80 shrink-0" />
-                    <span className="truncate">{item.email}</span>
-                  </div>
-                </div>
-              </a>
+                </a>
+              </ScrollReveal>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* Working Query Form Section */}
         <QueryForm />
 
         {/* Embedded Map Section Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className={cn(
-            "relative w-full max-w-4xl mx-auto overflow-hidden rounded-3xl p-6 sm:p-8 flex flex-col items-center",
-            "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35"
-          )}
-        >
-          {/* Glass Reflective Interior Shimmer */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
-
-          {/* Perfectly Centered Map Header */}
-          <div className="relative z-10 flex flex-col items-center text-center w-full mb-6">
-            <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wide drop-shadow-sm">
-              Find Us Here
-            </h3>
-            <p className="font-roboto-mono text-xs font-semibold text-white/80 tracking-wider uppercase mt-1">
-              UVCE, KR Circle, Bengaluru
-            </p>
-          </div>
-
-          {/* Embedded Google Map Frame */}
-          <div className="relative z-10 w-full h-[320px] sm:h-[400px] rounded-2xl overflow-hidden border-2 border-white/80 shadow-xl mb-6 bg-black/20">
-            <iframe
-              src={UVCE_MAP_EMBED_URL}
-              className="w-full h-full border-0"
-              allowFullScreen={false}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="University Visvesvaraya College of Engineering Location Map"
-            />
-          </div>
-
-          {/* Clean Get Directions Action Button */}
-          <a
-            href={UVCE_DIRECTIONS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative z-10 w-full sm:w-auto bg-white text-[#8a1c1c] font-outfit font-black text-base py-3.5 px-8 rounded-2xl shadow-xl hover:bg-white/90 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center uppercase tracking-wider"
+        <ScrollReveal direction="up" delay={80} className="w-full max-w-4xl mx-auto">
+          <div
+            className={cn(
+              "relative w-full overflow-hidden rounded-3xl p-6 sm:p-8 flex flex-col items-center",
+              "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35"
+            )}
           >
-            Get Directions
-          </a>
-        </motion.div>
+            {/* Glass Reflective Interior Shimmer */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
+
+            {/* Perfectly Centered Map Header */}
+            <div className="relative z-10 flex flex-col items-center text-center w-full mb-6">
+              <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wide drop-shadow-sm">
+                Find Us Here
+              </h3>
+              <p className="font-roboto-mono text-xs font-semibold text-white/80 tracking-wider uppercase mt-1">
+                UVCE, KR Circle, Bengaluru
+              </p>
+            </div>
+
+            {/* Embedded Google Map Frame */}
+            <div className="relative z-10 w-full h-[320px] sm:h-[400px] rounded-2xl overflow-hidden border-2 border-white/80 shadow-xl mb-6 bg-black/20">
+              <iframe
+                src={UVCE_MAP_EMBED_URL}
+                className="w-full h-full border-0"
+                allowFullScreen={false}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="University Visvesvaraya College of Engineering Location Map"
+              />
+            </div>
+
+            {/* Clean Get Directions Action Button */}
+            <a
+              href={UVCE_DIRECTIONS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 w-full sm:w-auto bg-white text-[#8a1c1c] font-outfit font-black text-base py-3.5 px-8 rounded-2xl shadow-xl hover:bg-white/90 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center uppercase tracking-wider"
+            >
+              Get Directions
+            </a>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )

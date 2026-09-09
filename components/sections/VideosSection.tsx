@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
+
 interface AftermovieItem {
   id: string
   title: string
@@ -79,62 +81,60 @@ function VideoCard({
   }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: idx * 0.2 }}
-      className={cn(
-        "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
-        "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
-        "transform-gpu hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-all duration-500"
-      )}
-    >
-      {/* Glass Interior Reflective Shimmer */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
-
-      {/* Video Thumbnail Preview Window with Glowing Glass Play Button */}
+    <ScrollReveal direction="up" delay={idx * 100} className="w-full">
       <div
-        onClick={() => onOpenModal(movie)}
-        className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-white/80 bg-black/40 group cursor-pointer z-10 shadow-xl"
+        className={cn(
+          "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
+          "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+          "transform-gpu hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-all duration-500"
+        )}
       >
-        {/* HTML5 Video Preview */}
-        <video
-          ref={videoRef}
-          src={movie.videoSrc}
-          muted
-          playsInline
-          loop
-          preload="metadata"
-          className="w-full h-full object-cover transform-gpu transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
-        />
+        {/* Glass Interior Reflective Shimmer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
 
-        {/* Dark Ambient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:bg-black/30 transition-colors" />
+        {/* Video Thumbnail Preview Window with Glowing Glass Play Button */}
+        <div
+          onClick={() => onOpenModal(movie)}
+          className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-white/80 bg-black/40 group cursor-pointer z-10 shadow-xl"
+        >
+          {/* HTML5 Video Preview */}
+          <video
+            ref={videoRef}
+            src={movie.videoSrc}
+            muted
+            playsInline
+            loop
+            preload="metadata"
+            className="w-full h-full object-cover transform-gpu transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+          />
 
-        {/* Center Glowing Glass Play Button Badge */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-2xl border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300 transform-gpu">
-            <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white text-white translate-x-0.5 drop-shadow-md" />
+          {/* Dark Ambient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:bg-black/30 transition-colors" />
+
+          {/* Center Glowing Glass Play Button Badge */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-2xl border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300 transform-gpu">
+              <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white text-white translate-x-0.5 drop-shadow-md" />
+            </div>
+          </div>
+
+          {/* Bottom Right Duration Badge */}
+          <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 backdrop-blur-xl text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
+            {movie.duration}
           </div>
         </div>
 
-        {/* Bottom Right Duration Badge */}
-        <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 backdrop-blur-xl text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
-          {movie.duration}
+        {/* Card Content Footer inside Translucent Glass Badge */}
+        <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/60 shadow-inner">
+          <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-white tracking-wide leading-none drop-shadow-md">
+            {movie.title}
+          </h3>
+          <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 leading-relaxed drop-shadow-sm">
+            {movie.description}
+          </p>
         </div>
       </div>
-
-      {/* Card Content Footer inside Translucent Glass Badge */}
-      <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/60 shadow-inner">
-        <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-white tracking-wide leading-none drop-shadow-md">
-          {movie.title}
-        </h3>
-        <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 leading-relaxed drop-shadow-sm">
-          {movie.description}
-        </p>
-      </div>
-    </motion.div>
+    </ScrollReveal>
   );
 }
 
@@ -187,26 +187,18 @@ export const VideosSection = memo(function VideosSection() {
   return (
     <section id="videos" className="relative w-full max-w-6xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Title: KAGADA - From the previous years! */}
-      <motion.h2
-        initial={{ opacity: 0, y: 25 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="font-saman text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4"
-      >
-        KAGADA - <span className="text-amber-400 drop-shadow-md">From the previous years!</span>
-      </motion.h2>
+      <ScrollReveal direction="up" duration={500}>
+        <h2 className="font-saman text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4">
+          KAGADA - <span className="text-amber-400 drop-shadow-md">From the previous years!</span>
+        </h2>
+      </ScrollReveal>
 
       {/* Subtitle */}
-      <motion.p
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.15 }}
-        className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl"
-      >
-        Experience the magic of KAGADA through our cinematic after movies.
-      </motion.p>
+      <ScrollReveal direction="up" delay={60} duration={500}>
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl">
+          Experience the magic of KAGADA through our cinematic after movies.
+        </p>
+      </ScrollReveal>
 
       {/* 2 Video Aftermovie Glassmorphic Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 w-full">

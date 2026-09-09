@@ -32,6 +32,7 @@ export default function RadialOrbitalTimeline({
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
   const [orbitRadius, setOrbitRadius] = useState<number>(240);
+  const [isInView, setIsInView] = useState<boolean>(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
@@ -39,6 +40,21 @@ export default function RadialOrbitalTimeline({
   const rafRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number | null>(null);
   const rotationAngleRef = useRef<number>(0);
+
+  // 📱 Track visibility to avoid 60fps RAF re-renders when off-screen
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // 📱 RESPONSIVE ORBIT RADIUS (118px phone < 480px, 165px tablet < 640px, 240px desktop)
   useEffect(() => {
@@ -127,29 +143,32 @@ export default function RadialOrbitalTimeline({
   };
 
   // 🚀 HARDWARE-ACCELERATED RAF ROTATION (20°/sec = 18s 1:1 match with center gear)
+  // Pauses automatically when off-screen to eliminate 60fps main-thread React re-renders
   useEffect(() => {
+    if (!autoRotate || !isInView) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      lastTimeRef.current = null;
+      return;
+    }
+
     const updateRotation = (time: number) => {
-      if (lastTimeRef.current !== null && autoRotate) {
+      if (lastTimeRef.current !== null) {
         const delta = (time - lastTimeRef.current) / 1000;
         setRotationAngle((prev) => (prev + delta * 20) % 360);
       }
       lastTimeRef.current = time;
-      if (autoRotate) {
-        rafRef.current = requestAnimationFrame(updateRotation);
-      }
+      rafRef.current = requestAnimationFrame(updateRotation);
     };
 
-    if (autoRotate) {
-      lastTimeRef.current = null;
-      rafRef.current = requestAnimationFrame(updateRotation);
-    }
+    lastTimeRef.current = null;
+    rafRef.current = requestAnimationFrame(updateRotation);
 
     return () => {
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [autoRotate]);
+  }, [autoRotate, isInView]);
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
