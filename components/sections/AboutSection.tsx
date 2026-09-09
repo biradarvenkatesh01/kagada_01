@@ -172,10 +172,10 @@ export const AboutSection = memo(function AboutSection() {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
         <motion.h2
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: true, amount: 0.1, margin: "100px 0px 0px 0px" }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-12 sm:mb-16 md:mb-20 tracking-tight text-center select-none"
         >
           About <span className="text-amber-400 drop-shadow-md">Us</span>
@@ -183,10 +183,10 @@ export const AboutSection = memo(function AboutSection() {
 
         {/* 3D Circular Orbit Card Carousel with 3 Rich Cards */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.05, margin: "150px 0px 0px 0px" }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="w-full flex items-center justify-center"
         >
           <CardStack
@@ -202,8 +202,8 @@ export const AboutSection = memo(function AboutSection() {
             maxVisible={3}
             spreadDeg={0}
             tiltXDeg={0}
-            springStiffness={120}
-            springDamping={22}
+            springStiffness={160}
+            springDamping={24}
             renderCard={renderAboutCard}
           />
         </motion.div>

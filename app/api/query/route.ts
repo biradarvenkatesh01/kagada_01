@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import fs from "fs";
-import path from "path";
-import os from "os";
 
 // Helper to safely format from-email even if raw domain is passed
 function resolveFromEmail(raw?: string): string {
@@ -24,74 +21,6 @@ interface QueryPayload {
   lastName?: string;
   email: string;
   message: string;
-}
-
-interface QueryRecord extends QueryPayload {
-  id: string;
-  timestamp: string;
-}
-
-// Persistence helper to ensure zero queries are lost, with Vercel serverless /tmp fallback
-function saveQueryLocally(payload: QueryPayload) {
-  // Check if we can write to process.cwd()/data or need to fallback to OS temp dir (e.g. on Vercel Lambda)
-  const isVercel = Boolean(process.env.VERCEL);
-  const targetDir = isVercel ? os.tmpdir() : path.join(process.cwd(), "data");
-
-  try {
-    if (!fs.existsSync(targetDir)) {
-      fs.mkdirSync(targetDir, { recursive: true });
-    }
-    const filePath = path.join(targetDir, "queries.json");
-    let existing: QueryRecord[] = [];
-    if (fs.existsSync(filePath)) {
-      const raw = fs.readFileSync(filePath, "utf-8");
-      try {
-        existing = JSON.parse(raw);
-        if (!Array.isArray(existing)) existing = [];
-      } catch {
-        existing = [];
-      }
-    }
-
-    const newRecord: QueryRecord = {
-      id: `query_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
-      timestamp: new Date().toISOString(),
-      ...payload,
-    };
-
-    existing.unshift(newRecord);
-    fs.writeFileSync(filePath, JSON.stringify(existing, null, 2), "utf-8");
-    return true;
-  } catch (err) {
-    // If local directory failed (e.g. read-only filesystem), fallback to os.tmpdir()
-    if (!isVercel) {
-      try {
-        const fallbackPath = path.join(os.tmpdir(), "queries.json");
-        let fallbackExisting: QueryRecord[] = [];
-        if (fs.existsSync(fallbackPath)) {
-          const raw = fs.readFileSync(fallbackPath, "utf-8");
-          try {
-            fallbackExisting = JSON.parse(raw);
-            if (!Array.isArray(fallbackExisting)) fallbackExisting = [];
-          } catch {
-            fallbackExisting = [];
-          }
-        }
-        const newRecord: QueryRecord = {
-          id: `query_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
-          timestamp: new Date().toISOString(),
-          ...payload,
-        };
-        fallbackExisting.unshift(newRecord);
-        fs.writeFileSync(fallbackPath, JSON.stringify(fallbackExisting, null, 2), "utf-8");
-        return true;
-      } catch (fallbackErr) {
-        console.warn("Fallback query save also failed:", fallbackErr);
-      }
-    }
-    console.warn("Could not persist query to filesystem in current environment:", err);
-    return false;
-  }
 }
 
 function escapeHtml(str: string): string {
@@ -269,61 +198,52 @@ export async function POST(req: NextRequest) {
       message: message.trim().slice(0, 5000),
     };
 
-    // 2. Always persist locally as primary fail-safe
-    saveQueryLocally(cleanPayload);
-
-    // 3. Dispatch email via Resend if API key is configured
-    let emailSent = false;
-    let resendError: string | null = null;
-
+    // Dispatch email directly via Resend
     const resendApiKey = process.env.RESEND_API_KEY;
-    const resend = resendApiKey ? new Resend(resendApiKey) : null;
+    if (!resendApiKey) {
+      console.error("[Query API] RESEND_API_KEY is not configured.");
+      return NextResponse.json(
+        { error: "Email delivery service is currently not configured." },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(resendApiKey);
     const notificationEmail =
       process.env.CONTACT_NOTIFICATION_EMAIL || "kagada.ieeeuvce@gmail.com";
     const fromEmail = resolveFromEmail(process.env.RESEND_FROM_EMAIL);
 
-    if (resend) {
-      try {
-        const fullName = `${cleanPayload.firstName} ${cleanPayload.lastName}`.trim();
-        const timeString = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-        const emailHtml = renderQueryEmailHtml({
-          name: fullName,
-          email: cleanPayload.email,
-          message: cleanPayload.message,
-          time: timeString,
-        });
+    const fullName = `${cleanPayload.firstName} ${cleanPayload.lastName}`.trim();
+    const timeString = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+    const emailHtml = renderQueryEmailHtml({
+      name: fullName,
+      email: cleanPayload.email,
+      message: cleanPayload.message,
+      time: timeString,
+    });
 
-        const sendResult = await resend.emails.send({
-          from: fromEmail,
-          to: [notificationEmail],
-          replyTo: cleanPayload.email,
-          subject: `[KAGADA 2026 Query] from ${fullName}`,
-          html: emailHtml,
-        });
+    const sendResult = await resend.emails.send({
+      from: fromEmail,
+      to: [notificationEmail],
+      replyTo: cleanPayload.email,
+      subject: `[KAGADA 2026 Query] from ${fullName}`,
+      html: emailHtml,
+    });
 
-        if (sendResult.error) {
-          console.error("Resend delivery failed:", sendResult.error);
-          resendError = sendResult.error.message;
-        } else {
-          emailSent = true;
-          console.log(
-            `[Query API] Query email successfully delivered to ${notificationEmail} via Resend (ID: ${sendResult.data?.id})`
-          );
-        }
-      } catch (err: unknown) {
-        console.error("Resend API exception:", err);
-        resendError = err instanceof Error ? err.message : String(err);
-      }
-    } else {
-      console.log(
-        "RESEND_API_KEY is not configured. Query successfully saved to data/queries.json."
+    if (sendResult.error) {
+      console.error("[Query API] Resend delivery failed:", sendResult.error);
+      return NextResponse.json(
+        { error: sendResult.error.message || "Failed to deliver email." },
+        { status: 502 }
       );
     }
 
+    console.log(
+      `[Query API] Query email successfully delivered to ${notificationEmail} via Resend (ID: ${sendResult.data?.id})`
+    );
+
     return NextResponse.json({
       success: true,
-      emailSent,
-      resendError,
       message: "Your query has been submitted successfully!",
     });
   } catch (error: unknown) {

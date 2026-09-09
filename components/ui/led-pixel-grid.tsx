@@ -4,18 +4,18 @@ import { useEffect, useRef, useCallback, memo } from "react";
 
 // ─── LED Pixel Configuration ───────────────────────────────────────────────
 const GRID_SPACING = 8;
-const DOT_SIZE = 1.1;
-const BLOOM_SIZE = 3.2;
+const DOT_SIZE = 1.2;
+const BLOOM_SIZE = 3.5;
 
-// Opacity ranges — softened visible field for balanced, elegant brightness
-const BASE_OPACITY_MIN = 0.28;
-const BASE_OPACITY_MAX = 0.42;
+// Opacity ranges — modestly boosted for enhanced luminous clarity
+const BASE_OPACITY_MIN = 0.35;
+const BASE_OPACITY_MAX = 0.52;
 
-// Animated pixel targets (softened luminous highlights)
-const DIM_TARGET_MIN = 0.10;
-const DIM_TARGET_MAX = 0.20;
-const BRIGHT_TARGET_MIN = 0.52;
-const BRIGHT_TARGET_MAX = 0.65;
+// Animated pixel targets (soft luminous highlights)
+const DIM_TARGET_MIN = 0.14;
+const DIM_TARGET_MAX = 0.25;
+const BRIGHT_TARGET_MIN = 0.65;
+const BRIGHT_TARGET_MAX = 0.78;
 
 // ─── Animation Frequency & Dynamic Movement ──────────────────────────────
 const TWINKLE_MIN_INTERVAL = 150;
@@ -95,7 +95,7 @@ const BLOOM_LUT: string[] = [];
 for (let i = 0; i <= 100; i++) {
   const alpha = i / 100;
   COLOR_LUT.push(`rgba(${LED_R},${LED_G},${LED_B},${alpha.toFixed(2)})`);
-  BLOOM_LUT.push(`rgba(${LED_R},${LED_G},${LED_B},${(alpha * 0.18).toFixed(2)})`);
+  BLOOM_LUT.push(`rgba(${LED_R},${LED_G},${LED_B},${(alpha * 0.22).toFixed(2)})`);
 }
 
 // ─── Utility ───────────────────────────────────────────────────────────────
@@ -479,7 +479,7 @@ function LEDPixelGridInner({ className }: { className?: string }) {
         const wave1 = Math.sin(p.col * 0.075 + p.row * 0.038 - flowT);
         const wave2 = Math.cos(p.col * 0.042 - p.row * 0.065 + flowT * 0.75);
         const combinedWave = wave1 * 0.07 + wave2 * 0.04;
-        displayOpacity = Math.min(0.65, Math.max(0.12, p.opacity + combinedWave));
+        displayOpacity = Math.min(0.78, Math.max(0.16, p.opacity + combinedWave));
       }
 
       // Subtle bloom for bright pixels
