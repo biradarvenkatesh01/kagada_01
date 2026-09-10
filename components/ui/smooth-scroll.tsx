@@ -11,13 +11,17 @@ export default function SmoothScroll({
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     // Initialize Lenis smooth momentum scrolling for butter-smooth navigation
     const lenis = new Lenis({
       duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
-      smoothWheel: true,
+      smoothWheel: !prefersReducedMotion,
       wheelMultiplier: 1.0,
       touchMultiplier: 1.2,
     });
@@ -27,14 +31,32 @@ export default function SmoothScroll({
       (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
     }
 
-    let rafId: number;
+    let rafId: number | null = null;
 
     function raf(time: number) {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
     }
 
-    rafId = requestAnimationFrame(raf);
+    if (!document.hidden) {
+      rafId = requestAnimationFrame(raf);
+    }
+
+    // Lifecycle: Pause RAF loop when tab is hidden to save battery & CPU
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      } else {
+        if (rafId === null) {
+          rafId = requestAnimationFrame(raf);
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     // Handle smooth anchor clicks site-wide
     const handleAnchorClick = (e: MouseEvent) => {
@@ -52,8 +74,9 @@ export default function SmoothScroll({
     document.addEventListener("click", handleAnchorClick);
 
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       document.removeEventListener("click", handleAnchorClick);
-      cancelAnimationFrame(rafId);
+      if (rafId !== null) cancelAnimationFrame(rafId);
       lenis.destroy();
       if (typeof window !== "undefined") {
         delete (window as unknown as { __lenis?: Lenis }).__lenis;

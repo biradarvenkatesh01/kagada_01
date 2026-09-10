@@ -90,7 +90,6 @@ html {
   overflow-y: auto;
   width: 100%;
   min-height: 100%;
-  background: #8a1c1c;
   color: var(--foreground);
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
@@ -102,7 +101,6 @@ body {
   overflow-y: auto;
   width: 100%;
   min-height: 100%;
-  background: #8a1c1c;
   color: var(--foreground);
   font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -354,6 +352,7 @@ img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-li
 .scroll-reveal[data-revealed="true"] {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
+  will-change: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {

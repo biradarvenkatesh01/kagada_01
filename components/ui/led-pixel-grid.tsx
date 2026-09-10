@@ -515,14 +515,38 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let lastW = 0;
+    let lastH = 0;
+    let resizeTimer: ReturnType<typeof setTimeout> | null = null;
+    let initialRender = true;
+
+    const doResize = () => {
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+      const w = Math.round(rect.width);
+      const h = Math.round(rect.height);
+      if (w === 0 || h === 0) return;
+
+      // Avoid full grid rebuild if dimensions shifted by less than 8px
+      if (Math.abs(w - lastW) < 8 && Math.abs(h - lastH) < 8) return;
+      lastW = w;
+      lastH = h;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
       const ctx = canvas.getContext("2d", { alpha: true });
       if (ctx) ctx.scale(dpr, dpr);
-      buildGrid(rect.width, rect.height);
+      buildGrid(w, h);
+    };
+
+    const resize = () => {
+      if (initialRender) {
+        initialRender = false;
+        doResize();
+        return;
+      }
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(doResize, 60);
     };
 
     resize();
@@ -539,7 +563,7 @@ function LEDPixelGridInner({ className }: { className?: string }) {
           isVisibleRef.current = true;
           lastTimeRef.current = performance.now();
           cancelAnimationFrame(animRef.current);
-          if (!prefersReducedMotion) {
+          if (!prefersReducedMotion && !document.hidden) {
             animRef.current = requestAnimationFrame(animate);
           } else {
             // Render single static frame for reduced motion users
@@ -554,16 +578,30 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     );
     io.observe(canvas);
 
-    if (!prefersReducedMotion) {
+    // Tab visibility handling: pause RAF when user switches tabs or window is minimized
+    const handleVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animRef.current);
+      } else if (isVisibleRef.current && !prefersReducedMotion) {
+        lastTimeRef.current = performance.now();
+        cancelAnimationFrame(animRef.current);
+        animRef.current = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    if (!prefersReducedMotion && !document.hidden) {
       animRef.current = requestAnimationFrame(animate);
     } else {
       animate(performance.now());
     }
 
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
       ro.disconnect();
       io.disconnect();
       cancelAnimationFrame(animRef.current);
+      if (resizeTimer) clearTimeout(resizeTimer);
     };
   }, [buildGrid, animate]);
 

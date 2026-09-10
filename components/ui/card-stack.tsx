@@ -128,7 +128,16 @@ export function CardStack<T extends CardStackItem>({
 
   const [hovering, setHovering] = React.useState(false);
   const [isInView, setIsInView] = React.useState(false);
+  const [isMobileViewport, setIsMobileViewport] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const mql = window.matchMedia("(max-width: 640px)");
+    setIsMobileViewport(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobileViewport(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
 
   React.useEffect(() => {
     if (!len) return;
@@ -232,6 +241,8 @@ export function CardStack<T extends CardStackItem>({
   if (!len) return null;
 
   const activeItem = items[active]!;
+  const isMobile = cardWidth < 500 || isMobileViewport;
+  const effectiveCardHeight = isMobile ? 770 : cardHeight;
 
   return (
     <div
@@ -242,93 +253,92 @@ export function CardStack<T extends CardStackItem>({
     >
       {/* Stage */}
       <div
-        className="relative w-full flex items-center justify-center transition-all duration-500 touch-pan-y"
-        style={{ height: `calc(min(90vh, ${cardHeight}px) + ${cardWidth < 500 ? 40 : 80}px)` }}
+        className="relative w-full flex items-center justify-center touch-pan-y"
+        style={{ height: `calc(min(90vh, ${effectiveCardHeight}px) + ${isMobile ? 40 : 80}px)` }}
         tabIndex={0}
         onKeyDown={onKeyDown}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {/* background wash / spotlight */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-56 w-[75%] rounded-full bg-[#8a1c1c]/10 blur-3xl"
-          aria-hidden="true"
-        />
+            {/* background wash / spotlight */}
+            <div
+              className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-56 w-[75%] rounded-full bg-[#8a1c1c]/10 blur-3xl"
+              aria-hidden="true"
+            />
 
-        <div
-          className="absolute inset-0 flex items-center justify-center"
-          style={{
-            perspective: `${perspectivePx}px`,
-          }}
-        >
-          <AnimatePresence initial={false}>
-            {items.map((item, i) => {
-              const off = signedOffset(i, active, len, loop);
-              const abs = Math.abs(off);
-              const visible = abs <= maxOffset;
+            <div
+              className="absolute inset-0 flex items-center justify-center"
+              style={{
+                perspective: `${perspectivePx}px`,
+              }}
+            >
+              <AnimatePresence initial={false}>
+                {items.map((item, i) => {
+                  const off = signedOffset(i, active, len, loop);
+                  const abs = Math.abs(off);
+                  const visible = abs <= maxOffset;
 
-              // hide far-away cards cleanly
-              if (!visible) return null;
+                  // hide far-away cards cleanly
+                  if (!visible) return null;
 
-              // 3D Geometry: on mobile (<500px), cards stack cleanly behind without overflowing screen edges
-              const isMobile = cardWidth < 500;
-              const radiusAngle = (off / maxOffset) * (Math.PI / 3.4);
-              const x = isMobile ? off * 10 : Math.sin(radiusAngle) * (cardSpacing * 1.35);
-              const z = isMobile ? -abs * 35 : (Math.cos(radiusAngle) - 1) * depthPx * 1.8;
-              const rotateY = isMobile ? 0 : off * -7;
-              const y = isMobile ? -abs * 10 : 0;
+                  // 3D Geometry: on mobile (<500px or mobile viewport), cards stack cleanly behind without overflowing screen edges
+                  const radiusAngle = (off / maxOffset) * (Math.PI / 3.4);
+                  const x = isMobile ? off * 10 : Math.sin(radiusAngle) * (cardSpacing * 1.35);
+                  const z = isMobile ? -abs * 35 : (Math.cos(radiusAngle) - 1) * depthPx * 1.8;
+                  const rotateY = isMobile ? 0 : off * -7;
+                  const y = isMobile ? -abs * 10 : 0;
 
-              const isActive = off === 0;
+                  const isActive = off === 0;
 
-              const scale = isActive
-                ? activeScale
-                : isMobile
-                ? Math.max(0.85, 0.94 - (abs - 1) * 0.06)
-                : inactiveScale;
-              const lift = isActive ? -activeLiftPx : 0;
+                  const scale = isActive
+                    ? activeScale
+                    : isMobile
+                    ? Math.max(0.85, 0.94 - (abs - 1) * 0.06)
+                    : inactiveScale;
+                  const lift = isActive ? -activeLiftPx : 0;
 
-              const zIndex = 100 - abs;
+                  const zIndex = 100 - abs;
 
-              // drag only on the active card
-              const dragProps = isActive
-                ? {
-                    drag: "x" as const,
-                    dragConstraints: { left: 0, right: 0 },
-                    dragElastic: 0.2,
-                    dragSnapToOrigin: true,
-                    onDragEnd: (
-                      _e: MouseEvent | TouchEvent | PointerEvent,
-                      info: { offset: { x: number }; velocity: { x: number } },
-                    ) => {
-                      if (reduceMotion) return;
-                      const travel = info.offset.x;
-                      const v = info.velocity.x;
-                      const threshold = Math.min(50, cardWidth * 0.15);
+                  // drag only on the active card
+                  const dragProps = isActive
+                    ? {
+                        drag: "x" as const,
+                        dragConstraints: { left: 0, right: 0 },
+                        dragElastic: 0.2,
+                        dragSnapToOrigin: true,
+                        onDragEnd: (
+                          _e: MouseEvent | TouchEvent | PointerEvent,
+                          info: { offset: { x: number }; velocity: { x: number } },
+                        ) => {
+                          if (reduceMotion) return;
+                          const travel = info.offset.x;
+                          const v = info.velocity.x;
+                          const threshold = Math.min(50, cardWidth * 0.15);
 
-                      // swipe logic
-                      if (travel > threshold || v > 200) prev();
-                      else if (travel < -threshold || v < -200) next();
-                    },
-                  }
-                : {};
+                          // swipe logic
+                          if (travel > threshold || v > 200) prev();
+                          else if (travel < -threshold || v < -200) next();
+                        },
+                      }
+                    : {};
 
-              return (
-                <motion.div
-                  key={item.id}
-                  className={cn(
-                    "absolute rounded-3xl border-2 border-white shadow-2xl backdrop-blur-xl bg-white/92",
-                    "select-none p-4 sm:p-10 flex flex-col justify-between overflow-hidden transform-gpu",
-                    isActive
-                      ? "cursor-grab active:cursor-grabbing ring-1 ring-white/80 shadow-black/20"
-                      : "cursor-pointer opacity-90 shadow-black/10 hover:opacity-100",
-                  )}
-                  style={{
-                    width: `min(92vw, ${cardWidth}px)`,
-                    height: `min(90vh, ${cardHeight}px)`,
-                    zIndex,
-                    transformStyle: "preserve-3d",
-                    willChange: "transform, opacity",
-                  }}
+                  return (
+                    <motion.div
+                      key={item.id}
+                      className={cn(
+                        "absolute rounded-3xl border-2 border-white shadow-2xl backdrop-blur-xl bg-white/92",
+                        "select-none p-4 sm:p-10 flex flex-col justify-between overflow-hidden transform-gpu",
+                        isActive
+                          ? "cursor-grab active:cursor-grabbing ring-1 ring-white/80 shadow-black/20"
+                          : "cursor-pointer opacity-90 shadow-black/10 hover:opacity-100",
+                      )}
+                      style={{
+                        width: `min(92vw, ${cardWidth}px)`,
+                        height: `min(90vh, ${effectiveCardHeight}px)`,
+                        zIndex,
+                        transformStyle: "preserve-3d",
+                        willChange: "transform, opacity",
+                      }}
                   initial={
                     reduceMotion
                       ? false

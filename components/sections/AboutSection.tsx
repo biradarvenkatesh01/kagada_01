@@ -6,16 +6,6 @@ import { ABOUT_CARDS } from "@/data/kagada-data";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 export const AboutSection = memo(function AboutSection() {
-  const [isMobileScreen, setIsMobileScreen] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobileScreen(window.innerWidth < 640);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const renderAboutCard = (item: CardStackItem) => {
     if (item.type === "uvce") {
@@ -187,8 +177,8 @@ export const AboutSection = memo(function AboutSection() {
             pauseOnHover
             showDots={false}
             showArrows={true}
-            cardWidth={isMobileScreen ? 330 : 960}
-            cardHeight={isMobileScreen ? 770 : 640}
+            cardWidth={960}
+            cardHeight={640}
             maxVisible={3}
             spreadDeg={0}
             tiltXDeg={0}

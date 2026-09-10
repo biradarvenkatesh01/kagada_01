@@ -16,7 +16,7 @@ const flipUnitVariants = cva(
   {
     variants: {
       size: {
-        sm: "w-8 min-w-8 h-12 text-2xl sm:w-10 sm:min-w-10 sm:h-14 sm:text-3xl", // Small
+        sm: "w-6 min-w-[1.5rem] h-9 text-base min-[360px]:w-7 min-[360px]:min-w-[1.75rem] min-[360px]:h-10.5 min-[360px]:text-lg min-[420px]:w-8 min-[420px]:min-w-[2rem] min-[420px]:h-12 min-[420px]:text-2xl sm:w-10 sm:min-w-10 sm:h-14 sm:text-3xl", // Fluid responsive Small
         md: "w-12 min-w-12 h-16 text-4xl sm:w-14 sm:min-w-14 sm:h-20 sm:text-5xl", // Medium
         lg: "w-14 min-w-14 h-20 text-5xl sm:w-17 sm:min-w-17 sm:h-24 sm:text-6xl", // Large
         xl: "w-20 min-w-20 h-28 text-7xl sm:w-22 sm:min-w-22 sm:h-32 sm:text-8xl", // Extra Large
@@ -164,11 +164,11 @@ const heightMap: Record<FlipClockSize, string> = {
 
 function ClockSeparator({ size = "md" }: { size?: FlipClockSize }) {
   return (
-    <div className="flex h-12 sm:h-14 items-center justify-center">
+    <div className="flex h-9 min-[360px]:h-10.5 min-[420px]:h-12 sm:h-14 items-center justify-center shrink-0">
       <span
         className={cn(
-          "text-center text-[#8a1c1c]/80 font-bold leading-none px-0.5 self-center select-none",
-          heightMap[size],
+          "text-center text-[#8a1c1c]/80 font-bold leading-none px-0.5 self-center select-none text-base min-[360px]:text-lg min-[420px]:text-2xl sm:text-3xl",
+          size !== "sm" && heightMap[size],
         )}
       >
         :
@@ -189,21 +189,43 @@ const FlipClock = ({
   const [time, setTime] = useState<TimeLeft>(getTime(countdown, targetDate));
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const update = () => {
       const nextTime = getTime(countdown, targetDate);
-
       setTime((prev) => {
         if (
           prev.seconds === nextTime.seconds &&
-          prev.minutes === nextTime.minutes
+          prev.minutes === nextTime.minutes &&
+          prev.hours === nextTime.hours &&
+          prev.days === nextTime.days
         ) {
           return prev;
         }
         return nextTime;
       });
-    }, 250);
+    };
 
-    return () => clearInterval(timer);
+    let timer: NodeJS.Timeout | null = setInterval(update, 1000);
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      } else {
+        update();
+        if (!timer) {
+          timer = setInterval(update, 1000);
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      if (timer) clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, [countdown, targetDate]);
 
   // 2 digits for days (e.g. 44)
@@ -218,7 +240,7 @@ const FlipClock = ({
 
   return (
     <div
-      className={cn("relative flex items-start justify-center space-x-1 sm:space-x-3 font-mono font-medium", className)}
+      className={cn("relative flex items-start justify-center space-x-1 sm:space-x-2 md:space-x-3 font-mono font-medium", className)}
       aria-live="polite"
       suppressHydrationWarning
       {...props}
@@ -229,7 +251,7 @@ const FlipClock = ({
 
       {/* Days Group */}
       {shouldShowDays && (
-        <div className="flex flex-col items-center" suppressHydrationWarning>
+        <div className="flex flex-col items-center shrink-0" suppressHydrationWarning>
           <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
             {daysStr.split("").map((digit, i) => (
               <FlipUnit
@@ -240,7 +262,7 @@ const FlipClock = ({
               />
             ))}
           </div>
-          <span className="font-roboto-mono text-[0.6rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+          <span className="font-roboto-mono text-[0.55rem] min-[360px]:text-[0.62rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
             DAYS
           </span>
         </div>
@@ -249,7 +271,7 @@ const FlipClock = ({
       {shouldShowDays && <ClockSeparator size={size} />}
 
       {/* Hours Group */}
-      <div className="flex flex-col items-center" suppressHydrationWarning>
+      <div className="flex flex-col items-center shrink-0" suppressHydrationWarning>
         <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
           {hoursStr.split("").map((digit, index) => (
             <FlipUnit
@@ -260,7 +282,7 @@ const FlipClock = ({
             />
           ))}
         </div>
-        <span className="font-roboto-mono text-[0.6rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+        <span className="font-roboto-mono text-[0.55rem] min-[360px]:text-[0.62rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
           HOURS
         </span>
       </div>
@@ -268,7 +290,7 @@ const FlipClock = ({
       <ClockSeparator size={size} />
 
       {/* Minutes Group */}
-      <div className="flex flex-col items-center" suppressHydrationWarning>
+      <div className="flex flex-col items-center shrink-0" suppressHydrationWarning>
         <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
           {minutesStr.split("").map((digit, index) => (
             <FlipUnit
@@ -279,7 +301,7 @@ const FlipClock = ({
             />
           ))}
         </div>
-        <span className="font-roboto-mono text-[0.6rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+        <span className="font-roboto-mono text-[0.55rem] min-[360px]:text-[0.62rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
           MINS
         </span>
       </div>
@@ -287,7 +309,7 @@ const FlipClock = ({
       <ClockSeparator size={size} />
 
       {/* Seconds Group */}
-      <div className="flex flex-col items-center" suppressHydrationWarning>
+      <div className="flex flex-col items-center shrink-0" suppressHydrationWarning>
         <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
           {secondsStr.split("").map((digit, index) => (
             <FlipUnit
@@ -298,7 +320,7 @@ const FlipClock = ({
             />
           ))}
         </div>
-        <span className="font-roboto-mono text-[0.6rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+        <span className="font-roboto-mono text-[0.55rem] min-[360px]:text-[0.62rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-1 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
           SECS
         </span>
       </div>

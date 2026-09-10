@@ -91,13 +91,9 @@ export const ContactSection = memo(function ContactSection() {
           <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {ORGANIZERS.map((item, idx) => (
               <ScrollReveal key={`organizer-${idx}`} direction="up" delay={idx * 80} className="h-full">
-                <a
-                  href={item.whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={`Chat with ${item.name} on WhatsApp`}
+                <div
                   className={cn(
-                    "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between cursor-pointer group h-full",
+                    "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between group h-full",
                     "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
                     "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white"
                   )}
@@ -119,22 +115,26 @@ export const ContactSection = memo(function ContactSection() {
                   </div>
 
                   <div className="relative z-10 w-full flex flex-col gap-2.5 pt-4 border-t border-white/40 font-roboto-mono text-xs sm:text-sm font-semibold">
-                    <div className="flex items-center justify-center gap-2 text-white/95 group-hover:text-white transition-colors drop-shadow-sm">
+                    <a
+                      href={item.whatsappLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`Chat with ${item.name} on WhatsApp`}
+                      className="flex items-center justify-center gap-2 text-white/95 hover:text-white transition-colors drop-shadow-sm hover:underline"
+                    >
                       <WhatsAppIcon className="w-4 h-4 text-emerald-400 shrink-0" />
                       <span>{item.phone}</span>
-                    </div>
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        window.location.href = item.emailLink
-                      }}
+                    </a>
+                    <a
+                      href={item.emailLink}
+                      title={`Email ${item.name}`}
                       className="flex items-center justify-center gap-2 text-white/95 hover:text-white hover:underline transition-colors drop-shadow-sm truncate max-w-full"
                     >
                       <Mail className="w-4 h-4 text-white/80 shrink-0" />
                       <span className="truncate">{item.email}</span>
-                    </div>
+                    </a>
                   </div>
-                </a>
+                </div>
               </ScrollReveal>
             ))}
           </div>

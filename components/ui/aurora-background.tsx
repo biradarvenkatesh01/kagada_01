@@ -1,10 +1,29 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export function AuroraBackground({ className }: { className?: string }) {
   const reduceMotion = useReducedMotion();
+  const [isHeroInView, setIsHeroInView] = useState(true);
+
+  useEffect(() => {
+    const hero = document.getElementById("hero");
+    if (!hero) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroInView(entry.isIntersecting);
+      },
+      { threshold: 0.02 }
+    );
+    io.observe(hero);
+
+    return () => io.disconnect();
+  }, []);
+
+  const shouldAnimate = !reduceMotion && isHeroInView;
 
   return (
     <div className={cn("fixed inset-0 pointer-events-none overflow-hidden z-0 select-none", className)}>
@@ -16,12 +35,12 @@ export function AuroraBackground({ className }: { className?: string }) {
 
       {/* 🌟 1. Top-Left Sweeping Gold Light Orb (Traverses to Top-Right & Center) */}
       <motion.div
-        animate={reduceMotion ? undefined : {
+        animate={shouldAnimate ? {
           scale: [1, 1.25, 0.95, 1.18, 1],
           opacity: [0.28, 0.48, 0.3, 0.45, 0.28],
           x: [0, 380, 200, -80, 0],
           y: [0, 180, 420, 150, 0],
-        }}
+        } : undefined}
         transition={{
           duration: 9,
           repeat: Infinity,
@@ -32,12 +51,12 @@ export function AuroraBackground({ className }: { className?: string }) {
 
       {/* 🌟 2. Top-Right Sweeping Amber Gold Orb (Traverses to Top-Left & Bottom) */}
       <motion.div
-        animate={reduceMotion ? undefined : {
+        animate={shouldAnimate ? {
           scale: [1, 1.2, 0.9, 1.15, 1],
           opacity: [0.25, 0.45, 0.28, 0.4, 0.25],
           x: [0, -420, -220, 100, 0],
           y: [0, 280, 500, 120, 0],
-        }}
+        } : undefined}
         transition={{
           duration: 10,
           repeat: Infinity,
@@ -48,12 +67,12 @@ export function AuroraBackground({ className }: { className?: string }) {
 
       {/* 🌟 3. Bottom-Right Sweeping Gold Orb (Traverses to Bottom-Left & Top) */}
       <motion.div
-        animate={reduceMotion ? undefined : {
+        animate={shouldAnimate ? {
           scale: [0.95, 1.25, 0.9, 1.12, 0.95],
           opacity: [0.22, 0.42, 0.25, 0.38, 0.22],
           x: [0, -380, -180, 80, 0],
           y: [0, -320, -520, -150, 0],
-        }}
+        } : undefined}
         transition={{
           duration: 8.5,
           repeat: Infinity,
@@ -64,12 +83,12 @@ export function AuroraBackground({ className }: { className?: string }) {
 
       {/* 🌟 4. Bottom-Left Sweeping Crimson & Gold Core Orb (Traverses to Center & Top-Right) */}
       <motion.div
-        animate={reduceMotion ? undefined : {
+        animate={shouldAnimate ? {
           scale: [1, 1.22, 0.92, 1.15, 1],
           opacity: [0.3, 0.5, 0.32, 0.45, 0.3],
           x: [0, 420, 220, -60, 0],
           y: [0, -350, -180, -280, 0],
-        }}
+        } : undefined}
         transition={{
           duration: 9.5,
           repeat: Infinity,

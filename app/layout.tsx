@@ -1,8 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, Outfit, Roboto_Mono } from "next/font/google";
 import SmoothScroll from "@/components/ui/smooth-scroll";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+};
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -84,10 +91,43 @@ export const metadata: Metadata = {
       "22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE on 10th October, 2026 at UVCE, Bengaluru.",
     images: ["/logo1.png"],
   },
+  alternates: {
+    canonical: "https://kagada2026.live",
+  },
   robots: {
     index: true,
     follow: true,
   },
+};
+
+const eventJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "EducationEvent",
+  name: "KAGADA 2026",
+  description:
+    "22nd Annual National-Level Technical Student Conference & Competition organized by IEEE UVCE at University Visvesvaraya College of Engineering, Bengaluru.",
+  startDate: "2026-10-10T09:00:00+05:30",
+  endDate: "2026-10-10T18:00:00+05:30",
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
+  location: {
+    "@type": "Place",
+    name: "University Visvesvaraya College of Engineering (UVCE)",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "K.R. Circle",
+      addressLocality: "Bengaluru",
+      addressRegion: "Karnataka",
+      postalCode: "560001",
+      addressCountry: "IN",
+    },
+  },
+  organizer: {
+    "@type": "Organization",
+    name: "IEEE UVCE",
+    url: "https://ieeeuvce.org",
+  },
+  image: "https://kagada2026.live/logo1.png",
 };
 
 export default function RootLayout({
@@ -103,8 +143,13 @@ export default function RootLayout({
       <head>
         {/* Preload critical hero background image for instant display */}
         <link rel="preload" as="image" href="/hero-bg.jpg" fetchPriority="high" />
+        {/* Schema.org Structured Data for Google Event Rich Results */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+        />
       </head>
-      <body className="min-h-full flex flex-col bg-[#8a1c1c] text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden font-jakarta">
+      <body className="min-h-full flex flex-col text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden font-jakarta">
         {/* Google Analytics (gtag.js) placed in body for optimal Next.js hydration */}
         <Script
           strategy="afterInteractive"

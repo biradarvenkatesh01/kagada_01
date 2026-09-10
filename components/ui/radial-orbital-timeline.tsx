@@ -58,19 +58,26 @@ export default function RadialOrbitalTimeline({
 
   // 📱 RESPONSIVE ORBIT RADIUS (118px phone < 480px, 165px tablet < 640px, 240px desktop)
   useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width < 480) {
+    const mqlPhone = window.matchMedia("(max-width: 479px)");
+    const mqlTablet = window.matchMedia("(max-width: 639px)");
+
+    const updateRadius = () => {
+      if (mqlPhone.matches) {
         setOrbitRadius(118);
-      } else if (width < 640) {
+      } else if (mqlTablet.matches) {
         setOrbitRadius(165);
       } else {
         setOrbitRadius(240);
       }
     };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    updateRadius();
+    mqlPhone.addEventListener("change", updateRadius);
+    mqlTablet.addEventListener("change", updateRadius);
+    return () => {
+      mqlPhone.removeEventListener("change", updateRadius);
+      mqlTablet.removeEventListener("change", updateRadius);
+    };
   }, []);
 
   // Keep ref in sync for RAF loop
@@ -143,15 +150,22 @@ export default function RadialOrbitalTimeline({
   };
 
   // 🚀 HARDWARE-ACCELERATED RAF ROTATION (20°/sec = 18s 1:1 match with center gear)
-  // Pauses automatically when off-screen to eliminate 60fps main-thread React re-renders
+  // Pauses automatically when off-screen or tab hidden to eliminate 60fps main-thread React re-renders
   useEffect(() => {
-    if (!autoRotate || !isInView) {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!autoRotate || !isInView || prefersReducedMotion) {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       lastTimeRef.current = null;
       return;
     }
 
+    let isTabVisible = !document.hidden;
+
     const updateRotation = (time: number) => {
+      if (!isTabVisible) return;
       if (lastTimeRef.current !== null) {
         const delta = (time - lastTimeRef.current) / 1000;
         setRotationAngle((prev) => (prev + delta * 20) % 360);
@@ -160,10 +174,26 @@ export default function RadialOrbitalTimeline({
       rafRef.current = requestAnimationFrame(updateRotation);
     };
 
-    lastTimeRef.current = null;
-    rafRef.current = requestAnimationFrame(updateRotation);
+    const handleVisibility = () => {
+      isTabVisible = !document.hidden;
+      if (isTabVisible) {
+        lastTimeRef.current = performance.now();
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        rafRef.current = requestAnimationFrame(updateRotation);
+      } else {
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    if (isTabVisible) {
+      lastTimeRef.current = null;
+      rafRef.current = requestAnimationFrame(updateRotation);
+    }
 
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
