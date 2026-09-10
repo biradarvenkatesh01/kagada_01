@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useSyncExternalStore } from "react";
 import { motion, AnimatePresence, animate } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -31,7 +31,6 @@ export default function RadialOrbitalTimeline({
   const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
-  const [orbitRadius, setOrbitRadius] = useState<number>(240);
   const [isInView, setIsInView] = useState<boolean>(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,28 +56,26 @@ export default function RadialOrbitalTimeline({
   }, []);
 
   // 📱 RESPONSIVE ORBIT RADIUS (118px phone < 480px, 165px tablet < 640px, 240px desktop)
-  useEffect(() => {
-    const mqlPhone = window.matchMedia("(max-width: 479px)");
-    const mqlTablet = window.matchMedia("(max-width: 639px)");
-
-    const updateRadius = () => {
-      if (mqlPhone.matches) {
-        setOrbitRadius(118);
-      } else if (mqlTablet.matches) {
-        setOrbitRadius(165);
-      } else {
-        setOrbitRadius(240);
-      }
-    };
-
-    updateRadius();
-    mqlPhone.addEventListener("change", updateRadius);
-    mqlTablet.addEventListener("change", updateRadius);
-    return () => {
-      mqlPhone.removeEventListener("change", updateRadius);
-      mqlTablet.removeEventListener("change", updateRadius);
-    };
-  }, []);
+  const orbitRadius = useSyncExternalStore(
+    (callback) => {
+      if (typeof window === "undefined") return () => {};
+      const mqlPhone = window.matchMedia("(max-width: 479px)");
+      const mqlTablet = window.matchMedia("(max-width: 639px)");
+      mqlPhone.addEventListener("change", callback);
+      mqlTablet.addEventListener("change", callback);
+      return () => {
+        mqlPhone.removeEventListener("change", callback);
+        mqlTablet.removeEventListener("change", callback);
+      };
+    },
+    () => {
+      if (typeof window === "undefined") return 240;
+      if (window.matchMedia("(max-width: 479px)").matches) return 118;
+      if (window.matchMedia("(max-width: 639px)").matches) return 165;
+      return 240;
+    },
+    () => 240
+  );
 
   // Keep ref in sync for RAF loop
   useEffect(() => {

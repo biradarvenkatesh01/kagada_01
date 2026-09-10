@@ -15,15 +15,18 @@ export default function SmoothScroll({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Initialize Lenis smooth momentum scrolling for butter-smooth navigation
+    // Initialize Lenis smooth momentum scrolling for ultra-fluid, butter-smooth navigation
     const lenis = new Lenis({
-      duration: 0.9,
+      lerp: prefersReducedMotion ? 1 : 0.08,
+      duration: prefersReducedMotion ? 0 : 1.25,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: !prefersReducedMotion,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.2,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.0,
+      syncTouch: false,
+      autoResize: true,
     });
 
     lenisRef.current = lenis;

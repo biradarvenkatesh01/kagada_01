@@ -11,39 +11,43 @@ interface GalleryItem {
   shape: string // Aspect-ratio matched CSS dimensions
 }
 
-// Row 1: 5 distinct Kagada event photos tailored to their natural aspect ratio
-const row1Items: GalleryItem[] = [
-  { id: 1, src: "/1 (1).jpg", shape: "w-[300px] sm:w-[390px] h-[190px] sm:h-[240px]" },
-  { id: 2, src: "/paper.png", shape: "w-[320px] sm:w-[420px] h-[180px] sm:h-[230px]" },
-  { id: 3, src: "/ottigekaliona.jpg", shape: "w-[320px] sm:w-[410px] h-[190px] sm:h-[240px]" },
-  { id: 4, src: "/1 (3).JPG", shape: "w-[320px] sm:w-[430px] h-[190px] sm:h-[240px]" },
-  { id: 5, src: "/1 (4).JPG", shape: "w-[300px] sm:w-[380px] h-[190px] sm:h-[240px]" },
+// Base photo sets tailored to their natural aspect ratios
+const ROW_1_BASE: GalleryItem[] = [
+  { id: 1, src: "/1 (1).jpg", shape: "w-[260px] min-[380px]:w-[310px] sm:w-[390px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 2, src: "/paper.png", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[420px] h-[160px] min-[380px]:h-[190px] sm:h-[230px]" },
+  { id: 3, src: "/ottigekaliona.jpg", shape: "w-[270px] min-[380px]:w-[325px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 4, src: "/1 (3).JPG", shape: "w-[280px] min-[380px]:w-[340px] sm:w-[430px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 5, src: "/1 (4).JPG", shape: "w-[260px] min-[380px]:w-[310px] sm:w-[380px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
 ]
 
-// Row 2: 6 distinct Kagada event photos tailored to their natural aspect ratio
-const row2Items: GalleryItem[] = [
-  { id: 6, src: "/1 (5).JPG", shape: "w-[310px] sm:w-[400px] h-[190px] sm:h-[240px]" },
-  { id: 7, src: "/poster.jpg", shape: "w-[220px] sm:w-[280px] h-[200px] sm:h-[250px]" },
-  { id: 8, src: "/1 (6).JPG", shape: "w-[330px] sm:w-[430px] h-[190px] sm:h-[240px]" },
-  { id: 9, src: "/FoodForCause.JPG", shape: "w-[320px] sm:w-[410px] h-[190px] sm:h-[240px]" },
-  { id: 10, src: "/1 (7).JPG", shape: "w-[310px] sm:w-[400px] h-[190px] sm:h-[240px]" },
-  { id: 11, src: "/project.jpg", shape: "w-[320px] sm:w-[410px] h-[190px] sm:h-[240px]" },
+const ROW_2_BASE: GalleryItem[] = [
+  { id: 6, src: "/1 (5).JPG", shape: "w-[270px] min-[380px]:w-[320px] sm:w-[400px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 7, src: "/poster.jpg", shape: "w-[190px] min-[380px]:w-[230px] sm:w-[280px] h-[170px] min-[380px]:h-[200px] sm:h-[250px]" },
+  { id: 8, src: "/1 (6).JPG", shape: "w-[280px] min-[380px]:w-[340px] sm:w-[430px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 9, src: "/FoodForCause.JPG", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 10, src: "/1 (7).JPG", shape: "w-[270px] min-[380px]:w-[320px] sm:w-[400px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 11, src: "/project.jpg", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
 ]
+
+// Replicated to guarantee seamless, continuous GPU looping without blanks on screens up to 4K
+const row1Items: GalleryItem[] = [...ROW_1_BASE, ...ROW_1_BASE];
+const row2Items: GalleryItem[] = [...ROW_2_BASE, ...ROW_2_BASE];
 
 function MarqueeRow({
   items,
   direction = 'left',
-  speed = 30,
+  speed = 50,
 }: {
   items: GalleryItem[]
   direction?: 'left' | 'right'
   speed?: number
 }) {
   return (
-    <div className="flex w-full overflow-hidden py-2 select-none">
+    <div className="flex w-full overflow-hidden py-3 sm:py-4 select-none">
       <div
         className={cn(
-          "flex w-max transform-gpu will-change-transform hover:[animation-play-state:paused]",
+          "flex w-max transform-gpu will-change-transform",
+          "marquee-pause-hover hover:[animation-play-state:paused]",
           direction === "left" ? "animate-marquee" : "animate-marquee-reverse"
         )}
         style={{ "--duration": `${speed}s` } as React.CSSProperties}
@@ -102,7 +106,7 @@ function MarqueeRow({
 
 export const GallerySection = memo(function GallerySection() {
   return (
-    <section id="gallery" className="relative w-full overflow-hidden py-4 sm:py-8 flex flex-col gap-6 sm:gap-10 select-none min-h-[480px] scroll-mt-6 z-10 cv-auto">
+    <section id="gallery" className="relative w-full overflow-hidden py-4 sm:py-8 flex flex-col gap-6 sm:gap-10 select-none min-h-[480px] scroll-mt-6 z-10">
       {/* Section Title */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4">
         <ScrollReveal direction="down" duration={500}>
@@ -119,10 +123,10 @@ export const GallerySection = memo(function GallerySection() {
       </div>
 
       {/* ROW 1: Moves Continuously to the RIGHT at smooth speed */}
-      <MarqueeRow items={row1Items} direction="right" speed={32} />
+      <MarqueeRow items={row1Items} direction="right" speed={64} />
 
       {/* ROW 2: Moves Continuously to the LEFT at smooth speed */}
-      <MarqueeRow items={row2Items} direction="left" speed={28} />
+      <MarqueeRow items={row2Items} direction="left" speed={56} />
     </section>
   )
 });

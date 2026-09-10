@@ -27,9 +27,9 @@ export function Marquee({
       <div className="relative flex w-full overflow-hidden py-4 sm:py-6 select-none">
         <div 
           className={cn(
-            "flex w-max animate-marquee transform-gpu will-change-transform",
-            pauseOnHover && "hover:[animation-play-state:paused]",
-            direction === "right" && "animate-marquee-reverse"
+            "flex w-max transform-gpu will-change-transform",
+            direction === "right" ? "animate-marquee-reverse" : "animate-marquee",
+            pauseOnHover && "marquee-pause-hover hover:[animation-play-state:paused]"
           )}
           style={{ "--duration": `${speed}s` } as React.CSSProperties}
         >

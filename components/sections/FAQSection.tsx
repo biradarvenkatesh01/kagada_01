@@ -56,7 +56,7 @@ export const FAQSection = memo(function FAQSection() {
   }
 
   return (
-    <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-6 sm:py-10 scroll-mt-6 z-10 cv-auto">
+    <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-6 sm:py-10 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <ScrollReveal direction="up" duration={500}>
         <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4">

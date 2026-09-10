@@ -69,9 +69,9 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
           </p>
         </div>
 
-        {/* Flip Clock Countdown Timer */}
-        <div className="mt-4 sm:mt-6 w-full flex justify-center pointer-events-auto">
-          <div className="w-fit max-w-[96vw] px-3.5 min-[360px]:px-5 sm:px-6 py-2.5 sm:py-3.5 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-lg shadow-black/10 text-[#8a1c1c] flex items-center justify-center text-center mx-auto">
+        {/* Flip Clock Countdown Timer Glass Box */}
+        <div className="mt-3.5 sm:mt-6 w-full max-w-[94vw] sm:max-w-fit mx-auto flex justify-center pointer-events-auto">
+          <div className="w-full sm:w-fit px-2.5 min-[340px]:px-3.5 min-[380px]:px-5 sm:px-6 py-2 min-[340px]:py-2.5 sm:py-3.5 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-lg shadow-black/10 text-[#8a1c1c] flex items-center justify-center text-center mx-auto overflow-hidden">
             <FlipClock
               countdown={true}
               targetDate={KAGADA_EVENT_DATE}

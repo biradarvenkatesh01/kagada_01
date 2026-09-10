@@ -63,7 +63,7 @@ const UVCE_DIRECTIONS_URL =
 
 export const ContactSection = memo(function ContactSection() {
   return (
-    <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10 cv-auto">
+    <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <ScrollReveal direction="up" duration={500}>
         <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4">

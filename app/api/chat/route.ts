@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const maxDuration = 30;
+
 const KAGADA_SYSTEM_PROMPT = `You are the official AI Assistant for KAGADA 2026 — the 22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE at University Visvesvaraya College of Engineering (UVCE), KR Circle, Bengaluru.
 
 YOUR STRICT DIRECTIVES:

@@ -22,6 +22,7 @@ export const BurgundyTexturedBackground = memo(function BurgundyTexturedBackgrou
       style={{
         backgroundColor: "#520d1a",
         transform: "translate3d(0, 0, 0)",
+        contain: "paint",
       }}
     >
       {/* ── Layer A: Base Rich Burgundy Surface ────────────────────── */}

@@ -98,7 +98,6 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  overflow-y: auto;
   width: 100%;
   min-height: 100%;
   color: var(--foreground);
@@ -190,11 +189,10 @@ html.lenis, html.lenis body {
   animation: marquee-reverse var(--duration, 30s) linear infinite;
 }
 
-/* Offscreen Section Rendering Optimization */
-.cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 700px;
+.marquee-pause-hover:hover {
+  animation-play-state: paused;
 }
+
 
 /* Accessibility & Reduced Motion Standard */
 @media (prefers-reduced-motion: reduce) {

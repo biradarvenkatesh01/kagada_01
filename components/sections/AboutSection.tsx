@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, memo } from "react";
+import { memo } from "react";
 import { CardStack, CardStackItem } from "@/components/ui/card-stack";
 import { ABOUT_CARDS } from "@/data/kagada-data";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";

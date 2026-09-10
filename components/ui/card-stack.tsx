@@ -128,16 +128,18 @@ export function CardStack<T extends CardStackItem>({
 
   const [hovering, setHovering] = React.useState(false);
   const [isInView, setIsInView] = React.useState(false);
-  const [isMobileViewport, setIsMobileViewport] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    const mql = window.matchMedia("(max-width: 640px)");
-    setIsMobileViewport(mql.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobileViewport(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
-  }, []);
+  const isMobileViewport = React.useSyncExternalStore(
+    (callback) => {
+      if (typeof window === "undefined") return () => {};
+      const mql = window.matchMedia("(max-width: 640px)");
+      mql.addEventListener("change", callback);
+      return () => mql.removeEventListener("change", callback);
+    },
+    () => (typeof window !== "undefined" ? window.matchMedia("(max-width: 640px)").matches : false),
+    () => false
+  );
 
   React.useEffect(() => {
     if (!len) return;

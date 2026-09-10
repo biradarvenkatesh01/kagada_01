@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
+export const maxDuration = 30;
+
 // Helper to safely format from-email even if raw domain is passed
 function resolveFromEmail(raw?: string): string {
   const val = (raw || process.env.RESEND_FROM_EMAIL || "").trim().replace(/^["']|["']$/g, "");
