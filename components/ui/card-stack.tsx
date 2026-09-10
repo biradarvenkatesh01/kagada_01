@@ -99,12 +99,12 @@ export function CardStack<T extends CardStackItem>({
   activeScale = 1.03,
   inactiveScale = 0.88,
 
-  springStiffness = 120, // Ultra-smooth spring physics for fluid motion
-  springDamping = 22, // Smooth liquid damping
+  springStiffness = 280, // Snappy responsive spring physics for quick sliding motion
+  springDamping = 26, // Quick, smooth liquid damping
 
   loop = true,
   autoAdvance = true,
-  intervalMs = 6000, // 6 seconds auto cycle
+  intervalMs = 3500, // 3.5 seconds auto advance
   pauseOnHover = true,
 
   showDots = false,
@@ -367,7 +367,7 @@ export function CardStack<T extends CardStackItem>({
                     type: "spring",
                     stiffness: springStiffness,
                     damping: springDamping,
-                    mass: 0.8,
+                    mass: 0.6,
                   }}
                   onClick={() => setActive(i)}
                   {...dragProps}

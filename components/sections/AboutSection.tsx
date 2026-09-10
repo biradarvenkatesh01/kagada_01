@@ -173,7 +173,7 @@ export const AboutSection = memo(function AboutSection() {
             items={ABOUT_CARDS}
             initialIndex={0}
             autoAdvance
-            intervalMs={6000}
+            intervalMs={3500}
             pauseOnHover
             showDots={false}
             showArrows={true}
@@ -182,8 +182,8 @@ export const AboutSection = memo(function AboutSection() {
             maxVisible={3}
             spreadDeg={0}
             tiltXDeg={0}
-            springStiffness={160}
-            springDamping={24}
+            springStiffness={280}
+            springDamping={26}
             renderCard={renderAboutCard}
           />
         </ScrollReveal>
