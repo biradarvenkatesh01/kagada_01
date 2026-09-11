@@ -14,7 +14,6 @@ import SponsorsSection from "@/components/sections/SponsorsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import ContactSection from "@/components/sections/ContactSection";
 import IntroVideoOverlay from "@/components/sections/IntroVideoOverlay";
-import AuroraBackground from "@/components/ui/aurora-background";
 import BurgundyTexturedBackground from "@/components/ui/burgundy-textured-background";
 import AIChatCard from "@/components/features/AIChatCard";
 import BackToTop from "@/components/ui/back-to-top";
@@ -80,9 +79,6 @@ export default function Home() {
         !isVideoHidden ? "h-screen min-h-[100dvh] overflow-hidden" : "min-h-screen"
       }`}
     >
-      {/* Dynamic Background Atmosphere (Hero) */}
-      <AuroraBackground />
-
       {/* Floating Pill Header Navigation */}
       <Navbar isVideoFading={isVideoFading} />
 
