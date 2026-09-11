@@ -90,8 +90,8 @@ export function CardStack<T extends CardStackItem>({
   maxVisible = 3,
 
   cardWidth = 960,
-  cardHeight = 560,
-  mobileCardHeight = 560,
+  cardHeight = 570,
+  mobileCardHeight = 570,
 
   overlap = 0.45,
   perspectivePx = 1400,
