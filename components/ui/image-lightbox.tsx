@@ -72,7 +72,7 @@ export default function ImageLightbox() {
         return;
       }
 
-      const src = imgEl.currentSrc || imgEl.src;
+      const src = imgEl.dataset.fullSrc || imgEl.currentSrc || imgEl.src;
       if (
         !src ||
         src.endsWith(".svg") ||

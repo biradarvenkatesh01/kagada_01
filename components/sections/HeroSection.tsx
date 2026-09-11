@@ -16,7 +16,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
     <section id="hero" className="relative w-full h-screen min-h-[100dvh] overflow-hidden flex items-center justify-center z-10">
       {/* Hero Background Photo Layer with Soft Blend */}
       <motion.img
-        src="/hero-bg.jpg"
+        src="/optimized/hero-bg.webp"
         alt="UVCE Building"
         data-no-lightbox="true"
         fetchPriority="high"

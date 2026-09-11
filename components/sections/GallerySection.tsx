@@ -7,26 +7,26 @@ import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface GalleryItem {
   id: number
-  src: string
-  shape: string // Aspect-ratio matched CSS dimensions
+  src: string        // Single optimized WebP asset (deduplicated across sections)
+  shape: string      // Aspect-ratio matched CSS dimensions
 }
 
-// Base photo sets tailored to their natural aspect ratios
+// Base photo sets tailored to their natural aspect ratios with deduplicated WebP assets
 const ROW_1_BASE: GalleryItem[] = [
-  { id: 1, src: "/1 (1).jpg", shape: "w-[260px] min-[380px]:w-[310px] sm:w-[390px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
-  { id: 2, src: "/paper.png", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[420px] h-[160px] min-[380px]:h-[190px] sm:h-[230px]" },
-  { id: 3, src: "/ottigekaliona.jpg", shape: "w-[270px] min-[380px]:w-[325px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
-  { id: 4, src: "/1 (3).JPG", shape: "w-[280px] min-[380px]:w-[340px] sm:w-[430px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
-  { id: 5, src: "/1 (4).JPG", shape: "w-[260px] min-[380px]:w-[310px] sm:w-[380px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 1, src: "/optimized/gallery/1-1.webp", shape: "w-[260px] min-[380px]:w-[310px] sm:w-[390px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 2, src: "/optimized/tracks/paper.webp", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[420px] h-[160px] min-[380px]:h-[190px] sm:h-[230px]" },
+  { id: 3, src: "/optimized/tracks/ottigekaliona.webp", shape: "w-[270px] min-[380px]:w-[325px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 4, src: "/optimized/gallery/1-3.webp", shape: "w-[280px] min-[380px]:w-[340px] sm:w-[430px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 5, src: "/optimized/gallery/1-4.webp", shape: "w-[260px] min-[380px]:w-[310px] sm:w-[380px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
 ]
 
 const ROW_2_BASE: GalleryItem[] = [
-  { id: 6, src: "/1 (5).JPG", shape: "w-[270px] min-[380px]:w-[320px] sm:w-[400px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
-  { id: 7, src: "/poster.jpg", shape: "w-[190px] min-[380px]:w-[230px] sm:w-[280px] h-[170px] min-[380px]:h-[200px] sm:h-[250px]" },
-  { id: 8, src: "/1 (6).JPG", shape: "w-[280px] min-[380px]:w-[340px] sm:w-[430px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
-  { id: 9, src: "/FoodForCause.JPG", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
-  { id: 10, src: "/1 (7).JPG", shape: "w-[270px] min-[380px]:w-[320px] sm:w-[400px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
-  { id: 11, src: "/project.jpg", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 6, src: "/optimized/gallery/1-5.webp", shape: "w-[270px] min-[380px]:w-[320px] sm:w-[400px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 7, src: "/optimized/tracks/poster.webp", shape: "w-[190px] min-[380px]:w-[230px] sm:w-[280px] h-[170px] min-[380px]:h-[200px] sm:h-[250px]" },
+  { id: 8, src: "/optimized/gallery/1-6.webp", shape: "w-[280px] min-[380px]:w-[340px] sm:w-[430px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 9, src: "/optimized/tracks/foodforcause.webp", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 10, src: "/optimized/gallery/1-7.webp", shape: "w-[270px] min-[380px]:w-[320px] sm:w-[400px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
+  { id: 11, src: "/optimized/tracks/project.webp", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
 ]
 
 // Replicated to guarantee seamless, continuous GPU looping without blanks on screens up to 4K

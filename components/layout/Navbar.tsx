@@ -44,6 +44,8 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
           src="/kagada-2026-header.png"
           alt="IEEE UVCE Kagada 2026 Logo"
           data-no-lightbox="true"
+          fetchPriority="high"
+          decoding="async"
           className="h-10 sm:h-12 xl:h-14 w-auto object-contain transition-all duration-300 hover:scale-105 shrink-0"
           style={{
             filter:

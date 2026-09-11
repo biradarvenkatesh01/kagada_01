@@ -16,17 +16,17 @@ interface SponsorItem {
 
 // Real Kagada Sponsor Image Assets & Official External Links
 const SPONSORS_BASE_1: SponsorItem[] = [
-  { id: 1, src: "/spo1.png", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org", invertWhite: true },
-  { id: 2, src: "/spo2.png", alt: "IEEE Cybersecurity STC", url: "https://cybersecurity.ieee.org" },
-  { id: 3, src: "/spo3.png", alt: "BLUMM", url: "https://blumm.in" },
-  { id: 4, src: "/spo4.png", alt: "IEEE SIGHT", url: "https://sight.ieee.org" },
+  { id: 1, src: "/optimized/sponsors/spo1.webp", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org", invertWhite: true },
+  { id: 2, src: "/optimized/sponsors/spo2.webp", alt: "IEEE Cybersecurity STC", url: "https://cybersecurity.ieee.org" },
+  { id: 3, src: "/optimized/sponsors/spo3.webp", alt: "BLUMM", url: "https://blumm.in" },
+  { id: 4, src: "/optimized/sponsors/spo4.webp", alt: "IEEE SIGHT", url: "https://sight.ieee.org" },
 ];
 
 const SPONSORS_BASE_2: SponsorItem[] = [
-  { id: 5, src: "/spo5.png", alt: "InsightsIAS", url: "https://www.insightsonindia.com" },
-  { id: 6, src: "/spo6.png", alt: "IEEE Foundation", url: "https://www.ieeefoundation.org" },
-  { id: 7, src: "/spon5.png", alt: "Kagada Sponsor", url: "https://ieeeuvce.org" },
-  { id: 8, src: "/spo1.png", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org", invertWhite: true },
+  { id: 5, src: "/optimized/sponsors/spo5.webp", alt: "InsightsIAS", url: "https://www.insightsonindia.com" },
+  { id: 6, src: "/optimized/sponsors/spo6.webp", alt: "IEEE Foundation", url: "https://www.ieeefoundation.org" },
+  { id: 7, src: "/optimized/sponsors/spon5.webp", alt: "Kagada Sponsor", url: "https://ieeeuvce.org" },
+  { id: 8, src: "/optimized/sponsors/spo1.webp", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org", invertWhite: true },
 ];
 
 // Replicated to 12 items to ensure seamless, gap-free infinite looping on all screen widths up to 4K

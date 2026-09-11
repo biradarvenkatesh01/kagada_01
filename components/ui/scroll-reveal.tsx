@@ -28,9 +28,9 @@ function getSharedObserver(): IntersectionObserver | null {
         });
       },
       {
-        // Pre-trigger 70px before entering viewport so animations are already smoothly unveiling
-        rootMargin: "70px 0px -30px 0px",
-        threshold: 0.05,
+        // Pre-trigger 250px before entering viewport so network requests and off-thread decodes are finished before the section scrolls into view
+        rootMargin: "250px 0px 50px 0px",
+        threshold: 0.02,
       }
     );
   }

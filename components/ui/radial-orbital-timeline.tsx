@@ -378,6 +378,8 @@ export default function RadialOrbitalTimeline({
                                 src={item.imageSrc}
                                 alt={item.title}
                                 data-no-lightbox="true"
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 select-none pointer-events-none"
                               />
                             </div>

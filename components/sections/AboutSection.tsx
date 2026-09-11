@@ -31,9 +31,13 @@ export const AboutSection = memo(function AboutSection() {
             <div className="lg:col-span-5 flex flex-col gap-3 sm:gap-5 items-center">
               <div className="w-full h-36 sm:h-60 rounded-2xl overflow-hidden shadow-md border border-white/80 bg-black/5">
                 <img
-                  src="/uvcecollege.png"
+                  src="/optimized/about/uvcecollege.webp"
                   alt="UVCE Campus"
                   data-no-lightbox="true"
+                  loading="eager"
+                  decoding="async"
+                  width={800}
+                  height={409}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -74,9 +78,13 @@ export const AboutSection = memo(function AboutSection() {
             <div className="lg:col-span-5 flex items-center justify-center py-2">
               <div className="w-44 h-44 sm:w-72 sm:h-72 flex items-center justify-center p-2">
                 <img
-                  src="/ieeebluelogo.png"
+                  src="/optimized/about/ieeebluelogo.webp"
                   alt="IEEE UVCE Logo"
                   data-no-lightbox="true"
+                  loading="lazy"
+                  decoding="async"
+                  width={500}
+                  height={500}
                   className="w-full h-full object-contain mix-blend-multiply drop-shadow-lg"
                 />
               </div>
