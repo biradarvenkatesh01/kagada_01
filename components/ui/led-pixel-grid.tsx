@@ -234,7 +234,7 @@ function LEDPixelGridInner({ className }: { className?: string }) {
   const startWave = useCallback((now: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const w = canvas.width / dpr;
     const h = canvas.height / dpr;
     activeWavesRef.current.push({
@@ -250,7 +250,7 @@ function LEDPixelGridInner({ className }: { className?: string }) {
   const startSweep = useCallback((now: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const w = canvas.width / dpr;
     const h = canvas.height / dpr;
     activeSweepsRef.current.push({
@@ -278,6 +278,9 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     const len = pixels.length;
     const cols = colsRef.current;
     const rows = rowsRef.current;
+
+    // Explicitly enforce DPI transform on every single animation frame
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     // ── Update wave pulses (expanding luminous ripples) ─────────────
     const waves = activeWavesRef.current;
@@ -521,21 +524,24 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     let initialRender = true;
 
     const doResize = () => {
+      const parent = canvas.parentElement;
       const rect = canvas.getBoundingClientRect();
-      const w = Math.round(rect.width);
-      const h = Math.round(rect.height);
-      if (w === 0 || h === 0) return;
+      const w = Math.round(rect.width || parent?.clientWidth || window.innerWidth);
+      const h = Math.round(rect.height || parent?.clientHeight || window.innerHeight);
+      if (w <= 0 || h <= 0) return;
 
-      // Avoid full grid rebuild if dimensions shifted by less than 8px
-      if (Math.abs(w - lastW) < 8 && Math.abs(h - lastH) < 8) return;
+      // Avoid full grid rebuild if dimensions shifted by less than 4px
+      if (Math.abs(w - lastW) < 4 && Math.abs(h - lastH) < 4) return;
       lastW = w;
       lastH = h;
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
       const ctx = canvas.getContext("2d", { alpha: true });
-      if (ctx) ctx.scale(dpr, dpr);
+      if (ctx) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
       buildGrid(w, h);
     };
 
@@ -552,6 +558,10 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
+    if (canvas.parentElement) {
+      ro.observe(canvas.parentElement);
+    }
+    window.addEventListener("resize", resize);
     lastTimeRef.current = 0;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -597,7 +607,8 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     }
 
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("visibilitychange", handleVisibility);
       ro.disconnect();
       io.disconnect();
       cancelAnimationFrame(animRef.current);

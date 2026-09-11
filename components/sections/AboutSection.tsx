@@ -170,7 +170,7 @@ export const AboutSection = memo(function AboutSection() {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
         <ScrollReveal direction="down" duration={450}>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-8 sm:mb-12 md:mb-16 tracking-tight text-center select-none">
+          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-12 sm:mb-16 md:mb-20 tracking-tight text-center select-none">
             About <span className="text-amber-400 drop-shadow-md">Us</span>
           </h2>
         </ScrollReveal>

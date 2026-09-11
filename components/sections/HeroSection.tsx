@@ -27,8 +27,14 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
         className="absolute inset-0 w-full h-full min-h-[100dvh] object-cover z-0 transform-gpu mix-blend-overlay pointer-events-none select-none"
       />
 
-
-
+      {/* 🔴 VERY LIGHT RED TINT LAYER */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isVideoFading ? 1 : 0 }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute inset-0 w-full h-full min-h-[100dvh] bg-[#8a1c1c]/15 pointer-events-none select-none z-[1]"
+        aria-hidden="true"
+      />
 
       {/* 💡 DYNAMIC LED PIXEL GRID OVERLAY */}
       <motion.div
@@ -58,7 +64,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
         className="absolute top-[48%] sm:top-1/2 left-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
       >
         {/* Title Glass Box containing Title + Subtitle */}
-        <div className="w-full px-2.5 min-[360px]:px-3 sm:px-10 py-4 min-[360px]:py-5 sm:py-8 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-xl shadow-black/10 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
+        <div className="w-full px-2.5 min-[360px]:px-3 sm:px-10 py-4 min-[360px]:py-5 sm:py-8 rounded-2xl sm:rounded-3xl bg-white/60 backdrop-blur-md border border-white/85 shadow-xl shadow-black/10 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
           <h1 className="whitespace-nowrap font-saman font-normal text-[2.65rem] min-[360px]:text-[3.1rem] xs:text-[3.6rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c] tracking-[-0.015em] drop-shadow-sm select-none leading-none text-center mx-auto">
             K<span className="inline-block ml-[0.03em]">a</span>g<span className="inline-block ml-[0.03em]">a</span>d<span className="inline-block ml-[0.03em]">a</span> 2026
           </h1>
@@ -71,7 +77,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
 
         {/* Flip Clock Countdown Timer Glass Box */}
         <div className="mt-3.5 sm:mt-6 w-full max-w-[94vw] sm:max-w-fit mx-auto flex justify-center pointer-events-auto">
-          <div className="w-full sm:w-fit px-2.5 min-[340px]:px-3.5 min-[380px]:px-5 sm:px-6 py-2 min-[340px]:py-2.5 sm:py-3.5 rounded-2xl sm:rounded-3xl bg-white/30 backdrop-blur-md border border-white/80 shadow-lg shadow-black/10 text-[#8a1c1c] flex items-center justify-center text-center mx-auto overflow-hidden">
+          <div className="w-full sm:w-fit px-2.5 min-[340px]:px-3.5 min-[380px]:px-5 sm:px-6 py-2 min-[340px]:py-2.5 sm:py-3.5 rounded-2xl sm:rounded-3xl bg-white/60 backdrop-blur-md border border-white/85 shadow-lg shadow-black/10 text-[#8a1c1c] flex items-center justify-center text-center mx-auto overflow-hidden">
             <FlipClock
               countdown={true}
               targetDate={KAGADA_EVENT_DATE}
