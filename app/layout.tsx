@@ -44,9 +44,9 @@ const robotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kagada2026.live"),
-  title: "KAGADA 2026 | Annual National-Level Technical Student Conference",
+  title: "KAGADA 2026",
   description:
-    "Official website for KAGADA 2026 - 22nd Annual National-Level Technical Student Conference & Competition organized by IEEE UVCE at University Visvesvaraya College of Engineering, Bengaluru.",
+    "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
   keywords: [
     "KAGADA",
     "KAGADA 2026",
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "IEEE UVCE Software Development SIG" }],
   openGraph: {
-    title: "KAGADA 2026 | IEEE UVCE National Technical Conference",
+    title: "KAGADA 2026",
     description:
-      "Annual National-Level Technical Student Conference conducted by IEEE UVCE on 10th October, 2026 at UVCE, KR Circle.",
+      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
     url: "https://kagada2026.live",
     siteName: "KAGADA 2026",
     images: [
@@ -77,18 +77,19 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icon.png", sizes: "192x192", type: "image/png" },
+      { url: "/favicon.ico" },
     ],
-    shortcut: "/favicon.ico",
+    shortcut: "/icon-192.png",
     apple: "/apple-touch-icon.png",
   },
   twitter: {
     card: "summary_large_image",
-    title: "KAGADA 2026 | IEEE UVCE National Technical Conference",
+    title: "KAGADA 2026",
     description:
-      "22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE on 10th October, 2026 at UVCE, Bengaluru.",
+      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
     images: ["/logo1.png"],
   },
   alternates: {
@@ -100,35 +101,52 @@ export const metadata: Metadata = {
   },
 };
 
-const eventJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "EducationEvent",
-  name: "KAGADA 2026",
-  description:
-    "22nd Annual National-Level Technical Student Conference & Competition organized by IEEE UVCE at University Visvesvaraya College of Engineering, Bengaluru.",
-  startDate: "2026-10-10T09:00:00+05:30",
-  endDate: "2026-10-10T18:00:00+05:30",
-  eventStatus: "https://schema.org/EventScheduled",
-  eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
-  location: {
-    "@type": "Place",
-    name: "University Visvesvaraya College of Engineering (UVCE)",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "K.R. Circle",
-      addressLocality: "Bengaluru",
-      addressRegion: "Karnataka",
-      postalCode: "560001",
-      addressCountry: "IN",
-    },
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "KAGADA 2026",
+    alternateName: ["Kagada", "Kagada 2026", "IEEE UVCE Kagada"],
+    url: "https://kagada2026.live/",
   },
-  organizer: {
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationEvent",
+    name: "KAGADA 2026",
+    description:
+      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
+    startDate: "2026-10-10T09:00:00+05:30",
+    endDate: "2026-10-10T18:00:00+05:30",
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: "University Visvesvaraya College of Engineering (UVCE)",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "K.R. Circle",
+        addressLocality: "Bengaluru",
+        addressRegion: "Karnataka",
+        postalCode: "560001",
+        addressCountry: "IN",
+      },
+    },
+    organizer: {
+      "@type": "Organization",
+      name: "IEEE UVCE",
+      url: "https://ieeeuvce.org",
+      logo: "https://kagada2026.live/icon-192.png",
+    },
+    image: "https://kagada2026.live/logo1.png",
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "Organization",
     name: "IEEE UVCE",
     url: "https://ieeeuvce.org",
+    logo: "https://kagada2026.live/icon-192.png",
   },
-  image: "https://kagada2026.live/logo1.png",
-};
+];
 
 export default function RootLayout({
   children,
@@ -143,10 +161,14 @@ export default function RootLayout({
       <head>
         {/* Preload critical hero background image for instant display */}
         <link rel="preload" as="image" href="/hero-bg.jpg" fetchPriority="high" />
-        {/* Schema.org Structured Data for Google Event Rich Results */}
+        {/* Explicit Favicons for Google Search & Web Crawlers */}
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        {/* Schema.org Structured Data (WebSite Site Name + Event + Organization) */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
       <body className="min-h-full flex flex-col text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden font-jakarta">
