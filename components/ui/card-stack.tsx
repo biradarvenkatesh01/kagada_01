@@ -29,6 +29,7 @@ export type CardStackProps<T extends CardStackItem> = {
   /** Card sizing */
   cardWidth?: number;
   cardHeight?: number;
+  mobileCardHeight?: number;
 
   /** How much cards overlap each other (0..0.8). Higher = more overlap */
   overlap?: number;
@@ -89,7 +90,8 @@ export function CardStack<T extends CardStackItem>({
   maxVisible = 3,
 
   cardWidth = 960,
-  cardHeight = 640,
+  cardHeight = 560,
+  mobileCardHeight = 560,
 
   overlap = 0.45,
   perspectivePx = 1400,
@@ -244,7 +246,7 @@ export function CardStack<T extends CardStackItem>({
 
   const activeItem = items[active]!;
   const isMobile = cardWidth < 500 || isMobileViewport;
-  const effectiveCardHeight = isMobile ? 770 : cardHeight;
+  const effectiveCardHeight = isMobile ? mobileCardHeight : cardHeight;
 
   return (
     <div
@@ -256,7 +258,7 @@ export function CardStack<T extends CardStackItem>({
       {/* Stage */}
       <div
         className="relative w-full flex items-center justify-center touch-pan-y"
-        style={{ height: `calc(min(90vh, ${effectiveCardHeight}px) + ${isMobile ? 40 : 80}px)` }}
+        style={{ height: isMobile ? `${effectiveCardHeight + 20}px` : `calc(min(90vh, ${effectiveCardHeight}px) + 56px)` }}
         tabIndex={0}
         onKeyDown={onKeyDown}
         onTouchStart={handleTouchStart}
@@ -329,14 +331,14 @@ export function CardStack<T extends CardStackItem>({
                       key={item.id}
                       className={cn(
                         "absolute rounded-3xl border-2 border-white shadow-2xl backdrop-blur-xl bg-white/92",
-                        "select-none p-4 sm:p-10 flex flex-col justify-between overflow-hidden transform-gpu",
+                        "select-none p-4 sm:p-7 md:p-8 flex flex-col overflow-hidden transform-gpu",
                         isActive
                           ? "cursor-grab active:cursor-grabbing ring-1 ring-white/80 shadow-black/20"
                           : "cursor-pointer opacity-90 shadow-black/10 hover:opacity-100",
                       )}
                       style={{
                         width: `min(92vw, ${cardWidth}px)`,
-                        height: `min(90vh, ${effectiveCardHeight}px)`,
+                        height: isMobile ? `${effectiveCardHeight}px` : `min(90vh, ${effectiveCardHeight}px)`,
                         zIndex,
                         transformStyle: "preserve-3d",
                         willChange: "transform, opacity",
