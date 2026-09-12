@@ -33,7 +33,7 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     date: "Oct 10, 2026",
     content: "Visual research posters, technical infographics, and scientific concept demonstrations.",
     description:
-      "Poster presentation provides an opportunity to present innovative ideas through technical posters to depict how real-life problems can be solved. Participants are free to choose the domain of their choice and the presentation will be held in hybrid mode. This event encourages creativity, critical thinking, and clear communication of technical concepts. Additionally, participants get a chance to engage with judges and peers, receive valuable feedback, and inspire others with their innovative solutions.",
+      "Poster presentation provides an opportunity to present innovative ideas through technical posters to depict how real-life problems can be solved. Participants are free to choose the domain of their choice and the presentation will be held in hybrid mode. This event encourages creativity, critical thinking and clear communication of technical concepts. Additionally, participants get a chance to engage with judges and peers, receive valuable feedback and inspire others with their innovative solutions.",
     imageSrc: "/optimized/tracks/poster.webp",
     category: "Poster",
     icon: ImageIcon,
