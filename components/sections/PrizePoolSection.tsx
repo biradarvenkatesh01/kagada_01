@@ -41,7 +41,7 @@ export const PrizePoolSection = memo(function PrizePoolSection() {
 
             {/* Description Paragraph */}
             <p className="font-jakarta text-xs sm:text-sm text-white/95 leading-relaxed font-medium max-w-lg mx-auto drop-shadow-sm">
-              Exciting rewards await at <strong className="font-extrabold text-white">KAGADA 2026</strong>! A total prize pool of <strong className="font-extrabold text-white">₹40,000</strong> will be shared across <strong className="font-extrabold text-white">Paper, Poster, and Project presentations</strong>, celebrating creativity, technical excellence and impactful ideas.
+              Exciting rewards await at <strong className="font-extrabold text-white">KAGADA 2026</strong>! A total prize pool of <strong className="font-extrabold text-white">₹40,000</strong> will be shared across <strong className="font-extrabold text-white">Paper, Poster and Project presentations</strong>, celebrating creativity, technical excellence and impactful ideas.
             </p>
           </ScrollReveal>
 
