@@ -207,7 +207,7 @@ export const WinnersSection = memo(function WinnersSection() {
         {/* Subtitle text */}
         <ScrollReveal direction="up" delay={60} duration={500}>
           <p className="font-jakarta font-medium text-white/90 text-base sm:text-lg md:text-xl max-w-2xl text-center drop-shadow-sm mb-4 sm:mb-8">
-            Honoring innovation, creativity, and excellence that shaped KAGADA’s journey.
+            Honoring innovation, creativity and excellence that shaped KAGADA’s journey.
           </p>
         </ScrollReveal>
 
