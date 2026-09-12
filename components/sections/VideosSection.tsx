@@ -24,7 +24,7 @@ const AFTERMOVIES: AftermovieItem[] = [
     year: "2024",
     duration: "1:30",
     videoSrc: "/kagada2024.mp4",
-    description: "Relive the excitement and energy of KAGADA 2024 with highlights from all events, competitions, and celebrations.",
+    description: "Relive the excitement and energy of KAGADA 2024 with highlights from all events, competitions and celebrations.",
   },
   {
     id: "kagada-2025",
@@ -32,7 +32,7 @@ const AFTERMOVIES: AftermovieItem[] = [
     year: "2025",
     duration: "1:35",
     videoSrc: "/kagada2025.mp4",
-    description: "Relive the excitement and energy of KAGADA 2025 with highlights from all events, competitions, and celebrations.",
+    description: "Relive the excitement and energy of KAGADA 2025 with highlights from all events, competitions and celebrations.",
   },
 ]
 
