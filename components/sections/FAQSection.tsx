@@ -21,7 +21,7 @@ const FAQS: FAQItem[] = [
   {
     question: "What can I present in KAGADA?",
     answer:
-      "KAGADA has 3 tracks in it viz., Paper Presentation, Poster Presentation and Project Presentation. You can choose any of these tracks.",
+      "KAGADA has 3 tracks: Paper Presentation, Poster Presentation and Project Presentation. You can choose any of these tracks.",
   },
   {
     question: "Why should I participate in KAGADA 2026?",

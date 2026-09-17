@@ -11,7 +11,7 @@ const SOCIALS = [
   },
   {
     name: "LinkedIn",
-    url: "https://www.linkedin.com/in/ieee-uvce-66563332/",
+    url: "https://www.linkedin.com/company/ieee-uvce/",
     iconKey: "linkedin",
   },
   {

@@ -16,16 +16,19 @@ function WinnerTrackCards() {
       id: 0,
       title: "Paper Presentation",
       icon: FileText,
+      link: "https://drive.google.com/drive/folders/1lRi76mdAld0b2_vnPImVYjpB2j2Zz0iW",
     },
     {
       id: 1,
       title: "Poster Presentation",
       icon: ImageIcon,
+      link: "https://drive.google.com/drive/folders/1AKdGbdqLyxHwr6ZWauQmmgjjFBfO59uS",
     },
     {
       id: 2,
       title: "Project Presentation",
       icon: Cpu,
+      link: "https://drive.google.com/drive/folders/1Xzn2vQoLUEN9mUnCeG4UOiWyjex2m-YY",
     },
   ];
 
@@ -124,13 +127,15 @@ function WinnerTrackCards() {
 
                 {/* Bottom CTA Red Glass Button */}
                 <div className="w-full z-10">
-                  <button
-                    type="button"
-                    className="w-full py-3 px-5 sm:py-3.5 sm:px-6 rounded-2xl bg-white/30 backdrop-blur-md border border-white/80 text-white font-jakarta text-xs sm:text-base font-extrabold tracking-wide group-hover:bg-white/45 active:scale-[0.98] transition-all shadow-md shadow-black/10 flex items-center justify-center gap-2 group/btn cursor-pointer"
-                  >
-                    <span>Explore Winners</span>
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-1" />
-                  </button>
+                  <a
+  href={card.link}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-full py-3 px-5 sm:py-3.5 sm:px-6 rounded-2xl bg-white/30 backdrop-blur-md border border-white/80 text-white font-jakarta text-xs sm:text-base font-extrabold tracking-wide group-hover:bg-white/45 active:scale-[0.98] transition-all shadow-md shadow-black/10 flex items-center justify-center gap-2 group/btn cursor-pointer"
+>
+  <span>Explore Winners</span>
+  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-1" />
+</a>
                 </div>
               </div>
             </ScrollReveal>
@@ -207,7 +212,7 @@ export const WinnersSection = memo(function WinnersSection() {
         {/* Subtitle text */}
         <ScrollReveal direction="up" delay={60} duration={500}>
           <p className="font-jakarta font-medium text-white/90 text-base sm:text-lg md:text-xl max-w-2xl text-center drop-shadow-sm mb-4 sm:mb-8">
-            Honoring innovation, creativity, and excellence that shaped KAGADA’s journey.
+            Honoring innovation, creativity and excellence that shaped KAGADA’s journey.
           </p>
         </ScrollReveal>
 

@@ -71,7 +71,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
 
           {/* Subtitle in Roboto Mono Font */}
           <p className="font-roboto-mono text-[0.7rem] min-[360px]:text-xs sm:text-base md:text-xl lg:text-2xl text-[#8a1c1c]/95 font-bold tracking-wider sm:tracking-widest mt-3 min-[360px]:mt-4 sm:mt-7 uppercase drop-shadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[95%] sm:max-w-none mx-auto">
-            Annual National-Level Technical Student Conference
+            Annual National - Level Technical Student Conference
           </p>
         </div>
 
