@@ -14,7 +14,16 @@ interface AftermovieItem {
   title: string
   year: string
   duration: string
+  /** Full-quality file with audio, used by the fullscreen modal. */
   videoSrc: string
+  /**
+   * Silent, harder-compressed encode of the same footage for the in-card
+   * preview. The card renders it muted and looping, so its audio track could
+   * never be heard — shipping it cost ~19 MB of the scroll path for nothing.
+   */
+  previewSrc: string
+  /** First frame of the preview, so `preload="none"` never shows a black box. */
+  posterSrc: string
   description: string
 }
 
@@ -25,6 +34,8 @@ const AFTERMOVIES: AftermovieItem[] = [
     year: "2024",
     duration: "1:30",
     videoSrc: "/kagada2024.mp4",
+    previewSrc: "/kagada2024-preview.mp4",
+    posterSrc: "/optimized/videos/kagada2024-poster.webp",
     description: "Relive the excitement and energy of KAGADA 2024 with highlights from all events, competitions and celebrations.",
   },
   {
@@ -33,6 +44,8 @@ const AFTERMOVIES: AftermovieItem[] = [
     year: "2025",
     duration: "1:35",
     videoSrc: "/kagada2025.mp4",
+    previewSrc: "/kagada2025-preview.mp4",
+    posterSrc: "/optimized/videos/kagada2025-poster.webp",
     description: "Relive the excitement and energy of KAGADA 2025 with highlights from all events, competitions and celebrations.",
   },
 ]
@@ -87,7 +100,7 @@ function VideoCard({
         className={cn(
           "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
           "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
-          "transform-gpu hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-all duration-500"
+          "hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-all duration-500"
         )}
       >
         {/* Glass Interior Reflective Shimmer */}
@@ -101,12 +114,13 @@ function VideoCard({
           {/* HTML5 Video Preview */}
           <video
             ref={videoRef}
-            src={movie.videoSrc}
+            src={movie.previewSrc}
+            poster={movie.posterSrc}
             muted
             playsInline
             loop
-            preload="metadata"
-            className="w-full h-full object-cover transform-gpu transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+            preload="none"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
           />
 
           {/* Dark Ambient Overlay */}
@@ -114,7 +128,7 @@ function VideoCard({
 
           {/* Center Glowing Glass Play Button Badge */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-2xl border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300 transform-gpu">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-2xl border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300">
               <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white text-white translate-x-0.5 drop-shadow-md" />
             </div>
           </div>

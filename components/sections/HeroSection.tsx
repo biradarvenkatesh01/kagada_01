@@ -24,7 +24,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
         initial={{ opacity: 0 }}
         animate={{ opacity: isVideoFading ? 0.85 : 0 }}
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 w-full h-full min-h-[100dvh] object-cover z-0 transform-gpu mix-blend-overlay pointer-events-none select-none"
+        className="absolute inset-0 w-full h-full min-h-[100dvh] object-cover z-0 mix-blend-overlay pointer-events-none select-none"
       />
 
       {/* 🔴 VERY LIGHT RED TINT LAYER */}

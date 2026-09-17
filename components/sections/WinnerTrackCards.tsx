@@ -103,7 +103,7 @@ export default function WinnerTrackCards() {
                 className={cn(
                   "w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[360px] md:max-w-none md:w-full h-[360px] sm:h-[400px] lg:h-[440px]",
                   "rounded-3xl border-2 border-white/90 shadow-md shadow-black/10 backdrop-blur-xl bg-white/25",
-                  "p-4 sm:p-8 flex flex-col justify-between items-center overflow-hidden transform-gpu select-none cursor-pointer group",
+                  "p-4 sm:p-8 flex flex-col justify-between items-center overflow-hidden select-none cursor-pointer group",
                   "hover:-translate-y-2 hover:scale-[1.02] hover:border-white hover:bg-white/35 transition-all duration-300"
                 )}
               >
@@ -119,7 +119,7 @@ export default function WinnerTrackCards() {
 
                 {/* Center Prominent Red Glass SVG Icon Badge */}
                 <div className="flex-1 my-3 sm:my-6 flex items-center justify-center z-10">
-                  <div className="w-22 h-22 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full bg-white/30 backdrop-blur-xl border-2 border-white/80 text-white flex items-center justify-center shadow-md shadow-black/10 transform-gpu group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-22 h-22 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full bg-white/30 backdrop-blur-xl border-2 border-white/80 text-white flex items-center justify-center shadow-md shadow-black/10 group-hover:scale-110 transition-transform duration-300">
                     <card.icon className="w-11 h-11 sm:w-14 sm:h-14 lg:w-16 lg:h-16 stroke-[1.8] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]" />
                   </div>
                 </div>

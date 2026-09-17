@@ -95,7 +95,7 @@ export const FAQSection = memo(function FAQSection() {
                 }
               }}
               className={cn(
-                "relative overflow-hidden cursor-pointer rounded-2xl py-3 px-4 sm:py-3.5 sm:px-5 border-2 transition-all duration-300 transform-gpu",
+                "relative overflow-hidden cursor-pointer rounded-2xl py-3 px-4 sm:py-3.5 sm:px-5 border-2 transition-all duration-300",
                 "bg-white/30 backdrop-blur-2xl border-white/80 shadow-lg shadow-black/20",
                 "hover:bg-white/45 hover:border-white",
                 isOpen && "bg-white/40 border-white shadow-black/30"

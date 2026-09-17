@@ -173,13 +173,17 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden font-jakarta">
         {/* Google Analytics (gtag.js) placed in body for optimal Next.js hydration */}
+        {/* lazyOnload defers analytics until the page is idle. With
+            afterInteractive it booted during hydration and showed up as ~197ms
+            of scripting inside the first scroll in a CPU profile. Tracking is
+            unaffected — gtag still initialises and sends the page_view. */}
         <Script
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://www.googletagmanager.com/gtag/js?id=G-F242B7FH1S"
         />
         <Script
           id="google-analytics"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         >
           {`
             window.dataLayer = window.dataLayer || [];
