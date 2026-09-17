@@ -198,7 +198,23 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
             data-lenis-prevent="true"
             className={cn(
-              "fixed bottom-22 sm:bottom-26 right-4 sm:right-7 z-50 w-[calc(100vw-2rem)] sm:w-[410px] h-[530px] max-h-[calc(100vh-7rem)] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
+              // The old max-height (100vh - 7rem) only reserved room for the
+              // panel's own bottom offset, not for the fixed navbar. On any
+              // viewport shorter than ~642px — every landscape phone, and any
+              // short desktop window — the panel grew until its top sat 8px
+              // from the top of the screen and ran 80px underneath the navbar,
+              // which hid the "KAGADA AI Assistant" header.
+              //
+              // Reserve navbar bottom edge + the panel's own bottom offset + a
+              // 1rem gap: 4.5rem + 5.5rem + 1rem = 11rem (mobile, plus the
+              // safe-area inset the navbar itself is pushed down by), and
+              // 5.5rem + 6.5rem + 1rem = 13rem from the sm breakpoint up.
+              "fixed bottom-22 sm:bottom-26 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
+              "h-[530px] max-h-[calc(100dvh_-_11rem_-_env(safe-area-inset-top,0px))] sm:max-h-[calc(100dvh_-_13rem)]",
+              // Above the navbar (z-999): if a viewport is ever short enough for
+              // the two to meet, the panel the user is actively typing into must
+              // win rather than being painted over.
+              "z-[1000] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
               "bg-[#8a1c1c]/80 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/80",
               className
             )}
