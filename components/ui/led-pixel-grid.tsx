@@ -6,15 +6,86 @@ import { createLEDGridEngine, type LEDGridEngine } from "@/lib/led-grid-engine";
 /**
  * Hero LED pixel field.
  *
- * The simulation itself lives in `lib/led-grid-engine` and normally runs inside
- * a Web Worker against an OffscreenCanvas. Profiling a CPU-throttled fast scroll
+ * The simulation lives in `lib/led-grid-engine` and normally runs inside a Web
+ * Worker against an OffscreenCanvas. Profiling a CPU-throttled fast scroll
  * showed this loop produced *every* remaining long task on the page (25 tasks /
  * 1467ms); ablating it dropped frame drops from 24.7% to 5.1%. The ~33k draw
  * calls per frame are inherent to the approved 8px grid, so rather than change
  * the look the work was moved off the main thread entirely.
  *
- * This component now only owns sizing and visibility, and posts messages.
+ * This component only owns sizing and visibility.
  */
+
+type Renderer =
+  | { kind: "worker"; worker: Worker }
+  | { kind: "main"; engine: LEDGridEngine };
+
+interface CanvasSize {
+  width: number;
+  height: number;
+  dpr: number;
+}
+
+/**
+ * A canvas's control can only be transferred to an OffscreenCanvas ONCE for the
+ * lifetime of the element, and React Strict Mode deliberately runs effect
+ * setup -> cleanup -> setup again against that same element in development.
+ * Keying the renderer off the element means the second setup reuses the existing
+ * worker instead of attempting a second transfer (which always throws, and
+ * previously cascaded into a getContext() call on an already-transferred canvas
+ * that took down the whole page in dev).
+ */
+const renderers = new WeakMap<HTMLCanvasElement, Renderer>();
+
+function createRenderer(canvas: HTMLCanvasElement, size: CanvasSize): Renderer | null {
+  const existing = renderers.get(canvas);
+  if (existing) return existing;
+
+  const canUseWorker =
+    typeof Worker !== "undefined" &&
+    typeof OffscreenCanvas !== "undefined" &&
+    typeof canvas.transferControlToOffscreen === "function";
+
+  if (canUseWorker) {
+    // Construct the worker BEFORE transferring. If worker construction fails the
+    // canvas is still untouched and the main-thread fallback below stays viable.
+    let worker: Worker | null = null;
+    try {
+      worker = new Worker(new URL("@/lib/led-grid.worker.ts", import.meta.url));
+    } catch {
+      worker = null;
+    }
+
+    if (worker) {
+      let transferred = false;
+      try {
+        const offscreen = canvas.transferControlToOffscreen();
+        transferred = true;
+        worker.postMessage({ type: "init", canvas: offscreen, ...size }, [offscreen]);
+        const renderer: Renderer = { kind: "worker", worker };
+        renderers.set(canvas, renderer);
+        return renderer;
+      } catch {
+        worker.terminate();
+        // Once the transfer has happened the canvas can never be drawn to from
+        // the main thread, so fall back only if it definitely did not happen.
+        if (transferred) return null;
+      }
+    }
+  }
+
+  const ctx = canvas.getContext("2d", { alpha: true });
+  if (!ctx) return null;
+  canvas.width = Math.round(size.width * size.dpr);
+  canvas.height = Math.round(size.height * size.dpr);
+  const engine = createLEDGridEngine(ctx);
+  engine.resize(size.width, size.height, size.dpr);
+  engine.frame(performance.now());
+  const renderer: Renderer = { kind: "main", engine };
+  renderers.set(canvas, renderer);
+  return renderer;
+}
+
 function LEDPixelGridInner({
   className,
   active = true,
@@ -28,24 +99,27 @@ function LEDPixelGridInner({
   active?: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const workerRef = useRef<Worker | null>(null);
-  // Main-thread fallback, used only when OffscreenCanvas/worker is unavailable.
-  const engineRef = useRef<LEDGridEngine | null>(null);
   const rafRef = useRef<number | null>(null);
   const runningRef = useRef(false);
-  const shouldRunRef = useRef(false);
-  // Assigned by the setup effect below; lets the `active` effect re-evaluate the
-  // run decision without tearing down the worker (which owns the transferred
-  // canvas and cannot be re-initialised).
-  const applyRunRef = useRef<((run: boolean) => void) | null>(null);
+  const shouldRunRef = useRef(active);
+  const teardownRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Assigned by the setup effect; lets the `active` effect re-evaluate the run
+  // decision without tearing down the worker.
   const syncRef = useRef<(() => void) | null>(null);
 
-  // ── Set up the renderer once ────────────────────────────────────────
   useEffect(() => {
+    // A Strict Mode remount runs cleanup then immediately re-runs setup in the
+    // same task. Cancelling the deferred teardown keeps the worker — and its
+    // one-time canvas transfer — alive across that cycle.
+    if (teardownRef.current !== null) {
+      clearTimeout(teardownRef.current);
+      teardownRef.current = null;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const measure = () => {
+    const measure = (): CanvasSize => {
       const parent = canvas.parentElement;
       const rect = canvas.getBoundingClientRect();
       return {
@@ -55,52 +129,19 @@ function LEDPixelGridInner({
       };
     };
 
-    let disposed = false;
     const size = measure();
-    let lastW = 0;
-    let lastH = 0;
+    const renderer = createRenderer(canvas, size);
+    if (!renderer) return;
 
-    const canUseWorker =
-      typeof Worker !== "undefined" &&
-      typeof OffscreenCanvas !== "undefined" &&
-      typeof canvas.transferControlToOffscreen === "function";
-
-    if (canUseWorker) {
-      try {
-        const worker = new Worker(new URL("@/lib/led-grid.worker.ts", import.meta.url));
-        workerRef.current = worker;
-        const offscreen = canvas.transferControlToOffscreen();
-        worker.postMessage({ type: "init", canvas: offscreen, ...size }, [offscreen]);
-        lastW = size.width;
-        lastH = size.height;
-      } catch {
-        workerRef.current = null;
-      }
-    }
-
-    if (!workerRef.current) {
-      // Fallback: identical engine, driven on the main thread.
-      const ctx = canvas.getContext("2d", { alpha: true });
-      if (ctx) {
-        canvas.width = Math.round(size.width * size.dpr);
-        canvas.height = Math.round(size.height * size.dpr);
-        const engine = createLEDGridEngine(ctx);
-        engine.resize(size.width, size.height, size.dpr);
-        engine.frame(performance.now());
-        engineRef.current = engine;
-        lastW = size.width;
-        lastH = size.height;
-      }
-    }
+    let lastW = size.width;
+    let lastH = size.height;
 
     const applyRun = (run: boolean) => {
-      if (disposed) return;
-      if (workerRef.current) {
-        workerRef.current.postMessage({ type: "run", running: run });
+      if (renderer.kind === "worker") {
+        renderer.worker.postMessage({ type: "run", running: run });
         return;
       }
-      const engine = engineRef.current;
-      if (!engine) return;
+      const { engine } = renderer;
       if (run && !runningRef.current) {
         runningRef.current = true;
         const loop = (t: number) => {
@@ -115,7 +156,6 @@ function LEDPixelGridInner({
         rafRef.current = null;
       }
     };
-    applyRunRef.current = applyRun;
 
     // ── Resize ────────────────────────────────────────────────────────
     let resizeTimer: ReturnType<typeof setTimeout> | null = null;
@@ -126,12 +166,12 @@ function LEDPixelGridInner({
       if (Math.abs(next.width - lastW) < 4 && Math.abs(next.height - lastH) < 4) return;
       lastW = next.width;
       lastH = next.height;
-      if (workerRef.current) {
-        workerRef.current.postMessage({ type: "resize", ...next });
-      } else if (engineRef.current) {
+      if (renderer.kind === "worker") {
+        renderer.worker.postMessage({ type: "resize", ...next });
+      } else {
         canvas.width = Math.round(next.width * next.dpr);
         canvas.height = Math.round(next.height * next.dpr);
-        engineRef.current.resize(next.width, next.height, next.dpr);
+        renderer.engine.resize(next.width, next.height, next.dpr);
       }
     };
     const onResize = () => {
@@ -148,8 +188,7 @@ function LEDPixelGridInner({
     let onScreen = false;
 
     const sync = () => {
-      const run = onScreen && shouldRunRef.current && !document.hidden && !prefersReducedMotion;
-      applyRun(run);
+      applyRun(onScreen && shouldRunRef.current && !document.hidden && !prefersReducedMotion);
     };
     syncRef.current = sync;
 
@@ -166,22 +205,28 @@ function LEDPixelGridInner({
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      disposed = true;
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
       ro.disconnect();
       io.disconnect();
       if (resizeTimer) clearTimeout(resizeTimer);
-      runningRef.current = false;
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      if (workerRef.current) {
-        workerRef.current.postMessage({ type: "dispose" });
-        workerRef.current.terminate();
-        workerRef.current = null;
-      }
-      engineRef.current = null;
-      applyRunRef.current = null;
       syncRef.current = null;
+
+      // Park the animation straight away, but defer destroying the renderer by a
+      // macrotask so a Strict Mode remount can reclaim it (see above). On a real
+      // unmount nothing cancels this and the worker is terminated.
+      applyRun(false);
+      teardownRef.current = setTimeout(() => {
+        teardownRef.current = null;
+        runningRef.current = false;
+        if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+        if (renderer.kind === "worker") {
+          renderer.worker.postMessage({ type: "dispose" });
+          renderer.worker.terminate();
+        }
+        renderers.delete(canvas);
+      }, 0);
     };
   }, []);
 

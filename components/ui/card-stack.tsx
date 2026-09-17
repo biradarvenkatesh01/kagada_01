@@ -34,13 +34,9 @@ export type CardStackProps<T extends CardStackItem> = {
   /** How much cards overlap each other (0..0.8). Higher = more overlap */
   overlap?: number;
 
-  /** Total fan angle (deg). Set 0 for straight horizontal alignment */
-  spreadDeg?: number;
-
   /** 3D / depth feel */
   perspectivePx?: number;
   depthPx?: number;
-  tiltXDeg?: number;
 
   /** Active emphasis */
   activeLiftPx?: number;

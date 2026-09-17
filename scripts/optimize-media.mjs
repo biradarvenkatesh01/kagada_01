@@ -10,6 +10,10 @@
  * render the clips muted and looping — the audio track in those is downloaded
  * but can never be heard.
  *
+ * kagada2025.mp4 is intentionally NOT re-encoded: at 0.63 Mbps it is already
+ * efficient, and re-encoding it only lost quality for a 6% size saving. Only its
+ * silent card preview is generated.
+ *
  * Run with: npm run optimize:media
  */
 import { execFileSync } from "node:child_process";
@@ -41,17 +45,6 @@ const JOBS = [
     src: "kagada2024.mp4",
     out: "kagada2024.opt.mp4",
     label: "aftermovie 2024 (modal playback, keeps audio)",
-    args: [
-      "-c:v", "libx264", "-preset", "slow", "-crf", "26",
-      "-profile:v", "high", "-pix_fmt", "yuv420p",
-      "-c:a", "aac", "-b:a", "96k",
-      "-movflags", "+faststart",
-    ],
-  },
-  {
-    src: "kagada2025.mp4",
-    out: "kagada2025.opt.mp4",
-    label: "aftermovie 2025 (modal playback, keeps audio)",
     args: [
       "-c:v", "libx264", "-preset", "slow", "-crf", "26",
       "-profile:v", "high", "-pix_fmt", "yuv420p",
@@ -107,8 +100,11 @@ for (const job of JOBS) {
   after += outSize;
 }
 
-// Replace the originals with the re-encoded masters.
-for (const name of ["video-intro", "kagada2024", "kagada2025"]) {
+// Replace the originals with the re-encoded masters. kagada2025 is deliberately
+// absent: its source is already lean (0.63 Mbps) and re-encoding it only cost
+// quality for a 6% saving, so its master is left byte-for-byte untouched and
+// only a silent preview is derived from it.
+for (const name of ["video-intro", "kagada2024"]) {
   const opt = join(PUBLIC_DIR, `${name}.opt.mp4`);
   if (existsSync(opt)) renameSync(opt, join(PUBLIC_DIR, `${name}.mp4`));
 }

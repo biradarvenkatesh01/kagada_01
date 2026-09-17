@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Geist, Geist_Mono, Plus_Jakarta_Sans, Outfit, Roboto_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Outfit, Roboto_Mono } from "next/font/google";
 import SmoothScroll from "@/components/ui/smooth-scroll";
 import "./globals.css";
 
@@ -10,16 +10,6 @@ export const viewport: Viewport = {
   maximumScale: 5,
   viewportFit: "cover",
 };
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -156,7 +146,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${plusJakartaSans.variable} ${outfit.variable} ${robotoMono.variable} h-full antialiased dark`}
+      className={`${plusJakartaSans.variable} ${outfit.variable} ${robotoMono.variable} h-full antialiased dark`}
     >
       <head>
         {/* Preload critical hero background image for instant display */}
