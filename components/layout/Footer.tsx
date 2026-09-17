@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 import { Code, Mail } from 'lucide-react'
 

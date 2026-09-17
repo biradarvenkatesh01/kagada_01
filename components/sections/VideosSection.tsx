@@ -161,16 +161,18 @@ export const VideosSection = memo(function VideosSection() {
         handleCloseModal()
       }
     }
-   if (activeModalVideo) {
-  window.addEventListener('keydown', handleKeyDown)
-  document.body.style.overflow = 'hidden' // Added to prevent background scroll
-} else {
-  document.body.style.overflow = 'unset' // Added to restore scroll
-}
-return () => {
-  window.removeEventListener('keydown', handleKeyDown)
-  document.body.style.overflow = 'unset' // Added to clean up on unmount
-}
+    if (!activeModalVideo) return
+
+    window.addEventListener('keydown', handleKeyDown)
+    // Restore whatever was set before instead of forcing a value, so closing the
+    // modal doesn't release a scroll lock owned by another overlay.
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = previousOverflow
+    }
   }, [activeModalVideo])
 
 

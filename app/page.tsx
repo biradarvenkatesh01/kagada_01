@@ -1,9 +1,4 @@
-"use client";
-
-import { useState, useRef, useEffect, useCallback } from "react";
-import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
 import TracksSection from "@/components/sections/TracksSection";
 import PrizePoolSection from "@/components/sections/PrizePoolSection";
@@ -13,125 +8,56 @@ import VideosSection from "@/components/sections/VideosSection";
 import SponsorsSection from "@/components/sections/SponsorsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import ContactSection from "@/components/sections/ContactSection";
-import IntroVideoOverlay from "@/components/sections/IntroVideoOverlay";
+import IntroExperience from "@/components/sections/IntroExperience";
 import BurgundyTexturedBackground from "@/components/ui/burgundy-textured-background";
-import AIChatCard from "@/components/features/AIChatCard";
 import BackToTop from "@/components/ui/back-to-top";
 import ImageLightbox from "@/components/ui/image-lightbox";
 
 export default function Home() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoFading, setIsVideoFading] = useState(false);
-  const [isVideoHidden, setIsVideoHidden] = useState(false);
-
-  useEffect(() => {
-    // Lock document scroll while intro video is playing
-    if (!isVideoHidden) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isVideoHidden]);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.play().catch(() => {
-        if (videoRef.current) {
-          videoRef.current.muted = true;
-          videoRef.current.play().catch(() => {});
-        }
-      });
-    }
-  }, []);
-
-  const triggerFade = useCallback(() => {
-    if (!isVideoFading) {
-      setIsVideoFading(true);
-      setTimeout(() => {
-        setIsVideoHidden(true);
-      }, 1800);
-    }
-  }, [isVideoFading]);
-
-  const handleTimeUpdate = useCallback(() => {
-    if (videoRef.current && !isVideoFading) {
-      const remainingTime = videoRef.current.duration - videoRef.current.currentTime;
-      if (remainingTime <= 1.5 && remainingTime > 0) {
-        triggerFade();
-      }
-    }
-  }, [isVideoFading, triggerFade]);
-
-  const handleTapToUnmute = useCallback(() => {
-    if (videoRef.current && videoRef.current.muted) {
-      videoRef.current.muted = false;
-    }
-  }, []);
-
   return (
-    <main
-      className={`relative w-full bg-transparent overflow-x-hidden ${
-        !isVideoHidden ? "h-screen min-h-[100dvh] overflow-hidden" : "min-h-screen"
-      }`}
-    >
-      {/* Floating Pill Header Navigation */}
-      <Navbar isVideoFading={isVideoFading} />
+    // The height used to toggle between `h-screen overflow-hidden` and
+    // `min-h-screen` when the intro video ended, which resized the document
+    // from 100vh to ~10000px in one frame and forced a full relayout (plus a
+    // Lenis re-measure) at the exact moment the hero faded in. The intro
+    // overlay is a fixed, opaque, full-viewport layer, so keeping the height
+    // static looks identical; scroll locking is done via body overflow instead.
+    <main className="relative w-full bg-transparent overflow-x-hidden min-h-screen">
+      <IntroExperience>
+        {/* CONTINUOUS NON-HERO BURGUNDY TEXTURED CANVAS */}
+        <div className="relative w-full overflow-hidden z-10">
+          <BurgundyTexturedBackground />
 
-      {/* SECTION 1: HERO (Untouched, with original background) */}
-      <HeroSection isVideoFading={isVideoFading} />
+          {/* SECTION 2: ABOUT US */}
+          <AboutSection />
 
-      {/* CONTINUOUS NON-HERO BURGUNDY TEXTURED CANVAS */}
-      <div className="relative w-full overflow-hidden z-10">
-        <BurgundyTexturedBackground />
+          {/* SECTION 3: TRACKS */}
+          <TracksSection />
 
-        {/* SECTION 2: ABOUT US */}
-        <AboutSection />
+          {/* SECTION 4: PRIZE POOL */}
+          <PrizePoolSection />
 
-        {/* SECTION 3: TRACKS */}
-        <TracksSection />
+          {/* SECTION 5: PREVIOUS WINNERS */}
+          <WinnersSection />
 
-        {/* SECTION 4: PRIZE POOL */}
-        <PrizePoolSection />
+          {/* SECTION 6: GALLERY MARQUEE */}
+          <GallerySection />
 
-        {/* SECTION 5: PREVIOUS WINNERS */}
-        <WinnersSection />
+          {/* SECTION 7: AFTERMOVIES */}
+          <VideosSection />
 
-        {/* SECTION 6: GALLERY MARQUEE */}
-        <GallerySection />
+          {/* SECTION 8: SPONSORS */}
+          <SponsorsSection />
 
-        {/* SECTION 7: AFTERMOVIES */}
-        <VideosSection />
+          {/* SECTION 9: FAQ ACCORDION */}
+          <FAQSection />
 
-        {/* SECTION 8: SPONSORS */}
-        <SponsorsSection />
+          {/* SECTION 10: CONTACT ORGANIZERS & MAP */}
+          <ContactSection />
 
-        {/* SECTION 9: FAQ ACCORDION */}
-        <FAQSection />
-
-        {/* SECTION 10: CONTACT ORGANIZERS & MAP */}
-        <ContactSection />
-
-        {/* FOOTER */}
-        <Footer />
-      </div>
-
-      {/* INTRO VIDEO OVERLAY */}
-      <IntroVideoOverlay
-        isVideoHidden={isVideoHidden}
-        isVideoFading={isVideoFading}
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={triggerFade}
-        onUnmute={handleTapToUnmute}
-        videoRef={videoRef}
-      />
-
-      {/* AI CHATBOT ASSISTANT */}
-      <AIChatCard isVisible={isVideoHidden || isVideoFading} />
+          {/* FOOTER */}
+          <Footer />
+        </div>
+      </IntroExperience>
 
       {/* FLOATING BACK TO TOP BUTTON */}
       <BackToTop />

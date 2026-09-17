@@ -81,6 +81,19 @@ export const FAQSection = memo(function FAQSection() {
             <div
               key={`faq-${idx}`}
               onClick={() => toggleAccordion(idx)}
+              // Keyboard/AT access for what is visually a button. Kept as a div
+              // with ARIA rather than a <button> so the existing styling, which
+              // relies on block layout, is untouched.
+              role="button"
+              tabIndex={0}
+              aria-expanded={isOpen}
+              aria-controls={`faq-panel-${idx}`}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  toggleAccordion(idx)
+                }
+              }}
               className={cn(
                 "relative overflow-hidden cursor-pointer rounded-2xl py-3 px-4 sm:py-3.5 sm:px-5 border-2 transition-all duration-300 transform-gpu",
                 "bg-white/30 backdrop-blur-2xl border-white/80 shadow-lg shadow-black/20",
@@ -116,6 +129,8 @@ export const FAQSection = memo(function FAQSection() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                     className="relative z-10 overflow-hidden"
+                    id={`faq-panel-${idx}`}
+                    role="region"
                   >
                     <div className="pt-3 sm:pt-3.5 border-t border-white/40 mt-3 sm:mt-3.5 text-left">
                       <p className="font-jakarta text-xs sm:text-sm md:text-base font-medium text-white/95 leading-relaxed drop-shadow-sm whitespace-pre-line">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback, useSyncExternalStore } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useCallback, useSyncExternalStore } from "react";
 import { motion, AnimatePresence, animate } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -28,7 +28,6 @@ export default function RadialOrbitalTimeline({
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
     {}
   );
-  const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
   const [isInView, setIsInView] = useState<boolean>(false);
@@ -77,11 +76,6 @@ export default function RadialOrbitalTimeline({
     () => 240
   );
 
-  // Keep ref in sync for RAF loop
-  useEffect(() => {
-    rotationAngleRef.current = rotationAngle;
-  }, [rotationAngle]);
-
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === containerRef.current || e.target === orbitRef.current) {
       setExpandedItems({});
@@ -89,6 +83,67 @@ export default function RadialOrbitalTimeline({
       setAutoRotate(true);
     }
   };
+
+  // Geometry for a single node at a given orbit rotation.
+  const calculateNodePosition = useCallback(
+    (index: number, total: number, angleDeg: number) => {
+      const angle = ((index / total) * 360 + angleDeg) % 360;
+      const radian = (angle * Math.PI) / 180;
+
+      const x = orbitRadius * Math.cos(radian);
+      const y = orbitRadius * Math.sin(radian);
+
+      const zIndex = Math.round(100 + 50 * Math.cos(radian));
+      const opacity = Math.max(
+        0.7,
+        Math.min(1, 0.7 + 0.3 * ((1 + Math.sin(radian)) / 2))
+      );
+
+      return { x, y, angle, zIndex, opacity };
+    },
+    [orbitRadius]
+  );
+
+  // Mirror the interaction state into refs so the RAF loop can read it without
+  // being re-created. Kept in sync by the layout effect below, never in render.
+  const expandedItemsRef = useRef(expandedItems);
+  const activeNodeIdRef = useRef(activeNodeId);
+
+  // ⚡ Writes orbit geometry straight to the DOM. Previously this ran through
+  // `setRotationAngle`, which re-rendered this entire subtree (5 nodes, their
+  // framer-motion wrappers and icons) 60 times per second. The visual result is
+  // identical — only the delivery mechanism changed.
+  const applyRotation = useCallback(
+    (angleDeg: number) => {
+      const total = timelineData.length;
+      const isAnyCardOpen = activeNodeIdRef.current !== null;
+
+      for (let i = 0; i < total; i++) {
+        const item = timelineData[i];
+        const el = nodeRefs.current[item.id];
+        if (!el) continue;
+
+        const position = calculateNodePosition(i, total, angleDeg);
+        const isExpanded = !!expandedItemsRef.current[item.id];
+
+        el.style.transform = `translate(${position.x}px, ${position.y}px)`;
+        el.style.zIndex = String(isExpanded ? 500 : position.zIndex);
+        el.style.opacity = String(
+          isExpanded ? 1 : isAnyCardOpen ? 0 : position.opacity
+        );
+      }
+    },
+    [timelineData, calculateNodePosition]
+  );
+
+  // Re-sync after any React render (expand/collapse, orbit radius change) so the
+  // imperative styles never fall behind the declarative ones. This runs before
+  // the browser paints, so the neutral transform the JSX renders is never seen.
+  useLayoutEffect(() => {
+    expandedItemsRef.current = expandedItems;
+    activeNodeIdRef.current = activeNodeId;
+    applyRotation(rotationAngleRef.current);
+  });
 
   // 🚀 HIGH-PERFORMANCE SPRING ROTATION TO TOP CENTER (270°)
   const centerViewOnNode = useCallback(
@@ -117,11 +172,12 @@ export default function RadialOrbitalTimeline({
         damping: 19,
         mass: 0.8,
         onUpdate: (latest) => {
-          setRotationAngle(latest);
+          rotationAngleRef.current = latest;
+          applyRotation(latest);
         },
       });
     },
-    [timelineData]
+    [timelineData, applyRotation]
   );
 
   const toggleItem = (id: number) => {
@@ -165,7 +221,8 @@ export default function RadialOrbitalTimeline({
       if (!isTabVisible) return;
       if (lastTimeRef.current !== null) {
         const delta = (time - lastTimeRef.current) / 1000;
-        setRotationAngle((prev) => (prev + delta * 20) % 360);
+        rotationAngleRef.current = (rotationAngleRef.current + delta * 20) % 360;
+        applyRotation(rotationAngleRef.current);
       }
       lastTimeRef.current = time;
       rafRef.current = requestAnimationFrame(updateRotation);
@@ -195,23 +252,7 @@ export default function RadialOrbitalTimeline({
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [autoRotate, isInView]);
-
-  const calculateNodePosition = (index: number, total: number) => {
-    const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radian = (angle * Math.PI) / 180;
-
-    const x = orbitRadius * Math.cos(radian);
-    const y = orbitRadius * Math.sin(radian);
-
-    const zIndex = Math.round(100 + 50 * Math.cos(radian));
-    const opacity = Math.max(
-      0.7,
-      Math.min(1, 0.7 + 0.3 * ((1 + Math.sin(radian)) / 2))
-    );
-
-    return { x, y, angle, zIndex, opacity };
-  };
+  }, [autoRotate, isInView, applyRotation]);
 
   const getRelatedItems = (itemId: number): number[] => {
     const currentItem = timelineData.find((item) => item.id === itemId);
@@ -268,7 +309,14 @@ export default function RadialOrbitalTimeline({
               {/* 🌌 ORBITING CIRCULAR NODES & INSTANT EXPANDING CARDS */}
               {timelineData.map((index_item, index) => {
                 const item = index_item;
-                const position = calculateNodePosition(index, timelineData.length);
+                // Rendered at the orbit's neutral angle. The layout effect above
+                // overwrites transform/zIndex/opacity with the live rotation
+                // synchronously before paint, so this is never visible.
+                const position = calculateNodePosition(
+                  index,
+                  timelineData.length,
+                  0
+                );
                 const isExpanded = !!expandedItems[item.id];
                 const isRelated = isRelatedToActive(item.id);
                 const Icon = item.icon;

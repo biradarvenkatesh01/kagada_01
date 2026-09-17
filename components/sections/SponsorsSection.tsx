@@ -1,7 +1,4 @@
-'use client'
-
 import * as React from 'react'
-import { memo } from 'react'
 import { Marquee } from '@/components/ui/marquee'
 import { cn } from '@/lib/utils'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
@@ -33,7 +30,7 @@ const SPONSORS_BASE_2: SponsorItem[] = [
 const SPONSORS_ROW_1: SponsorItem[] = [...SPONSORS_BASE_1, ...SPONSORS_BASE_1, ...SPONSORS_BASE_1];
 const SPONSORS_ROW_2: SponsorItem[] = [...SPONSORS_BASE_2, ...SPONSORS_BASE_2, ...SPONSORS_BASE_2];
 
-export const SponsorsSection = memo(function SponsorsSection() {
+export function SponsorsSection() {
   return (
     <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-6 sm:py-10 scroll-mt-6 z-10">
       {/* Main Section Title */}
@@ -119,6 +116,6 @@ export const SponsorsSection = memo(function SponsorsSection() {
       </div>
     </section>
   )
-});
+}
 
 export default SponsorsSection;

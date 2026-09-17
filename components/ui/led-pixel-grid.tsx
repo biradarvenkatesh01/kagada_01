@@ -7,6 +7,9 @@ const GRID_SPACING = 8;
 const DOT_SIZE = 1.2;
 const BLOOM_SIZE = 3.5;
 
+// Sentinel written into the per-pixel bucket buffer for dots too dim to draw.
+const SKIP_BUCKET = 255;
+
 // Opacity ranges — modestly boosted for enhanced luminous clarity
 const BASE_OPACITY_MIN = 0.35;
 const BASE_OPACITY_MAX = 0.52;
@@ -71,6 +74,14 @@ interface LEDPixel {
   nextUpdate: number;
   glowIntensity: number;
   animating: boolean;
+  // Precomputed constants for the ambient undulation. The two wave terms are
+  // sin/cos of (per-pixel phase ± time), and the per-pixel phase never changes,
+  // so the angle-addition identity lets us replace two trig calls per pixel per
+  // frame with four multiplies. Mathematically identical output.
+  sinA: number;
+  cosA: number;
+  sinB: number;
+  cosB: number;
 }
 
 interface WavePulse {
@@ -110,7 +121,18 @@ function dist(x1: number, y1: number, x2: number, y2: number) {
 }
 
 // ─── Component ─────────────────────────────────────────────────────────────
-function LEDPixelGridInner({ className }: { className?: string }) {
+function LEDPixelGridInner({
+  className,
+  active = true,
+}: {
+  className?: string;
+  /**
+   * When false the grid is built but the animation loop stays parked. The hero
+   * renders this at opacity 0 behind the opaque intro video, where a full-rate
+   * canvas loop is pure wasted work during the most load-sensitive moment.
+   */
+  active?: boolean;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pixelsRef = useRef<LEDPixel[]>([]);
   const colsRef = useRef(0);
@@ -134,6 +156,12 @@ function LEDPixelGridInner({ className }: { className?: string }) {
   const activeWavesRef = useRef<WavePulse[]>([]);
   const activeSweepsRef = useRef<SweepWave[]>([]);
   const animateRef = useRef<((timestamp: number) => void) | null>(null);
+  // Draw-batching scratch buffers (allocated once per grid build, never per frame)
+  const bucketOfRef = useRef<Uint8Array>(new Uint8Array(0));
+  const sortedRef = useRef<Int32Array>(new Int32Array(0));
+  const bucketCountRef = useRef<Int32Array>(new Int32Array(101));
+  const bucketStartRef = useRef<Int32Array>(new Int32Array(101));
+  const bucketCursorRef = useRef<Int32Array>(new Int32Array(101));
 
   const buildGrid = useCallback((w: number, h: number) => {
     const cols = Math.ceil(w / GRID_SPACING) + 1;
@@ -147,6 +175,8 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         const base = rand(BASE_OPACITY_MIN, BASE_OPACITY_MAX);
+        const a = col * 0.075 + row * 0.038;
+        const b = col * 0.042 - row * 0.065;
         pixels.push({
           x: col * GRID_SPACING,
           y: row * GRID_SPACING,
@@ -159,11 +189,18 @@ function LEDPixelGridInner({ className }: { className?: string }) {
           nextUpdate: now + rand(200, TWINKLE_MAX_INTERVAL),
           glowIntensity: 0,
           animating: false,
+          sinA: Math.sin(a),
+          cosA: Math.cos(a),
+          sinB: Math.sin(b),
+          cosB: Math.cos(b),
         });
       }
     }
 
     pixelsRef.current = pixels;
+    // Reusable scratch buffers for the counting-sort draw batching below.
+    bucketOfRef.current = new Uint8Array(pixels.length);
+    sortedRef.current = new Int32Array(pixels.length);
     nextClusterRef.current = now + rand(CLUSTER_INTERVAL_MIN, CLUSTER_INTERVAL_MAX);
     nextTravelRef.current = now + rand(TRAVEL_INTERVAL_MIN, TRAVEL_INTERVAL_MAX);
     nextWaveRef.current = now + rand(WAVE_INTERVAL_MIN, WAVE_INTERVAL_MAX);
@@ -429,9 +466,19 @@ function LEDPixelGridInner({ className }: { className?: string }) {
           }
         }
       }
+    }
 
-      // Spontaneous pulse
-      if (!p.animating && Math.random() < ANIMATE_CHANCE * (dt / 16)) {
+    // ── Spontaneous pulses ───────────────────────────────────────────
+    // Each pixel independently had an ANIMATE_CHANCE*(dt/16) probability of
+    // firing, which cost one Math.random() per pixel per frame (~33k on a
+    // desktop hero). Sampling the expected number of pixels directly gives the
+    // same distribution of twinkles for ~100 RNG calls instead.
+    const spontaneousExpected = len * ANIMATE_CHANCE * (dt / 16);
+    let spontaneousCount = Math.floor(spontaneousExpected);
+    if (Math.random() < spontaneousExpected - spontaneousCount) spontaneousCount++;
+    for (let s = 0; s < spontaneousCount; s++) {
+      const p = pixels[(Math.random() * len) | 0];
+      if (p && !p.animating) {
         animatePixel(p, timestamp, "random");
       }
     }
@@ -471,21 +518,17 @@ function LEDPixelGridInner({ className }: { className?: string }) {
 
     // Continuous flowing ambient matrix current (gentle rhythmic diagonal and cross-wave undulation)
     const flowT = timestamp * 0.0035;
+    // Time-varying halves of the two wave terms, evaluated once per frame
+    // instead of once per pixel (see the sinA/cosA/sinB/cosB note on LEDPixel).
+    const cosFlow = Math.cos(flowT);
+    const sinFlow = Math.sin(flowT);
+    const cosFlow2 = Math.cos(flowT * 0.75);
+    const sinFlow2 = Math.sin(flowT * 0.75);
 
+    // Bloom is rare (only actively-glowing pixels), so it stays a direct draw.
     for (let i = 0; i < len; i++) {
       const p = pixels[i];
       if (p.opacity < 0.005) continue;
-
-      let displayOpacity = p.opacity;
-      if (!p.animating) {
-        // Continuous dual wave undulation across the whole background
-        const wave1 = Math.sin(p.col * 0.075 + p.row * 0.038 - flowT);
-        const wave2 = Math.cos(p.col * 0.042 - p.row * 0.065 + flowT * 0.75);
-        const combinedWave = wave1 * 0.07 + wave2 * 0.04;
-        displayOpacity = Math.min(0.78, Math.max(0.16, p.opacity + combinedWave));
-      }
-
-      // Subtle bloom for bright pixels
       if (p.glowIntensity > 0.04) {
         const bloomIdx = Math.min(100, Math.max(0, (p.glowIntensity * 100) | 0));
         ctx.fillStyle = BLOOM_LUT[bloomIdx];
@@ -496,16 +539,70 @@ function LEDPixelGridInner({ className }: { className?: string }) {
           BLOOM_SIZE
         );
       }
+    }
 
-      // Core LED micro-dot
+    // Core LED micro-dots, batched by opacity bucket. Drawing them one at a
+    // time meant ~33k `ctx.fillStyle` assignments and ~33k fillRect calls per
+    // frame; a counting sort into the 101 LUT buckets reduces that to 101 state
+    // changes and 101 path fills for exactly the same pixels.
+    const bucketOf = bucketOfRef.current;
+    const sorted = sortedRef.current;
+    const counts = bucketCountRef.current;
+    const starts = bucketStartRef.current;
+    counts.fill(0);
+
+    for (let i = 0; i < len; i++) {
+      const p = pixels[i];
+      if (p.opacity < 0.005) {
+        bucketOf[i] = SKIP_BUCKET;
+        continue;
+      }
+
+      let displayOpacity = p.opacity;
+      if (!p.animating) {
+        // Continuous dual wave undulation across the whole background.
+        // sin(a - flowT) and cos(b + 0.75*flowT) expanded via angle addition.
+        const wave1 = p.sinA * cosFlow - p.cosA * sinFlow;
+        const wave2 = p.cosB * cosFlow2 - p.sinB * sinFlow2;
+        const combinedWave = wave1 * 0.07 + wave2 * 0.04;
+        displayOpacity = Math.min(0.78, Math.max(0.16, p.opacity + combinedWave));
+      }
+
       const opacityIdx = Math.min(100, Math.max(0, (displayOpacity * 100) | 0));
-      ctx.fillStyle = COLOR_LUT[opacityIdx];
-      ctx.fillRect(
-        p.x - DOT_SIZE * 0.5,
-        p.y - DOT_SIZE * 0.5,
-        DOT_SIZE,
-        DOT_SIZE
-      );
+      bucketOf[i] = opacityIdx;
+      counts[opacityIdx]++;
+    }
+
+    // Prefix sums give each bucket its slice of the `sorted` index buffer.
+    // `cursor` is a throwaway copy advanced during placement so that `starts`
+    // still holds each bucket's begin offset for the draw pass.
+    let running = 0;
+    for (let b = 0; b <= 100; b++) {
+      starts[b] = running;
+      running += counts[b];
+    }
+    const cursor = bucketCursorRef.current;
+    cursor.set(starts);
+
+    for (let i = 0; i < len; i++) {
+      const b = bucketOf[i];
+      if (b === SKIP_BUCKET) continue;
+      sorted[cursor[b]++] = i;
+    }
+
+    const half = DOT_SIZE * 0.5;
+    for (let b = 0; b <= 100; b++) {
+      const count = counts[b];
+      if (count === 0) continue;
+      ctx.fillStyle = COLOR_LUT[b];
+      ctx.beginPath();
+      const begin = starts[b];
+      const end = begin + count;
+      for (let k = begin; k < end; k++) {
+        const p = pixels[sorted[k]];
+        ctx.rect(p.x - half, p.y - half, DOT_SIZE, DOT_SIZE);
+      }
+      ctx.fill();
     }
 
     animRef.current = requestAnimationFrame((t) => {
@@ -565,6 +662,7 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     lastTimeRef.current = 0;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const shouldAnimate = active && !prefersReducedMotion;
 
     // IntersectionObserver: automatically sleep animation when off-screen to save 100% CPU
     const io = new IntersectionObserver(
@@ -573,7 +671,7 @@ function LEDPixelGridInner({ className }: { className?: string }) {
           isVisibleRef.current = true;
           lastTimeRef.current = performance.now();
           cancelAnimationFrame(animRef.current);
-          if (!prefersReducedMotion && !document.hidden) {
+          if (shouldAnimate && !document.hidden) {
             animRef.current = requestAnimationFrame(animate);
           } else {
             // Render single static frame for reduced motion users
@@ -592,7 +690,7 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     const handleVisibility = () => {
       if (document.hidden) {
         cancelAnimationFrame(animRef.current);
-      } else if (isVisibleRef.current && !prefersReducedMotion) {
+      } else if (isVisibleRef.current && shouldAnimate) {
         lastTimeRef.current = performance.now();
         cancelAnimationFrame(animRef.current);
         animRef.current = requestAnimationFrame(animate);
@@ -600,21 +698,24 @@ function LEDPixelGridInner({ className }: { className?: string }) {
     };
     document.addEventListener("visibilitychange", handleVisibility);
 
-    if (!prefersReducedMotion && !document.hidden) {
+    if (shouldAnimate && !document.hidden) {
       animRef.current = requestAnimationFrame(animate);
     } else {
+      // Paint a single static frame so the grid is correct but idle.
       animate(performance.now());
     }
 
     return () => {
       window.removeEventListener("resize", resize);
-      window.removeEventListener("visibilitychange", handleVisibility);
+      // Registered on `document`, so it has to be removed from `document`;
+      // removing it from `window` left the listener attached after unmount.
+      document.removeEventListener("visibilitychange", handleVisibility);
       ro.disconnect();
       io.disconnect();
       cancelAnimationFrame(animRef.current);
       if (resizeTimer) clearTimeout(resizeTimer);
     };
-  }, [buildGrid, animate]);
+  }, [buildGrid, animate, active]);
 
   return (
     <canvas

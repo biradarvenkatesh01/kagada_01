@@ -1,7 +1,4 @@
-'use client'
-
 import * as React from 'react'
-import { memo } from 'react'
 import { User, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import QueryForm from '@/components/features/QueryForm'
@@ -61,7 +58,7 @@ const UVCE_MAP_EMBED_URL =
 const UVCE_DIRECTIONS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=University+Visvesvaraya+College+of+Engineering"
 
-export const ContactSection = memo(function ContactSection() {
+export function ContactSection() {
   return (
     <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
@@ -190,6 +187,6 @@ export const ContactSection = memo(function ContactSection() {
       </div>
     </section>
   )
-});
+}
 
 export default ContactSection;

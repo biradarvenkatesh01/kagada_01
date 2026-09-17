@@ -24,10 +24,6 @@
   font-family: 'Smooch Sans', sans-serif;
 }
 
-.font-glacial {
-  font-family: 'Glacial Indifference', sans-serif;
-}
-
 .font-roboto-mono {
   font-family: var(--font-roboto-mono), 'Roboto Mono', monospace;
 }
@@ -68,7 +64,6 @@
   --font-mono: var(--font-roboto-mono), 'Roboto Mono', monospace;
   --font-saman: 'Saman';
   --font-smooch: 'Smooch Sans';
-  --font-glacial: 'Glacial Indifference';
   --font-outfit: var(--font-outfit), 'Outfit', sans-serif;
   --font-jakarta: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
   --font-roboto-mono: var(--font-roboto-mono), 'Roboto Mono', monospace;

@@ -104,14 +104,17 @@ export default function ImageLightbox() {
       }
     };
 
-    if (activeImage) {
-      window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-    }
+    if (!activeImage) return;
+
+    window.addEventListener("keydown", handleKeyDown);
+    // Remember what was there rather than assuming, so closing the lightbox
+    // doesn't clobber a scroll lock owned by the intro overlay or video modal.
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = previousOverflow;
     };
   }, [activeImage, handleClose]);
 

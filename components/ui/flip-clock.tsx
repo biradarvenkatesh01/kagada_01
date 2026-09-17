@@ -231,6 +231,11 @@ const FlipClock = ({
       });
     };
 
+    // The page is statically prerendered, so the initial state was computed at
+    // build time. Correct it immediately on mount instead of waiting up to a
+    // full second for the first tick.
+    update();
+
     let timer: NodeJS.Timeout | null = setInterval(update, 1000);
 
     const onVisibilityChange = () => {
