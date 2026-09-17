@@ -132,7 +132,7 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-18 sm:top-20 left-0 right-0 bg-white/65 backdrop-blur-2xl border-2 border-white/80 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c] lg:hidden z-[1001]"
+            className="absolute top-18 sm:top-20 left-0 right-0 bg-white/85 backdrop-blur-2xl border-2 border-white/80 rounded-3xl p-6 shadow-2xl shadow-black/25 flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c] lg:hidden z-[1001]"
           >
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
               About Us
