@@ -221,6 +221,7 @@ return () => {
       </div>
 
       {/* FULLSCREEN INTERACTIVE CINEMATIC VIDEO MODAL */}
+         {typeof document !== 'undefined' && createPortal(
        <AnimatePresence>
           {activeModalVideo && (
             <motion.div
