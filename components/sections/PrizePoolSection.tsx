@@ -1,10 +1,7 @@
-"use client";
-
-import { memo } from "react";
 import ScrollReveal from "@/components/ui/scroll-reveal";
 import { Trophy, Award } from "lucide-react";
 
-export const PrizePoolSection = memo(function PrizePoolSection() {
+export function PrizePoolSection() {
   return (
     <section
       id="prizes"
@@ -61,6 +58,6 @@ export const PrizePoolSection = memo(function PrizePoolSection() {
       </div>
     </section>
   );
-});
+}
 
 export default PrizePoolSection;

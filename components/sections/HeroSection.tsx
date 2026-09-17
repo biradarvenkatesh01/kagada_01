@@ -43,7 +43,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
         className="absolute inset-0 w-full h-full min-h-[100dvh] pointer-events-none z-[2]"
       >
-        <LEDPixelGrid />
+        <LEDPixelGrid active={isVideoFading} />
       </motion.div>
 
       {/* Hero Title & Subtitle Glass Box Container */}

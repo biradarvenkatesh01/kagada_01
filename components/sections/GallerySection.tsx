@@ -1,7 +1,4 @@
-'use client'
-
 import * as React from 'react'
-import { memo } from 'react'
 import { cn } from '@/lib/utils'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
@@ -59,7 +56,11 @@ function MarqueeRow({
               key={`b1-${item.id}-${idx}`}
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-zoom-in group rounded-3xl",
-                "bg-white/25 backdrop-blur-sm border-2 border-white/90 shadow-md shadow-black/10",
+                // No backdrop-blur here: the <img> below fills the card edge-to-edge
+                // (w-full h-full object-cover) so the blurred backdrop was never
+                // visible, yet it forced the compositor to re-snapshot and re-blur
+                // the textured background every frame of the infinite marquee.
+                "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
                 "transition-all duration-500 transform-gpu hover:scale-[1.03] hover:bg-white/45 hover:border-white",
                 item.shape
               )}
@@ -83,7 +84,11 @@ function MarqueeRow({
               key={`b2-${item.id}-${idx}`}
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-zoom-in group rounded-3xl",
-                "bg-white/25 backdrop-blur-sm border-2 border-white/90 shadow-md shadow-black/10",
+                // No backdrop-blur here: the <img> below fills the card edge-to-edge
+                // (w-full h-full object-cover) so the blurred backdrop was never
+                // visible, yet it forced the compositor to re-snapshot and re-blur
+                // the textured background every frame of the infinite marquee.
+                "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
                 "transition-all duration-500 transform-gpu hover:scale-[1.03] hover:bg-white/45 hover:border-white",
                 item.shape
               )}
@@ -104,7 +109,7 @@ function MarqueeRow({
   )
 }
 
-export const GallerySection = memo(function GallerySection() {
+export function GallerySection() {
   return (
     <section id="gallery" className="relative w-full overflow-hidden py-4 sm:py-8 flex flex-col gap-6 sm:gap-10 select-none min-h-[480px] scroll-mt-6 z-10">
       {/* Section Title */}
@@ -129,6 +134,6 @@ export const GallerySection = memo(function GallerySection() {
       <MarqueeRow items={row2Items} direction="left" speed={56} />
     </section>
   )
-});
+}
 
 export default GallerySection;

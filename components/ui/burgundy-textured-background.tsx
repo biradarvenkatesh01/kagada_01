@@ -1,7 +1,3 @@
-"use client";
-
-import { memo } from "react";
-
 /**
  * BurgundyTexturedBackground
  * 
@@ -14,15 +10,21 @@ import { memo } from "react";
  * - Layer C: Dual procedural SVG micro-fiber grain & embossed tactile paper tooth
  * - Layer D: Soft lateral edge vignettes & gentle top dissolve from Hero
  */
-export const BurgundyTexturedBackground = memo(function BurgundyTexturedBackground() {
+export function BurgundyTexturedBackground() {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden z-0 transform-gpu"
+      className="absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden z-0"
       style={{
         backgroundColor: "#520d1a",
-        transform: "translate3d(0, 0, 0)",
-        contain: "paint",
+        // NOTE: deliberately NOT GPU-promoted. This element spans the full
+        // height of every non-hero section (~9000px+), which exceeds the max
+        // GPU texture dimension. Forcing it onto its own layer made the
+        // compositor tile it and re-read the backdrop for each mix-blend
+        // child, producing blank/white tiles during fast scrolling.
+        // `isolation: isolate` keeps the identical blend group that
+        // `contain: paint` used to provide, without allocating a layer.
+        isolation: "isolate",
       }}
     >
       {/* ── Layer A: Base Rich Burgundy Surface ────────────────────── */}
@@ -170,6 +172,6 @@ export const BurgundyTexturedBackground = memo(function BurgundyTexturedBackgrou
       />
     </div>
   );
-});
+}
 
 export default BurgundyTexturedBackground;

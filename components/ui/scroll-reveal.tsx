@@ -28,9 +28,15 @@ function getSharedObserver(): IntersectionObserver | null {
         });
       },
       {
-        // Pre-trigger 250px before entering viewport so network requests and off-thread decodes are finished before the section scrolls into view
-        rootMargin: "250px 0px 50px 0px",
-        threshold: 0.02,
+        // Pre-trigger well BELOW the viewport so content is already revealed by
+        // the time it scrolls up into view. rootMargin is top/right/bottom/left,
+        // so the large value has to be on `bottom` to grow the observation box
+        // downwards, in the direction content arrives from.
+        rootMargin: "200px 0px 400px 0px",
+        // threshold 0 fires as soon as any part crosses the (expanded) box.
+        // A non-zero threshold delays tall elements and made sections appear
+        // late during fast scrolling.
+        threshold: 0,
       }
     );
   }
