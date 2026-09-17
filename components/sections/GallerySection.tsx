@@ -8,6 +8,22 @@ interface GalleryItem {
   shape: string      // Aspect-ratio matched CSS dimensions
 }
 
+interface MarqueeItem extends GalleryItem {
+  /** Which replication of the base set this card belongs to (see globals.css). */
+  copy: number
+}
+
+/**
+ * Repeat a base set `copies` times, tagging each card with its copy index so the
+ * redundant copies can be dropped on small viewports without changing the
+ * visible sequence.
+ */
+function replicate(base: GalleryItem[], copies: number): MarqueeItem[] {
+  return Array.from({ length: copies }, (_, copy) =>
+    base.map((item) => ({ ...item, copy }))
+  ).flat()
+}
+
 // Base photo sets tailored to their natural aspect ratios with deduplicated WebP assets
 const ROW_1_BASE: GalleryItem[] = [
   { id: 1, src: "/optimized/gallery/1-1.webp", shape: "w-[260px] min-[380px]:w-[310px] sm:w-[390px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
@@ -26,16 +42,18 @@ const ROW_2_BASE: GalleryItem[] = [
   { id: 11, src: "/optimized/tracks/project.webp", shape: "w-[270px] min-[380px]:w-[330px] sm:w-[410px] h-[165px] min-[380px]:h-[195px] sm:h-[240px]" },
 ]
 
-// Replicated to guarantee seamless, continuous GPU looping without blanks on screens up to 4K
-const row1Items: GalleryItem[] = [...ROW_1_BASE, ...ROW_1_BASE];
-const row2Items: GalleryItem[] = [...ROW_2_BASE, ...ROW_2_BASE];
+// Replicated to guarantee seamless, continuous looping without blanks on screens
+// up to 4K. Copies beyond the first are hidden below 640px (see globals.css).
+const row1Items: MarqueeItem[] = replicate(ROW_1_BASE, 2);
+const row2Items: MarqueeItem[] = replicate(ROW_2_BASE, 2);
+const MARQUEE_COPIES = 2;
 
 function MarqueeRow({
   items,
   direction = 'left',
   speed = 50,
 }: {
-  items: GalleryItem[]
+  items: MarqueeItem[]
   direction?: 'left' | 'right'
   speed?: number
 }) {
@@ -47,13 +65,19 @@ function MarqueeRow({
           "marquee-pause-hover hover:[animation-play-state:paused]",
           direction === "left" ? "animate-marquee" : "animate-marquee-reverse"
         )}
-        style={{ "--duration": `${speed}s` } as React.CSSProperties}
+        style={{
+          "--duration": `${speed}s`,
+          // Mobile hides all but one copy, so the block travels 1/N the distance;
+          // scaling the duration by the same N keeps px/sec identical.
+          "--duration-mobile": `${speed / MARQUEE_COPIES}s`,
+        } as React.CSSProperties}
       >
         {/* Block 1: Exactly 50% width */}
         <div className="flex items-center gap-5 sm:gap-8 pr-5 sm:pr-8 shrink-0">
           {items.map((item, idx) => (
             <div
               key={`b1-${item.id}-${idx}`}
+              data-marquee-copy={item.copy}
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-zoom-in group rounded-3xl",
                 // No backdrop-blur here: the <img> below fills the card edge-to-edge
@@ -61,7 +85,7 @@ function MarqueeRow({
                 // visible, yet it forced the compositor to re-snapshot and re-blur
                 // the textured background every frame of the infinite marquee.
                 "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-all duration-500 transform-gpu hover:scale-[1.03] hover:bg-white/45 hover:border-white",
+                "transition-all duration-500 hover:scale-[1.03] hover:bg-white/45 hover:border-white",
                 item.shape
               )}
             >
@@ -70,7 +94,7 @@ function MarqueeRow({
                 alt="Kagada Event Photo"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover transform-gpu transition-transform duration-500 group-hover:scale-105 select-none cursor-zoom-in pointer-events-auto"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 select-none cursor-zoom-in pointer-events-auto"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/30 pointer-events-none rounded-3xl" />
             </div>
@@ -82,6 +106,7 @@ function MarqueeRow({
           {items.map((item, idx) => (
             <div
               key={`b2-${item.id}-${idx}`}
+              data-marquee-copy={item.copy}
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-zoom-in group rounded-3xl",
                 // No backdrop-blur here: the <img> below fills the card edge-to-edge
@@ -89,7 +114,7 @@ function MarqueeRow({
                 // visible, yet it forced the compositor to re-snapshot and re-blur
                 // the textured background every frame of the infinite marquee.
                 "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-all duration-500 transform-gpu hover:scale-[1.03] hover:bg-white/45 hover:border-white",
+                "transition-all duration-500 hover:scale-[1.03] hover:bg-white/45 hover:border-white",
                 item.shape
               )}
             >
@@ -98,7 +123,7 @@ function MarqueeRow({
                 alt="Kagada Event Photo"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover transform-gpu transition-transform duration-500 group-hover:scale-105 select-none cursor-zoom-in pointer-events-auto"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 select-none cursor-zoom-in pointer-events-auto"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/30 pointer-events-none rounded-3xl" />
             </div>

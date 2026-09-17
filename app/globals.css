@@ -184,6 +184,29 @@ html.lenis, html.lenis body {
   animation: marquee-reverse var(--duration, 30s) linear infinite;
 }
 
+/* ─── Mobile marquee trimming ──────────────────────────────────────────
+   Each marquee block is replicated enough times to stay seamless on a 4K
+   display. On a 390px phone that meant ~7000px-wide animated layers holding
+   ~9x more cards than a seamless loop needs — the single largest remaining
+   source of jank on a low-end device (71.9% -> 53.5% dropped frames, 28 -> 4
+   long tasks at 6x CPU throttle).
+
+   Hiding the redundant copies leaves the visible card *sequence* unchanged
+   (each copy is identical), and `--duration-mobile` scales the animation by the
+   same factor so the travel speed in px/sec is also unchanged. One copy of a
+   base set is still 1200-2000px wide, i.e. 3-5x a phone viewport, so the loop
+   remains seamless. */
+@media (max-width: 639.98px) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation-duration: var(--duration-mobile, var(--duration, 30s));
+  }
+
+  [data-marquee-copy]:not([data-marquee-copy="0"]) {
+    display: none;
+  }
+}
+
 .marquee-pause-hover:hover {
   animation-play-state: paused;
 }
@@ -344,7 +367,11 @@ img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-li
 
 .scroll-reveal[data-revealed="true"] {
   opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
+  /* `none` is the identity transform, so this animates identically to
+     translate3d(0,0,0) scale(1) — but it releases the compositor layer once the
+     reveal finishes instead of keeping ~30 of them alive for the page lifetime.
+     Layerize was costing 14ms/frame with every reveal permanently promoted. */
+  transform: none;
   will-change: auto;
 }
 

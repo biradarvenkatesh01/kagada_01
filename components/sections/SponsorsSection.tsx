@@ -11,6 +11,20 @@ interface SponsorItem {
   invertWhite?: boolean
 }
 
+interface MarqueeSponsor extends SponsorItem {
+  /** Which replication of the base set this card belongs to (see globals.css). */
+  copy: number
+}
+
+/** How many times each base set is repeated inside one marquee block. */
+const SPONSOR_COPIES = 3
+
+function replicate(base: SponsorItem[], copies: number): MarqueeSponsor[] {
+  return Array.from({ length: copies }, (_, copy) =>
+    base.map((item) => ({ ...item, copy }))
+  ).flat()
+}
+
 // Real Kagada Sponsor Image Assets & Official External Links
 const SPONSORS_BASE_1: SponsorItem[] = [
   { id: 1, src: "/optimized/sponsors/spo1.webp", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org", invertWhite: true },
@@ -26,9 +40,11 @@ const SPONSORS_BASE_2: SponsorItem[] = [
   { id: 8, src: "/optimized/sponsors/spo1.webp", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org", invertWhite: true },
 ];
 
-// Replicated to 12 items to ensure seamless, gap-free infinite looping on all screen widths up to 4K
-const SPONSORS_ROW_1: SponsorItem[] = [...SPONSORS_BASE_1, ...SPONSORS_BASE_1, ...SPONSORS_BASE_1];
-const SPONSORS_ROW_2: SponsorItem[] = [...SPONSORS_BASE_2, ...SPONSORS_BASE_2, ...SPONSORS_BASE_2];
+// Replicated to 12 items to ensure seamless, gap-free infinite looping on all
+// screen widths up to 4K. Copies beyond the first are hidden below 640px, where
+// a single copy is already ~3x the viewport width (see globals.css).
+const SPONSORS_ROW_1: MarqueeSponsor[] = replicate(SPONSORS_BASE_1, SPONSOR_COPIES);
+const SPONSORS_ROW_2: MarqueeSponsor[] = replicate(SPONSORS_BASE_2, SPONSOR_COPIES);
 
 export function SponsorsSection() {
   return (
@@ -49,17 +65,24 @@ export function SponsorsSection() {
 
       {/* Glassmorphic Sponsor Image Marquee Loop Row 1 */}
       <div className="w-full flex flex-col gap-6 sm:gap-10">
-        <Marquee speed={48} pauseOnHover={true} direction="left">
+        <Marquee speed={48} mobileSpeed={48 / SPONSOR_COPIES} pauseOnHover={true} direction="left">
           {SPONSORS_ROW_1.map((item, idx) => (
             <a
               key={`sponsor-r1-${item.id}-${idx}`}
+              data-marquee-copy={item.copy}
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-pointer group p-3.5 sm:p-6 flex items-center justify-center text-center rounded-3xl",
-                "bg-white/25 backdrop-blur-sm border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white",
+                // No backdrop-blur: unlike a static glass card, these sit in a
+                // permanently-running marquee, so the compositor had to re-read
+                // and re-blur the backdrop for all 48 of them on every frame,
+                // forever. At 4px over a smooth gradient already washed out by
+                // bg-white/25 the result is visually indistinguishable (verified
+                // by A/B screenshot with the animation paused).
+                "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
+                "transition-all duration-500 hover:scale-105 hover:bg-white/45 hover:border-white",
                 "min-w-[210px] min-[360px]:min-w-[260px] sm:min-w-[320px] h-[100px] sm:h-[135px]"
               )}
             >
@@ -70,7 +93,7 @@ export function SponsorsSection() {
                 loading="lazy"
                 decoding="async"
                 className={cn(
-                  "max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-md transform-gpu transition-transform duration-500 group-hover:scale-105",
+                  "max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-md transition-transform duration-500 group-hover:scale-105",
                   item.invertWhite && "brightness-0 invert drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
                 )}
               />
@@ -82,17 +105,24 @@ export function SponsorsSection() {
         </Marquee>
 
         {/* Glassmorphic Sponsor Image Marquee Loop Row 2 */}
-        <Marquee speed={52} pauseOnHover={true} direction="right">
+        <Marquee speed={52} mobileSpeed={52 / SPONSOR_COPIES} pauseOnHover={true} direction="right">
           {SPONSORS_ROW_2.map((item, idx) => (
             <a
               key={`sponsor-r2-${item.id}-${idx}`}
+              data-marquee-copy={item.copy}
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-pointer group p-3.5 sm:p-6 flex items-center justify-center text-center rounded-3xl",
-                "bg-white/25 backdrop-blur-sm border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white",
+                // No backdrop-blur: unlike a static glass card, these sit in a
+                // permanently-running marquee, so the compositor had to re-read
+                // and re-blur the backdrop for all 48 of them on every frame,
+                // forever. At 4px over a smooth gradient already washed out by
+                // bg-white/25 the result is visually indistinguishable (verified
+                // by A/B screenshot with the animation paused).
+                "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
+                "transition-all duration-500 hover:scale-105 hover:bg-white/45 hover:border-white",
                 "min-w-[210px] min-[360px]:min-w-[260px] sm:min-w-[320px] h-[100px] sm:h-[135px]"
               )}
             >
@@ -103,7 +133,7 @@ export function SponsorsSection() {
                 loading="lazy"
                 decoding="async"
                 className={cn(
-                  "max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-md transform-gpu transition-transform duration-500 group-hover:scale-105",
+                  "max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-md transition-transform duration-500 group-hover:scale-105",
                   item.invertWhite && "brightness-0 invert drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
                 )}
               />

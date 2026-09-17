@@ -92,7 +92,7 @@ export function ContactSection() {
                   className={cn(
                     "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between group h-full",
                     "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
-                    "transition-all duration-500 transform-gpu hover:scale-105 hover:bg-white/45 hover:border-white"
+                    "transition-all duration-500 hover:scale-105 hover:bg-white/45 hover:border-white"
                   )}
                 >
                   {/* Glass Reflective Interior Shimmer */}

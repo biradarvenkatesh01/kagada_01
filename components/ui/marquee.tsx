@@ -6,6 +6,11 @@ interface MarqueeProps extends React.HTMLAttributes<HTMLDivElement> {
   pauseOnHover?: boolean
   direction?: "left" | "right"
   speed?: number
+  /**
+   * Duration used below 640px, where globals.css hides all but the first copy of
+   * the content. Scaling it by the same factor keeps the travel speed identical.
+   */
+  mobileSpeed?: number
 }
 
 export function Marquee({
@@ -13,6 +18,7 @@ export function Marquee({
   pauseOnHover = false,
   direction = "left",
   speed = 30,
+  mobileSpeed,
   className,
   ...props
 }: MarqueeProps) {
@@ -31,7 +37,10 @@ export function Marquee({
             direction === "right" ? "animate-marquee-reverse" : "animate-marquee",
             pauseOnHover && "marquee-pause-hover hover:[animation-play-state:paused]"
           )}
-          style={{ "--duration": `${speed}s` } as React.CSSProperties}
+          style={{
+            "--duration": `${speed}s`,
+            "--duration-mobile": `${mobileSpeed ?? speed}s`,
+          } as React.CSSProperties}
         >
           {/* Block 1: Exactly 50% of the total flex container width */}
           <div className="flex items-center gap-6 sm:gap-8 pr-6 sm:pr-8 shrink-0">

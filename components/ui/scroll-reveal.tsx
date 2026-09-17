@@ -132,7 +132,7 @@ export function ScrollReveal({
   return (
     <Component
       ref={ref}
-      className={cn("scroll-reveal transform-gpu", className)}
+      className={cn("scroll-reveal", className)}
       style={cssVars}
       {...props}
     >

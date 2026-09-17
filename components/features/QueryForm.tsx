@@ -98,7 +98,7 @@ export default function QueryForm({ className }: { className?: string }) {
       <div
         className={cn(
           "relative w-full overflow-hidden rounded-3xl p-6 sm:p-10",
-          "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35 transform-gpu",
+          "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
           className
         )}
       >
