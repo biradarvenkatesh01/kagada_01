@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { createPortal } from 'react-dom'
 import { useState, useRef, useEffect, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react'
@@ -160,11 +161,18 @@ export const VideosSection = memo(function VideosSection() {
         handleCloseModal()
       }
     }
-    if (activeModalVideo) {
-      window.addEventListener('keydown', handleKeyDown)
-    }
-    return () => window.removeEventListener('keydown', handleKeyDown)
+   if (activeModalVideo) {
+  window.addEventListener('keydown', handleKeyDown)
+  document.body.style.overflow = 'hidden' // Added to prevent background scroll
+} else {
+  document.body.style.overflow = 'unset' // Added to restore scroll
+}
+return () => {
+  window.removeEventListener('keydown', handleKeyDown)
+  document.body.style.overflow = 'unset' // Added to clean up on unmount
+}
   }, [activeModalVideo])
+
 
   const togglePlayPause = () => {
     if (modalVideoRef.current) {
@@ -213,77 +221,79 @@ export const VideosSection = memo(function VideosSection() {
       </div>
 
       {/* FULLSCREEN INTERACTIVE CINEMATIC VIDEO MODAL */}
-      <AnimatePresence>
-        {activeModalVideo && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-8"
-            onClick={handleCloseModal}
-          >
+       <AnimatePresence>
+          {activeModalVideo && (
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl rounded-3xl overflow-hidden border-2 border-white/80 bg-[#3d0b0b]/95 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[999999] bg-black/90 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-8"
+              onClick={handleCloseModal}
             >
-              {/* Modal Header Bar */}
-              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/30 bg-[#8a1c1c]/50 backdrop-blur-md">
-                <h3 className="font-saman text-2xl sm:text-4xl text-white tracking-wide">
-                  {activeModalVideo.title} <span className="font-roboto-mono text-sm text-white/80">({activeModalVideo.year} Aftermovie)</span>
-                </h3>
-                <button
-                  type="button"
-                  onClick={handleCloseModal}
-                  className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/40"
-                  aria-label="Close video"
-                >
-                  <X className="w-5 h-5 stroke-[2.5]" />
-                </button>
-              </div>
-
-              {/* Main Video Viewport */}
-              <div className="relative w-full aspect-video bg-black flex items-center justify-center">
-                <video
-                  ref={modalVideoRef}
-                  src={activeModalVideo.videoSrc}
-                  autoPlay
-                  controls
-                  className="w-full h-full object-contain"
-                  onPlay={() => setIsPlaying(true)}
-                  onPause={() => setIsPlaying(false)}
-                />
-              </div>
-
-              {/* Modal Footer Controls Bar */}
-              <div className="p-4 sm:p-6 bg-[#8a1c1c]/50 backdrop-blur-md border-t border-white/30 flex items-center justify-between">
-                <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 max-w-2xl">
-                  {activeModalVideo.description}
-                </p>
-                <div className="flex items-center gap-3 shrink-0">
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-5xl rounded-3xl overflow-hidden border-2 border-white/80 bg-[#3d0b0b]/95 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col"
+              >
+                {/* Modal Header Bar */}
+                <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/30 bg-[#8a1c1c]/50 backdrop-blur-md">
+                  <h3 className="font-saman text-2xl sm:text-4xl text-white tracking-wide">
+                    {activeModalVideo.title} <span className="font-roboto-mono text-sm text-white/80">({activeModalVideo.year} Aftermovie)</span>
+                  </h3>
                   <button
                     type="button"
-                    onClick={togglePlayPause}
-                    className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-white border border-white/40 transition-colors cursor-pointer"
+                    onClick={handleCloseModal}
+                    className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/40"
+                    aria-label="Close video"
                   >
-                    {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-white" />}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={toggleMute}
-                    className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-white border border-white/40 transition-colors cursor-pointer"
-                  >
-                    {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                    <X className="w-5 h-5 stroke-[2.5]" />
                   </button>
                 </div>
-              </div>
+
+                {/* Main Video Viewport */}
+                <div className="relative w-full aspect-video bg-black flex items-center justify-center">
+                  <video
+                    ref={modalVideoRef}
+                    src={activeModalVideo.videoSrc}
+                    autoPlay
+                    controls
+                    className="w-full h-full object-contain"
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                  />
+                </div>
+
+                {/* Modal Footer Controls Bar */}
+                <div className="p-4 sm:p-6 bg-[#8a1c1c]/50 backdrop-blur-md border-t border-white/30 flex items-center justify-between">
+                  <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 max-w-2xl">
+                    {activeModalVideo.description}
+                  </p>
+                  <div className="flex items-center gap-3 shrink-0">
+                    <button
+                      type="button"
+                      onClick={togglePlayPause}
+                      className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-white border border-white/40 transition-colors cursor-pointer"
+                    >
+                      {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-white" />}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={toggleMute}
+                      className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-white border border-white/40 transition-colors cursor-pointer"
+                    >
+                      {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   )
 });
