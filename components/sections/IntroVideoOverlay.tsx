@@ -34,7 +34,7 @@ export const IntroVideoOverlay = memo(function IntroVideoOverlay({
           exit={{ opacity: 0 }}
           transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
           onClick={onUnmute}
-          className="fixed inset-0 w-screen h-screen min-h-[100dvh] z-[9999] bg-black cursor-pointer transform-gpu pointer-events-auto overflow-hidden"
+          className="fixed inset-0 w-screen h-screen min-h-[100dvh] z-[9999] bg-black cursor-pointer transform-gpu pointer-events-auto overflow-hidden touch-none select-none overscroll-none"
         >
           <video
             ref={videoRef}
