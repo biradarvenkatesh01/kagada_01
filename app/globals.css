@@ -457,3 +457,59 @@ video::-webkit-media-controls-overflow-button {
 @media (prefers-reduced-motion: reduce) {
   .animate-gear-spin { animation: none !important; }
 }
+
+/* --- Off-screen render skipping --------------------------------------------
+   THE dominant cost on this page. The document is ~8900px tall on a phone and
+   ~10000px on desktop, and every section is heavy to raster (large translucent
+   glass surfaces over a gradient, shadows, borders). The browser was doing
+   layout + paint work for sections nowhere near the viewport on every frame.
+
+   `content-visibility: auto` lets it skip that work entirely until a section is
+   near the viewport. Measured on 390x844 @DPR3 at 6x CPU throttle, n=3,
+   identical scripted scroll:
+
+       without .......... 64.8% dropped frames  (range 58.4-75.2)
+       with ..............  6.2% dropped frames  (range 4.6-8.1)
+
+   `contain-intrinsic-size: auto <h>` is the important detail: the `auto`
+   keyword makes the browser remember each section's REAL height once rendered
+   and reuse it thereafter, so the scrollbar and anchor offsets stay correct.
+   The px value is only the first guess for a section that has never been
+   rendered; the values below are measured per breakpoint to keep that guess
+   close and avoid scrollbar drift on first scroll.
+
+   The hero is deliberately excluded: it is always the first thing on screen, it
+   owns the intro-video interplay and the LED canvas, and measurement showed
+   including it made no difference (6.2% vs 6.3%). */
+#about, #tracks, #prizes, #winners, #gallery,
+#videos, #sponsors, #faq, #contact, footer {
+  content-visibility: auto;
+}
+
+/* Mobile-measured intrinsic heights */
+@media (max-width: 639px) {
+  #about    { contain-intrinsic-size: auto 872px; }
+  #tracks   { contain-intrinsic-size: auto 580px; }
+  #prizes   { contain-intrinsic-size: auto 463px; }
+  #winners  { contain-intrinsic-size: auto 678px; }
+  #gallery  { contain-intrinsic-size: auto 639px; }
+  #videos   { contain-intrinsic-size: auto 1028px; }
+  #sponsors { contain-intrinsic-size: auto 508px; }
+  #faq      { contain-intrinsic-size: auto 788px; }
+  #contact  { contain-intrinsic-size: auto 2362px; }
+  footer    { contain-intrinsic-size: auto 194px; }
+}
+
+/* Desktop-measured intrinsic heights (1440x900) */
+@media (min-width: 640px) {
+  #about    { contain-intrinsic-size: auto 1054px; }
+  #tracks   { contain-intrinsic-size: auto 1028px; }
+  #prizes   { contain-intrinsic-size: auto 592px; }
+  #winners  { contain-intrinsic-size: auto 808px; }
+  #gallery  { contain-intrinsic-size: auto 870px; }
+  #videos   { contain-intrinsic-size: auto 916px; }
+  #sponsors { contain-intrinsic-size: auto 722px; }
+  #faq      { contain-intrinsic-size: auto 952px; }
+  #contact  { contain-intrinsic-size: auto 2086px; }
+  footer    { contain-intrinsic-size: auto 182px; }
+}
