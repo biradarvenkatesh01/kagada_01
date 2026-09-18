@@ -383,3 +383,10 @@ img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-li
   }
 }
 
+/* ─── Video Player Controls Hardening ────────────────────────────── */
+video::-internal-media-controls-download-button,
+video::-webkit-media-controls-download-button,
+video::-webkit-media-controls-overflow-button {
+  display: none !important;
+}
+

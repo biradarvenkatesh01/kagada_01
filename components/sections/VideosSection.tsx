@@ -120,6 +120,7 @@ function VideoCard({
             playsInline
             loop
             preload="none"
+            onContextMenu={(e) => e.preventDefault()}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
           />
 
@@ -277,6 +278,9 @@ export const VideosSection = memo(function VideosSection() {
                     src={activeModalVideo.videoSrc}
                     autoPlay
                     controls
+                    controlsList="nodownload noplaybackrate noremoteplayback"
+                    disablePictureInPicture
+                    onContextMenu={(e) => e.preventDefault()}
                     className="w-full h-full object-contain"
                     onPlay={() => setIsPlaying(true)}
                     onPause={() => setIsPlaying(false)}
