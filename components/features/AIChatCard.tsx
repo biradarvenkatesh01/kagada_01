@@ -138,7 +138,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             }}
             className="fixed bottom-22 sm:bottom-25 right-5 sm:right-7 z-50 cursor-pointer select-none"
           >
-            <div className="relative bg-white/95 backdrop-blur-lg text-[#8a1c1c] border-2 border-white px-4 py-3 rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs hover:scale-[1.03] transition-all duration-200 group">
+            <div className="relative bg-white/95 backdrop-blur-lg text-[#8a1c1c] border-2 border-white px-4 py-3 rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs hover:scale-[1.03] transition-glass duration-200 group">
               <div className="w-8 h-8 rounded-full bg-[#8a1c1c]/10 flex items-center justify-center shrink-0 border border-[#8a1c1c]/20 text-[#8a1c1c]">
                 <Bot className="w-5 h-5 stroke-[2.2]" />
               </div>
@@ -176,7 +176,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className={cn(
           "fixed bottom-5 sm:bottom-7 right-5 sm:right-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-2xl select-none group",
-          "bg-[#8a1c1c]/90 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] hover:border-white transition-all duration-300",
+          "bg-[#8a1c1c]/90 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] hover:border-white transition-glass duration-300",
           isOpen && "bg-[#8a1c1c] border-white ring-4 ring-white/30"
         )}
         aria-label="Toggle AI Chatbot"
@@ -286,7 +286,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isTyping}
-                className="p-2.5 rounded-xl bg-white text-[#8a1c1c] hover:bg-white/90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md font-bold"
+                className="p-2.5 rounded-xl bg-white text-[#8a1c1c] hover:bg-white/90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed transition-glass duration-200 shadow-md font-bold"
                 aria-label="Send Message"
               >
                 <Send className="w-4 h-4 stroke-[2.5]" />

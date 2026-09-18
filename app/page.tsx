@@ -12,6 +12,7 @@ import IntroExperience from "@/components/sections/IntroExperience";
 import BurgundyTexturedBackground from "@/components/ui/burgundy-textured-background";
 import BackToTop from "@/components/ui/back-to-top";
 import ImageLightbox from "@/components/ui/image-lightbox";
+import OffscreenAnimationPause from "@/components/ui/marquee-auto-pause";
 
 export default function Home() {
   return (
@@ -64,6 +65,10 @@ export default function Home() {
 
       {/* FULLSCREEN IMAGE LIGHTBOX MODAL */}
       <ImageLightbox />
+
+      {/* Pauses the gallery/sponsor marquees and the Tracks gear while they are
+          off-screen. Mounted globally so those sections stay Server Components. */}
+      <OffscreenAnimationPause />
     </main>
   );
 }

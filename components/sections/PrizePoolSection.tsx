@@ -22,7 +22,7 @@ export function PrizePoolSection() {
             className="relative w-full bg-white/40 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/20 rounded-3xl p-5 sm:p-7 md:p-8 text-white flex flex-col items-center text-center overflow-hidden"
           >
             {/* Circular Trophy SVG Icon Glass Badge */}
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/40 backdrop-blur-md border-2 border-white/80 text-white flex items-center justify-center mb-3 sm:mb-4 shadow-lg shadow-black/10">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/40 border-2 border-white/80 text-white flex items-center justify-center mb-3 sm:mb-4 shadow-lg shadow-black/10">
               <Trophy className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.2] drop-shadow-sm" />
             </div>
 

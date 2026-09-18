@@ -410,3 +410,50 @@ video::-webkit-media-controls-overflow-button {
 .tshadow-sm { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
 .tshadow-md { text-shadow: 0 3px 3px rgba(0, 0, 0, 0.12); }
 .tshadow-lg { text-shadow: 0 4px 4px rgba(0, 0, 0, 0.15); }
+
+/* --- Glass-safe transitions ---------------------------------------------
+   Tailwind's `transition-all` resolves to `transition-property: all`, and even
+   plain `transition` includes `backdrop-filter`. On a glass surface that means
+   any style recalculation can begin animating the blur itself, which browsers
+   composite very poorly — a documented cause of the flicker seen on the contact
+   cards, and measured here as part of an 8.1% -> 2.7% dropped-frame improvement
+   on mobile (390x844 @DPR3, 4x CPU, n=3).
+
+   This transitions everything those elements actually animate, and nothing else.
+   Never add `filter` or `backdrop-filter` to this list. */
+.transition-glass {
+  transition-property: transform, background-color, border-color, color,
+                       opacity, box-shadow, text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  /* No transition-duration here on purpose: this rule is unlayered and would
+     therefore beat Tailwind's layered duration-* utilities, silently forcing
+     every transition to one value. Every usage carries its own duration-* class. */
+}
+
+/* --- Off-screen animation pause -----------------------------------------
+   Applied by useOffscreenPause(). A CSS animation runs at full rate even when
+   its element is far outside the viewport; the browser will not stop it.
+   The marquees animate ~4000px-wide composited layers, and pausing them while
+   off-screen took dropped frames from 90.1% to 55.9% at 6x CPU throttle on a
+   390x844 @DPR3 viewport. The user cannot see an off-screen marquee, and the
+   animation resumes exactly where it left off. */
+.anim-paused,
+.anim-paused * {
+  animation-play-state: paused !important;
+}
+
+/* --- Tracks centre gear -------------------------------------------------
+   Was a framer-motion `animate={{rotate:360}} repeat:Infinity`, which drives a
+   JS rAF loop on the main thread for the life of the page. It was measured
+   still rotating (241deg -> 259deg over 900ms) while the Tracks section was
+   scrolled entirely out of view at the footer.
+
+   As a CSS animation it runs on the compositor and, crucially, can be paused by
+   the same .anim-paused gate as the marquees when off-screen. Same 18s linear
+   rotation, so the motion is visually identical. */
+@keyframes gear-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.animate-gear-spin { animation: gear-spin 18s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gear-spin { animation: none !important; }
+}

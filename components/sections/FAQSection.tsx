@@ -95,7 +95,7 @@ export const FAQSection = memo(function FAQSection() {
                 }
               }}
               className={cn(
-                "relative overflow-hidden cursor-pointer rounded-2xl py-3 px-4 sm:py-3.5 sm:px-5 border-2 transition-all duration-300",
+                "relative overflow-hidden cursor-pointer rounded-2xl py-3 px-4 sm:py-3.5 sm:px-5 border-2 transition-glass duration-300",
                 "bg-white/30 backdrop-blur-lg border-white/80 shadow-lg shadow-black/20",
                 "hover:bg-white/45 hover:border-white",
                 isOpen && "bg-white/40 border-white shadow-black/30"
@@ -112,7 +112,7 @@ export const FAQSection = memo(function FAQSection() {
                 <div
                   className={cn(
                     "w-7 h-7 sm:w-8 sm:h-8 rounded-full shrink-0 flex items-center justify-center",
-                    "bg-white/30 backdrop-blur-lg border border-white/80 text-white shadow-sm transition-transform duration-300",
+                    "bg-white/30 border border-white/80 text-white shadow-sm transition-transform duration-300",
                     isOpen && "rotate-180 bg-white/50 border-white"
                   )}
                 >

@@ -114,7 +114,7 @@ export function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 sm:w-12 sm:h-12 bg-white/30 backdrop-blur-lg border border-white/80 rounded-full flex items-center justify-center text-white transition-all duration-300 transform hover:scale-110 hover:bg-white hover:text-[#8a1c1c] shadow-lg shadow-black/20"
+                  className="w-10 h-10 sm:w-12 sm:h-12 bg-white/30 border border-white/80 rounded-full flex items-center justify-center text-white transition-glass duration-300 transform hover:scale-110 hover:bg-white hover:text-[#8a1c1c] shadow-lg shadow-black/20"
                   aria-label={social.name}
                   title={social.name}
                 >

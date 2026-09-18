@@ -136,7 +136,7 @@ export default function ImageLightbox() {
           >
             <button
               onClick={handleClose}
-              className="p-3 sm:p-3.5 rounded-full bg-[#8a1c1c]/90 hover:bg-[#8a1c1c] backdrop-blur-xl border-2 border-white/80 text-white shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
+              className="p-3 sm:p-3.5 rounded-full bg-[#8a1c1c]/90 hover:bg-[#8a1c1c] backdrop-blur-xl border-2 border-white/80 text-white shadow-2xl transition-glass duration-200 hover:scale-110 active:scale-95 cursor-pointer"
               title="Close image"
               aria-label="Close image"
             >

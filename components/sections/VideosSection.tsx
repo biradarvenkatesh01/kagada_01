@@ -100,7 +100,7 @@ function VideoCard({
         className={cn(
           "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
           "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
-          "hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-all duration-500"
+          "hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-glass duration-500"
         )}
       >
         {/* Glass Interior Reflective Shimmer */}
@@ -129,19 +129,19 @@ function VideoCard({
 
           {/* Center Glowing Glass Play Button Badge */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-lg border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-glass duration-300">
               <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white text-white translate-x-0.5 drop-shadow-md" />
             </div>
           </div>
 
           {/* Bottom Right Duration Badge */}
-          <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 backdrop-blur-lg text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
+          <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
             {movie.duration}
           </div>
         </div>
 
         {/* Card Content Footer inside Translucent Glass Badge */}
-        <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 backdrop-blur-lg border border-white/60 shadow-inner">
+        <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 border border-white/60 shadow-inner">
           <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-white tracking-wide leading-none tshadow-md">
             {movie.title}
           </h3>

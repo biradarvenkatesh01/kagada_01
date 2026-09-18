@@ -82,7 +82,7 @@ export function SponsorsSection() {
                 // bg-white/25 the result is visually indistinguishable (verified
                 // by A/B screenshot with the animation paused).
                 "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-all duration-500 hover:scale-105 hover:bg-white/45 hover:border-white",
+                "transition-glass duration-500 hover:scale-105 hover:bg-white/45 hover:border-white",
                 "min-w-[210px] min-[360px]:min-w-[260px] sm:min-w-[320px] h-[100px] sm:h-[135px]"
               )}
             >
@@ -122,7 +122,7 @@ export function SponsorsSection() {
                 // bg-white/25 the result is visually indistinguishable (verified
                 // by A/B screenshot with the animation paused).
                 "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-all duration-500 hover:scale-105 hover:bg-white/45 hover:border-white",
+                "transition-glass duration-500 hover:scale-105 hover:bg-white/45 hover:border-white",
                 "min-w-[210px] min-[360px]:min-w-[260px] sm:min-w-[320px] h-[100px] sm:h-[135px]"
               )}
             >

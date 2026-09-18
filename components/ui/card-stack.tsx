@@ -399,14 +399,14 @@ export function CardStack<T extends CardStackItem>({
         <div className="mt-4 sm:mt-6 flex items-center justify-center gap-4 z-20">
           <button
             onClick={prev}
-            className="p-2.5 sm:p-3 rounded-full bg-white/40 backdrop-blur-md border border-white text-[#8a1c1c] hover:bg-white/70 hover:scale-110 active:scale-95 transition-all shadow-md shadow-black/5"
+            className="p-2.5 sm:p-3 rounded-full bg-white/40 backdrop-blur-md border border-white text-[#8a1c1c] hover:bg-white/70 hover:scale-110 active:scale-95 transition-glass duration-150 shadow-md shadow-black/5"
             aria-label="Previous Card"
           >
             <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
           </button>
           <button
             onClick={next}
-            className="p-2.5 sm:p-3 rounded-full bg-white/40 backdrop-blur-md border border-white text-[#8a1c1c] hover:bg-white/70 hover:scale-110 active:scale-95 transition-all shadow-md shadow-black/5"
+            className="p-2.5 sm:p-3 rounded-full bg-white/40 backdrop-blur-md border border-white text-[#8a1c1c] hover:bg-white/70 hover:scale-110 active:scale-95 transition-glass duration-150 shadow-md shadow-black/5"
             aria-label="Next Card"
           >
             <ChevronRight className="w-5 h-5 stroke-[2.5]" />
@@ -425,7 +425,7 @@ export function CardStack<T extends CardStackItem>({
                   key={it.id}
                   onClick={() => setActive(idx)}
                   className={cn(
-                    "h-2.5 rounded-full transition-all duration-300",
+                    "h-2.5 rounded-full transition-glass duration-300",
                     on
                       ? "w-6 bg-[#8a1c1c]"
                       : "w-2.5 bg-[#8a1c1c]/30 hover:bg-[#8a1c1c]/60",

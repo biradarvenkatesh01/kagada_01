@@ -132,7 +132,7 @@ export default function QueryForm({ className }: { className?: string }) {
               <button
                 type="button"
                 onClick={handleReset}
-                className="bg-[#8a1c1c] hover:bg-[#a12222] text-white font-outfit font-extrabold text-sm sm:text-base py-3.5 px-8 rounded-2xl shadow-xl border-2 border-white/80 hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-wider cursor-pointer"
+                className="bg-[#8a1c1c] hover:bg-[#a12222] text-white font-outfit font-extrabold text-sm sm:text-base py-3.5 px-8 rounded-2xl shadow-xl border-2 border-white/80 hover:scale-105 active:scale-95 transition-glass duration-300 uppercase tracking-wider cursor-pointer"
               >
                 Send Another Query
               </button>
@@ -187,7 +187,7 @@ export default function QueryForm({ className }: { className?: string }) {
                     placeholder="John"
                     required
                     disabled={status === "submitting"}
-                    className="w-full bg-white/70 backdrop-blur-md border border-white/90 rounded-2xl px-4 py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-all shadow-inner"
+                    className="w-full bg-white/70 border border-white/90 rounded-2xl px-4 py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-glass duration-150 shadow-inner"
                   />
                 </div>
 
@@ -206,7 +206,7 @@ export default function QueryForm({ className }: { className?: string }) {
                     onChange={handleChange}
                     placeholder="Doe"
                     disabled={status === "submitting"}
-                    className="w-full bg-white/70 backdrop-blur-md border border-white/90 rounded-2xl px-4 py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-all shadow-inner"
+                    className="w-full bg-white/70 border border-white/90 rounded-2xl px-4 py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-glass duration-150 shadow-inner"
                   />
                 </div>
               </div>
@@ -228,7 +228,7 @@ export default function QueryForm({ className }: { className?: string }) {
                   placeholder="john.doe@example.com"
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-white/70 backdrop-blur-md border border-white/90 rounded-2xl px-4 py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-all shadow-inner"
+                  className="w-full bg-white/70 border border-white/90 rounded-2xl px-4 py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-glass duration-150 shadow-inner"
                 />
               </div>
 
@@ -249,7 +249,7 @@ export default function QueryForm({ className }: { className?: string }) {
                   placeholder="Ask about presentation tracks, registration details, eligibility, or event schedule..."
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-white/70 backdrop-blur-md border border-white/90 rounded-2xl px-4 py-3.5 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-all shadow-inner resize-none custom-scrollbar"
+                  className="w-full bg-white/70 border border-white/90 rounded-2xl px-4 py-3.5 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-glass duration-150 shadow-inner resize-none custom-scrollbar"
                 />
               </div>
 
@@ -259,7 +259,7 @@ export default function QueryForm({ className }: { className?: string }) {
                 disabled={status === "submitting"}
                 className={cn(
                   "w-full sm:w-auto self-center bg-[#8a1c1c] hover:bg-[#a12222] text-white font-outfit font-extrabold text-base py-4 px-10 rounded-2xl shadow-xl border-2 border-white/80",
-                  "transition-all duration-300 uppercase tracking-wider flex items-center justify-center gap-2 group cursor-pointer",
+                  "transition-glass duration-300 uppercase tracking-wider flex items-center justify-center gap-2 group cursor-pointer",
                   "hover:scale-105 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                 )}
               >

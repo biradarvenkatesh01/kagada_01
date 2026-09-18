@@ -85,7 +85,7 @@ function MarqueeRow({
                 // visible, yet it forced the compositor to re-snapshot and re-blur
                 // the textured background every frame of the infinite marquee.
                 "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-all duration-500 hover:scale-[1.03] hover:bg-white/45 hover:border-white",
+                "transition-glass duration-500 hover:scale-[1.03] hover:bg-white/45 hover:border-white",
                 item.shape
               )}
             >
@@ -114,7 +114,7 @@ function MarqueeRow({
                 // visible, yet it forced the compositor to re-snapshot and re-blur
                 // the textured background every frame of the infinite marquee.
                 "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-all duration-500 hover:scale-[1.03] hover:bg-white/45 hover:border-white",
+                "transition-glass duration-500 hover:scale-[1.03] hover:bg-white/45 hover:border-white",
                 item.shape
               )}
             >

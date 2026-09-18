@@ -92,7 +92,7 @@ export function ContactSection() {
                   className={cn(
                     "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between group h-full",
                     "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
-                    "transition-all duration-500 hover:scale-105 hover:bg-white/45 hover:border-white"
+                    "transition-glass duration-500 hover:scale-105 hover:bg-white/45 hover:border-white"
                   )}
                 >
                   {/* Glass Reflective Interior Shimmer */}
@@ -100,7 +100,7 @@ export function ContactSection() {
 
                   <div className="relative z-10 w-full flex flex-col items-center">
                     {/* Profile Icon SVG */}
-                    <div className="w-14 h-14 rounded-2xl bg-white/30 backdrop-blur-lg border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-14 h-14 rounded-2xl bg-white/30 border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
                       <User className="w-7 h-7 stroke-[2.2]" />
                     </div>
                     <h4 className="font-outfit font-extrabold text-xl text-white tracking-wide mb-1 tshadow-sm">
@@ -178,7 +178,7 @@ export function ContactSection() {
               href={UVCE_DIRECTIONS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative z-10 w-full sm:w-auto bg-white text-[#8a1c1c] font-outfit font-black text-base py-3.5 px-8 rounded-2xl shadow-xl hover:bg-white/90 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center uppercase tracking-wider"
+              className="relative z-10 w-full sm:w-auto bg-white text-[#8a1c1c] font-outfit font-black text-base py-3.5 px-8 rounded-2xl shadow-xl hover:bg-white/90 hover:scale-105 active:scale-95 transition-glass duration-300 flex items-center justify-center uppercase tracking-wider"
             >
               Get Directions
             </a>

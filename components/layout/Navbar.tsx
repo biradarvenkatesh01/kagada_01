@@ -46,7 +46,7 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
           data-no-lightbox="true"
           fetchPriority="high"
           decoding="async"
-          className="h-10 sm:h-12 xl:h-14 w-auto object-contain transition-all duration-300 hover:scale-105 shrink-0"
+          className="h-10 sm:h-12 xl:h-14 w-auto object-contain transition-glass duration-300 hover:scale-105 shrink-0"
           style={{
             filter:
               "invert(18%) sepia(85%) saturate(3000%) hue-rotate(345deg) brightness(85%) contrast(95%)",
@@ -58,55 +58,55 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
       <nav className="hidden lg:flex flex-nowrap items-center gap-3.5 xl:gap-6 2xl:gap-8 font-roboto-mono text-xs xl:text-sm font-bold tracking-wider text-[#8a1c1c] shrink-0">
         <a
           href="#about"
-          className="whitespace-nowrap shrink-0 transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
         >
           About Us
         </a>
         <a
           href="#tracks"
-          className="whitespace-nowrap shrink-0 transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
         >
           Tracks
         </a>
         <a
           href="#prizes"
-          className="whitespace-nowrap shrink-0 transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
         >
           Prize Pool
         </a>
         <a
           href="#winners"
-          className="whitespace-nowrap shrink-0 transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
         >
           Winners
         </a>
         <a
           href="#gallery"
-          className="whitespace-nowrap shrink-0 transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
         >
           Gallery
         </a>
         <a
           href="#videos"
-          className="whitespace-nowrap shrink-0 transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
         >
           Aftermovies
         </a>
         <a
           href="#sponsors"
-          className="whitespace-nowrap shrink-0 transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
         >
           Sponsors
         </a>
         <a
           href="#faq"
-          className="whitespace-nowrap shrink-0 transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
         >
           FAQ
         </a>
         <a
           href="#contact"
-          className="whitespace-nowrap shrink-0 transition-all duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
         >
           Contact
         </a>
