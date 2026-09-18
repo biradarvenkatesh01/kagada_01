@@ -121,12 +121,12 @@ export default function QueryForm({ className }: { className?: string }) {
                 <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 stroke-[2.2]" />
               </div>
 
-              <h4 className="font-smooch text-4xl sm:text-6xl text-[#8a1c1c] font-semibold tracking-wide mb-2">
+              <h4 className="font-smooch text-4xl sm:text-6xl text-white font-semibold tracking-wide mb-2 drop-shadow-md">
                 Query Received!
               </h4>
 
-              <p className="font-jakarta text-sm sm:text-base font-medium text-slate-800/90 max-w-md mb-8 leading-relaxed">
-                Thank you, <strong className="text-[#8a1c1c]">{formData.firstName}</strong>. We have received your query and IEEE UVCE will respond as soon as possible.
+              <p className="font-jakarta text-sm sm:text-base font-medium text-white/90 max-w-md mb-8 leading-relaxed drop-shadow-sm">
+                Thank you, <strong className="font-extrabold text-white">{formData.firstName}</strong>. We have received your query and IEEE UVCE will respond as soon as possible.
               </p>
 
               <button
@@ -149,7 +149,7 @@ export default function QueryForm({ className }: { className?: string }) {
             >
               {/* Form Title & Subtitle */}
               <div className="text-center mb-6 sm:mb-8">
-                <h3 className="font-smooch text-4xl sm:text-6xl text-[#8a1c1c] font-semibold tracking-wide leading-tight drop-shadow-sm">
+                <h3 className="font-smooch text-4xl sm:text-6xl text-white font-semibold tracking-wide leading-tight drop-shadow-md">
                   Have a Query?
                 </h3>
                 <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-wider mt-1 drop-shadow-sm">

@@ -87,18 +87,25 @@ export default function WinnerTrackCards() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-6xl my-4 sm:my-8 px-0 sm:px-4">
-      {/* 3 Horizontal Cards Container: Grid in Laptop/Desktop View, Full-Width 1-Card Carousel in Mobile View */}
+      {/* 3 Horizontal Cards Container: Grid in Laptop/Desktop View, Full-Width 1-Card Carousel in Mobile View.
+          The reveal wraps the WHOLE container rather than each card: on mobile the
+          container is an overflow-x-auto carousel, and an IntersectionObserver
+          clips against every scrolling ancestor, so per-card reveals on cards 2
+          and 3 never fired — they sat at opacity 0 until swiped to, then animated
+          in mid-swipe. rootMargin cannot defeat an intermediate overflow clip, so
+          the observed element has to live outside it. */}
+      <ScrollReveal direction="up" className="w-full">
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
         className="w-full flex md:grid md:grid-cols-3 gap-0 md:gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory py-4 md:py-0 select-none scrollbar-none"
       >
-        {cards.map((card, i) => (
+        {cards.map((card) => (
           <div
             key={card.id}
             className="w-full shrink-0 snap-center flex items-center justify-center px-4 md:px-0 md:w-auto md:shrink"
           >
-            <ScrollReveal direction="up" delay={i * 80} className="w-full flex justify-center">
+            <div className="w-full flex justify-center">
               <div
                 className={cn(
                   "w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[360px] md:max-w-none md:w-full h-[360px] sm:h-[400px] lg:h-[440px]",
@@ -137,10 +144,11 @@ export default function WinnerTrackCards() {
 </a>
                 </div>
               </div>
-            </ScrollReveal>
+            </div>
           </div>
         ))}
       </div>
+      </ScrollReveal>
 
       {/* Mobile Navigation Controls: Arrows + Indicator Dots */}
       <div className="flex md:hidden items-center justify-center gap-4 mt-5 z-20">

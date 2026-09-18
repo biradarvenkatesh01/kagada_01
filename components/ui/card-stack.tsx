@@ -353,6 +353,10 @@ export function CardStack<T extends CardStackItem>({
                         }
                   }
                   animate={{
+                    // Cards in this fan physically overlap during a transition,
+                    // so inactive cards must stay opaque enough to occlude the
+                    // ones behind them. Lowering this (0.55 was tried) makes the
+                    // stack translucent mid-advance and renders text over text.
                     opacity: isActive ? 1 : 0.9,
                     x,
                     y: y + lift,
