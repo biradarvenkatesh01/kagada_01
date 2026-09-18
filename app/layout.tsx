@@ -149,8 +149,6 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} ${outfit.variable} ${robotoMono.variable} h-full antialiased dark`}
     >
       <head>
-        {/* Preload critical hero background image for instant display */}
-        <link rel="preload" as="image" href="/optimized/hero-bg.webp" type="image/webp" fetchPriority="high" />
         {/* Explicit Favicons for Google Search & Web Crawlers */}
         <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
         <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
