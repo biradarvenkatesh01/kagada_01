@@ -1,10 +1,27 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useSyncExternalStore } from "react";
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/sections/HeroSection";
 import IntroVideoOverlay from "@/components/sections/IntroVideoOverlay";
 import AIChatCard from "@/components/features/AIChatCard";
+
+// Tab-scoped key in sessionStorage.
+// sessionStorage is unique per tab:
+// - Persists on reload within the SAME tab (so reload will NOT replay the video).
+// - Brand new/empty in ANY OTHER tab (so other tabs WILL show the video).
+const TAB_INTRO_KEY = "kagada_tab_intro_seen";
+
+function getTabIntroStatus(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    // Purge any lingering global localStorage key from past versions
+    localStorage.removeItem("kagada_intro_seen");
+    return sessionStorage.getItem(TAB_INTRO_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Owns the intro-video lifecycle and the few pieces of chrome that depend on it
@@ -21,10 +38,29 @@ export default function IntroExperience({
   const [isVideoFading, setIsVideoFading] = useState(false);
   const [isVideoHidden, setIsVideoHidden] = useState(false);
 
+  // Tab-scoped reload check: true if this specific tab has already loaded the site
+  const isTabAlreadySeen = useSyncExternalStore(
+    () => () => {},
+    getTabIntroStatus,
+    () => false
+  );
+
+  const effectiveVideoHidden = isVideoHidden || isTabAlreadySeen;
+  const effectiveVideoFading = isVideoFading || isTabAlreadySeen;
+
+  // Once loaded in this tab, record in sessionStorage so reloading this tab won't replay
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(TAB_INTRO_KEY, "true");
+    } catch {
+      // Storage unavailable or blocked
+    }
+  }, []);
+
   // 🔒 STRICT SCROLL LOCK: Prevent all scrolling while intro video is playing
   // and guarantee users always end up at the top in the Hero section.
   useEffect(() => {
-    if (isVideoHidden) {
+    if (effectiveVideoHidden) {
       // Restore Lenis and ensure user lands at top of Hero section
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       const lenis = (window as unknown as { __lenis?: { start: () => void; scrollTo: (target: number, opts?: { immediate?: boolean }) => void } }).__lenis;
@@ -103,10 +139,10 @@ export default function IntroExperience({
       }
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     };
-  }, [isVideoHidden]);
+  }, [effectiveVideoHidden]);
 
   useEffect(() => {
-    if (isVideoHidden) return;
+    if (effectiveVideoHidden) return;
     if (videoRef.current) {
       videoRef.current.muted = false;
       videoRef.current.play().catch(() => {
@@ -116,11 +152,16 @@ export default function IntroExperience({
         }
       });
     }
-  }, [isVideoHidden]);
+  }, [effectiveVideoHidden]);
 
   const triggerFade = useCallback(() => {
     if (!isVideoFading) {
       setIsVideoFading(true);
+      try {
+        sessionStorage.setItem(TAB_INTRO_KEY, "true");
+      } catch {
+        // ignore
+      }
       // Ensure viewport stays locked at top Hero section as fade commences
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       const lenis = (window as unknown as { __lenis?: { scrollTo: (target: number, opts?: { immediate?: boolean }) => void } }).__lenis;
@@ -156,18 +197,18 @@ export default function IntroExperience({
   return (
     <>
       {/* Floating Pill Header Navigation */}
-      <Navbar isVideoFading={isVideoFading} />
+      <Navbar isVideoFading={effectiveVideoFading} />
 
       {/* SECTION 1: HERO (Untouched, with original background) */}
-      <HeroSection isVideoFading={isVideoFading} />
+      <HeroSection isVideoFading={effectiveVideoFading} />
 
       {/* SECTIONS 2-10 + FOOTER (server-rendered) */}
       {children}
 
       {/* INTRO VIDEO OVERLAY */}
       <IntroVideoOverlay
-        isVideoHidden={isVideoHidden}
-        isVideoFading={isVideoFading}
+        isVideoHidden={effectiveVideoHidden}
+        isVideoFading={effectiveVideoFading}
         onTimeUpdate={handleTimeUpdate}
         onEnded={triggerFade}
         onUnmute={handleTapToUnmute}
@@ -175,7 +216,7 @@ export default function IntroExperience({
       />
 
       {/* AI CHATBOT ASSISTANT */}
-      <AIChatCard isVisible={isVideoHidden || isVideoFading} />
+      <AIChatCard isVisible={effectiveVideoHidden || effectiveVideoFading} />
     </>
   );
 }
