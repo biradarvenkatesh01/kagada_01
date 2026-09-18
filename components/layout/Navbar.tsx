@@ -36,7 +36,7 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
         damping: 20,
         delay: 0.1,
       }}
-      className="fixed top-[calc(1rem+env(safe-area-inset-top,0px))] sm:top-6 left-1/2 z-[999] w-[94%] sm:w-[92%] max-w-7xl h-14 sm:h-16 rounded-full bg-white/45 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/15 px-4 sm:px-8 flex flex-nowrap items-center justify-between pointer-events-auto transform-gpu will-change-transform"
+      className="fixed top-[calc(1rem+env(safe-area-inset-top,0px))] sm:top-6 left-1/2 z-[999] w-[94%] sm:w-[92%] max-w-7xl h-14 sm:h-16 rounded-full bg-white/45 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/15 px-4 sm:px-8 flex flex-nowrap items-center justify-between pointer-events-auto transform-gpu will-change-transform"
     >
       {/* Left Brand Logo (Constant Kagada Red Filter) */}
       <a href="#hero" className="flex items-center gap-2 select-none py-0 shrink-0">
@@ -132,7 +132,7 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-18 sm:top-20 left-0 right-0 bg-white/85 backdrop-blur-2xl border-2 border-white/80 rounded-3xl p-6 shadow-2xl shadow-black/25 flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c] lg:hidden z-[1001]"
+            className="absolute top-18 sm:top-20 left-0 right-0 bg-white/85 backdrop-blur-lg border-2 border-white/80 rounded-3xl p-6 shadow-2xl shadow-black/25 flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c] lg:hidden z-[1001]"
           >
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
               About Us

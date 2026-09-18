@@ -59,14 +59,14 @@ export const FAQSection = memo(function FAQSection() {
     <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-6 sm:py-10 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4">
-          Frequently Asked <span className="text-amber-400 drop-shadow-md">Questions</span>
+        <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+          Frequently Asked <span className="text-amber-400 tshadow-md">Questions</span>
         </h2>
       </ScrollReveal>
 
       {/* Subtitle */}
       <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl">
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center tshadow-sm mb-10 sm:mb-14 max-w-2xl">
           Everything you need to know about KAGADA conference, tracks, and events.
         </p>
       </ScrollReveal>
@@ -96,7 +96,7 @@ export const FAQSection = memo(function FAQSection() {
               }}
               className={cn(
                 "relative overflow-hidden cursor-pointer rounded-2xl py-3 px-4 sm:py-3.5 sm:px-5 border-2 transition-all duration-300",
-                "bg-white/30 backdrop-blur-2xl border-white/80 shadow-lg shadow-black/20",
+                "bg-white/30 backdrop-blur-lg border-white/80 shadow-lg shadow-black/20",
                 "hover:bg-white/45 hover:border-white",
                 isOpen && "bg-white/40 border-white shadow-black/30"
               )}
@@ -106,13 +106,13 @@ export const FAQSection = memo(function FAQSection() {
 
               {/* Accordion Header Row */}
               <div className="relative z-10 flex items-center justify-between gap-3">
-                <h3 className="font-outfit font-bold text-base sm:text-lg text-white tracking-wide leading-snug drop-shadow-sm text-left">
+                <h3 className="font-outfit font-bold text-base sm:text-lg text-white tracking-wide leading-snug tshadow-sm text-left">
                   {faq.question}
                 </h3>
                 <div
                   className={cn(
                     "w-7 h-7 sm:w-8 sm:h-8 rounded-full shrink-0 flex items-center justify-center",
-                    "bg-white/30 backdrop-blur-xl border border-white/80 text-white shadow-sm transition-transform duration-300",
+                    "bg-white/30 backdrop-blur-lg border border-white/80 text-white shadow-sm transition-transform duration-300",
                     isOpen && "rotate-180 bg-white/50 border-white"
                   )}
                 >
@@ -133,7 +133,7 @@ export const FAQSection = memo(function FAQSection() {
                     role="region"
                   >
                     <div className="pt-3 sm:pt-3.5 border-t border-white/40 mt-3 sm:mt-3.5 text-left">
-                      <p className="font-jakarta text-xs sm:text-sm md:text-base font-medium text-white/95 leading-relaxed drop-shadow-sm whitespace-pre-line">
+                      <p className="font-jakarta text-xs sm:text-sm md:text-base font-medium text-white/95 leading-relaxed tshadow-sm whitespace-pre-line">
                         {faq.answer}
                       </p>
                     </div>

@@ -98,7 +98,7 @@ export default function QueryForm({ className }: { className?: string }) {
       <div
         className={cn(
           "relative w-full overflow-hidden rounded-3xl p-6 sm:p-10",
-          "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+          "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
           className
         )}
       >
@@ -121,11 +121,11 @@ export default function QueryForm({ className }: { className?: string }) {
                 <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 stroke-[2.2]" />
               </div>
 
-              <h4 className="font-smooch text-4xl sm:text-6xl text-white font-semibold tracking-wide mb-2 drop-shadow-md">
+              <h4 className="font-smooch text-4xl sm:text-6xl text-white font-semibold tracking-wide mb-2 tshadow-md">
                 Query Received!
               </h4>
 
-              <p className="font-jakarta text-sm sm:text-base font-medium text-white/90 max-w-md mb-8 leading-relaxed drop-shadow-sm">
+              <p className="font-jakarta text-sm sm:text-base font-medium text-white/90 max-w-md mb-8 leading-relaxed tshadow-sm">
                 Thank you, <strong className="font-extrabold text-white">{formData.firstName}</strong>. We have received your query and IEEE UVCE will respond as soon as possible.
               </p>
 
@@ -149,10 +149,10 @@ export default function QueryForm({ className }: { className?: string }) {
             >
               {/* Form Title & Subtitle */}
               <div className="text-center mb-6 sm:mb-8">
-                <h3 className="font-smooch text-4xl sm:text-6xl text-white font-semibold tracking-wide leading-tight drop-shadow-md">
+                <h3 className="font-smooch text-4xl sm:text-6xl text-white font-semibold tracking-wide leading-tight tshadow-md">
                   Have a Query?
                 </h3>
-                <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-wider mt-1 drop-shadow-sm">
+                <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-wider mt-1 tshadow-sm">
                   Send us your question and our team will get back to you
                 </p>
               </div>

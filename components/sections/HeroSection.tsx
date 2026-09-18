@@ -65,12 +65,12 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
       >
         {/* Title Glass Box containing Title + Subtitle */}
         <div className="w-full px-2.5 min-[360px]:px-3 sm:px-10 py-4 min-[360px]:py-5 sm:py-8 rounded-2xl sm:rounded-3xl bg-white/60 backdrop-blur-md border border-white/85 shadow-xl shadow-black/10 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
-          <h1 className="whitespace-nowrap font-saman font-normal text-[2.65rem] min-[360px]:text-[3.1rem] xs:text-[3.6rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c] tracking-[-0.015em] drop-shadow-sm select-none leading-none text-center mx-auto">
+          <h1 className="whitespace-nowrap font-saman font-normal text-[2.65rem] min-[360px]:text-[3.1rem] xs:text-[3.6rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#8a1c1c] tracking-[-0.015em] tshadow-sm select-none leading-none text-center mx-auto">
             K<span className="inline-block ml-[0.03em]">a</span>g<span className="inline-block ml-[0.03em]">a</span>d<span className="inline-block ml-[0.03em]">a</span> 2026
           </h1>
 
           {/* Subtitle in Roboto Mono Font */}
-          <p className="font-roboto-mono text-[0.7rem] min-[360px]:text-xs sm:text-base md:text-xl lg:text-2xl text-[#8a1c1c]/95 font-bold tracking-wider sm:tracking-widest mt-3 min-[360px]:mt-4 sm:mt-7 uppercase drop-shadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[95%] sm:max-w-none mx-auto">
+          <p className="font-roboto-mono text-[0.7rem] min-[360px]:text-xs sm:text-base md:text-xl lg:text-2xl text-[#8a1c1c]/95 font-bold tracking-wider sm:tracking-widest mt-3 min-[360px]:mt-4 sm:mt-7 uppercase tshadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[95%] sm:max-w-none mx-auto">
             Annual National - Level Technical Student Conference
           </p>
         </div>
@@ -111,7 +111,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
           whileTap={{ scale: 0.95 }}
           className="px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-white/30 backdrop-blur-md border border-white/80 shadow-md shadow-black/10 flex items-center justify-center"
         >
-          <span className="font-roboto-mono text-xs sm:text-sm font-bold text-[#8a1c1c]/95 tracking-widest uppercase drop-shadow-sm select-none group-hover:text-[#8a1c1c] whitespace-nowrap">
+          <span className="font-roboto-mono text-xs sm:text-sm font-bold text-[#8a1c1c]/95 tracking-widest uppercase tshadow-sm select-none group-hover:text-[#8a1c1c] whitespace-nowrap">
             Explore Tracks
           </span>
         </motion.div>

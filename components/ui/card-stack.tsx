@@ -326,7 +326,7 @@ export function CardStack<T extends CardStackItem>({
                     <motion.div
                       key={item.id}
                       className={cn(
-                        "absolute rounded-3xl border-2 border-white shadow-2xl backdrop-blur-xl bg-white/92",
+                        "absolute rounded-3xl border-2 border-white shadow-2xl backdrop-blur-lg bg-white/92",
                         "select-none p-4 sm:p-7 md:p-8 flex flex-col overflow-hidden transform-gpu",
                         isActive
                           ? "cursor-grab active:cursor-grabbing ring-1 ring-white/80 shadow-black/20"

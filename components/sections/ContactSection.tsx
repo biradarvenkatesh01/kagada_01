@@ -63,14 +63,14 @@ export function ContactSection() {
     <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4">
-          Contact <span className="text-amber-400 drop-shadow-md">Us</span>
+        <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+          Contact <span className="text-amber-400 tshadow-md">Us</span>
         </h2>
       </ScrollReveal>
 
       {/* Subtitle */}
       <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl">
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center tshadow-sm mb-10 sm:mb-14 max-w-2xl">
           For more queries, reach out to our IEEE UVCE organizers or find your way to KAGADA 2026.
         </p>
       </ScrollReveal>
@@ -79,7 +79,7 @@ export function ContactSection() {
         {/* Organizers Section */}
         <div className="flex flex-col items-center">
           <ScrollReveal direction="up" duration={450}>
-            <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wider mb-8 text-center drop-shadow-md">
+            <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wider mb-8 text-center tshadow-md">
               Organisers
             </h3>
           </ScrollReveal>
@@ -91,7 +91,7 @@ export function ContactSection() {
                 <div
                   className={cn(
                     "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between group h-full",
-                    "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+                    "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
                     "transition-all duration-500 hover:scale-105 hover:bg-white/45 hover:border-white"
                   )}
                 >
@@ -100,10 +100,10 @@ export function ContactSection() {
 
                   <div className="relative z-10 w-full flex flex-col items-center">
                     {/* Profile Icon SVG */}
-                    <div className="w-14 h-14 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-14 h-14 rounded-2xl bg-white/30 backdrop-blur-lg border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
                       <User className="w-7 h-7 stroke-[2.2]" />
                     </div>
-                    <h4 className="font-outfit font-extrabold text-xl text-white tracking-wide mb-1 drop-shadow-sm">
+                    <h4 className="font-outfit font-extrabold text-xl text-white tracking-wide mb-1 tshadow-sm">
                       {item.name}
                     </h4>
                     <p className="font-roboto-mono text-xs font-bold text-red-200 tracking-wider mb-5 uppercase">
@@ -145,7 +145,7 @@ export function ContactSection() {
           <div
             className={cn(
               "relative w-full overflow-hidden rounded-3xl p-6 sm:p-8 flex flex-col items-center",
-              "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35"
+              "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35"
             )}
           >
             {/* Glass Reflective Interior Shimmer */}
@@ -153,7 +153,7 @@ export function ContactSection() {
 
             {/* Perfectly Centered Map Header */}
             <div className="relative z-10 flex flex-col items-center text-center w-full mb-6">
-              <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wide drop-shadow-sm">
+              <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wide tshadow-sm">
                 Find Us Here
               </h3>
               <p className="font-roboto-mono text-xs font-semibold text-white/80 tracking-wider uppercase mt-1">

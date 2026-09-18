@@ -390,3 +390,23 @@ video::-webkit-media-controls-overflow-button {
   display: none !important;
 }
 
+/* --- Cheap text shadows -------------------------------------------------
+   Tailwind's drop-shadow-* compiles to filter: drop-shadow(), and `filter`
+   promotes a render surface per element. With 129 such elements the compositor
+   was redoing that at DPR 3 every frame. For pure-text elements, text-shadow
+   paints inline for the same visual result.
+
+   Measured (390x844 @DPR3, 4x CPU, n=3): converting 70 text elements took
+   dropped frames 13.1% -> 5.6% and median frame time 27.6ms -> 20.9ms.
+
+   Values mirror Tailwind's drop-shadow scale exactly (read from computed style):
+     sm  drop-shadow(rgba(0,0,0,0.15) 0 1px 2px)
+     md  drop-shadow(rgba(0,0,0,0.12) 0 3px 3px)
+     lg  drop-shadow(rgba(0,0,0,0.15) 0 4px 4px)
+
+   Only valid where the shadow should follow the GLYPHS. Anything with a
+   background (chat bubbles, cards) or an SVG/img child keeps drop-shadow,
+   because there the filter shadows the element's whole shape. */
+.tshadow-sm { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
+.tshadow-md { text-shadow: 0 3px 3px rgba(0, 0, 0, 0.12); }
+.tshadow-lg { text-shadow: 0 4px 4px rgba(0, 0, 0, 0.15); }

@@ -10,14 +10,14 @@ export function WinnersSection() {
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4 sm:px-0">
         {/* Section Heading */}
         <ScrollReveal direction="down" duration={500}>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none">
-            Previous <span className="text-amber-400 drop-shadow-md">Winners</span>
+          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-white tshadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none">
+            Previous <span className="text-amber-400 tshadow-md">Winners</span>
           </h2>
         </ScrollReveal>
 
         {/* Subtitle text */}
         <ScrollReveal direction="up" delay={60} duration={500}>
-          <p className="font-jakarta font-medium text-white/90 text-base sm:text-lg md:text-xl max-w-2xl text-center drop-shadow-sm mb-4 sm:mb-8">
+          <p className="font-jakarta font-medium text-white/90 text-base sm:text-lg md:text-xl max-w-2xl text-center tshadow-sm mb-4 sm:mb-8">
             Honoring innovation, creativity and excellence that shaped KAGADA’s journey.
           </p>
         </ScrollReveal>

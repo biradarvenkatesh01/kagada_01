@@ -353,7 +353,7 @@ export default function RadialOrbitalTimeline({
                         : "bg-[#8a1c1c] text-white border-white/80 shadow-md shadow-black/50"
                     }
                     border-2 
-                    transition-all duration-300 transform-gpu will-change-transform
+                    transition-all duration-300 transform-gpu
                   `}
                 >
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[3.2] text-white" />
@@ -388,7 +388,7 @@ export default function RadialOrbitalTimeline({
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.6, y: 15 }}
                       transition={{ type: "spring", stiffness: 320, damping: 24, mass: 0.6 }}
-                      className="absolute top-2 sm:top-16 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[9999] pointer-events-auto transform-gpu will-change-transform"
+                      className="absolute top-2 sm:top-16 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[9999] pointer-events-auto transform-gpu"
                     >
                       {/* 🌟 Ultra-Premium White Card Container (100% opaque, crisp text, zero ghosting) */}
                       <div className="relative bg-white border-2 border-white shadow-2xl shadow-black/40 rounded-3xl p-5 sm:p-8 text-slate-900 flex flex-col max-h-[78vh] sm:max-h-none overflow-y-auto custom-scrollbar">

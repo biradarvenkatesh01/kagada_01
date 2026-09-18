@@ -13,12 +13,12 @@ export const TracksSection = memo(function TracksSection() {
     >
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-start text-center">
         {/* Section Heading */}
-        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-5xl sm:text-7xl md:text-8xl text-white drop-shadow-lg mb-1 tracking-tight text-center select-none">
+        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-5xl sm:text-7xl md:text-8xl text-white tshadow-lg mb-1 tracking-tight text-center select-none">
           Tracks
         </ScrollReveal>
 
         {/* Subtitle */}
-        <ScrollReveal as="p" y={12} delay={60} duration={0.4} className="font-roboto-mono text-xs sm:text-sm md:text-base text-amber-400 font-bold tracking-wider sm:tracking-widest uppercase mb-2 sm:mb-4 drop-shadow-md select-none">
+        <ScrollReveal as="p" y={12} delay={60} duration={0.4} className="font-roboto-mono text-xs sm:text-sm md:text-base text-amber-400 font-bold tracking-wider sm:tracking-widest uppercase mb-2 sm:mb-4 tshadow-md select-none">
           Click on any track icon to explore details
         </ScrollReveal>
 

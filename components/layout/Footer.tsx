@@ -67,7 +67,7 @@ const SocialIcons: Record<string, () => React.JSX.Element> = {
 
 export function Footer() {
   return (
-    <footer data-no-lightbox="true" className="relative w-full border-t-2 border-white/80 bg-white/20 backdrop-blur-2xl shadow-2xl z-20 py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
+    <footer data-no-lightbox="true" className="relative w-full border-t-2 border-white/80 bg-white/20 backdrop-blur-lg shadow-2xl z-20 py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
       {/* Subtle Glass Interior Shimmer */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/20 pointer-events-none" />
 
@@ -114,7 +114,7 @@ export function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 sm:w-12 sm:h-12 bg-white/30 backdrop-blur-xl border border-white/80 rounded-full flex items-center justify-center text-white transition-all duration-300 transform hover:scale-110 hover:bg-white hover:text-[#8a1c1c] shadow-lg shadow-black/20"
+                  className="w-10 h-10 sm:w-12 sm:h-12 bg-white/30 backdrop-blur-lg border border-white/80 rounded-full flex items-center justify-center text-white transition-all duration-300 transform hover:scale-110 hover:bg-white hover:text-[#8a1c1c] shadow-lg shadow-black/20"
                   aria-label={social.name}
                   title={social.name}
                 >

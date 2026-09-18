@@ -99,7 +99,7 @@ function VideoCard({
       <div
         className={cn(
           "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
-          "bg-white/30 backdrop-blur-2xl border-2 border-white/80 shadow-2xl shadow-black/35",
+          "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
           "hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-all duration-500"
         )}
       >
@@ -129,23 +129,23 @@ function VideoCard({
 
           {/* Center Glowing Glass Play Button Badge */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-2xl border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 backdrop-blur-lg border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-all duration-300">
               <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white text-white translate-x-0.5 drop-shadow-md" />
             </div>
           </div>
 
           {/* Bottom Right Duration Badge */}
-          <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 backdrop-blur-xl text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
+          <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 backdrop-blur-lg text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
             {movie.duration}
           </div>
         </div>
 
         {/* Card Content Footer inside Translucent Glass Badge */}
-        <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/60 shadow-inner">
-          <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-white tracking-wide leading-none drop-shadow-md">
+        <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 backdrop-blur-lg border border-white/60 shadow-inner">
+          <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-white tracking-wide leading-none tshadow-md">
             {movie.title}
           </h3>
-          <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 leading-relaxed drop-shadow-sm">
+          <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 leading-relaxed tshadow-sm">
             {movie.description}
           </p>
         </div>
@@ -213,14 +213,14 @@ export const VideosSection = memo(function VideosSection() {
     <section id="videos" className="relative w-full max-w-6xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Title: KAGADA - From the previous years! */}
       <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-lg tracking-tight text-center select-none leading-tight mb-4">
-          KAGADA - <span className="text-amber-400 drop-shadow-md">From the previous years!</span>
+        <h2 className="font-saman text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+          KAGADA - <span className="text-amber-400 tshadow-md">From the previous years!</span>
         </h2>
       </ScrollReveal>
 
       {/* Subtitle */}
       <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center drop-shadow-sm mb-10 sm:mb-14 max-w-2xl">
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center tshadow-sm mb-10 sm:mb-14 max-w-2xl">
           Experience the magic of KAGADA through our cinematic after movies.
         </p>
       </ScrollReveal>
@@ -245,7 +245,7 @@ export const VideosSection = memo(function VideosSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[999999] bg-black/90 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-8"
+              className="fixed inset-0 z-[999999] bg-black/90 backdrop-blur-lg flex items-center justify-center p-4 sm:p-8"
               onClick={handleCloseModal}
             >
               <motion.div
@@ -254,7 +254,7 @@ export const VideosSection = memo(function VideosSection() {
                 exit={{ scale: 0.9, opacity: 0, y: 20 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-5xl rounded-3xl overflow-hidden border-2 border-white/80 bg-[#3d0b0b]/95 backdrop-blur-2xl shadow-2xl shadow-black/90 flex flex-col"
+                className="relative w-full max-w-5xl rounded-3xl overflow-hidden border-2 border-white/80 bg-[#3d0b0b]/95 backdrop-blur-lg shadow-2xl shadow-black/90 flex flex-col"
               >
                 {/* Modal Header Bar */}
                 <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/30 bg-[#8a1c1c]/50 backdrop-blur-md">
