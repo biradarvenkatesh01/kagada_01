@@ -7,7 +7,15 @@ import { cn } from "@/lib/utils";
 
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
-export default function QueryForm({ className }: { className?: string }) {
+interface QueryFormProps {
+  className?: string;
+  containerClassName?: string;
+}
+
+export default function QueryForm({
+  className,
+  containerClassName = "w-full max-w-3xl mx-auto",
+}: QueryFormProps) {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -38,14 +46,8 @@ export default function QueryForm({ className }: { className?: string }) {
       return;
     }
 
-    if (!formData.email.trim()) {
-      setStatus("error");
-      setErrorMessage("Please enter your email address.");
-      return;
-    }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email.trim())) {
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
       setStatus("error");
       setErrorMessage("Please enter a valid email address.");
       return;
@@ -94,10 +96,10 @@ export default function QueryForm({ className }: { className?: string }) {
   };
 
   return (
-    <ScrollReveal direction="up" delay={80} className="w-full max-w-3xl mx-auto">
+    <ScrollReveal direction="up" delay={80} className={cn("w-full", containerClassName)}>
       <div
         className={cn(
-          "relative w-full overflow-hidden rounded-3xl p-6 sm:p-10",
+          "relative w-full overflow-hidden rounded-3xl p-6 sm:p-7 lg:p-8 flex flex-col justify-between",
           "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
           className
         )}
@@ -148,11 +150,11 @@ export default function QueryForm({ className }: { className?: string }) {
               className="w-full flex flex-col"
             >
               {/* Form Title & Subtitle */}
-              <div className="text-center mb-6 sm:mb-8">
-                <h3 className="font-smooch text-4xl sm:text-6xl text-white font-semibold tracking-wide leading-tight tshadow-md">
+              <div className="text-center mb-4 sm:mb-5">
+                <h3 className="font-smooch text-3xl sm:text-4xl lg:text-5xl text-white font-semibold tracking-wide leading-tight tshadow-md">
                   Have a Query?
                 </h3>
-                <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-wider mt-1 tshadow-sm">
+                <p className="font-roboto-mono text-xs font-semibold text-white/90 uppercase tracking-wider mt-0.5 tshadow-sm">
                   Send us your question and our team will get back to you
                 </p>
               </div>
@@ -162,7 +164,7 @@ export default function QueryForm({ className }: { className?: string }) {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 p-4 rounded-2xl bg-red-600/20 border border-red-500/60 backdrop-blur-md flex items-center gap-3 text-red-100 font-jakarta text-xs sm:text-sm shadow-md"
+                  className="mb-4 p-3 rounded-2xl bg-red-600/20 border border-red-500/60 backdrop-blur-md flex items-center gap-3 text-red-100 font-jakarta text-xs sm:text-sm shadow-md"
                 >
                   <AlertCircle className="w-5 h-5 text-red-300 shrink-0" />
                   <span>{errorMessage}</span>
@@ -170,11 +172,11 @@ export default function QueryForm({ className }: { className?: string }) {
               )}
 
               {/* Field 1: First Name & Last Name Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-3.5">
                 <div className="flex flex-col text-left">
                   <label
                     htmlFor="firstName"
-                    className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1.5 drop-shadow-sm"
+                    className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1 drop-shadow-sm"
                   >
                     First name <span className="text-amber-300">*</span>
                   </label>
@@ -187,14 +189,14 @@ export default function QueryForm({ className }: { className?: string }) {
                     placeholder="John"
                     required
                     disabled={status === "submitting"}
-                    className="w-full bg-white/70 border border-white/90 rounded-2xl px-4 py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-glass duration-150 shadow-inner"
+                    className="w-full bg-white/85 hover:bg-white/95 focus:bg-white border-2 border-white/90 focus:border-amber-400 focus:ring-2 focus:ring-amber-300/40 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
                   />
                 </div>
 
                 <div className="flex flex-col text-left">
                   <label
                     htmlFor="lastName"
-                    className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1.5 drop-shadow-sm"
+                    className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1 drop-shadow-sm"
                   >
                     Last name
                   </label>
@@ -206,16 +208,16 @@ export default function QueryForm({ className }: { className?: string }) {
                     onChange={handleChange}
                     placeholder="Doe"
                     disabled={status === "submitting"}
-                    className="w-full bg-white/70 border border-white/90 rounded-2xl px-4 py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-glass duration-150 shadow-inner"
+                    className="w-full bg-white/85 hover:bg-white/95 focus:bg-white border-2 border-white/90 focus:border-amber-400 focus:ring-2 focus:ring-amber-300/40 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
                   />
                 </div>
               </div>
 
               {/* Field 2: Email */}
-              <div className="flex flex-col text-left mb-4 sm:mb-5">
+              <div className="flex flex-col text-left mb-3 sm:mb-3.5">
                 <label
                   htmlFor="email"
-                  className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1.5 drop-shadow-sm"
+                  className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1 drop-shadow-sm"
                 >
                   Email <span className="text-amber-300">*</span>
                 </label>
@@ -228,28 +230,28 @@ export default function QueryForm({ className }: { className?: string }) {
                   placeholder="john.doe@example.com"
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-white/70 border border-white/90 rounded-2xl px-4 py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-glass duration-150 shadow-inner"
+                  className="w-full bg-white/85 hover:bg-white/95 focus:bg-white border-2 border-white/90 focus:border-amber-400 focus:ring-2 focus:ring-amber-300/40 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
                 />
               </div>
 
               {/* Field 3: Query Message */}
-              <div className="flex flex-col text-left mb-6 sm:mb-8">
+              <div className="flex flex-col text-left mb-5 sm:mb-6">
                 <label
                   htmlFor="message"
-                  className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1.5 drop-shadow-sm"
+                  className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1 drop-shadow-sm"
                 >
                   What can we help you with? <span className="text-amber-300">*</span>
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  rows={4}
+                  rows={3}
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Ask about presentation tracks, registration details, eligibility, or event schedule..."
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-white/70 border border-white/90 rounded-2xl px-4 py-3.5 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm sm:text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#8a1c1c]/50 focus:border-[#8a1c1c] focus:bg-white/90 transition-glass duration-150 shadow-inner resize-none custom-scrollbar"
+                  className="w-full bg-white/85 hover:bg-white/95 focus:bg-white border-2 border-white/90 focus:border-amber-400 focus:ring-2 focus:ring-amber-300/40 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm resize-none custom-scrollbar min-h-[85px] sm:min-h-[95px]"
                 />
               </div>
 
@@ -258,7 +260,7 @@ export default function QueryForm({ className }: { className?: string }) {
                 type="submit"
                 disabled={status === "submitting"}
                 className={cn(
-                  "w-full sm:w-auto self-center bg-[#8a1c1c] hover:bg-[#a12222] text-white font-outfit font-extrabold text-base py-4 px-10 rounded-2xl shadow-xl border-2 border-white/80",
+                  "w-full sm:w-auto self-center bg-[#8a1c1c] hover:bg-[#a12222] text-white font-outfit font-black text-sm sm:text-base py-3 sm:py-3.5 px-8 rounded-2xl shadow-xl border-2 border-white/80",
                   "transition-glass duration-300 uppercase tracking-wider flex items-center justify-center gap-2 group cursor-pointer",
                   "hover:scale-105 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                 )}

@@ -61,11 +61,11 @@ export const IntroVideoOverlay = memo(function IntroVideoOverlay({
                 e.stopPropagation();
                 onSkip();
               }}
-              className="absolute top-[calc(1.2rem+env(safe-area-inset-top,0px))] sm:top-7 right-5 sm:right-8 z-[60] flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/20 hover:bg-[#8a1c1c]/80 backdrop-blur-md border border-white/60 hover:border-white text-white font-jakarta text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 shadow-xl shadow-black/40 group cursor-pointer"
+              className="absolute top-[calc(1.2rem+env(safe-area-inset-top,0px))] sm:top-7 right-5 sm:right-8 z-[60] flex items-center gap-2 px-4.5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-[#8a1c1c] hover:bg-[#a12222] border-2 border-amber-400 text-white font-outfit text-xs sm:text-sm font-black tracking-wider uppercase transition-all duration-200 shadow-2xl shadow-black/80 hover:scale-105 active:scale-95 group cursor-pointer"
               aria-label="Skip Intro Video"
             >
-              <span>Skip</span>
-              <SkipForward className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/90 group-hover:text-white transition-transform group-hover:translate-x-0.5" />
+              <span className="leading-none drop-shadow-sm">Skip</span>
+              <SkipForward className="w-4 h-4 text-amber-300 group-hover:text-white stroke-[2.5] transition-transform group-hover:translate-x-0.5" />
             </motion.button>
           )}
         </motion.div>

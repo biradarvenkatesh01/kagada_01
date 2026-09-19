@@ -5,7 +5,7 @@ export function PrizePoolSection() {
   return (
     <section
       id="prizes"
-      className="relative w-full text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-0 sm:pt-2 pb-12 sm:pb-16 -mt-16 sm:-mt-24 scroll-mt-6"
+      className="relative w-full text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-4 sm:pt-8 pb-12 sm:pb-16 mt-4 sm:mt-8 scroll-mt-6"
     >
       <div className="relative z-10 w-full max-w-xl md:max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}

@@ -381,10 +381,10 @@ export default function RadialOrbitalTimeline({
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.6, y: 15 }}
                       transition={{ type: "spring", stiffness: 320, damping: 24, mass: 0.6 }}
-                      className="absolute top-2 sm:top-16 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[9999] pointer-events-auto transform-gpu"
+                      className="absolute top-0 sm:top-8 md:top-10 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[9999] pointer-events-auto transform-gpu"
                     >
                       {/* 🌟 Ultra-Premium White Card Container (100% opaque, crisp text, zero ghosting) */}
-                      <div className="relative bg-white border-2 border-white shadow-2xl shadow-black/40 rounded-3xl p-5 sm:p-8 text-slate-900 flex flex-col max-h-[78vh] sm:max-h-none overflow-y-auto custom-scrollbar">
+                      <div className="relative bg-white border-2 border-white shadow-2xl shadow-black/40 rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[82vh] sm:max-h-none overflow-y-auto custom-scrollbar">
                         
                         {/* Top Floating Glass Close Button */}
                         <button
@@ -410,7 +410,7 @@ export default function RadialOrbitalTimeline({
                           
                           {/* Image Box (Left Column on PC) */}
                           {item.imageSrc && (
-                            <div className="md:col-span-5 w-full h-40 sm:h-64 md:h-72 rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group" data-no-lightbox="true">
+                            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group" data-no-lightbox="true">
                               <img
                                 src={item.imageSrc}
                                 alt={item.title}

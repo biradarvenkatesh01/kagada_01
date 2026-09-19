@@ -137,53 +137,59 @@ export function ContactSection() {
           </div>
         </div>
 
-        {/* Working Query Form Section */}
-        <QueryForm />
+        {/* Working Query Form & Embedded Map: Side-by-Side on PC (lg:grid-cols-2), Stacked on Mobile */}
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+          {/* Query Form Column */}
+          <QueryForm
+            containerClassName="w-full h-full max-w-none mx-0"
+            className="h-full"
+          />
 
-        {/* Embedded Map Section Card */}
-        <ScrollReveal direction="up" delay={80} className="w-full max-w-4xl mx-auto">
-          <div
-            className={cn(
-              "relative w-full overflow-hidden rounded-3xl p-6 sm:p-8 flex flex-col items-center",
-              "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35"
-            )}
-          >
-            {/* Glass Reflective Interior Shimmer */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
-
-            {/* Perfectly Centered Map Header */}
-            <div className="relative z-10 flex flex-col items-center text-center w-full mb-6">
-              <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wide tshadow-sm">
-                Find Us Here
-              </h3>
-              <p className="font-roboto-mono text-xs font-semibold text-white/80 tracking-wider uppercase mt-1">
-                UVCE, KR Circle, Bengaluru
-              </p>
-            </div>
-
-            {/* Embedded Google Map Frame */}
-            <div className="relative z-10 w-full h-[320px] sm:h-[400px] rounded-2xl overflow-hidden border-2 border-white/80 shadow-xl mb-6 bg-black/20">
-              <iframe
-                src={UVCE_MAP_EMBED_URL}
-                className="w-full h-full border-0"
-                allowFullScreen={false}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="University Visvesvaraya College of Engineering Location Map"
-              />
-            </div>
-
-            {/* Clean Get Directions Action Button */}
-            <a
-              href={UVCE_DIRECTIONS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative z-10 w-full sm:w-auto bg-white text-[#8a1c1c] font-outfit font-black text-base py-3.5 px-8 rounded-2xl shadow-xl hover:bg-white/90 hover:scale-105 active:scale-95 transition-glass duration-300 flex items-center justify-center uppercase tracking-wider"
+          {/* Embedded Map Column */}
+          <ScrollReveal direction="up" delay={80} className="w-full h-full">
+            <div
+              className={cn(
+                "relative w-full h-full overflow-hidden rounded-3xl p-6 sm:p-7 lg:p-8 flex flex-col justify-between items-center",
+                "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35"
+              )}
             >
-              Get Directions
-            </a>
-          </div>
-        </ScrollReveal>
+              {/* Glass Reflective Interior Shimmer */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
+
+              {/* Centered Map Header */}
+              <div className="relative z-10 flex flex-col items-center text-center w-full mb-4 sm:mb-5">
+                <h3 className="font-smooch text-3xl sm:text-4xl lg:text-5xl text-white font-semibold tracking-wide leading-tight tshadow-md">
+                  Find Us Here
+                </h3>
+                <p className="font-roboto-mono text-xs font-semibold text-white/90 uppercase tracking-wider mt-0.5 tshadow-sm">
+                  UVCE, KR Circle, Bengaluru
+                </p>
+              </div>
+
+              {/* Embedded Google Map Frame */}
+              <div className="relative z-10 w-full flex-1 min-h-[260px] sm:min-h-[290px] rounded-2xl overflow-hidden border-2 border-white/80 shadow-xl mb-5 sm:mb-6 bg-black/20">
+                <iframe
+                  src={UVCE_MAP_EMBED_URL}
+                  className="w-full h-full border-0 min-h-[260px]"
+                  allowFullScreen={false}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="University Visvesvaraya College of Engineering Location Map"
+                />
+              </div>
+
+              {/* Clean Get Directions Action Button */}
+              <a
+                href={UVCE_DIRECTIONS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-10 w-full sm:w-auto bg-white text-[#8a1c1c] font-outfit font-black text-sm sm:text-base py-3 sm:py-3.5 px-8 rounded-2xl shadow-xl hover:bg-white/90 hover:scale-105 active:scale-95 transition-glass duration-300 flex items-center justify-center uppercase tracking-wider cursor-pointer"
+              >
+                Get Directions
+              </a>
+            </div>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   )
