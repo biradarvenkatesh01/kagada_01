@@ -158,45 +158,7 @@ body {
   animation: bounce-subtle 2.2s ease-in-out infinite;
 }
 
-/* ─── Flip Clock 3D Keyframe Animations (Zero Runtime <style> Injections) ─── */
-@keyframes flip-top-anim {
-  0% {
-    transform: rotateX(0deg);
-    z-index: 30;
-  }
-  50%,
-  100% {
-    transform: rotateX(-90deg);
-    z-index: 10;
-  }
-}
 
-@keyframes flip-bottom-anim {
-  0%,
-  50% {
-    transform: rotateX(90deg);
-    z-index: 10;
-  }
-  100% {
-    transform: rotateX(0deg);
-    z-index: 30;
-  }
-}
-
-.animate-flip-top {
-  animation: flip-top-anim 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: transform;
-}
-
-.animate-flip-bottom {
-  animation: flip-bottom-anim 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: transform;
-}
-
-.backface-hidden {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
 
 /* Lenis Scroll Reset Helpers */
 html.lenis, html.lenis body {
@@ -409,32 +371,10 @@ img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-li
   margin-bottom: 0.25rem;
 }
 
-/* ─── Compositor-driven Hardware-Accelerated Scroll Reveal ───────── */
+/* ─── Zero-Flicker Instant Hardware-Accelerated Elements ───────── */
 .scroll-reveal {
-  opacity: 0;
-  transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, 20px), 0) scale(var(--reveal-scale, 1));
-  transition-property: opacity, transform;
-  transition-duration: var(--reveal-duration, 0.45s);
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-
-.scroll-reveal[data-revealed="true"] {
   opacity: 1;
-  /* `none` is the identity transform, so this animates identically to
-     translate3d(0,0,0) scale(1) — but it releases the compositor layer once the
-     reveal finishes instead of keeping ~30 of them alive for the page lifetime.
-     Layerize was costing 14ms/frame with every reveal permanently promoted. */
   transform: none;
-  will-change: auto;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
 }
 
 /* ─── Video Player Controls Hardening ────────────────────────────── */

@@ -6,7 +6,6 @@ import {
   FC,
   HTMLAttributes,
   memo,
-  ReactNode,
   useEffect,
   useState,
   useRef,
@@ -44,99 +43,30 @@ interface FlipUnitProps
   digit: number | string;
 }
 
-const commonCardStyle = cn(
-  "absolute inset-x-0 overflow-hidden h-1/2 bg-inherit text-inherit backface-hidden",
-);
-
 const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
   digit,
   size,
   variant,
   className,
 }: FlipUnitProps) {
-  const [prevDigit, setPrevDigit] = useState(digit);
-  const [flipping, setFlipping] = useState(false);
-
-  useEffect(() => {
-    if (digit !== prevDigit) {
-      let timer: NodeJS.Timeout | undefined;
-      const raf = requestAnimationFrame(() => {
-        setFlipping(true);
-        timer = setTimeout(() => {
-          setFlipping(false);
-          setPrevDigit(digit);
-        }, 550);
-      });
-      return () => {
-        cancelAnimationFrame(raf);
-        if (timer) clearTimeout(timer);
-      };
-    }
-  }, [digit, prevDigit]);
-
   return (
-    <div className={cn(flipUnitVariants({ size, variant }), className)} suppressHydrationWarning>
-      {/* 1. Background Top */}
-      <div className={cn(commonCardStyle, "rounded-t-lg top-0")} suppressHydrationWarning>
-        <DigitSpan position="top">{digit}</DigitSpan>
-      </div>
+    <div
+      className={cn(
+        flipUnitVariants({ size, variant }),
+        "flex items-center justify-center font-mono font-bold shadow-sm",
+        className
+      )}
+      suppressHydrationWarning
+    >
+      <span className="leading-none select-none tracking-tight" suppressHydrationWarning>
+        {digit}
+      </span>
 
-      {/* 2. Background Bottom */}
-      <div className={cn(commonCardStyle, "rounded-b-lg translate-y-full")} suppressHydrationWarning>
-        <DigitSpan position="bottom">{prevDigit}</DigitSpan>
-      </div>
-
-      {/* 3. Top Flap */}
-      <div
-        className={cn(
-          commonCardStyle,
-          "z-20 origin-bottom rounded-t-lg",
-          flipping && "animate-flip-top perspective-[1000px]",
-        )}
-        suppressHydrationWarning
-      >
-        <DigitSpan position="top">{prevDigit}</DigitSpan>
-      </div>
-
-      {/* 4. Bottom Flap */}
-      <div
-        className={cn(
-          commonCardStyle,
-          "z-10 origin-top rounded-b-lg translate-y-full",
-          flipping && "animate-flip-bottom perspective-[1000px]",
-        )}
-        style={{ transform: "rotateX(90deg)" }}
-        suppressHydrationWarning
-      >
-        <DigitSpan position="bottom">{digit}</DigitSpan>
-      </div>
-
-      {/* Center Divider Shadow */}
-      <div className="absolute top-1/2 left-0 w-full h-px -translate-y-1/2 bg-black/30 z-30" />
+      {/* Subtle center divider maintaining the exact split-flap card aesthetic */}
+      <div className="absolute top-1/2 left-0 w-full h-px -translate-y-1/2 bg-black/30 pointer-events-none" />
     </div>
   );
 });
-
-interface DigitSpanProps {
-  children: ReactNode;
-  position?: "top" | "bottom";
-}
-
-function DigitSpan({ children, position }: DigitSpanProps) {
-  return (
-    <span
-      className={cn(
-        "absolute left-0 right-0 w-full flex items-center justify-center h-[200%] select-none",
-      )}
-      style={{
-        top: position === "top" ? "0%" : "-100%",
-      }}
-      suppressHydrationWarning
-    >
-      {children}
-    </span>
-  );
-}
 
 interface FlipClockProps
   extends HTMLAttributes<HTMLDivElement> {

@@ -67,7 +67,7 @@ export default function SmoothScroll({
       if (cancelled) return;
 
       lenis = new LenisCtor({
-        lerp: 0.12,
+        lerp: 0.14,
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
