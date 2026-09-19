@@ -512,47 +512,6 @@ video::-webkit-media-controls-overflow-button {
   .animate-gear-spin { animation: none !important; }
 }
 
-/* --- Off-screen render skipping --------------------------------------------
-   THE dominant cost on this page. The document is ~8900px tall on a phone and
-   ~10000px on desktop, and every section is heavy to raster (large translucent
-   glass surfaces over a gradient, shadows, borders). The browser was doing
-   layout + paint work for sections nowhere near the viewport on every frame.
+/* Document flow stays stable with no content-visibility skip thrashing, eliminating
+   flickering and disappearing elements when scrolling backwards on phones and desktops. */
 
-   `content-visibility: auto` lets it skip that work entirely until a section is
-   near the viewport. Measured on 390x844 @DPR3 at 6x CPU throttle, n=3,
-   identical scripted scroll:
-
-       without .......... 64.8% dropped frames  (range 58.4-75.2)
-       with ..............  6.2% dropped frames  (range 4.6-8.1)
-
-   `contain-intrinsic-size: auto <h>` is the important detail: the `auto`
-   keyword makes the browser remember each section's REAL height once rendered
-   and reuse it thereafter, so the scrollbar and anchor offsets stay correct.
-   The px value is only the first guess for a section that has never been
-   rendered; the values below are measured per breakpoint to keep that guess
-   close and avoid scrollbar drift on first scroll.
-
-   The hero is deliberately excluded: it is always the first thing on screen, it
-   owns the intro-video interplay and the LED canvas, and measurement showed
-   including it made no difference (6.2% vs 6.3%). */
-/* Mobile-measured intrinsic heights: Active only on low-memory mobile viewports.
-   On desktop (>=640px), un-skipping 2000px+ sections mid-scroll forced 50-80ms synchronous
-   layout recalculation pauses while scrolling with Lenis. On desktop the full page renders
-   without layout thrashing. */
-@media (max-width: 639.98px) {
-  #about, #tracks, #prizes, #winners, #gallery,
-  #videos, #sponsors, #faq, #contact, footer {
-    content-visibility: auto;
-  }
-
-  #about    { contain-intrinsic-size: auto 872px; }
-  #tracks   { contain-intrinsic-size: auto 580px; }
-  #prizes   { contain-intrinsic-size: auto 463px; }
-  #winners  { contain-intrinsic-size: auto 678px; }
-  #gallery  { contain-intrinsic-size: auto 639px; }
-  #videos   { contain-intrinsic-size: auto 1028px; }
-  #sponsors { contain-intrinsic-size: auto 508px; }
-  #faq      { contain-intrinsic-size: auto 788px; }
-  #contact  { contain-intrinsic-size: auto 2362px; }
-  footer    { contain-intrinsic-size: auto 194px; }
-}

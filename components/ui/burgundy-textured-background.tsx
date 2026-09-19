@@ -74,36 +74,14 @@ export function BurgundyTexturedBackground() {
         }}
       />
 
-      {/* ── Layer C1: Macro Texture — Pigment Wash & Vat-Dye Absorption ─ */}
-      {/* Pre-baked WebP tile eliminating runtime SVG feTurbulence filter re-rasterization */}
+      {/* ── Layer C1: Master Tactile Texture — Pigment Wash, Cold-Press Tooth & Fibers ─ */}
+      {/* Single pre-baked composite WebP tile eliminating 3 separate GPU blend layers & runtime SVG filters */}
       <div
-        className="absolute inset-0 w-full h-full opacity-[0.48] mix-blend-soft-light"
+        className="absolute inset-0 w-full h-full opacity-[0.54] mix-blend-soft-light"
         style={{
-          backgroundImage: `url("/optimized/textures/paper-pigment.webp")`,
+          backgroundImage: `url("/optimized/textures/paper-master.webp")`,
           backgroundRepeat: "repeat",
           backgroundSize: "650px 650px",
-        }}
-      />
-
-      {/* ── Layer C2: Fine Texture — Cold-Press Paper Tooth & Felt Surface Roughness */}
-      {/* Pre-baked WebP tile eliminating runtime SVG feTurbulence filter re-rasterization */}
-      <div
-        className="absolute inset-0 w-full h-full opacity-[0.44] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("/optimized/textures/paper-tooth.webp")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "300px 300px",
-        }}
-      />
-
-      {/* ── Layer C3: Micro Texture — Interwoven Organic Paper Fibers ── */}
-      {/* Pre-baked WebP tile eliminating runtime feDisplacementMap & feComposite calculations */}
-      <div
-        className="absolute inset-0 w-full h-full opacity-[0.62] mix-blend-soft-light"
-        style={{
-          backgroundImage: `url("/optimized/textures/paper-fibers.webp")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "400px 400px",
         }}
       />
 

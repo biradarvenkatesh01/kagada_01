@@ -40,15 +40,19 @@ export default function SmoothScroll({
     const isTouchPrimary = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
     if (isTouchPrimary || prefersReducedMotion) {
-      // Native scrolling. `scroll-padding-top` in globals.css already offsets
-      // anchor targets for the fixed navbar, and smooth behaviour is handled by
-      // the browser off the main thread.
-      const root = document.documentElement;
-      const previousBehavior = root.style.scrollBehavior;
-      if (!prefersReducedMotion) root.style.scrollBehavior = "smooth";
-      return () => {
-        root.style.scrollBehavior = previousBehavior;
+      // Touch-primary mobile devices: Preserve 120Hz OS-native momentum touch panning.
+      // Do NOT set root.style.scrollBehavior = 'smooth' globally on touch screens,
+      // as it causes finger flick momentum to jitter/fight browser physics.
+      const handleTouchAnchor = (e: MouseEvent) => {
+        const anchor = (e.target as HTMLElement)?.closest("a");
+        if (!anchor || !anchor.hash || !anchor.hash.startsWith("#")) return;
+        const elem = document.querySelector(anchor.hash);
+        if (!elem) return;
+        e.preventDefault();
+        elem.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
       };
+      document.addEventListener("click", handleTouchAnchor);
+      return () => document.removeEventListener("click", handleTouchAnchor);
     }
 
     let lenis: Lenis | null = null;
@@ -63,11 +67,13 @@ export default function SmoothScroll({
       if (cancelled) return;
 
       lenis = new LenisCtor({
-        lerp: 0.16,
+        lerp: 0.12,
+        duration: 1.0,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
-        wheelMultiplier: 1.0,
+        wheelMultiplier: 1.05,
         touchMultiplier: 1.0,
         syncTouch: false,
         autoResize: false,
