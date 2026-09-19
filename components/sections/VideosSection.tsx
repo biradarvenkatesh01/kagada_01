@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { createPortal } from 'react-dom'
-import { useState, useRef, useEffect, memo } from 'react'
+import { useState, useRef, useEffect, memo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -14,15 +14,7 @@ interface AftermovieItem {
   title: string
   year: string
   duration: string
-  /** Full-quality file with audio, used by the fullscreen modal. */
   videoSrc: string
-  /**
-   * Silent, harder-compressed encode of the same footage for the in-card
-   * preview. The card renders it muted and looping, so its audio track could
-   * never be heard — shipping it cost ~19 MB of the scroll path for nothing.
-   */
-  previewSrc: string
-  /** First frame of the preview, so `preload="none"` never shows a black box. */
   posterSrc: string
   description: string
 }
@@ -34,7 +26,6 @@ const AFTERMOVIES: AftermovieItem[] = [
     year: "2024",
     duration: "1:30",
     videoSrc: "/kagada2024.mp4",
-    previewSrc: "/kagada2024-preview.mp4",
     posterSrc: "/optimized/videos/kagada2024-poster.webp",
     description: "Relive the excitement and energy of KAGADA 2024 with highlights from all events, competitions and celebrations.",
   },
@@ -44,13 +35,12 @@ const AFTERMOVIES: AftermovieItem[] = [
     year: "2025",
     duration: "1:35",
     videoSrc: "/kagada2025.mp4",
-    previewSrc: "/kagada2025-preview.mp4",
     posterSrc: "/optimized/videos/kagada2025-poster.webp",
     description: "Relive the excitement and energy of KAGADA 2025 with highlights from all events, competitions and celebrations.",
   },
 ]
 
-function VideoCard({
+const VideoCard = memo(function VideoCard({
   movie,
   idx,
   onOpenModal,
@@ -61,38 +51,19 @@ function VideoCard({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
+  const handleMouseEnter = () => {
     const video = videoRef.current;
-    if (!video) return;
+    if (video) {
+      video.play().catch(() => {});
+    }
+  };
 
-    let playPromise: Promise<void> | null = null;
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          playPromise = video.play();
-          if (playPromise) {
-            playPromise.catch(() => {
-              // Autoplay gracefully prevented or aborted
-            });
-          }
-        } else {
-          if (playPromise) {
-            playPromise.then(() => video.pause()).catch(() => video.pause());
-          } else {
-            video.pause();
-          }
-        }
-      },
-      { threshold: 0.15 }
-    );
-
-    io.observe(video);
-    return () => {
-      io.disconnect();
+  const handleMouseLeave = () => {
+    const video = videoRef.current;
+    if (video) {
       video.pause();
-    };
-  }, []);
+    }
+  };
 
   return (
     <ScrollReveal direction="up" delay={idx * 100} className="w-full">
@@ -102,6 +73,8 @@ function VideoCard({
           "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
           "hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-glass duration-500"
         )}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {/* Glass Interior Reflective Shimmer */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
@@ -114,7 +87,7 @@ function VideoCard({
           {/* HTML5 Video Preview */}
           <video
             ref={videoRef}
-            src={movie.previewSrc}
+            src={movie.videoSrc}
             poster={movie.posterSrc}
             muted
             playsInline
@@ -152,7 +125,7 @@ function VideoCard({
       </div>
     </ScrollReveal>
   );
-}
+});
 
 export const VideosSection = memo(function VideosSection() {
   const [activeModalVideo, setActiveModalVideo] = useState<AftermovieItem | null>(null)
@@ -160,15 +133,15 @@ export const VideosSection = memo(function VideosSection() {
   const [isPlaying, setIsPlaying] = useState(true)
   const [isMuted, setIsMuted] = useState(false)
 
-  const handleOpenModal = (movie: AftermovieItem) => {
+  const handleOpenModal = useCallback((movie: AftermovieItem) => {
     setActiveModalVideo(movie)
     setIsPlaying(true)
     setIsMuted(false)
-  }
+  }, [])
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setActiveModalVideo(null)
-  }
+  }, [])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

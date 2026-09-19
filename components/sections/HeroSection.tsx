@@ -4,7 +4,6 @@ import { memo } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import FlipClock from "@/components/ui/flip-clock";
-import LEDPixelGrid from "@/components/ui/led-pixel-grid";
 import { KAGADA_EVENT_DATE } from "@/data/kagada-data";
 
 interface HeroSectionProps {
@@ -35,16 +34,6 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
         className="absolute inset-0 w-full h-full min-h-[100dvh] bg-[#8a1c1c]/15 pointer-events-none select-none z-[1]"
         aria-hidden="true"
       />
-
-      {/* 💡 DYNAMIC LED PIXEL GRID OVERLAY */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isVideoFading ? 1 : 0 }}
-        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 w-full h-full min-h-[100dvh] pointer-events-none z-[2]"
-      >
-        <LEDPixelGrid active={isVideoFading} />
-      </motion.div>
 
       {/* Hero Title & Subtitle Glass Box Container */}
       <motion.div
@@ -116,18 +105,11 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
           </span>
         </motion.div>
 
-        <motion.div
-          animate={{ y: [0, 7, 0] }}
-          transition={{
-            duration: 2.2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          whileHover={{ scale: 1.15 }}
-          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/40 backdrop-blur-md border border-white/80 shadow-md shadow-black/10 flex items-center justify-center text-[#8a1c1c]"
+        <div
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/40 backdrop-blur-md border border-white/80 shadow-md shadow-black/10 flex items-center justify-center text-[#8a1c1c] animate-bounce-subtle group-hover:scale-110 transition-transform duration-200"
         >
           <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
-        </motion.div>
+        </div>
       </motion.a>
     </section>
   );

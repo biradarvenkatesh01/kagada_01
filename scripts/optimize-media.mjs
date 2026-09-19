@@ -52,31 +52,6 @@ const JOBS = [
       "-movflags", "+faststart",
     ],
   },
-  {
-    // Card previews: same footage and duration, but muted+looping in the UI, so
-    // the audio track is pure waste. Encoded harder since it renders into a
-    // ~490px-wide card.
-    src: "kagada2024.mp4",
-    out: "kagada2024-preview.mp4",
-    label: "aftermovie 2024 card preview (silent)",
-    args: [
-      "-an",
-      "-c:v", "libx264", "-preset", "slow", "-crf", "30",
-      "-profile:v", "high", "-pix_fmt", "yuv420p",
-      "-movflags", "+faststart",
-    ],
-  },
-  {
-    src: "kagada2025.mp4",
-    out: "kagada2025-preview.mp4",
-    label: "aftermovie 2025 card preview (silent)",
-    args: [
-      "-an",
-      "-c:v", "libx264", "-preset", "slow", "-crf", "30",
-      "-profile:v", "high", "-pix_fmt", "yuv420p",
-      "-movflags", "+faststart",
-    ],
-  },
 ];
 
 let before = 0;

@@ -144,6 +144,60 @@ body {
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
+/* Lightweight compositor bounce for Hero chevron */
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2.2s ease-in-out infinite;
+}
+
+/* ─── Flip Clock 3D Keyframe Animations (Zero Runtime <style> Injections) ─── */
+@keyframes flip-top-anim {
+  0% {
+    transform: rotateX(0deg);
+    z-index: 30;
+  }
+  50%,
+  100% {
+    transform: rotateX(-90deg);
+    z-index: 10;
+  }
+}
+
+@keyframes flip-bottom-anim {
+  0%,
+  50% {
+    transform: rotateX(90deg);
+    z-index: 10;
+  }
+  100% {
+    transform: rotateX(0deg);
+    z-index: 30;
+  }
+}
+
+.animate-flip-top {
+  animation: flip-top-anim 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform;
+}
+
+.animate-flip-bottom {
+  animation: flip-bottom-anim 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform;
+}
+
+.backface-hidden {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
 /* Lenis Scroll Reset Helpers */
 html.lenis, html.lenis body {
   height: auto;

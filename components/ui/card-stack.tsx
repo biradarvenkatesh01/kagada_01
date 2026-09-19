@@ -80,6 +80,18 @@ function signedOffset(i: number, active: number, len: number, loop: boolean) {
   return Math.abs(alt) < Math.abs(raw) ? alt : raw;
 }
 
+const subscribeMobileViewport = (callback: () => void) => {
+  if (typeof window === "undefined") return () => {};
+  const mql = window.matchMedia("(max-width: 640px)");
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+};
+
+const getMobileViewportSnapshot = () =>
+  typeof window !== "undefined" ? window.matchMedia("(max-width: 640px)").matches : false;
+
+const getMobileViewportServerSnapshot = () => false;
+
 export function CardStack<T extends CardStackItem>({
   items,
   initialIndex = 0,
@@ -129,14 +141,9 @@ export function CardStack<T extends CardStackItem>({
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   const isMobileViewport = React.useSyncExternalStore(
-    (callback) => {
-      if (typeof window === "undefined") return () => {};
-      const mql = window.matchMedia("(max-width: 640px)");
-      mql.addEventListener("change", callback);
-      return () => mql.removeEventListener("change", callback);
-    },
-    () => (typeof window !== "undefined" ? window.matchMedia("(max-width: 640px)").matches : false),
-    () => false
+    subscribeMobileViewport,
+    getMobileViewportSnapshot,
+    getMobileViewportServerSnapshot
   );
 
   React.useEffect(() => {
@@ -337,7 +344,6 @@ export function CardStack<T extends CardStackItem>({
                         height: isMobile ? `${effectiveCardHeight}px` : `min(90vh, ${effectiveCardHeight}px)`,
                         zIndex,
                         transformStyle: "preserve-3d",
-                        willChange: "transform, opacity",
                       }}
                   initial={
                     reduceMotion

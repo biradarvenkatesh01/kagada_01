@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { useState, memo } from 'react'
+import { useState, memo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -51,9 +51,9 @@ export const FAQSection = memo(function FAQSection() {
   // All FAQs closed initially
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-  const toggleAccordion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
+  const toggleAccordion = useCallback((index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index))
+  }, [])
 
   return (
     <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-6 sm:py-10 scroll-mt-6 z-10">

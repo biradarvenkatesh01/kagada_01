@@ -18,6 +18,28 @@ interface RadialOrbitalTimelineProps {
   timelineData: TimelineItem[];
 }
 
+// 📱 RESPONSIVE ORBIT RADIUS SUBSCRIPTION (118px phone < 480px, 165px tablet < 640px, 240px desktop)
+const subscribeOrbitRadius = (callback: () => void) => {
+  if (typeof window === "undefined") return () => {};
+  const mqlPhone = window.matchMedia("(max-width: 479px)");
+  const mqlTablet = window.matchMedia("(max-width: 639px)");
+  mqlPhone.addEventListener("change", callback);
+  mqlTablet.addEventListener("change", callback);
+  return () => {
+    mqlPhone.removeEventListener("change", callback);
+    mqlTablet.removeEventListener("change", callback);
+  };
+};
+
+const getOrbitRadiusSnapshot = () => {
+  if (typeof window === "undefined") return 240;
+  if (window.matchMedia("(max-width: 479px)").matches) return 118;
+  if (window.matchMedia("(max-width: 639px)").matches) return 165;
+  return 240;
+};
+
+const getOrbitRadiusServerSnapshot = () => 240;
+
 export default function RadialOrbitalTimeline({
   timelineData,
 }: RadialOrbitalTimelineProps) {
@@ -50,26 +72,11 @@ export default function RadialOrbitalTimeline({
     return () => io.disconnect();
   }, []);
 
-  // 📱 RESPONSIVE ORBIT RADIUS (118px phone < 480px, 165px tablet < 640px, 240px desktop)
+  // 📱 RESPONSIVE ORBIT RADIUS (referentially stable)
   const orbitRadius = useSyncExternalStore(
-    (callback) => {
-      if (typeof window === "undefined") return () => {};
-      const mqlPhone = window.matchMedia("(max-width: 479px)");
-      const mqlTablet = window.matchMedia("(max-width: 639px)");
-      mqlPhone.addEventListener("change", callback);
-      mqlTablet.addEventListener("change", callback);
-      return () => {
-        mqlPhone.removeEventListener("change", callback);
-        mqlTablet.removeEventListener("change", callback);
-      };
-    },
-    () => {
-      if (typeof window === "undefined") return 240;
-      if (window.matchMedia("(max-width: 479px)").matches) return 118;
-      if (window.matchMedia("(max-width: 639px)").matches) return 165;
-      return 240;
-    },
-    () => 240
+    subscribeOrbitRadius,
+    getOrbitRadiusSnapshot,
+    getOrbitRadiusServerSnapshot
   );
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -105,10 +112,7 @@ export default function RadialOrbitalTimeline({
   const expandedItemsRef = useRef(expandedItems);
   const activeNodeIdRef = useRef(activeNodeId);
 
-  // ⚡ Writes orbit geometry straight to the DOM. Previously this ran through
-  // `setRotationAngle`, which re-rendered this entire subtree (5 nodes, their
-  // framer-motion wrappers and icons) 60 times per second. The visual result is
-  // identical — only the delivery mechanism changed.
+  // ⚡ Writes orbit geometry straight to the DOM with GPU translate3d.
   const applyRotation = useCallback(
     (angleDeg: number) => {
       const total = timelineData.length;
@@ -122,7 +126,7 @@ export default function RadialOrbitalTimeline({
         const position = calculateNodePosition(i, total, angleDeg);
         const isExpanded = !!expandedItemsRef.current[item.id];
 
-        el.style.transform = `translate(${position.x}px, ${position.y}px)`;
+        el.style.transform = `translate3d(${position.x.toFixed(2)}px, ${position.y.toFixed(2)}px, 0px)`;
         el.style.zIndex = String(isExpanded ? 500 : position.zIndex);
         el.style.opacity = String(
           isExpanded ? 1 : isAnyCardOpen ? 0 : position.opacity
@@ -310,7 +314,7 @@ export default function RadialOrbitalTimeline({
                 const Icon = item.icon;
 
                 const nodeStyle = {
-                  transform: `translate(${position.x}px, ${position.y}px)`,
+                  transform: `translate3d(${position.x.toFixed(2)}px, ${position.y.toFixed(2)}px, 0px)`,
                   zIndex: isExpanded ? 500 : position.zIndex,
                   opacity: isExpanded ? 1 : isAnyCardOpen ? 0 : position.opacity,
                   pointerEvents: (isAnyCardOpen && !isExpanded ? "none" : "auto") as React.CSSProperties["pointerEvents"],

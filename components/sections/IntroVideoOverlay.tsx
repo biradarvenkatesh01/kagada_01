@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SkipForward } from "lucide-react";
 
 interface IntroVideoOverlayProps {
   isVideoHidden: boolean;
@@ -9,6 +10,7 @@ interface IntroVideoOverlayProps {
   onTimeUpdate: () => void;
   onEnded: () => void;
   onUnmute: () => void;
+  onSkip?: () => void;
   videoRef: React.RefObject<HTMLVideoElement | null>;
 }
 
@@ -18,6 +20,7 @@ export const IntroVideoOverlay = memo(function IntroVideoOverlay({
   onTimeUpdate,
   onEnded,
   onUnmute,
+  onSkip,
   videoRef,
 }: IntroVideoOverlayProps) {
   return (
@@ -46,6 +49,25 @@ export const IntroVideoOverlay = memo(function IntroVideoOverlay({
             className="w-full h-full min-h-[100dvh] object-cover"
           />
           <div className="absolute inset-0 bg-white/18 pointer-events-none z-[51]" />
+
+          {/* ⏭️ SKIP INTRO BUTTON */}
+          {onSkip && (
+            <motion.button
+              type="button"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.4 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onSkip();
+              }}
+              className="absolute top-[calc(1.2rem+env(safe-area-inset-top,0px))] sm:top-7 right-5 sm:right-8 z-[60] flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/20 hover:bg-[#8a1c1c]/80 backdrop-blur-md border border-white/60 hover:border-white text-white font-jakarta text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 shadow-xl shadow-black/40 group cursor-pointer"
+              aria-label="Skip Intro Video"
+            >
+              <span>Skip</span>
+              <SkipForward className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/90 group-hover:text-white transition-transform group-hover:translate-x-0.5" />
+            </motion.button>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

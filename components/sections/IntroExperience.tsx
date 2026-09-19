@@ -23,6 +23,8 @@ function getTabIntroStatus(): boolean {
   }
 }
 
+const emptySubscribe = () => () => {};
+
 /**
  * Owns the intro-video lifecycle and the few pieces of chrome that depend on it
  * (navbar reveal, hero fade-in, chat launcher). Everything below the hero is
@@ -40,7 +42,7 @@ export default function IntroExperience({
 
   // Tab-scoped reload check: true if this specific tab has already loaded the site
   const isTabAlreadySeen = useSyncExternalStore(
-    () => () => {},
+    emptySubscribe,
     getTabIntroStatus,
     () => false
   );
@@ -194,6 +196,31 @@ export default function IntroExperience({
     }
   }, []);
 
+  const handleSkip = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    setIsVideoFading(true);
+    try {
+      sessionStorage.setItem(TAB_INTRO_KEY, "true");
+    } catch {
+      // ignore
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (target: number, opts?: { immediate?: boolean }) => void } }).__lenis;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+
+    setTimeout(() => {
+      setIsVideoHidden(true);
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true });
+      }
+    }, 450);
+  }, []);
+
   return (
     <>
       {/* Floating Pill Header Navigation */}
@@ -212,6 +239,7 @@ export default function IntroExperience({
         onTimeUpdate={handleTimeUpdate}
         onEnded={triggerFade}
         onUnmute={handleTapToUnmute}
+        onSkip={handleSkip}
         videoRef={videoRef}
       />
 

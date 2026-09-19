@@ -178,7 +178,7 @@ function ClockSeparator({ size = "md" }: { size?: FlipClockSize }) {
   );
 }
 
-const FlipClock = ({
+const FlipClock = memo(function FlipClock({
   countdown = false,
   targetDate,
   size = "sm",
@@ -186,7 +186,7 @@ const FlipClock = ({
   showDays = "auto",
   className,
   ...props
-}: FlipClockProps) => {
+}: FlipClockProps) {
   const [time, setTime] = useState<TimeLeft>(getTime(countdown, targetDate));
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -236,26 +236,57 @@ const FlipClock = ({
     // full second for the first tick.
     update();
 
-    let timer: NodeJS.Timeout | null = setInterval(update, 1000);
+    let timer: NodeJS.Timeout | null = null;
+    let isVisible = !document.hidden;
+    let isInView = true;
+
+    const startTimer = () => {
+      if (!timer && isVisible && isInView) {
+        update();
+        timer = setInterval(update, 1000);
+      }
+    };
+
+    const stopTimer = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
+
+    startTimer();
 
     const onVisibilityChange = () => {
-      if (document.hidden) {
-        if (timer) {
-          clearInterval(timer);
-          timer = null;
-        }
+      isVisible = !document.hidden;
+      if (isVisible && isInView) {
+        startTimer();
       } else {
-        update();
-        if (!timer) {
-          timer = setInterval(update, 1000);
-        }
+        stopTimer();
       }
     };
 
     document.addEventListener("visibilitychange", onVisibilityChange);
 
+    const el = containerRef.current;
+    let io: IntersectionObserver | null = null;
+    if (el && typeof IntersectionObserver !== "undefined") {
+      io = new IntersectionObserver(
+        ([entry]) => {
+          isInView = entry.isIntersecting;
+          if (isInView && isVisible) {
+            startTimer();
+          } else {
+            stopTimer();
+          }
+        },
+        { threshold: 0 }
+      );
+      io.observe(el);
+    }
+
     return () => {
-      if (timer) clearInterval(timer);
+      stopTimer();
+      if (io) io.disconnect();
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [countdown, targetDate]);
@@ -367,45 +398,9 @@ const FlipClock = ({
           </span>
         </div>
       </div>
-
-      {/* Ultra Smooth 60fps Keyframe Animations */}
-      <style jsx global>{`
-        .animate-flip-top {
-          animation: flip-top-anim 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-          will-change: transform;
-        }
-        .animate-flip-bottom {
-          animation: flip-bottom-anim 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-          will-change: transform;
-        }
-
-        @keyframes flip-top-anim {
-          0% {
-            transform: rotateX(0deg);
-            z-index: 30;
-          }
-          50%,
-          100% {
-            transform: rotateX(-90deg);
-            z-index: 10;
-          }
-        }
-
-        @keyframes flip-bottom-anim {
-          0%,
-          50% {
-            transform: rotateX(90deg);
-            z-index: 10;
-          }
-          100% {
-            transform: rotateX(0deg);
-            z-index: 30;
-          }
-        }
-      `}</style>
     </div>
   );
-};
+});
 
 function getTime(countdown: boolean, targetDate?: Date): TimeLeft {
   const now = new Date();
