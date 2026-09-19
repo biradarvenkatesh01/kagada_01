@@ -96,13 +96,7 @@ export default function RadialOrbitalTimeline({
       const x = orbitRadius * Math.cos(radian);
       const y = orbitRadius * Math.sin(radian);
 
-      const zIndex = Math.round(100 + 50 * Math.cos(radian));
-      const opacity = Math.max(
-        0.7,
-        Math.min(1, 0.7 + 0.3 * ((1 + Math.sin(radian)) / 2))
-      );
-
-      return { x, y, angle, zIndex, opacity };
+      return { x, y };
     },
     [orbitRadius]
   );
@@ -113,10 +107,12 @@ export default function RadialOrbitalTimeline({
   const activeNodeIdRef = useRef(activeNodeId);
 
   // ⚡ Writes orbit geometry straight to the DOM with GPU translate3d.
+  // CRITICAL PERFORMANCE: Only updates `transform` on the rAF loop.
+  // Mutating `zIndex` on every degree of rotation forced Chromium to run Recalculate Style
+  // and rebuild the LayerTree 60-120 times/sec.
   const applyRotation = useCallback(
     (angleDeg: number) => {
       const total = timelineData.length;
-      const isAnyCardOpen = activeNodeIdRef.current !== null;
 
       for (let i = 0; i < total; i++) {
         const item = timelineData[i];
@@ -124,26 +120,27 @@ export default function RadialOrbitalTimeline({
         if (!el) continue;
 
         const position = calculateNodePosition(i, total, angleDeg);
-        const isExpanded = !!expandedItemsRef.current[item.id];
-
         el.style.transform = `translate3d(${position.x.toFixed(2)}px, ${position.y.toFixed(2)}px, 0px)`;
-        el.style.zIndex = String(isExpanded ? 500 : position.zIndex);
-        el.style.opacity = String(
-          isExpanded ? 1 : isAnyCardOpen ? 0 : position.opacity
-        );
       }
     },
     [timelineData, calculateNodePosition]
   );
 
-  // Re-sync after any React render (expand/collapse, orbit radius change) so the
-  // imperative styles never fall behind the declarative ones. This runs before
-  // the browser paints, so the neutral transform the JSX renders is never seen.
+  // Sync zIndex and opacity only when active/expanded card state changes, not on every rAF frame
   useLayoutEffect(() => {
     expandedItemsRef.current = expandedItems;
     activeNodeIdRef.current = activeNodeId;
+    const isAnyCardOpen = activeNodeId !== null;
+
+    for (const item of timelineData) {
+      const el = nodeRefs.current[item.id];
+      if (!el) continue;
+      const isExpanded = !!expandedItems[item.id];
+      el.style.zIndex = String(isExpanded ? 500 : 20);
+      el.style.opacity = String(isExpanded ? 1 : isAnyCardOpen ? 0 : 1);
+    }
     applyRotation(rotationAngleRef.current);
-  });
+  }, [expandedItems, activeNodeId, timelineData, applyRotation]);
 
   // 🚀 HIGH-PERFORMANCE SPRING ROTATION TO TOP CENTER (270°)
   const centerViewOnNode = useCallback(
@@ -315,15 +312,9 @@ export default function RadialOrbitalTimeline({
 
                 const nodeStyle = {
                   transform: `translate3d(${position.x.toFixed(2)}px, ${position.y.toFixed(2)}px, 0px)`,
-                  zIndex: isExpanded ? 500 : position.zIndex,
-                  opacity: isExpanded ? 1 : isAnyCardOpen ? 0 : position.opacity,
+                  zIndex: isExpanded ? 500 : 20,
+                  opacity: isExpanded ? 1 : isAnyCardOpen ? 0 : 1,
                   pointerEvents: (isAnyCardOpen && !isExpanded ? "none" : "auto") as React.CSSProperties["pointerEvents"],
-                  // ONLY opacity is transitioned. `transform` is written to this
-                  // element every frame by applyRotation(), so a transform
-                  // transition made the browser restart a 300ms interpolation
-                  // 60 times a second on every node — it can never complete, and
-                  // it is the single most expensive thing this component did.
-                  // The orbit motion is already smooth because it is rAF-driven.
                   transition: "opacity 0.3s ease-out",
                 };
 

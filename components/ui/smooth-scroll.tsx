@@ -63,17 +63,32 @@ export default function SmoothScroll({
       if (cancelled) return;
 
       lenis = new LenisCtor({
-        lerp: 0.14,
-        duration: 0.75,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        lerp: 0.16,
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
         wheelMultiplier: 1.0,
         touchMultiplier: 1.0,
         syncTouch: false,
-        autoResize: true,
+        autoResize: false,
       });
+
+      // Handle window resize cleanly without thrashing layout during scroll
+      let resizeTimer: number;
+      const handleResize = () => {
+        cancelAnimationFrame(resizeTimer);
+        resizeTimer = requestAnimationFrame(() => {
+          lenis?.resize();
+        });
+      };
+      window.addEventListener("resize", handleResize, { passive: true });
+      cleanupFns.push(() => {
+        window.removeEventListener("resize", handleResize);
+        cancelAnimationFrame(resizeTimer);
+      });
+
+      // Initial measurement once fonts and DOM settle
+      setTimeout(() => lenis?.resize(), 300);
 
       (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 

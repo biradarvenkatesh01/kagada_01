@@ -75,33 +75,33 @@ export function BurgundyTexturedBackground() {
       />
 
       {/* ── Layer C1: Macro Texture — Pigment Wash & Vat-Dye Absorption ─ */}
-      {/* Low-frequency organic variations in pigment saturation typical of handmade paper */}
+      {/* Pre-baked WebP tile eliminating runtime SVG feTurbulence filter re-rasterization */}
       <div
         className="absolute inset-0 w-full h-full opacity-[0.48] mix-blend-soft-light"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 650 650' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='pigment' x='0%25' y='0%25' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.011' numOctaves='3' stitchTiles='stitch' result='puddle'/%3E%3CfeColorMatrix type='matrix' values='0.58 0 0 0 0.28 0 0.12 0 0 0.06 0 0 0.22 0 0.10 0 0 0 0.42 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pigment)'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("/optimized/textures/paper-pigment.webp")`,
           backgroundRepeat: "repeat",
           backgroundSize: "650px 650px",
         }}
       />
 
       {/* ── Layer C2: Fine Texture — Cold-Press Paper Tooth & Felt Surface Roughness */}
-      {/* Medium-scale pulp clumping creating the physical tooth of cold-pressed art paper */}
+      {/* Pre-baked WebP tile eliminating runtime SVG feTurbulence filter re-rasterization */}
       <div
         className="absolute inset-0 w-full h-full opacity-[0.44] mix-blend-overlay"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='tooth' x='0%25' y='0%25' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.14 0.17' numOctaves='3' stitchTiles='stitch' result='pulp'/%3E%3CfeColorMatrix type='matrix' values='0.65 0 0 0 0.32 0 0.15 0 0 0.07 0 0 0.25 0 0.11 0 0 0 0.52 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23tooth)'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("/optimized/textures/paper-tooth.webp")`,
           backgroundRepeat: "repeat",
           backgroundSize: "300px 300px",
         }}
       />
 
       {/* ── Layer C3: Micro Texture — Interwoven Organic Paper Fibers ── */}
-      {/* Directional, elongated cellulose fiber strands displaced organically by paper waves */}
+      {/* Pre-baked WebP tile eliminating runtime feDisplacementMap & feComposite calculations */}
       <div
         className="absolute inset-0 w-full h-full opacity-[0.62] mix-blend-soft-light"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fibers' x='0%25' y='0%25' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.022 0.45' numOctaves='4' stitchTiles='stitch' result='hFibers'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45 0.022' numOctaves='4' stitchTiles='stitch' result='vFibers'/%3E%3CfeTurbulence type='turbulence' baseFrequency='0.06 0.06' numOctaves='3' stitchTiles='stitch' result='curveWave'/%3E%3CfeComposite in='hFibers' in2='vFibers' operator='arithmetic' k1='0' k2='0.6' k3='0.4' k4='0' result='mesh'/%3E%3CfeDisplacementMap in='mesh' in2='curveWave' scale='7' xChannelSelector='R' yChannelSelector='G' result='curvedMesh'/%3E%3CfeColorMatrix type='matrix' values='0.72 0 0 0 0.38 0 0.18 0 0 0.08 0 0 0.28 0 0.12 0 0 0 0.65 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fibers)'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("/optimized/textures/paper-fibers.webp")`,
           backgroundRepeat: "repeat",
           backgroundSize: "400px 400px",
         }}

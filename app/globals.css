@@ -535,13 +535,16 @@ video::-webkit-media-controls-overflow-button {
    The hero is deliberately excluded: it is always the first thing on screen, it
    owns the intro-video interplay and the LED canvas, and measurement showed
    including it made no difference (6.2% vs 6.3%). */
-#about, #tracks, #prizes, #winners, #gallery,
-#videos, #sponsors, #faq, #contact, footer {
-  content-visibility: auto;
-}
+/* Mobile-measured intrinsic heights: Active only on low-memory mobile viewports.
+   On desktop (>=640px), un-skipping 2000px+ sections mid-scroll forced 50-80ms synchronous
+   layout recalculation pauses while scrolling with Lenis. On desktop the full page renders
+   without layout thrashing. */
+@media (max-width: 639.98px) {
+  #about, #tracks, #prizes, #winners, #gallery,
+  #videos, #sponsors, #faq, #contact, footer {
+    content-visibility: auto;
+  }
 
-/* Mobile-measured intrinsic heights */
-@media (max-width: 639px) {
   #about    { contain-intrinsic-size: auto 872px; }
   #tracks   { contain-intrinsic-size: auto 580px; }
   #prizes   { contain-intrinsic-size: auto 463px; }
@@ -552,18 +555,4 @@ video::-webkit-media-controls-overflow-button {
   #faq      { contain-intrinsic-size: auto 788px; }
   #contact  { contain-intrinsic-size: auto 2362px; }
   footer    { contain-intrinsic-size: auto 194px; }
-}
-
-/* Desktop-measured intrinsic heights (1440x900) */
-@media (min-width: 640px) {
-  #about    { contain-intrinsic-size: auto 1054px; }
-  #tracks   { contain-intrinsic-size: auto 1028px; }
-  #prizes   { contain-intrinsic-size: auto 592px; }
-  #winners  { contain-intrinsic-size: auto 808px; }
-  #gallery  { contain-intrinsic-size: auto 870px; }
-  #videos   { contain-intrinsic-size: auto 916px; }
-  #sponsors { contain-intrinsic-size: auto 722px; }
-  #faq      { contain-intrinsic-size: auto 952px; }
-  #contact  { contain-intrinsic-size: auto 2086px; }
-  footer    { contain-intrinsic-size: auto 182px; }
 }
