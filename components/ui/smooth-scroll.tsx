@@ -68,12 +68,10 @@ export default function SmoothScroll({
 
       lenis = new LenisCtor({
         lerp: 0.12,
-        duration: 1.0,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
-        wheelMultiplier: 1.05,
+        wheelMultiplier: 1.0,
         touchMultiplier: 1.0,
         syncTouch: false,
         autoResize: false,

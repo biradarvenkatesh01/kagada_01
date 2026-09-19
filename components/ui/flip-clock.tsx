@@ -13,7 +13,7 @@ import {
 } from "react";
 
 const flipUnitVariants = cva(
-  "relative subpixel-antialiased perspective-[1000px] rounded-md overflow-hidden transform-gpu",
+  "relative subpixel-antialiased rounded-md overflow-hidden",
   {
     variants: {
       size: {
@@ -45,7 +45,7 @@ interface FlipUnitProps
 }
 
 const commonCardStyle = cn(
-  "absolute inset-x-0 overflow-hidden h-1/2 bg-inherit text-inherit backface-hidden transform-gpu",
+  "absolute inset-x-0 overflow-hidden h-1/2 bg-inherit text-inherit backface-hidden",
 );
 
 const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
@@ -91,7 +91,7 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
         className={cn(
           commonCardStyle,
           "z-20 origin-bottom rounded-t-lg",
-          flipping && "animate-flip-top",
+          flipping && "animate-flip-top perspective-[1000px]",
         )}
         suppressHydrationWarning
       >
@@ -103,7 +103,7 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
         className={cn(
           commonCardStyle,
           "z-10 origin-top rounded-b-lg translate-y-full",
-          flipping && "animate-flip-bottom",
+          flipping && "animate-flip-bottom perspective-[1000px]",
         )}
         style={{ transform: "rotateX(90deg)" }}
         suppressHydrationWarning
@@ -189,31 +189,6 @@ const FlipClock = memo(function FlipClock({
 }: FlipClockProps) {
   const [time, setTime] = useState<TimeLeft>(getTime(countdown, targetDate));
   const containerRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    const content = contentRef.current;
-    if (!el || !content) return;
-
-    const measure = () => {
-      const containerW = el.clientWidth;
-      const contentW = content.scrollWidth;
-      if (containerW > 0 && contentW > 0) {
-        if (contentW > containerW) {
-          setScale(Math.max(0.65, (containerW - 4) / contentW));
-        } else {
-          setScale(1);
-        }
-      }
-    };
-
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -231,9 +206,6 @@ const FlipClock = memo(function FlipClock({
       });
     };
 
-    // The page is statically prerendered, so the initial state was computed at
-    // build time. Correct it immediately on mount instead of waiting up to a
-    // full second for the first tick.
     update();
 
     let timer: NodeJS.Timeout | null = null;
@@ -279,7 +251,7 @@ const FlipClock = memo(function FlipClock({
             stopTimer();
           }
         },
-        { threshold: 0 }
+        { rootMargin: "0px 0px 50px 0px", threshold: 0 }
       );
       io.observe(el);
     }
@@ -308,12 +280,7 @@ const FlipClock = memo(function FlipClock({
       suppressHydrationWarning
     >
       <div
-        ref={contentRef}
-        style={{
-          transform: scale < 1 ? `scale(${scale})` : undefined,
-          transformOrigin: "center center",
-        }}
-        className="w-fit flex items-start justify-center space-x-0.5 min-[340px]:space-x-1 sm:space-x-2 md:space-x-3 font-mono font-medium shrink-0 transform-gpu transition-transform duration-100 ease-out"
+        className="w-fit flex items-start justify-center space-x-0.5 min-[340px]:space-x-1 sm:space-x-2 md:space-x-3 font-mono font-medium shrink-0"
         aria-live="polite"
         suppressHydrationWarning
         {...props}
