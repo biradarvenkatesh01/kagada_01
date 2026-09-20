@@ -125,10 +125,118 @@
 #winners,
 #gallery,
 #sponsors,
-#faq,
 #contact,
 footer {
   contain: layout style;
+}
+
+/* ─── Super-Smooth Accordion (Direct scrollHeight Architecture) ─── */
+.accordion__item {
+  display: flex;
+  flex-direction: column;
+  background-color: #D8D3C7;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  margin-bottom: 0.75rem;
+  border-radius: 0;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+.accordion__item.active {
+  border-color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+}
+
+.item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1.25rem;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+  width: 100%;
+  border: none;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .item__header {
+    padding: 1rem 1.5rem;
+  }
+}
+
+.item__question {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #5A182B;
+  line-height: 1.35;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .item__question {
+    font-size: 1.15rem;
+  }
+}
+
+.item__icon {
+  flex: 0 0 30px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(90, 24, 43, 0.1);
+  border: 1px solid rgba(90, 24, 43, 0.25);
+  color: #5A182B;
+  border-radius: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.active .item__icon {
+  background: #5A182B;
+  color: #D8D3C7;
+  border-color: #5A182B;
+}
+
+.item__icon svg {
+  transition: transform 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+  will-change: transform;
+}
+
+.active .item__icon svg {
+  transform: rotate(180deg);
+}
+
+.item__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 300ms ease;
+  will-change: max-height;
+}
+
+.item__body {
+  padding: 0.75rem 1.25rem 1rem 1.25rem;
+  border-top: 1px solid rgba(90, 24, 43, 0.18);
+}
+
+@media (min-width: 640px) {
+  .item__body {
+    padding: 0.875rem 1.5rem 1.125rem 1.5rem;
+  }
+}
+
+.item__answer {
+  font-family: var(--font-jakarta), sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #2b2622;
+  margin: 0;
+  white-space: pre-line;
 }
 
 #contact iframe {
