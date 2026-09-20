@@ -21,13 +21,13 @@ interface AftermovieItem {
 
 const AFTERMOVIES: AftermovieItem[] = [
   {
-    id: "kagada-2024",
-    title: "KAGADA 2024",
-    year: "2024",
+    id: "kagada-20",
+    title: "KAGADA 20",
+    year: "20",
     duration: "1:30",
     videoSrc: "/kagada2024.mp4",
     posterSrc: "/optimized/videos/kagada2024-poster.webp",
-    description: "Relive the excitement and energy of KAGADA 2024 with highlights from all events, competitions and celebrations.",
+    description: "Relive the excitement and energy of KAGADA 20 with highlights from all events, competitions and celebrations.",
   },
   {
     id: "kagada-2025",

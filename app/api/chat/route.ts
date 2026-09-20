@@ -24,7 +24,7 @@ PRESENTATION TRACKS (3 Main Category Tracks):
 3. Project Presentation: Live technical working prototype model presentation demonstrating hardware/software innovation to solve real-world problems.
 
 HUMANITARIAN ACTIVITIES:
-- Ottige Kaliyona: Social initiative focused on education and community empowerment.
+- Ottige Kaliyona: Social initiative conducted every year by IEEE WIE during KAGADA, focused on empowering government school students through hands-on technology education and fun learning activities.
 - Food for Cause: Social responsibility initiative driving hunger relief and food distribution.
 
 OFFICIAL ORGANIZERS & CONTACTS:
