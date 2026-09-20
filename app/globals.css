@@ -93,59 +93,155 @@
   border-radius: 0 !important;
 }
 
-/* ─── Layout containment ───────────────────────────────────
-   Opening an FAQ answer animates `grid-template-rows` from 0fr to 1fr, which
-   the browser handles as a layout transition. `contain` bounds how far the
-   resulting reflow can spread:
-   - On the FAQ card, `isolation: isolate` creates a stacking/blend context.
-   - On the sections that follow it, `layout` lets the browser reposition each
-     box without descending into its subtree. That matters most for #contact,
-     which holds the Google Maps iframe and the query form.
-
-   #videos and #hero are deliberately excluded: they contain `position: fixed`
-   children (the aftermovie lightbox, the intro overlay), and a layout-contained
-   ancestor becomes their containing block, which would break full-screen. */
-/* ─── FAQ — native <details> accordion ─── */
-#faq .kagada-paper-card {
-  isolation: isolate;
-  background-image: none !important;
-  background-color: #D8D3C7 !important;
-  transform: translateZ(0);
-  contain: content;
-  box-shadow: 0 4px 16px -4px rgba(90, 24, 43, 0.15);
-}
-
-/* Hide the native disclosure marker */
-#faq summary { list-style: none; }
-#faq summary::marker { display: none; content: ''; }
-#faq summary::-webkit-details-marker { display: none; }
-
-/* Open state — border highlight */
-#faq details[open] { border-color: white; }
-
-/* Chevron rotation */
-#faq .faq-chevron { transition: transform 150ms ease-out; }
-#faq details[open] .faq-chevron { transform: rotate(180deg); }
-
-/* Icon box color swap */
-#faq .faq-icon-box {
-  transition: background-color 120ms ease-out, border-color 120ms ease-out, color 120ms ease-out;
-}
-#faq details[open] .faq-icon-box {
-  background-color: #5A182B;
-  color: #D8D3C7;
-  border-color: #5A182B;
-}
-
 #about,
 #prizes,
 #winners,
 #gallery,
 #sponsors,
-#faq,
 #contact,
 footer {
   contain: layout style;
+}
+
+/* ─── High-Performance FAQ Accordion ─── */
+.faq-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #D8D3C7;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 0.75rem;
+  border-radius: 0;
+  transition: border-color 0.15s ease;
+  overflow: hidden;
+}
+
+.faq-card[data-open="true"] {
+  border-color: #ffffff;
+}
+
+.faq-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1.25rem;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+  width: 100%;
+  border: none;
+  text-align: left;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.faq-trigger:focus-visible {
+  outline: 2px solid #5A182B;
+  outline-offset: -2px;
+}
+
+@media (min-width: 640px) {
+  .faq-trigger {
+    padding: 1rem 1.5rem;
+  }
+}
+
+.faq-question {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #5A182B;
+  line-height: 1.35;
+  margin: 0;
+  padding-right: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .faq-question {
+    font-size: 1.15rem;
+  }
+}
+
+.faq-icon-box {
+  flex: 0 0 28px;
+  height: 28px;
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(90, 24, 43, 0.1);
+  border: 1px solid rgba(90, 24, 43, 0.25);
+  color: #5A182B;
+  border-radius: 0;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .faq-icon-box {
+    flex: 0 0 32px;
+    height: 32px;
+    width: 32px;
+  }
+}
+
+.faq-card[data-open="true"] .faq-icon-box {
+  background: #5A182B;
+  color: #D8D3C7;
+  border-color: #5A182B;
+}
+
+.faq-icon {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 2.5;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: rotate(0deg);
+}
+
+.faq-card[data-open="true"] .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.faq-body {
+  padding: 0.75rem 1.25rem 1rem 1.25rem;
+  border-top: 1px solid rgba(90, 24, 43, 0.18);
+  transition: opacity 180ms ease;
+  opacity: 0;
+}
+
+@media (min-width: 640px) {
+  .faq-body {
+    padding: 0.875rem 1.5rem 1.125rem 1.5rem;
+  }
+}
+
+.faq-card[data-open="true"] .faq-body {
+  opacity: 1;
+}
+
+.faq-answer {
+  font-family: var(--font-jakarta), sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #2b2622;
+  margin: 0;
+  white-space: pre-line;
 }
 
 #contact iframe {

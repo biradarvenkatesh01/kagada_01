@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import * as React from 'react'
+import { useState, useCallback, memo } from 'react'
 import { ChevronDown } from 'lucide-react'
 
 // ── FAQ data ────────────────────────────────────────────────────────────────
@@ -44,38 +45,18 @@ const FAQS: FAQItem[] = [
   },
 ]
 
-// ── Section ─────────────────────────────────────────────────────────────────
-// Uses native <details name="..."> for an exclusive accordion group.
-// The browser handles open/close natively — no React state, no JS animation.
-export function FAQSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
+export const FAQSection = memo(function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-  // Tell Lenis the page height changed after a <details> toggles
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    let timer: number | null = null
-
-    const handleToggle = () => {
-      if (timer !== null) clearTimeout(timer)
-      timer = window.setTimeout(() => {
-        const lenis = (window as unknown as { __lenis?: { resize: () => void } }).__lenis
-        lenis?.resize()
-        timer = null
-      }, 60)
-    }
-
-    // The toggle event fires on the <details> element — use capture to catch it
-    container.addEventListener('toggle', handleToggle, true)
-    return () => {
-      container.removeEventListener('toggle', handleToggle, true)
-      if (timer !== null) clearTimeout(timer)
-    }
+  const toggleItem = useCallback((index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index))
   }, [])
 
   return (
-    <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
+    <section
+      id="faq"
+      className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10"
+    >
       {/* Main Section Title */}
       <div>
         <h2 data-reveal className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
@@ -90,39 +71,49 @@ export function FAQSection() {
         </p>
       </div>
 
-      {/* FAQ Accordion — native <details> exclusive group */}
-      <div className="w-full" ref={containerRef}>
-        <div className="w-full flex flex-col gap-2.5 sm:gap-3">
-          {FAQS.map((faq, idx) => (
-            <details
-              key={idx}
-              name="faq-accordion"
-              className="faq-card kagada-paper-card border-2 border-white/90 !rounded-none group"
+      {/* FAQ Accordion List */}
+      <div className="w-full flex flex-col">
+        {FAQS.map((faq, idx) => {
+          const isOpen = openIndex === idx
+          return (
+            <div
+              key={`faq-${idx}`}
+              className="faq-card"
+              data-open={isOpen}
             >
-              <summary
-                id={`faq-header-${idx}`}
-                className="w-full flex items-center justify-between gap-3 py-3 px-4 sm:py-3.5 sm:px-5 cursor-pointer text-left select-none outline-none focus-visible:ring-2 focus-visible:ring-[#5A182B] list-none [&::-webkit-details-marker]:hidden"
+              <button
+                type="button"
+                onClick={() => toggleItem(idx)}
+                className="faq-trigger"
+                aria-expanded={isOpen}
+                aria-controls={`faq-panel-${idx}`}
+                id={`faq-btn-${idx}`}
               >
-                <h3 className="font-outfit font-bold text-base sm:text-lg text-[#5A182B] tracking-wide leading-snug">
-                  {faq.question}
-                </h3>
-                <div className="faq-icon-box w-7 h-7 sm:w-8 sm:h-8 !rounded-none shrink-0 flex items-center justify-center border shadow-sm bg-[#5A182B]/10 border-[#5A182B]/25 text-[#5A182B]">
-                  <ChevronDown className="faq-chevron w-4 h-4 stroke-[2.5] transform-gpu" />
+                <h3 className="faq-question">{faq.question}</h3>
+                <div className="faq-icon-box">
+                  <ChevronDown className="faq-icon" />
                 </div>
-              </summary>
-              <div className="px-4 pb-3.5 sm:px-5 sm:pb-4 pt-0 text-left">
-                <div className="pt-2 sm:pt-2.5 border-t border-[#5A182B]/20">
-                  <p className="font-jakarta text-xs sm:text-sm md:text-base font-medium text-stone-800 leading-relaxed whitespace-pre-line select-text">
-                    {faq.answer}
-                  </p>
+              </button>
+
+              <div
+                id={`faq-panel-${idx}`}
+                role="region"
+                aria-labelledby={`faq-btn-${idx}`}
+                className="faq-panel"
+                data-open={isOpen}
+              >
+                <div className="faq-panel-inner">
+                  <div className="faq-body">
+                    <p className="faq-answer">{faq.answer}</p>
+                  </div>
                 </div>
               </div>
-            </details>
-          ))}
-        </div>
+            </div>
+          )
+        })}
       </div>
     </section>
   )
-}
+})
 
 export default FAQSection
