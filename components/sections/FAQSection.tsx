@@ -4,6 +4,7 @@ import * as React from 'react'
 import { useState, useCallback, memo } from 'react'
 import { ChevronDown } from 'lucide-react'
 
+// ── FAQ data ────────────────────────────────────────────────────────────────
 interface FAQItem {
   question: string
   answer: string
