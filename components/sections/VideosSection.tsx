@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface AftermovieItem {
   id: string
@@ -42,11 +41,9 @@ const AFTERMOVIES: AftermovieItem[] = [
 
 const VideoCard = memo(function VideoCard({
   movie,
-  idx,
   onOpenModal,
 }: {
   movie: AftermovieItem;
-  idx: number;
   onOpenModal: (movie: AftermovieItem) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -66,7 +63,7 @@ const VideoCard = memo(function VideoCard({
   };
 
   return (
-    <ScrollReveal direction="up" delay={idx * 100} className="w-full">
+    <div className="w-full">
       <div
         className={cn(
           "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
@@ -120,7 +117,7 @@ const VideoCard = memo(function VideoCard({
           </p>
         </div>
       </div>
-    </ScrollReveal>
+    </div>
   );
 });
 
@@ -182,26 +179,25 @@ export const VideosSection = memo(function VideosSection() {
   return (
     <section id="videos" className="relative w-full max-w-6xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Title: KAGADA - From the previous years! */}
-      <ScrollReveal direction="up" duration={500}>
+      <div>
         <h2 className="font-saman text-[#D8D3C7] text-4xl sm:text-6xl md:text-7xl lg:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           KAGADA - <span className="text-amber-400 tshadow-md">From the previous years!</span>
         </h2>
-      </ScrollReveal>
+      </div>
 
       {/* Subtitle */}
-      <ScrollReveal direction="up" delay={60} duration={500}>
+      <div>
         <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
           Experience the magic of KAGADA through our cinematic after movies.
         </p>
-      </ScrollReveal>
+      </div>
 
       {/* 2 Video Aftermovie Glassmorphic Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
-        {AFTERMOVIES.map((movie, idx) => (
+        {AFTERMOVIES.map((movie) => (
           <VideoCard
             key={movie.id}
             movie={movie}
-            idx={idx}
             onOpenModal={handleOpenModal}
           />
         ))}

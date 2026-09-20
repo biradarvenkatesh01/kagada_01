@@ -4,7 +4,6 @@ import * as React from 'react'
 import { useState, memo, useCallback, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface FAQItem {
   question: string
@@ -89,13 +88,20 @@ const FAQCard = memo(function FAQCard({
         </div>
       </button>
 
-      {/* Accordion Body Content via Hardware-Accelerated CSS Grid */}
+      {/* Accordion body. `grid-template-rows: 0fr -> 1fr` is a LAYOUT animation, so
+          it cannot be composited — every frame costs a style recalc, a layout and a
+          repaint of the card. Deliberately NOT layer-promoted: `transform-gpu` gave
+          this panel its own texture that the compositor had to re-rasterise at the
+          new size on every one of those frames, on top of the paint it was already
+          doing, and `will-change: grid-template-rows` is a no-op hint for a property
+          that has no compositor fast path. Repaint is kept off the rest of the page
+          by `contain` on the card (see .kagada-paper-card in globals.css). */}
       <div
         id={`faq-panel-${idx}`}
         role="region"
         aria-labelledby={`faq-header-${idx}`}
         className={cn(
-          "grid transition-[grid-template-rows,opacity] duration-200 ease-out transform-gpu will-change-[grid-template-rows]",
+          "grid transition-[grid-template-rows,opacity] duration-200 ease-out",
           isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 pointer-events-none"
         )}
       >
@@ -137,21 +143,21 @@ export const FAQSection = memo(function FAQSection() {
   return (
     <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
-      <ScrollReveal direction="up" duration={500}>
+      <div>
         <h2 className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           Frequently Asked <span className="text-amber-400 tshadow-md">Questions</span>
         </h2>
-      </ScrollReveal>
+      </div>
 
       {/* Subtitle */}
-      <ScrollReveal direction="up" delay={60} duration={500}>
+      <div>
         <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
           Everything you need to know about KAGADA conference, tracks, and events.
         </p>
-      </ScrollReveal>
+      </div>
 
       {/* Glassmorphic FAQ Accordion Container */}
-      <ScrollReveal direction="up" delay={100} duration={500} className="w-full">
+      <div className="w-full">
         <div className="w-full flex flex-col gap-2.5 sm:gap-3">
           {FAQS.map((faq, idx) => (
             <FAQCard
@@ -163,7 +169,7 @@ export const FAQSection = memo(function FAQSection() {
             />
           ))}
         </div>
-      </ScrollReveal>
+      </div>
     </section>
   )
 });

@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { marked } from "marked";
 
 function sanitizeHtml(html: string): string {
   return html
@@ -16,15 +15,39 @@ function sanitizeHtml(html: string): string {
     .replace(/href\s*=\s*(?:'javascript:[^']*'|"javascript:[^"]*"|javascript:[^\s>]+)/gi, 'href="#"');
 }
 
+// `marked` is ~40KB and is only ever needed once the user opens the chat, but a
+// static import put it in the bundle every visitor downloads before the hero
+// paints. It is fetched on first open instead; until it resolves, assistant
+// replies render as escaped plain text, which is what the fallback below
+// already did on a parse error.
+type MarkedParse = (src: string, opts: { async: false; breaks: boolean }) => string;
+let markedParse: MarkedParse | null = null;
+let markedLoad: Promise<void> | null = null;
+
+function loadMarked(): Promise<void> {
+  markedLoad ??= import("marked").then(({ marked }) => {
+    markedParse = marked.parse as MarkedParse;
+  });
+  return markedLoad;
+}
+
+function escapeHtml(text: string): string {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
 function renderMarkdown(content: string): string {
+  if (!markedParse) return escapeHtml(content);
   try {
-    const rawHtml = marked.parse(content, { async: false, breaks: true }) as string;
+    const rawHtml = markedParse(content, { async: false, breaks: true });
     const cleanHtml = sanitizeHtml(rawHtml);
     return cleanHtml
       .replaceAll("<table>", '<div class="chat-table-scroll" data-lenis-prevent="true"><table>')
       .replaceAll("</table>", "</table></div>");
   } catch {
-    return content;
+    return escapeHtml(content);
   }
 }
 
@@ -35,6 +58,7 @@ interface AIChatCardProps {
 
 export default function AIChatCard({ className, isVisible = true }: AIChatCardProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [, setMarkdownReady] = useState(false);
   const [messages, setMessages] = useState<{ sender: "ai" | "user"; text: string }[]>([
     {
       sender: "ai",
@@ -46,6 +70,19 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   const [showGreeting, setShowGreeting] = useState(false);
   const hasGreetedRef = useRef(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+  // Fetch the markdown renderer the first time the chat is opened, then
+  // re-render so any messages already on screen pick it up.
+  useEffect(() => {
+    if (!isOpen) return;
+    let cancelled = false;
+    loadMarked().then(() => {
+      if (!cancelled) setMarkdownReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [isOpen]);
 
   // Trigger brief 'Heyy' greeting once user reaches the hero page after initial video
   useEffect(() => {
@@ -138,7 +175,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             }}
             className="fixed bottom-20 sm:bottom-24 right-5 sm:right-7 z-50 cursor-pointer select-none"
           >
-            <div className="relative kagada-paper-card text-[#5A182B] border-2 border-white/95 px-4 py-3 !rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs transition-all duration-200 group">
+            <div className="relative kagada-paper-card text-[#5A182B] border-2 border-white/95 px-4 py-3 !rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs transition-glass duration-200 group">
               <div className="w-8 h-8 !rounded-full bg-[#5A182B]/10 flex items-center justify-center shrink-0 border border-[#5A182B]/20 text-[#5A182B]">
                 <Bot className="w-5 h-5 stroke-[2.2] text-[#5A182B]" />
               </div>
@@ -174,7 +211,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className={cn(
           "fixed bottom-5 sm:bottom-7 right-5 sm:right-7 z-50 w-12 h-12 sm:w-14 sm:h-14 !rounded-full flex items-center justify-center text-[#5A182B] shadow-2xl select-none group cursor-pointer",
-          "kagada-paper-card border-2 border-[#5A182B]/30 shadow-2xl shadow-black/40 hover:brightness-105 hover:border-[#5A182B]/60 transition-all duration-300",
+          "kagada-paper-card border-2 border-[#5A182B]/30 shadow-2xl shadow-black/40 hover:brightness-105 hover:border-[#5A182B]/60 transition-glass duration-300",
           isOpen && "border-[#5A182B] ring-4 ring-[#5A182B]/20"
         )}
         aria-label="Toggle AI Chatbot"

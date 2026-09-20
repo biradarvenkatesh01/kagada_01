@@ -1,4 +1,3 @@
-import ScrollReveal from "@/components/ui/scroll-reveal";
 import { Trophy } from "lucide-react";
 
 export function PrizePoolSection() {
@@ -9,16 +8,13 @@ export function PrizePoolSection() {
     >
       <div className="relative z-10 w-full max-w-xl md:max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
-        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-4xl sm:text-6xl md:text-7xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 tracking-tight text-center select-none">
+        <h2 className="font-saman text-4xl sm:text-6xl md:text-7xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 tracking-tight text-center select-none">
           Prize <span className="text-amber-400 tshadow-md">Pool</span>
-        </ScrollReveal>
+        </h2>
 
         <div className="w-full flex flex-col items-center gap-5 sm:gap-6">
           {/* Box 1: Total Prize Money Authentic Paper Card */}
-          <ScrollReveal
-            y={20}
-            scale={0.98}
-            duration={0.45}
+          <div
             className="relative w-full kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/25 rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col items-center text-center overflow-hidden"
           >
             {/* Circular Trophy SVG Icon Badge */}
@@ -41,19 +37,16 @@ export function PrizePoolSection() {
             <p className="font-jakarta text-xs sm:text-sm text-stone-700 leading-relaxed font-medium max-w-lg mx-auto">
               Exciting rewards await at <strong className="font-extrabold text-[#5A182B]">KAGADA 2026</strong>! A total prize pool of <strong className="font-extrabold text-[#5A182B]">₹40,000</strong> will be shared across <strong className="font-extrabold text-[#5A182B]">Paper, Poster and Project presentations</strong>, celebrating creativity, technical excellence and impactful ideas.
             </p>
-          </ScrollReveal>
+          </div>
 
           {/* Box 2: Certificate Participation Authentic Paper Banner (Clean without emoji) */}
-          <ScrollReveal
-            y={16}
-            delay={80}
-            duration={0.45}
+          <div
             className="relative w-full max-w-lg mx-auto kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/20 rounded-2xl sm:rounded-3xl py-3 px-5 sm:py-3.5 sm:px-6 text-slate-900 flex items-center justify-center text-center overflow-hidden"
           >
             <p className="font-jakarta text-xs sm:text-sm text-stone-800 font-semibold leading-snug">
               Every participant will be awarded a <strong className="font-black text-[#5A182B]">Certificate of Participation</strong>.
             </p>
-          </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

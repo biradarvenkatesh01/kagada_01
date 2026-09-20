@@ -93,16 +93,25 @@ export default function IntroExperience({
     document.body.style.overscrollBehavior = "none";
     document.documentElement.style.overscrollBehavior = "none";
 
-    // 4. Lock Lenis smooth scroll instance
+    // 4. Lock Lenis smooth scroll instance.
+    // Lenis is imported lazily, so it may not exist yet when the intro mounts.
+    // This used to re-run every 120ms for the whole intro, firing a forced
+    // scroll write ~80 times while the page was still loading and decoding the
+    // video. It only ever needs to land once, so the poll stops the moment the
+    // instance shows up.
     const lockLenis = () => {
-      const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void; scrollTo: (target: number, opts?: { immediate?: boolean }) => void } }).__lenis;
-      if (lenis) {
-        lenis.scrollTo(0, { immediate: true });
-        lenis.stop();
-      }
+      const lenis = (window as unknown as { __lenis?: { stop: () => void; scrollTo: (target: number, opts?: { immediate?: boolean }) => void } }).__lenis;
+      if (!lenis) return false;
+      lenis.scrollTo(0, { immediate: true });
+      lenis.stop();
+      return true;
     };
-    lockLenis();
-    const lenisCheckId = setInterval(lockLenis, 120);
+    let lenisCheckId: ReturnType<typeof setInterval> | undefined;
+    if (!lockLenis()) {
+      lenisCheckId = setInterval(() => {
+        if (lockLenis()) clearInterval(lenisCheckId);
+      }, 120);
+    }
 
     // 5. Block all user scroll inputs (wheel, touch gestures, keyboard scroll keys)
     const preventScroll = (e: Event) => {

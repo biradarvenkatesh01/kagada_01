@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { cn } from '@/lib/utils'
-import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface GalleryItem {
   id: number
@@ -80,7 +79,7 @@ function MarqueeRow({
               className={cn(
                 "relative shrink-0 overflow-hidden group rounded-3xl",
                 "bg-stone-900 border-2 border-white/95 shadow-md shadow-black/20",
-                "transition-all duration-300 hover:shadow-xl hover:border-white",
+                "transition-glass duration-300 hover:shadow-xl hover:border-white",
                 item.shape
               )}
             >
@@ -104,7 +103,7 @@ function MarqueeRow({
               className={cn(
                 "relative shrink-0 overflow-hidden group rounded-3xl",
                 "bg-stone-900 border-2 border-white/95 shadow-md shadow-black/20",
-                "transition-all duration-300 hover:shadow-xl hover:border-white",
+                "transition-glass duration-300 hover:shadow-xl hover:border-white",
                 item.shape
               )}
             >
@@ -128,17 +127,17 @@ export function GallerySection() {
     <section id="gallery" className="relative w-full overflow-hidden py-8 sm:py-12 flex flex-col gap-4 sm:gap-6 select-none scroll-mt-6 z-10">
       {/* Section Title */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4">
-        <ScrollReveal direction="down" duration={500}>
+        <div>
           <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-1.5 sm:mb-2 tracking-tight text-center select-none">
             Event <span className="text-amber-400 tshadow-md">Gallery</span>
           </h2>
-        </ScrollReveal>
+        </div>
 
-        <ScrollReveal direction="up" delay={60} duration={500}>
+        <div>
           <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-2 sm:mb-3 max-w-2xl">
             Capturing unforgettable moments across KAGADA editions.
           </p>
-        </ScrollReveal>
+        </div>
       </div>
 
       {/* ROW 1: Moves Continuously to the RIGHT at smooth speed */}

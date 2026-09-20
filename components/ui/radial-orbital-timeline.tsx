@@ -344,7 +344,7 @@ export default function RadialOrbitalTimeline({
                         : "bg-[#D8D3C7] text-[#5A182B] border-[#5A182B]/30 shadow-md shadow-black/50"
                     }
                     border-2 
-                    transition-all duration-300 transform-gpu cursor-pointer
+                    transition-glass duration-300 transform-gpu cursor-pointer
                   `}
                 >
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75] text-[#5A182B]" />
@@ -408,11 +408,10 @@ export default function RadialOrbitalTimeline({
                           
                           {/* Image Box (Left Column on PC) */}
                           {item.imageSrc && (
-                            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 !rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group" data-no-lightbox="true">
+                            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 !rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group">
                               <img
                                 src={item.imageSrc}
                                 alt={item.title}
-                                data-no-lightbox="true"
                                 loading="lazy"
                                 decoding="async"
                                 className="w-full h-full object-cover select-none pointer-events-none"

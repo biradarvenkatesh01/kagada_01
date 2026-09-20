@@ -17,7 +17,6 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
       <motion.img
         src="/optimized/hero-bg.webp"
         alt="UVCE Building"
-        data-no-lightbox="true"
         fetchPriority="high"
         decoding="async"
         initial={{ opacity: 0 }}
@@ -87,7 +86,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
         className="absolute bottom-5 sm:bottom-8 left-1/2 z-20 flex flex-col items-center gap-3 sm:gap-4 group pointer-events-auto transform-gpu"
       >
         <div
-          className="px-6 py-2.5 sm:px-8 sm:py-3 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-all group-hover:border-white"
+          className="px-6 py-2.5 sm:px-8 sm:py-3 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white"
         >
           <span className="font-roboto-mono text-sm sm:text-base font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
             Explore Tracks
@@ -95,7 +94,7 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
         </div>
 
         <div
-          className="w-12 h-12 sm:w-14 sm:h-14 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-all group-hover:border-white"
+          className="w-12 h-12 sm:w-14 sm:h-14 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white"
         >
           <ChevronDown className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.8]" />
         </div>

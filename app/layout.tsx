@@ -151,6 +151,19 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} ${outfit.variable} ${robotoMono.variable} h-full antialiased dark`}
     >
       <head>
+        {/* Saman is a self-hosted @font-face in globals.css, so the browser only
+            discovers it after the stylesheet parses AND an element that uses it
+            is laid out. It sets every section heading on the page, so with
+            `font-display: swap` that late discovery showed up as a visible
+            re-layout of all of them. Preloading moves the request into the
+            initial batch. */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/ttf"
+          href="/fonts/SAMAN___.TTF"
+          crossOrigin="anonymous"
+        />
         {/* Explicit Favicons for Google Search & Web Crawlers */}
         <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
         <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />

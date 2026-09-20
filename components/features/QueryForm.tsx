@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 interface QueryFormProps {
   className?: string;
@@ -96,7 +95,7 @@ export default function QueryForm({
   };
 
   return (
-    <ScrollReveal direction="up" delay={80} className={cn("w-full", containerClassName)}>
+    <div className={cn("w-full", containerClassName)}>
       <div
         className={cn(
           "relative w-full overflow-hidden rounded-3xl p-6 sm:p-7 lg:p-8 flex flex-col justify-between",
@@ -131,7 +130,7 @@ export default function QueryForm({
               <button
                 type="button"
                 onClick={handleReset}
-                className="kagada-paper-card hover:brightness-105 text-[#5A182B] font-outfit font-extrabold text-sm sm:text-base py-3.5 px-8 rounded-2xl shadow-xl border-2 border-[#5A182B]/30 transition-all duration-200 uppercase tracking-wider cursor-pointer"
+                className="kagada-paper-card hover:brightness-105 text-[#5A182B] font-outfit font-extrabold text-sm sm:text-base py-3.5 px-8 rounded-2xl shadow-xl border-2 border-[#5A182B]/30 transition-glass duration-200 uppercase tracking-wider cursor-pointer"
               >
                 Send Another Query
               </button>
@@ -186,7 +185,7 @@ export default function QueryForm({
                     placeholder="John"
                     required
                     disabled={status === "submitting"}
-                    className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm"
+                    className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
                   />
                 </div>
 
@@ -205,7 +204,7 @@ export default function QueryForm({
                     onChange={handleChange}
                     placeholder="Doe"
                     disabled={status === "submitting"}
-                    className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm"
+                    className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
                   />
                 </div>
               </div>
@@ -227,7 +226,7 @@ export default function QueryForm({
                   placeholder="john.doe@example.com"
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm"
+                  className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
                 />
               </div>
 
@@ -248,7 +247,7 @@ export default function QueryForm({
                   placeholder="Ask about presentation tracks, registration details, eligibility, or event schedule..."
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm resize-none custom-scrollbar min-h-[85px] sm:min-h-[95px]"
+                  className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm resize-none custom-scrollbar min-h-[85px] sm:min-h-[95px]"
                 />
               </div>
 
@@ -258,7 +257,7 @@ export default function QueryForm({
                 disabled={status === "submitting"}
                 className={cn(
                   "w-full sm:w-auto self-center kagada-paper-card hover:brightness-105 text-[#5A182B] font-outfit font-black text-sm sm:text-base py-3 sm:py-3.5 px-8 rounded-2xl shadow-xl border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60",
-                  "transition-all duration-200 uppercase tracking-wider flex items-center justify-center gap-2 group cursor-pointer",
+                  "transition-glass duration-200 uppercase tracking-wider flex items-center justify-center gap-2 group cursor-pointer",
                   "disabled:opacity-60 disabled:cursor-not-allowed"
                 )}
               >
@@ -279,6 +278,6 @@ export default function QueryForm({
         </AnimatePresence>
       </div>
     </div>
-  </ScrollReveal>
+  </div>
 );
 }

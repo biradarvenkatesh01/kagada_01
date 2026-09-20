@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { FileText, Image as ImageIcon, Cpu, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 // 3 Winner Track Red-Tinted Glass Cards (Allocated statically once)
 const WINNER_CARDS = [
@@ -88,7 +87,7 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-5xl my-3 sm:my-6 px-0 sm:px-4">
       {/* 3 Horizontal Cards Container: Grid in Laptop/Desktop View, Full-Width 1-Card Carousel in Mobile View. */}
-      <ScrollReveal direction="up" className="w-full">
+      <div className="w-full">
         <div
           ref={scrollContainerRef}
           onScroll={handleScroll}
@@ -126,7 +125,7 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
                       href={card.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-2.5 px-4 sm:py-3 sm:px-5 rounded-2xl kagada-paper-card hover:brightness-105 border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 text-[#5A182B] font-jakarta text-xs sm:text-sm font-extrabold tracking-wide transition-all duration-200 shadow-md shadow-black/15 flex items-center justify-center gap-2 group/btn cursor-pointer"
+                      className="w-full py-2.5 px-4 sm:py-3 sm:px-5 rounded-2xl kagada-paper-card hover:brightness-105 border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 text-[#5A182B] font-jakarta text-xs sm:text-sm font-extrabold tracking-wide transition-glass duration-200 shadow-md shadow-black/15 flex items-center justify-center gap-2 group/btn cursor-pointer"
                     >
                       <span>Explore Winners</span>
                       <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#5A182B] transition-transform group-hover/btn:translate-x-1" />
@@ -137,7 +136,7 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
             </div>
           ))}
         </div>
-      </ScrollReveal>
+      </div>
 
       {/* Mobile Navigation Controls: Arrows + Indicator Dots */}
       <div className="flex md:hidden items-center justify-center gap-4 mt-5 z-20">
@@ -146,7 +145,7 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
           onClick={() => scrollToIndex(Math.max(0, activeCard - 1))}
           disabled={activeCard === 0}
           className={cn(
-            "p-2 rounded-full border-2 border-[#5A182B]/30 kagada-paper-card text-[#5A182B] shadow-md transition-all duration-150",
+            "p-2 rounded-full border-2 border-[#5A182B]/30 kagada-paper-card text-[#5A182B] shadow-md transition-glass duration-150",
             activeCard === 0
               ? "opacity-30 cursor-not-allowed"
               : "hover:bg-white active:bg-white/80 cursor-pointer"
@@ -162,7 +161,7 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
               key={`dot-${card.id}`}
               onClick={() => scrollToIndex(i)}
               className={cn(
-                "h-2.5 rounded-full transition-all duration-300 cursor-pointer",
+                "h-2.5 rounded-full transition-[width,background-color] duration-300 cursor-pointer",
                 activeCard === i
                   ? "w-8 bg-[#5A182B]"
                   : "w-2.5 bg-[#D8D3C7]/60 hover:bg-[#D8D3C7]"
@@ -177,7 +176,7 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
           onClick={() => scrollToIndex(Math.min(WINNER_CARDS.length - 1, activeCard + 1))}
           disabled={activeCard === WINNER_CARDS.length - 1}
           className={cn(
-            "p-2 rounded-full border-2 border-[#5A182B]/30 kagada-paper-card text-[#5A182B] shadow-md transition-all duration-150",
+            "p-2 rounded-full border-2 border-[#5A182B]/30 kagada-paper-card text-[#5A182B] shadow-md transition-glass duration-150",
             activeCard === WINNER_CARDS.length - 1
               ? "opacity-30 cursor-not-allowed"
               : "hover:bg-white active:bg-white/80 cursor-pointer"

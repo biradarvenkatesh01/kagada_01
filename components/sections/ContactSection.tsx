@@ -2,7 +2,6 @@ import * as React from 'react'
 import { User, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import QueryForm from '@/components/features/QueryForm'
-import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -62,32 +61,32 @@ export function ContactSection() {
   return (
     <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
-      <ScrollReveal direction="up" duration={500}>
+      <div>
         <h2 className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           Contact <span className="text-amber-400 tshadow-md">Us</span>
         </h2>
-      </ScrollReveal>
+      </div>
 
       {/* Subtitle */}
-      <ScrollReveal direction="up" delay={60} duration={500}>
+      <div>
         <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
           For more queries, reach out to our IEEE UVCE organizers or find your way to KAGADA 2026.
         </p>
-      </ScrollReveal>
+      </div>
 
       <div className="w-full flex flex-col gap-8 sm:gap-10 mb-2 sm:mb-4">
         {/* Organizers Section */}
         <div className="flex flex-col items-center">
-          <ScrollReveal direction="up" duration={450}>
+          <div>
             <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-[#D8D3C7] tracking-wider mb-3 sm:mb-4 text-center tshadow-md">
               Organisers
             </h3>
-          </ScrollReveal>
+          </div>
 
           {/* 3 Authentic Paper Organizers Cards Directing to WhatsApp */}
           <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {ORGANIZERS.map((item, idx) => (
-              <ScrollReveal key={`organizer-${idx}`} direction="up" delay={idx * 80} className="h-full">
+              <div key={`organizer-${idx}`} className="h-full">
                 <div
                   className={cn(
                     "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between group h-full",
@@ -129,7 +128,7 @@ export function ContactSection() {
                     </a>
                   </div>
                 </div>
-              </ScrollReveal>
+              </div>
             ))}
           </div>
         </div>
@@ -143,7 +142,7 @@ export function ContactSection() {
           />
 
           {/* Embedded Map Column */}
-          <ScrollReveal direction="up" delay={80} className="w-full h-full">
+          <div className="w-full h-full">
             <div
               className={cn(
                 "relative w-full h-full overflow-hidden rounded-3xl p-6 sm:p-7 lg:p-8 flex flex-col justify-between items-center",
@@ -177,12 +176,12 @@ export function ContactSection() {
                 href={UVCE_DIRECTIONS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative z-10 w-full sm:w-auto kagada-paper-card hover:brightness-105 text-[#5A182B] font-outfit font-black text-sm sm:text-base py-3 sm:py-3.5 px-8 rounded-2xl shadow-xl border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 transition-all duration-200 flex items-center justify-center uppercase tracking-wider cursor-pointer"
+                className="relative z-10 w-full sm:w-auto kagada-paper-card hover:brightness-105 text-[#5A182B] font-outfit font-black text-sm sm:text-base py-3 sm:py-3.5 px-8 rounded-2xl shadow-xl border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 transition-glass duration-200 flex items-center justify-center uppercase tracking-wider cursor-pointer"
               >
                 Get Directions
               </a>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Marquee } from '@/components/ui/marquee'
 import { cn } from '@/lib/utils'
-import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface SponsorItem {
   id: number
@@ -50,18 +49,18 @@ export function SponsorsSection() {
   return (
     <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
-      <ScrollReveal direction="up" duration={500}>
+      <div>
         <h2 className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           Our <span className="text-amber-400 tshadow-md">Sponsors</span>
         </h2>
-      </ScrollReveal>
+      </div>
 
       {/* Subtitle */}
-      <ScrollReveal direction="up" delay={60} duration={500}>
+      <div>
         <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
           Honoring the partners and organizations supporting KAGADA’s legacy.
         </p>
-      </ScrollReveal>
+      </div>
 
       {/* Sponsor Image Marquee Loop Row 1 */}
       <div className="w-full flex flex-col gap-4 sm:gap-6">
