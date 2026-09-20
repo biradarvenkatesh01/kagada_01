@@ -9,7 +9,7 @@ export const TracksSection = memo(function TracksSection() {
   return (
     <section
       id="tracks"
-      className="relative w-full text-slate-900 flex flex-col items-center justify-start z-30 px-4 pt-2 sm:pt-4 pb-2 sm:pb-4 scroll-mt-6 overflow-visible"
+      className="relative w-full text-slate-900 flex flex-col items-center justify-start z-30 px-4 py-8 sm:py-12 scroll-mt-6 overflow-visible"
     >
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-start text-center">
         {/* Section Heading */}

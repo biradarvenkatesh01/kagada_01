@@ -125,17 +125,17 @@ function MarqueeRow({
 
 export function GallerySection() {
   return (
-    <section id="gallery" className="relative w-full overflow-hidden py-4 sm:py-8 flex flex-col gap-6 sm:gap-10 select-none min-h-[480px] scroll-mt-6 z-10">
+    <section id="gallery" className="relative w-full overflow-hidden py-8 sm:py-12 flex flex-col gap-4 sm:gap-6 select-none scroll-mt-6 z-10">
       {/* Section Title */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4">
         <ScrollReveal direction="down" duration={500}>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none">
+          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-1.5 sm:mb-2 tracking-tight text-center select-none">
             Event <span className="text-amber-400 tshadow-md">Gallery</span>
           </h2>
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={60} duration={500}>
-          <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-6 sm:mb-10 max-w-2xl">
+          <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-2 sm:mb-3 max-w-2xl">
             Capturing unforgettable moments across KAGADA editions.
           </p>
         </ScrollReveal>

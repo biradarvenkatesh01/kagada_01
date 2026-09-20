@@ -165,12 +165,12 @@ export const AboutSection = memo(function AboutSection() {
   return (
     <section
       id="about"
-      className="relative w-full min-h-screen text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-16 sm:py-20 md:py-24 scroll-mt-6"
+      className="relative w-full text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-8 sm:py-12 scroll-mt-6"
     >
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
         <ScrollReveal direction="down" duration={450}>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-12 sm:mb-16 md:mb-20 tracking-tight text-center select-none">
+          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 tracking-tight text-center select-none">
             About <span className="text-amber-400 tshadow-md">Us</span>
           </h2>
         </ScrollReveal>

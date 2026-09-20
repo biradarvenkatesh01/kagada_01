@@ -48,23 +48,23 @@ const SPONSORS_ROW_2: MarqueeSponsor[] = replicate(SPONSORS_BASE_2, SPONSOR_COPI
 
 export function SponsorsSection() {
   return (
-    <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-6 sm:py-10 scroll-mt-6 z-10">
+    <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+        <h2 className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           Our <span className="text-amber-400 tshadow-md">Sponsors</span>
         </h2>
       </ScrollReveal>
 
       {/* Subtitle */}
       <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-8 sm:mb-12 max-w-2xl">
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
           Honoring the partners and organizations supporting KAGADA’s legacy.
         </p>
       </ScrollReveal>
 
       {/* Sponsor Image Marquee Loop Row 1 */}
-      <div className="w-full flex flex-col gap-6 sm:gap-10">
+      <div className="w-full flex flex-col gap-4 sm:gap-6">
         <Marquee speed={48} mobileSpeed={48 / SPONSOR_COPIES} pauseOnHover={false} direction="left">
           {SPONSORS_ROW_1.map((item, idx) => (
             <a

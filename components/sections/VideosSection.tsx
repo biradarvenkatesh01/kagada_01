@@ -183,20 +183,20 @@ export const VideosSection = memo(function VideosSection() {
     <section id="videos" className="relative w-full max-w-6xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Title: KAGADA - From the previous years! */}
       <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-[#D8D3C7] text-4xl sm:text-6xl md:text-7xl lg:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+        <h2 className="font-saman text-[#D8D3C7] text-4xl sm:text-6xl md:text-7xl lg:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           KAGADA - <span className="text-amber-400 tshadow-md">From the previous years!</span>
         </h2>
       </ScrollReveal>
 
       {/* Subtitle */}
       <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-10 sm:mb-14 max-w-2xl">
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
           Experience the magic of KAGADA through our cinematic after movies.
         </p>
       </ScrollReveal>
 
       {/* 2 Video Aftermovie Glassmorphic Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
         {AFTERMOVIES.map((movie, idx) => (
           <VideoCard
             key={movie.id}

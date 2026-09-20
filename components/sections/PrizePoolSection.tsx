@@ -5,11 +5,11 @@ export function PrizePoolSection() {
   return (
     <section
       id="prizes"
-      className="relative w-full text-slate-900 flex flex-col items-center justify-start z-10 px-4 pt-2 sm:pt-4 pb-10 sm:pb-14 mt-0 scroll-mt-6"
+      className="relative w-full text-slate-900 flex flex-col items-center justify-start z-10 px-4 py-8 sm:py-12 scroll-mt-6"
     >
       <div className="relative z-10 w-full max-w-xl md:max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
-        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-4xl sm:text-6xl md:text-7xl text-[#D8D3C7] tshadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none">
+        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-4xl sm:text-6xl md:text-7xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 tracking-tight text-center select-none">
           Prize <span className="text-amber-400 tshadow-md">Pool</span>
         </ScrollReveal>
 

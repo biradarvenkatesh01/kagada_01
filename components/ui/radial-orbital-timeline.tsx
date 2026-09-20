@@ -264,11 +264,11 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className="w-full min-h-[420px] sm:min-h-[760px] md:min-h-[840px] flex flex-col items-center justify-start bg-transparent overflow-visible py-0 sm:py-2 select-none -mt-6 sm:-mt-8"
+      className="w-full min-h-[380px] sm:min-h-[580px] md:min-h-[620px] flex flex-col items-center justify-start bg-transparent overflow-visible py-0 select-none -mt-4 sm:-mt-6"
       ref={containerRef}
       onClick={handleContainerClick}
     >
-      <div className="relative w-full max-w-6xl h-[420px] min-[480px]:h-[480px] sm:h-[720px] md:h-[780px] flex items-center justify-center">
+      <div className="relative w-full max-w-6xl h-[380px] min-[480px]:h-[440px] sm:h-[580px] md:h-[620px] flex items-center justify-center">
         {/* Active card flag to hide background gear and sibling nodes */}
         {(() => {
           const isAnyCardOpen = activeNodeId !== null;

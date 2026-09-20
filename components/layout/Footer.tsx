@@ -67,7 +67,7 @@ const SocialIcons: Record<string, () => React.JSX.Element> = {
 
 export function Footer() {
   return (
-    <footer data-no-lightbox="true" className="relative w-full border-t-2 border-white/80 bg-black/25 shadow-2xl z-20 py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
+    <footer data-no-lightbox="true" className="relative w-full border-t-2 border-white/80 bg-black/25 shadow-2xl z-20 py-8 sm:py-10 px-4 sm:px-6 lg:px-8">
       <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 max-w-6xl mx-auto">
         {/* Left side - Developer credit */}
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left gap-3 sm:gap-4">

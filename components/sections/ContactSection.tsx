@@ -63,29 +63,29 @@ export function ContactSection() {
     <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+        <h2 className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           Contact <span className="text-amber-400 tshadow-md">Us</span>
         </h2>
       </ScrollReveal>
 
       {/* Subtitle */}
       <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-10 sm:mb-14 max-w-2xl">
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
           For more queries, reach out to our IEEE UVCE organizers or find your way to KAGADA 2026.
         </p>
       </ScrollReveal>
 
-      <div className="w-full flex flex-col gap-12 sm:gap-16 mb-6 sm:mb-10">
+      <div className="w-full flex flex-col gap-8 sm:gap-10 mb-2 sm:mb-4">
         {/* Organizers Section */}
         <div className="flex flex-col items-center">
           <ScrollReveal direction="up" duration={450}>
-            <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-[#D8D3C7] tracking-wider mb-8 text-center tshadow-md">
+            <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-[#D8D3C7] tracking-wider mb-3 sm:mb-4 text-center tshadow-md">
               Organisers
             </h3>
           </ScrollReveal>
 
           {/* 3 Authentic Paper Organizers Cards Directing to WhatsApp */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {ORGANIZERS.map((item, idx) => (
               <ScrollReveal key={`organizer-${idx}`} direction="up" delay={idx * 80} className="h-full">
                 <div
