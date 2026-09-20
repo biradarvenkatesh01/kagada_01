@@ -94,30 +94,47 @@
 }
 
 /* ─── Layout containment ───────────────────────────────────
-   Opening an FAQ answer animates `grid-template-rows`, which is a layout
-   property: the browser re-runs style, layout and paint on every frame of the
-   transition, and the card grows, so everything after it in the document flow
-   moves too.
-
-   `contain` bounds how far that work can spread:
-   - On the FAQ card, `paint` clips the invalidated region to the card, so the
-     growing panel stops dirtying the burgundy texture behind it, and `layout`
-     keeps the card's internal reflow from escaping into its siblings. It also
-     subsumes the `isolation: isolate` this rule used to carry, since paint
-     containment already forms a stacking and blend-isolation context.
+   Opening an FAQ answer animates `grid-template-rows` from 0fr to 1fr, which
+   the browser handles as a layout transition. `contain` bounds how far the
+   resulting reflow can spread:
+   - On the FAQ card, `isolation: isolate` creates a stacking/blend context.
    - On the sections that follow it, `layout` lets the browser reposition each
      box without descending into its subtree. That matters most for #contact,
-     which holds the Google Maps iframe and the query form; without it, every
-     frame of a 200ms accordion transition re-laid-out both.
+     which holds the Google Maps iframe and the query form.
 
    #videos and #hero are deliberately excluded: they contain `position: fixed`
    children (the aftermovie lightbox, the intro overlay), and a layout-contained
    ancestor becomes their containing block, which would break full-screen. */
-/* ─── FAQ Isolation & High Performance Card ─── */
+/* ─── FAQ — native <details> accordion ─── */
 #faq .kagada-paper-card {
   isolation: isolate;
   background-image: none !important;
   background-color: #D8D3C7 !important;
+  transform: translateZ(0);
+  contain: content;
+  box-shadow: 0 4px 16px -4px rgba(90, 24, 43, 0.15);
+}
+
+/* Hide the native disclosure marker */
+#faq summary { list-style: none; }
+#faq summary::marker { display: none; content: ''; }
+#faq summary::-webkit-details-marker { display: none; }
+
+/* Open state — border highlight */
+#faq details[open] { border-color: white; }
+
+/* Chevron rotation */
+#faq .faq-chevron { transition: transform 150ms ease-out; }
+#faq details[open] .faq-chevron { transform: rotate(180deg); }
+
+/* Icon box color swap */
+#faq .faq-icon-box {
+  transition: background-color 120ms ease-out, border-color 120ms ease-out, color 120ms ease-out;
+}
+#faq details[open] .faq-icon-box {
+  background-color: #5A182B;
+  color: #D8D3C7;
+  border-color: #5A182B;
 }
 
 #about,
