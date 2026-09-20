@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, memo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface NavbarProps {
   isVideoFading: boolean;
@@ -144,54 +145,70 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
         {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
 
-      {/* Mobile Dropdown Navigation */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            id="mobile-nav-dropdown"
-            // No `scale` here. This panel is a `.kagada-paper-card`, so its
-            // background is a six-layer procedural gradient; animating scale
-            // makes Chrome re-rasterise that texture at each step to keep it
-            // sharp, whereas a translate is a pure compositor transform on an
-            // already-rasterised layer. Dropping the 2% scale is invisible next
-            // to the slide and the fade, and it is the difference between
-            // re-painting the panel every frame and not.
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-18 sm:top-20 left-0 right-0 kagada-paper-card border-2 border-white/95 !rounded-3xl p-6 shadow-2xl shadow-black/30 flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#5A182B] lg:hidden z-[1001]"
-          >
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-              About Us
-            </a>
-            <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-              Tracks
-            </a>
-            <a href="#prizes" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-              Prize Pool
-            </a>
-            <a href="#winners" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-              Winners
-            </a>
-            <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-              Gallery
-            </a>
-            <a href="#videos" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-              Aftermovies
-            </a>
-            <a href="#sponsors" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-              Sponsors
-            </a>
-            <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-              FAQ
-            </a>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-              Contact
-            </a>
-          </motion.div>
+      {/* Mobile Dropdown Navigation.
+          Deliberately always rendered rather than mounted on open. Mounting it
+          meant React render + layout + the first raster of a ~350x430
+          `.kagada-paper-card` (a six-layer procedural gradient) all had to land
+          inside the first frame of the open animation, which is exactly the
+          frame that has no budget to spare. Kept in the DOM, that paint is
+          already done and opening is only `opacity` + `translate`, both of
+          which the compositor handles without touching layout or paint.
+
+          It is also plain CSS now instead of framer-motion: a JS-driven
+          animation has to tick on the main thread every frame, and this one
+          has nothing JS needs to decide. `lg:hidden` means it does not exist
+          at all on desktop. `inert` keeps it out of the tab order and the
+          accessibility tree while it is closed, which is what the old
+          conditional mount was giving us for free.
+
+          No `scale`: scaling a gradient-textured card makes Chrome
+          re-rasterise the texture at each step to stay sharp, where a
+          translate just moves an already-rasterised layer.
+
+          `shadow-2xl` -> `shadow-xl`: a 50px blur over a panel this size was
+          the most expensive part of its paint, same finding as the header
+          above and the chat panel. */}
+      <div
+        id="mobile-nav-dropdown"
+        inert={!mobileMenuOpen}
+        className={cn(
+          "absolute top-18 sm:top-20 left-0 right-0 kagada-paper-card border-2 border-white/95",
+          "!rounded-3xl p-6 shadow-xl shadow-black/25 flex flex-col gap-4 font-roboto-mono",
+          "text-base font-bold text-[#5A182B] lg:hidden z-[1001]",
+          "transition-[opacity,translate] duration-200 ease-out",
+          mobileMenuOpen
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-2.5 pointer-events-none"
         )}
-      </AnimatePresence>
+      >
+          <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+            About Us
+          </a>
+          <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+            Tracks
+          </a>
+          <a href="#prizes" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+            Prize Pool
+          </a>
+          <a href="#winners" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+            Winners
+          </a>
+          <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+            Gallery
+          </a>
+          <a href="#videos" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+            Aftermovies
+          </a>
+          <a href="#sponsors" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+            Sponsors
+          </a>
+          <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+            FAQ
+          </a>
+          <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+            Contact
+          </a>
+      </div>
     </motion.header>
   );
 });
