@@ -67,6 +67,13 @@ export default function SmoothScroll({
       if (cancelled) return;
 
       lenis = new LenisCtor({
+        // Left at 0.14 deliberately. Raising it to 0.18 to make the viewport
+        // chase the wheel more closely measurably made things WORSE, not
+        // better: at 6x CPU throttle the navbar dropdown went from 27.8ms p95
+        // / 1.5% dropped to 34.7ms / 9.8%, and the FAQ answer from 20.8ms /
+        // 1.5% to 27.6ms / 4.9%. A tighter lerp keeps Lenis actively
+        // integrating for more frames, and that work lands on the same main
+        // thread the panel animations need.
         lerp: 0.14,
         orientation: "vertical",
         gestureOrientation: "vertical",
@@ -123,7 +130,14 @@ export default function SmoothScroll({
         const elem = document.querySelector(anchor.hash);
         if (!elem) return;
         e.preventDefault();
-        lenis?.scrollTo(elem as HTMLElement, { offset: -80, duration: 1.2 });
+        // 1.2s felt like the page was dragging itself to the target. 0.85s with
+        // an expo-out curve covers the same distance but front-loads the motion,
+        // so it reads as responsive rather than slow.
+        lenis?.scrollTo(elem as HTMLElement, {
+          offset: -80,
+          duration: 0.85,
+          easing: (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+        });
       };
       document.addEventListener("click", handleAnchorClick);
       cleanupFns.push(() => document.removeEventListener("click", handleAnchorClick));

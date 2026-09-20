@@ -9,7 +9,7 @@ export function WinnersSection() {
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4 sm:px-0">
         {/* Section Heading */}
         <div>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-1.5 sm:mb-2 tracking-tight text-center select-none">
+          <h2 data-reveal className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-1.5 sm:mb-2 tracking-tight text-center select-none">
             Previous <span className="text-amber-400 tshadow-md">Winners</span>
           </h2>
         </div>

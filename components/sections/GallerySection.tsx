@@ -77,7 +77,7 @@ function MarqueeRow({
               key={`b1-${item.id}-${idx}`}
               data-marquee-copy={item.copy}
               className={cn(
-                "relative shrink-0 overflow-hidden group rounded-3xl",
+                "relative shrink-0 overflow-hidden group",
                 "bg-stone-900 border-2 border-white/95 shadow-md shadow-black/20",
                 "transition-glass duration-300 hover:shadow-xl hover:border-white",
                 item.shape
@@ -101,7 +101,7 @@ function MarqueeRow({
               key={`b2-${item.id}-${idx}`}
               data-marquee-copy={item.copy}
               className={cn(
-                "relative shrink-0 overflow-hidden group rounded-3xl",
+                "relative shrink-0 overflow-hidden group",
                 "bg-stone-900 border-2 border-white/95 shadow-md shadow-black/20",
                 "transition-glass duration-300 hover:shadow-xl hover:border-white",
                 item.shape
@@ -128,13 +128,13 @@ export function GallerySection() {
       {/* Section Title */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4">
         <div>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-1.5 sm:mb-2 tracking-tight text-center select-none">
+          <h2 data-reveal className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-1.5 sm:mb-2 tracking-tight text-center select-none">
             Event <span className="text-amber-400 tshadow-md">Gallery</span>
           </h2>
         </div>
 
         <div>
-          <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-2 sm:mb-3 max-w-2xl">
+          <p data-reveal className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-2 sm:mb-3 max-w-2xl">
             Capturing unforgettable moments across KAGADA editions.
           </p>
         </div>

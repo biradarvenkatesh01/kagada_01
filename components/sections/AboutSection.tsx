@@ -167,7 +167,7 @@ export const AboutSection = memo(function AboutSection() {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
         <div>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 tracking-tight text-center select-none">
+          <h2 data-reveal className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 tracking-tight text-center select-none">
             About <span className="text-amber-400 tshadow-md">Us</span>
           </h2>
         </div>

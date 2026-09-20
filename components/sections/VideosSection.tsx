@@ -180,7 +180,7 @@ export const VideosSection = memo(function VideosSection() {
     <section id="videos" className="relative w-full max-w-6xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Title: KAGADA - From the previous years! */}
       <div>
-        <h2 className="font-saman text-[#D8D3C7] text-4xl sm:text-6xl md:text-7xl lg:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
+        <h2 data-reveal className="font-saman text-[#D8D3C7] text-4xl sm:text-6xl md:text-7xl lg:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           KAGADA - <span className="text-amber-400 tshadow-md">From the previous years!</span>
         </h2>
       </div>
