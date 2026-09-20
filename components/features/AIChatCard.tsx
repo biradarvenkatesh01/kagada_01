@@ -96,7 +96,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
     };
   }, []);
 
-  // Trigger brief 'Heyy' greeting once user reaches the hero page after initial video
+  // Trigger brief 'Heyy' greeting once user loads the page
   useEffect(() => {
     if (isVisible && !hasGreetedRef.current) {
       hasGreetedRef.current = true;
@@ -124,7 +124,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
     }
   }, [messages, isTyping, isOpen]);
 
-  // If hidden (e.g. while intro video is playing), don't render
+  // If hidden, don't render
   if (!isVisible) return null;
 
   const handleSend = async () => {

@@ -41,7 +41,10 @@ Thumbs.db
 *.tsbuildinfo
 next-env.d.ts
 
+# Reference and scratch files
+origami_assembly_*.html
+WhatsApp*.mp4
+*.tmp
 
-design.md 
-
+design.md
 Agents.md 

@@ -6,10 +6,10 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
-  isVideoFading: boolean;
+  isIntroActive?: boolean;
 }
 
-export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
+export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Close mobile menu on Escape.
@@ -30,15 +30,15 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
     <motion.header
       initial={{ y: -80, opacity: 0, x: "-50%" }}
       animate={{
-        y: isVideoFading ? 0 : -80,
-        opacity: isVideoFading ? 1 : 0,
+        y: isIntroActive ? -80 : 0,
+        opacity: isIntroActive ? 0 : 1,
         x: "-50%",
       }}
       transition={{
         type: "spring",
         stiffness: 90,
         damping: 20,
-        delay: 0.1,
+        delay: isIntroActive ? 0 : 0.2,
       }}
       // `backdrop-blur-lg` stays: this is a FIXED element, so content scrolls
       // behind it constantly and the blur is genuinely visible — verified by A/B

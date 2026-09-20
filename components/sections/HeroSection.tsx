@@ -7,38 +7,54 @@ import FlipClock from "@/components/ui/flip-clock";
 import { KAGADA_EVENT_DATE } from "@/data/kagada-data";
 
 interface HeroSectionProps {
-  isVideoFading: boolean;
+  isIntroActive?: boolean;
 }
 
-export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSectionProps) {
+export const HeroSection = memo(function HeroSection({ isIntroActive = false }: HeroSectionProps) {
   return (
     <section id="hero" className="relative w-full h-screen min-h-[100dvh] overflow-hidden flex items-center justify-center z-10 bg-black">
-      {/* Hero Background Photo Layer */}
-      <motion.img
-        src="/optimized/hero-bg.webp"
-        alt="UVCE Building"
-        fetchPriority="high"
-        decoding="async"
+      {/* Hero Background Responsive Origami Art Layer */}
+      <motion.picture
         initial={{ opacity: 0 }}
-        animate={{ opacity: isVideoFading ? 0.8 : 0 }}
-        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 w-full h-full min-h-[100dvh] object-cover z-0 pointer-events-none select-none"
-      />
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="absolute inset-0 w-full h-full min-h-[100dvh] z-0 pointer-events-none select-none overflow-hidden"
+      >
+        {/* Desktop / PC widescreen view (>= 768px) */}
+        <source
+          media="(min-width: 768px)"
+          srcSet="/optimized/hero-bg-desktop-2x.webp 2x, /optimized/hero-bg-desktop.webp 1x"
+          type="image/webp"
+        />
+        {/* Mobile portrait view (< 768px) */}
+        <source
+          srcSet="/optimized/hero-bg-mobile-2x.webp 2x, /optimized/hero-bg-mobile.webp 1x"
+          type="image/webp"
+        />
+        {/* Native Fallback img */}
+        <img
+          src="/optimized/hero-bg-desktop-2x.webp"
+          alt="UVCE Origami Artwork"
+          fetchPriority="high"
+          decoding="async"
+          className="w-full h-full min-h-[100dvh] object-cover object-center"
+        />
+      </motion.picture>
 
       {/* Hero Title & Subtitle Glass Box Container */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 30, x: "-50%" }}
+        initial={{ opacity: 0, scale: 0.95, y: 20, x: "-50%" }}
         animate={{
-          opacity: isVideoFading ? 1 : 0,
-          scale: isVideoFading ? 1 : 0.95,
-          y: isVideoFading ? "-50%" : "30px",
+          opacity: isIntroActive ? 0 : 1,
+          scale: isIntroActive ? 0.95 : 1,
+          y: isIntroActive ? "calc(-50% + 20px)" : "-50%",
           x: "-50%",
         }}
         transition={{
           type: "spring",
           stiffness: 85,
           damping: 20,
-          delay: 0.25,
+          delay: isIntroActive ? 0 : 0.25,
         }}
         className="absolute top-[48%] sm:top-1/2 left-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
       >
@@ -71,17 +87,17 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
       {/* Bottom "Explore Tracks" CTA Indicator */}
       <motion.a
         href="#tracks"
-        initial={{ opacity: 0, y: 30, x: "-50%" }}
+        initial={{ opacity: 0, y: 20, x: "-50%" }}
         animate={{
-          opacity: isVideoFading ? 1 : 0,
-          y: isVideoFading ? 0 : 30,
+          opacity: isIntroActive ? 0 : 1,
+          y: isIntroActive ? 20 : 0,
           x: "-50%",
         }}
         transition={{
           type: "spring",
           stiffness: 80,
           damping: 18,
-          delay: 0.4,
+          delay: isIntroActive ? 0 : 0.4,
         }}
         className="absolute bottom-5 sm:bottom-8 left-1/2 z-20 flex flex-col items-center gap-3 sm:gap-4 group pointer-events-auto transform-gpu"
       >
