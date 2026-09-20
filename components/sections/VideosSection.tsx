@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface AftermovieItem {
   id: string
@@ -21,13 +20,13 @@ interface AftermovieItem {
 
 const AFTERMOVIES: AftermovieItem[] = [
   {
-    id: "kagada-2024",
-    title: "KAGADA 2024",
-    year: "2024",
+    id: "kagada-20",
+    title: "KAGADA 20",
+    year: "20",
     duration: "1:30",
     videoSrc: "/kagada2024.mp4",
     posterSrc: "/optimized/videos/kagada2024-poster.webp",
-    description: "Relive the excitement and energy of KAGADA 2024 with highlights from all events, competitions and celebrations.",
+    description: "Relive the excitement and energy of KAGADA 20 with highlights from all events, competitions and celebrations.",
   },
   {
     id: "kagada-2025",
@@ -42,11 +41,9 @@ const AFTERMOVIES: AftermovieItem[] = [
 
 const VideoCard = memo(function VideoCard({
   movie,
-  idx,
   onOpenModal,
 }: {
   movie: AftermovieItem;
-  idx: number;
   onOpenModal: (movie: AftermovieItem) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -66,23 +63,20 @@ const VideoCard = memo(function VideoCard({
   };
 
   return (
-    <ScrollReveal direction="up" delay={idx * 100} className="w-full">
+    <div className="w-full">
       <div
         className={cn(
           "relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 sm:p-6",
-          "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
-          "hover:scale-[1.02] hover:bg-white/40 hover:border-white transition-glass duration-500"
+          "kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/25",
+          "hover:shadow-2xl hover:border-white transition-glass duration-500"
         )}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Glass Interior Reflective Shimmer */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
-
-        {/* Video Thumbnail Preview Window with Glowing Glass Play Button */}
+        {/* Video Thumbnail Preview Window with Glowing Play Button */}
         <div
           onClick={() => onOpenModal(movie)}
-          className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-white/80 bg-black/40 group cursor-pointer z-10 shadow-xl"
+          className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-[#ded4c3] bg-black/40 group cursor-pointer z-10 shadow-xl"
         >
           {/* HTML5 Video Preview */}
           <video
@@ -94,36 +88,36 @@ const VideoCard = memo(function VideoCard({
             loop
             preload="none"
             onContextMenu={(e) => e.preventDefault()}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
           />
 
           {/* Dark Ambient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:bg-black/30 transition-colors" />
 
-          {/* Center Glowing Glass Play Button Badge */}
+          {/* Center Glowing Play Button Badge */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#8a1c1c]/75 border-2 border-white text-white flex items-center justify-center shadow-2xl shadow-black/50 group-hover:scale-110 group-hover:bg-[#8a1c1c]/90 transition-glass duration-300">
-              <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-white text-white translate-x-0.5 drop-shadow-md" />
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#D8D3C7] border-2 border-[#5A182B]/30 text-[#5A182B] flex items-center justify-center shadow-2xl shadow-black/50 group-hover:bg-white transition-colors duration-300">
+              <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-[#5A182B] text-[#5A182B] translate-x-0.5 drop-shadow-md" />
             </div>
           </div>
 
           {/* Bottom Right Duration Badge */}
-          <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/30 text-white font-roboto-mono text-xs font-bold border border-white/80 shadow-lg">
+          <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-[#D8D3C7] text-[#5A182B] font-roboto-mono text-xs font-black border border-[#5A182B]/30 shadow-lg">
             {movie.duration}
           </div>
         </div>
 
-        {/* Card Content Footer inside Translucent Glass Badge */}
-        <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-white/20 border border-white/60 shadow-inner">
-          <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-white tracking-wide leading-none tshadow-md">
+        {/* Card Content Footer */}
+        <div className="flex flex-col gap-2 mt-5 z-10 text-left p-4 sm:p-5 rounded-2xl bg-[#5A182B]/5 border border-[#5A182B]/15 shadow-sm">
+          <h3 className="font-smooch text-4xl sm:text-5xl font-semibold text-[#5A182B] tracking-wide leading-none">
             {movie.title}
           </h3>
-          <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 leading-relaxed tshadow-sm">
+          <p className="font-jakarta text-xs sm:text-sm font-medium text-stone-700 leading-relaxed">
             {movie.description}
           </p>
         </div>
       </div>
-    </ScrollReveal>
+    </div>
   );
 });
 
@@ -161,7 +155,7 @@ export const VideosSection = memo(function VideosSection() {
       window.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = previousOverflow
     }
-  }, [activeModalVideo])
+  }, [activeModalVideo, handleCloseModal])
 
 
   const togglePlayPause = () => {
@@ -185,26 +179,25 @@ export const VideosSection = memo(function VideosSection() {
   return (
     <section id="videos" className="relative w-full max-w-6xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Title: KAGADA - From the previous years! */}
-      <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+      <div>
+        <h2 className="font-saman text-[#D8D3C7] text-4xl sm:text-6xl md:text-7xl lg:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           KAGADA - <span className="text-amber-400 tshadow-md">From the previous years!</span>
         </h2>
-      </ScrollReveal>
+      </div>
 
       {/* Subtitle */}
-      <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center tshadow-sm mb-10 sm:mb-14 max-w-2xl">
+      <div>
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
           Experience the magic of KAGADA through our cinematic after movies.
         </p>
-      </ScrollReveal>
+      </div>
 
       {/* 2 Video Aftermovie Glassmorphic Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 w-full">
-        {AFTERMOVIES.map((movie, idx) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
+        {AFTERMOVIES.map((movie) => (
           <VideoCard
             key={movie.id}
             movie={movie}
-            idx={idx}
             onOpenModal={handleOpenModal}
           />
         ))}
@@ -218,7 +211,7 @@ export const VideosSection = memo(function VideosSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[999999] bg-black/90 backdrop-blur-lg flex items-center justify-center p-4 sm:p-8"
+              className="fixed inset-0 z-[999999] bg-black/95 flex items-center justify-center p-4 sm:p-8"
               onClick={handleCloseModal}
             >
               <motion.div
@@ -227,17 +220,17 @@ export const VideosSection = memo(function VideosSection() {
                 exit={{ scale: 0.9, opacity: 0, y: 20 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-5xl rounded-3xl overflow-hidden border-2 border-white/80 bg-[#3d0b0b]/95 backdrop-blur-lg shadow-2xl shadow-black/90 flex flex-col"
+                className="relative w-full max-w-5xl rounded-3xl overflow-hidden border-2 border-white/95 bg-[#250606] shadow-2xl shadow-black/90 flex flex-col"
               >
                 {/* Modal Header Bar */}
-                <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/30 bg-[#8a1c1c]/50 backdrop-blur-md">
-                  <h3 className="font-saman text-2xl sm:text-4xl text-white tracking-wide">
-                    {activeModalVideo.title} <span className="font-roboto-mono text-sm text-white/80">({activeModalVideo.year} Aftermovie)</span>
+                <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/20 bg-[#5A182B]">
+                  <h3 className="font-saman text-2xl sm:text-4xl text-[#D8D3C7] tracking-wide">
+                    {activeModalVideo.title} <span className="font-roboto-mono text-sm text-[#D8D3C7]/80">({activeModalVideo.year} Aftermovie)</span>
                   </h3>
                   <button
                     type="button"
                     onClick={handleCloseModal}
-                    className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/40"
+                    className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-[#D8D3C7] flex items-center justify-center transition-colors cursor-pointer border border-white/40"
                     aria-label="Close video"
                   >
                     <X className="w-5 h-5 stroke-[2.5]" />
@@ -261,22 +254,22 @@ export const VideosSection = memo(function VideosSection() {
                 </div>
 
                 {/* Modal Footer Controls Bar */}
-                <div className="p-4 sm:p-6 bg-[#8a1c1c]/50 backdrop-blur-md border-t border-white/30 flex items-center justify-between">
-                  <p className="font-jakarta text-xs sm:text-sm font-medium text-white/90 max-w-2xl">
+                <div className="p-4 sm:p-6 bg-[#5A182B] border-t border-white/20 flex items-center justify-between">
+                  <p className="font-jakarta text-xs sm:text-sm font-medium text-[#D8D3C7]/90 max-w-2xl">
                     {activeModalVideo.description}
                   </p>
                   <div className="flex items-center gap-3 shrink-0">
                     <button
                       type="button"
                       onClick={togglePlayPause}
-                      className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-white border border-white/40 transition-colors cursor-pointer"
+                      className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-[#D8D3C7] border border-white/40 transition-colors cursor-pointer"
                     >
-                      {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-white" />}
+                      {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-[#D8D3C7]" />}
                     </button>
                     <button
                       type="button"
                       onClick={toggleMute}
-                      className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-white border border-white/40 transition-colors cursor-pointer"
+                      className="p-2.5 rounded-xl bg-white/20 hover:bg-white/40 text-[#D8D3C7] border border-white/40 transition-colors cursor-pointer"
                     >
                       {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                     </button>

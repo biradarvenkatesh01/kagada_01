@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://kagada2026.live"),
   title: "KAGADA 2026",
   description:
-    "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
+    "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 24th October, 2026 at UVCE, Bengaluru.",
   keywords: [
     "KAGADA",
     "KAGADA 2026",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "KAGADA 2026",
     description:
-      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
+      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 24th October, 2026 at UVCE, Bengaluru.",
     url: "https://kagada2026.live",
     siteName: "KAGADA 2026",
     images: [
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "KAGADA 2026",
     description:
-      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
+      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 24th October, 2026 at UVCE, Bengaluru.",
     images: ["/logo1.png"],
   },
   alternates: {
@@ -106,9 +106,9 @@ const structuredData = [
     "@type": "EducationEvent",
     name: "KAGADA 2026",
     description:
-      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
-    startDate: "2026-10-10T09:00:00+05:30",
-    endDate: "2026-10-10T18:00:00+05:30",
+      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 24th October, 2026 at UVCE, Bengaluru.",
+    startDate: "2026-10-24T09:00:00+05:30",
+    endDate: "2026-10-24T18:00:00+05:30",
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
     location: {
@@ -151,6 +151,19 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} ${outfit.variable} ${robotoMono.variable} h-full antialiased dark`}
     >
       <head>
+        {/* Saman is a self-hosted @font-face in globals.css, so the browser only
+            discovers it after the stylesheet parses AND an element that uses it
+            is laid out. It sets every section heading on the page, so with
+            `font-display: swap` that late discovery showed up as a visible
+            re-layout of all of them. Preloading moves the request into the
+            initial batch. */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/ttf"
+          href="/fonts/SAMAN___.TTF"
+          crossOrigin="anonymous"
+        />
         {/* Explicit Favicons for Google Search & Web Crawlers */}
         <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
         <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
@@ -161,7 +174,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="min-h-full flex flex-col text-slate-100 selection:bg-[#8a1c1c] selection:text-white overflow-x-hidden font-jakarta">
+      <body className="min-h-full flex flex-col text-[#D8D3C7] bg-[#5A182B] selection:bg-[#5A182B] selection:text-[#D8D3C7] overflow-x-hidden font-jakarta">
         {/* Google Analytics (gtag.js) placed in body for optimal Next.js hydration */}
         {/* lazyOnload defers analytics until the page is idle. With
             afterInteractive it booted during hydration and showed up as ~197ms

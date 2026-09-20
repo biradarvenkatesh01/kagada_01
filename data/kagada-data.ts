@@ -2,7 +2,7 @@ import { FileText, Image as ImageIcon, Cpu, Sparkles, Heart } from "lucide-react
 import { CardStackItem } from "@/components/ui/card-stack";
 import { TimelineItem } from "@/components/ui/radial-orbital-timeline";
 
-export const KAGADA_EVENT_DATE = new Date("2026-10-10T00:00:00+05:30");
+export const KAGADA_EVENT_DATE = new Date("2026-10-24T00:00:00+05:30");
 
 // Exactly 3 Rich About Section Cards
 export const ABOUT_CARDS: CardStackItem[] = [
@@ -48,7 +48,7 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     title: "Ottige Kaliyona",
     content: "Flagship social initiative empowering government school students through technology education.",
     description:
-      "Ottige Kaliyona, conducted by IEEE WIE during KAGADA 25, is an initiative to contribute in uprising of the society, inviting students from a government school for technical education and fun activities. The program provides hands-on learning experiences, fostering curiosity and creativity among young minds.",
+      "Ottige Kaliyona, conducted every year by IEEE WIE during KAGADA, is an initiative to contribute in uprising of the society, inviting students from a government school for technical education and fun activities. The program provides hands-on learning experiences, fostering curiosity and creativity among young minds.",
     imageSrc: "/optimized/tracks/ottigekaliona.webp",
     icon: Sparkles,
     relatedIds: [5],

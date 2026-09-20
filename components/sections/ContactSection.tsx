@@ -2,7 +2,6 @@ import * as React from 'react'
 import { User, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import QueryForm from '@/components/features/QueryForm'
-import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -62,77 +61,74 @@ export function ContactSection() {
   return (
     <section id="contact" className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
       {/* Main Section Title */}
-      <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+      <div>
+        <h2 className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
           Contact <span className="text-amber-400 tshadow-md">Us</span>
         </h2>
-      </ScrollReveal>
+      </div>
 
       {/* Subtitle */}
-      <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center tshadow-sm mb-10 sm:mb-14 max-w-2xl">
+      <div>
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
           For more queries, reach out to our IEEE UVCE organizers or find your way to KAGADA 2026.
         </p>
-      </ScrollReveal>
+      </div>
 
-      <div className="w-full flex flex-col gap-12 sm:gap-16 mb-6 sm:mb-10">
+      <div className="w-full flex flex-col gap-8 sm:gap-10 mb-2 sm:mb-4">
         {/* Organizers Section */}
         <div className="flex flex-col items-center">
-          <ScrollReveal direction="up" duration={450}>
-            <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-white tracking-wider mb-8 text-center tshadow-md">
+          <div>
+            <h3 className="font-outfit font-extrabold text-2xl sm:text-3xl text-[#D8D3C7] tracking-wider mb-3 sm:mb-4 text-center tshadow-md">
               Organisers
             </h3>
-          </ScrollReveal>
+          </div>
 
-          {/* 3 Glassmorphic Organizers Cards Directing to WhatsApp */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {/* 3 Authentic Paper Organizers Cards Directing to WhatsApp */}
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {ORGANIZERS.map((item, idx) => (
-              <ScrollReveal key={`organizer-${idx}`} direction="up" delay={idx * 80} className="h-full">
+              <div key={`organizer-${idx}`} className="h-full">
                 <div
                   className={cn(
                     "relative overflow-hidden rounded-3xl p-6 text-center flex flex-col items-center justify-between group h-full",
-                    "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
-                    "transition-glass duration-500 hover:scale-105 hover:bg-white/45 hover:border-white"
+                    "kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/25",
+                    "transition-glass duration-500 hover:shadow-2xl hover:border-white"
                   )}
                 >
-                  {/* Glass Reflective Interior Shimmer */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
-
                   <div className="relative z-10 w-full flex flex-col items-center">
                     {/* Profile Icon SVG */}
-                    <div className="w-14 h-14 rounded-2xl bg-white/30 border border-white/80 flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                      <User className="w-7 h-7 stroke-[2.2]" />
+                    <div className="w-14 h-14 rounded-2xl bg-[#5A182B]/10 border border-[#5A182B]/25 flex items-center justify-center text-[#5A182B] mb-4 shadow-sm transition-colors duration-300">
+                      <User className="w-7 h-7 stroke-[2.2] text-[#5A182B]" />
                     </div>
-                    <h4 className="font-outfit font-extrabold text-xl text-white tracking-wide mb-1 tshadow-sm">
+                    <h4 className="font-outfit font-extrabold text-xl text-[#5A182B] tracking-wide mb-1">
                       {item.name}
                     </h4>
-                    <p className="font-roboto-mono text-xs font-bold text-red-200 tracking-wider mb-5 uppercase">
+                    <p className="font-roboto-mono text-xs font-bold text-[#5A182B]/85 tracking-wider mb-5 uppercase">
                       {item.designation}
                     </p>
                   </div>
 
-                  <div className="relative z-10 w-full flex flex-col gap-2.5 pt-4 border-t border-white/40 font-roboto-mono text-xs sm:text-sm font-semibold">
+                  <div className="relative z-10 w-full flex flex-col gap-2.5 pt-4 border-t border-[#5A182B]/20 font-roboto-mono text-xs sm:text-sm font-semibold">
                     <a
                       href={item.whatsappLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       title={`Chat with ${item.name} on WhatsApp`}
-                      className="flex items-center justify-center gap-2 text-white/95 hover:text-white transition-colors drop-shadow-sm hover:underline"
+                      className="flex items-center justify-center gap-2 text-stone-800 hover:text-[#5A182B] transition-colors hover:underline"
                     >
-                      <WhatsAppIcon className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <WhatsAppIcon className="w-4 h-4 text-emerald-600 shrink-0" />
                       <span>{item.phone}</span>
                     </a>
                     <a
                       href={item.emailLink}
                       title={`Email ${item.name}`}
-                      className="flex items-center justify-center gap-2 text-white/95 hover:text-white hover:underline transition-colors drop-shadow-sm truncate max-w-full"
+                      className="flex items-center justify-center gap-2 text-stone-800 hover:text-[#5A182B] hover:underline transition-colors truncate max-w-full"
                     >
-                      <Mail className="w-4 h-4 text-white/80 shrink-0" />
+                      <Mail className="w-4 h-4 text-[#5A182B] shrink-0" />
                       <span className="truncate">{item.email}</span>
                     </a>
                   </div>
                 </div>
-              </ScrollReveal>
+              </div>
             ))}
           </div>
         </div>
@@ -146,28 +142,25 @@ export function ContactSection() {
           />
 
           {/* Embedded Map Column */}
-          <ScrollReveal direction="up" delay={80} className="w-full h-full">
+          <div className="w-full h-full">
             <div
               className={cn(
                 "relative w-full h-full overflow-hidden rounded-3xl p-6 sm:p-7 lg:p-8 flex flex-col justify-between items-center",
-                "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35"
+                "kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/25"
               )}
             >
-              {/* Glass Reflective Interior Shimmer */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
-
               {/* Centered Map Header */}
               <div className="relative z-10 flex flex-col items-center text-center w-full mb-4 sm:mb-5">
-                <h3 className="font-smooch text-3xl sm:text-4xl lg:text-5xl text-white font-semibold tracking-wide leading-tight tshadow-md">
+                <h3 className="font-smooch text-3xl sm:text-4xl lg:text-5xl text-[#5A182B] font-semibold tracking-wide leading-tight">
                   Find Us Here
                 </h3>
-                <p className="font-roboto-mono text-xs font-semibold text-white/90 uppercase tracking-wider mt-0.5 tshadow-sm">
+                <p className="font-roboto-mono text-xs font-bold text-[#5A182B]/85 uppercase tracking-wider mt-0.5">
                   UVCE, KR Circle, Bengaluru
                 </p>
               </div>
 
               {/* Embedded Google Map Frame */}
-              <div className="relative z-10 w-full flex-1 min-h-[260px] sm:min-h-[290px] rounded-2xl overflow-hidden border-2 border-white/80 shadow-xl mb-5 sm:mb-6 bg-black/20">
+              <div className="relative z-10 w-full flex-1 min-h-[260px] sm:min-h-[290px] rounded-2xl overflow-hidden border-2 border-[#5A182B]/20 shadow-md mb-5 sm:mb-6 bg-stone-100">
                 <iframe
                   src={UVCE_MAP_EMBED_URL}
                   className="w-full h-full border-0 min-h-[260px]"
@@ -183,12 +176,12 @@ export function ContactSection() {
                 href={UVCE_DIRECTIONS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative z-10 w-full sm:w-auto bg-white text-[#8a1c1c] font-outfit font-black text-sm sm:text-base py-3 sm:py-3.5 px-8 rounded-2xl shadow-xl hover:bg-white/90 hover:scale-105 active:scale-95 transition-glass duration-300 flex items-center justify-center uppercase tracking-wider cursor-pointer"
+                className="relative z-10 w-full sm:w-auto kagada-paper-card hover:brightness-105 text-[#5A182B] font-outfit font-black text-sm sm:text-base py-3 sm:py-3.5 px-8 rounded-2xl shadow-xl border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 transition-glass duration-200 flex items-center justify-center uppercase tracking-wider cursor-pointer"
               >
                 Get Directions
               </a>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

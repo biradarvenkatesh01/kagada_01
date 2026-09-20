@@ -105,9 +105,7 @@ export function CardStack<T extends CardStackItem>({
   perspectivePx = 1400,
   depthPx = 200,
 
-  activeLiftPx = 22,
-  activeScale = 1.03,
-  inactiveScale = 0.88,
+  inactiveScale = 1,
 
   springStiffness = 280, // Snappy responsive spring physics for quick sliding motion
   springDamping = 26, // Quick, smooth liquid damping
@@ -269,7 +267,7 @@ export function CardStack<T extends CardStackItem>({
       >
             {/* background wash / spotlight */}
             <div
-              className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-56 w-[75%] rounded-full bg-[#8a1c1c]/10 blur-3xl"
+              className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-56 w-[75%] rounded-full bg-[#5A182B]/10 blur-3xl"
               aria-hidden="true"
             />
 
@@ -297,12 +295,8 @@ export function CardStack<T extends CardStackItem>({
 
                   const isActive = off === 0;
 
-                  const scale = isActive
-                    ? activeScale
-                    : isMobile
-                    ? Math.max(0.85, 0.94 - (abs - 1) * 0.06)
-                    : inactiveScale;
-                  const lift = isActive ? -activeLiftPx : 0;
+                  const scale = 1;
+                  const lift = 0;
 
                   const zIndex = 100 - abs;
 
@@ -333,7 +327,7 @@ export function CardStack<T extends CardStackItem>({
                     <motion.div
                       key={item.id}
                       className={cn(
-                        "absolute rounded-3xl border-2 border-white shadow-2xl backdrop-blur-lg bg-white/92",
+                        "absolute !rounded-2xl sm:!rounded-3xl border-2 border-white/95 shadow-2xl kagada-paper-card",
                         "select-none p-4 sm:p-7 md:p-8 flex flex-col overflow-hidden transform-gpu",
                         isActive
                           ? "cursor-grab active:cursor-grabbing ring-1 ring-white/80 shadow-black/20"
@@ -405,14 +399,14 @@ export function CardStack<T extends CardStackItem>({
         <div className="mt-4 sm:mt-6 flex items-center justify-center gap-4 z-20">
           <button
             onClick={prev}
-            className="p-2.5 sm:p-3 rounded-full bg-white/40 backdrop-blur-md border border-white text-[#8a1c1c] hover:bg-white/70 hover:scale-110 active:scale-95 transition-glass duration-150 shadow-md shadow-black/5"
+            className="p-2.5 sm:p-3 rounded-full kagada-paper-card border border-[#5A182B]/30 text-[#5A182B] hover:bg-white active:bg-white/80 transition-glass duration-150 shadow-md shadow-black/10 cursor-pointer"
             aria-label="Previous Card"
           >
             <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
           </button>
           <button
             onClick={next}
-            className="p-2.5 sm:p-3 rounded-full bg-white/40 backdrop-blur-md border border-white text-[#8a1c1c] hover:bg-white/70 hover:scale-110 active:scale-95 transition-glass duration-150 shadow-md shadow-black/5"
+            className="p-2.5 sm:p-3 rounded-full kagada-paper-card border border-[#5A182B]/30 text-[#5A182B] hover:bg-white active:bg-white/80 transition-glass duration-150 shadow-md shadow-black/10 cursor-pointer"
             aria-label="Next Card"
           >
             <ChevronRight className="w-5 h-5 stroke-[2.5]" />
@@ -423,7 +417,7 @@ export function CardStack<T extends CardStackItem>({
       {/* Dots navigation centered at bottom (Only if showDots is true) */}
       {showDots ? (
         <div className="mt-8 flex items-center justify-center gap-3">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/30 backdrop-blur-md border border-white/60 shadow-md">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full kagada-paper-card border border-[#5A182B]/30 shadow-md shadow-black/10">
             {items.map((it, idx) => {
               const on = idx === active;
               return (
@@ -431,10 +425,10 @@ export function CardStack<T extends CardStackItem>({
                   key={it.id}
                   onClick={() => setActive(idx)}
                   className={cn(
-                    "h-2.5 rounded-full transition-glass duration-300",
+                    "h-2.5 rounded-full transition-[width,background-color] duration-300 cursor-pointer",
                     on
-                      ? "w-6 bg-[#8a1c1c]"
-                      : "w-2.5 bg-[#8a1c1c]/30 hover:bg-[#8a1c1c]/60",
+                      ? "w-6 bg-[#5A182B]"
+                      : "w-2.5 bg-[#5A182B]/30 hover:bg-[#5A182B]/60",
                   )}
                   aria-label={`Go to card ${idx + 1}`}
                 />
@@ -446,7 +440,7 @@ export function CardStack<T extends CardStackItem>({
               href={activeItem.href}
               target="_blank"
               rel="noreferrer"
-              className="p-2 rounded-full bg-white/30 backdrop-blur-md border border-white/60 text-[#8a1c1c] hover:bg-white/50 transition shadow-md"
+              className="p-2 rounded-full kagada-paper-card border border-[#5A182B]/30 text-[#5A182B] hover:bg-white active:bg-white/80 transition-colors shadow-md shadow-black/10"
               aria-label="Open link"
             >
               <SquareArrowOutUpRight className="h-4 w-4" />
@@ -460,7 +454,7 @@ export function CardStack<T extends CardStackItem>({
 
 function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-2xl bg-white/20 backdrop-blur-md border border-white/50">
+    <div className="relative h-full w-full overflow-hidden rounded-2xl kagada-paper-card border-2 border-white/95">
       {/* Clean empty card layout */}
       {item.imageSrc && (
         <img

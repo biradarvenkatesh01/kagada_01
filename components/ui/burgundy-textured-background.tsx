@@ -7,7 +7,7 @@
  * 4 Layers:
  * - Layer A: Base deep burgundy / maroon continuous gradient covering all non-hero sections
  * - Layer B: Asymmetrical tonal clouds with a 135° diagonal raking light flow
- * - Layer C: Dual procedural SVG micro-fiber grain & embossed tactile paper tooth
+ * - Layer C: Code-generated woven cotton fabric weave texture
  * - Layer D: Soft lateral edge vignettes & gentle top dissolve from Hero
  */
 export function BurgundyTexturedBackground() {
@@ -16,7 +16,7 @@ export function BurgundyTexturedBackground() {
       aria-hidden="true"
       className="absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden z-0"
       style={{
-        backgroundColor: "#520d1a",
+        backgroundColor: "#5A182B",
         // NOTE: deliberately NOT GPU-promoted. This element spans the full
         // height of every non-hero section (~9000px+), which exceeds the max
         // GPU texture dimension. Forcing it onto its own layer made the
@@ -27,20 +27,20 @@ export function BurgundyTexturedBackground() {
         isolation: "isolate",
       }}
     >
-      {/* ── Layer A: Base Rich Burgundy Surface ────────────────────── */}
+      {/* ── Layer A: Base Rich Deep Burgundy Maroon Surface (#5A182B) ── */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
           background: `linear-gradient(
             180deg,
-            #460914 0%,
-            #570d1b 12%,
-            #681223 25%,
-            #5e0f1e 40%,
-            #6b1324 58%,
-            #580d1c 72%,
-            #641121 85%,
-            #420813 100%
+            #440f1d 0%,
+            #5A182B 12%,
+            #681b32 25%,
+            #5A182B 40%,
+            #6b1d34 58%,
+            #5A182B 72%,
+            #641a30 85%,
+            #400e1b 100%
           )`,
         }}
       />
@@ -74,56 +74,8 @@ export function BurgundyTexturedBackground() {
         }}
       />
 
-      {/* ── Layer C1: Master Tactile Texture — Pigment Wash, Cold-Press Tooth & Fibers ─ */}
-      {/* Single pre-baked composite WebP tile eliminating 3 separate GPU blend layers & runtime SVG filters */}
-      <div
-        className="absolute inset-0 w-full h-full opacity-[0.54] mix-blend-soft-light"
-        style={{
-          backgroundImage: `url("/optimized/textures/paper-master.webp")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "650px 650px",
-        }}
-      />
-
-      {/* ── Layer C4: Micro Texture — Multidirectional Fine Angular Fiber Strands */}
-      {/* Organic angled fiber striations strictly in tonal burgundy (no white, black, or gray) */}
-      <div
-        className="absolute inset-0 w-full h-full opacity-55 mix-blend-overlay"
-        style={{
-          backgroundImage: `
-            repeating-linear-gradient(
-              28deg,
-              rgba(205, 45, 75, 0.12) 0px,
-              rgba(205, 45, 75, 0.12) 1px,
-              transparent 1px,
-              transparent 5px
-            ),
-            repeating-linear-gradient(
-              -52deg,
-              rgba(40, 4, 10, 0.15) 0px,
-              rgba(40, 4, 10, 0.15) 1px,
-              transparent 1px,
-              transparent 7px
-            )
-          `,
-          backgroundSize: "14px 14px, 16px 16px",
-        }}
-      />
-
-      {/* ── Layer C5: Micro Texture — Organic Paper Flecks & Pulp Inclusions */}
-      {/* Microscopic organic paper flecks tone-matched to deep ruby and wine */}
-      <div
-        className="absolute inset-0 w-full h-full opacity-65 mix-blend-soft-light"
-        style={{
-          backgroundImage: `
-            radial-gradient(circle at 20% 35%, rgba(220, 65, 90, 0.32) 0.5px, transparent 1.6px),
-            radial-gradient(circle at 75% 65%, rgba(42, 5, 12, 0.35) 0.6px, transparent 1.9px),
-            radial-gradient(circle at 45% 85%, rgba(200, 50, 75, 0.28) 0.5px, transparent 1.6px),
-            radial-gradient(circle at 88% 25%, rgba(215, 60, 85, 0.25) 0.5px, transparent 1.5px)
-          `,
-          backgroundSize: "52px 52px, 76px 76px, 94px 94px, 64px 64px",
-        }}
-      />
+      {/* ── Layer C: Code-Generated Woven Cotton Fabric Weave Texture ── */}
+      <div className="absolute inset-0 w-full h-full opacity-65 kagada-fabric-bg-texture" />
 
       {/* ── Layer D1: Smooth Top Transition from Hero Section ───────── */}
       <div

@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 interface QueryFormProps {
   className?: string;
@@ -96,17 +95,14 @@ export default function QueryForm({
   };
 
   return (
-    <ScrollReveal direction="up" delay={80} className={cn("w-full", containerClassName)}>
+    <div className={cn("w-full", containerClassName)}>
       <div
         className={cn(
           "relative w-full overflow-hidden rounded-3xl p-6 sm:p-7 lg:p-8 flex flex-col justify-between",
-          "bg-white/30 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/35",
+          "kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/25",
           className
         )}
       >
-        {/* Glass Reflective Interior Shimmer */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
-
       <div className="relative z-10 w-full flex flex-col items-center">
         <AnimatePresence mode="wait">
           {status === "success" ? (
@@ -119,22 +115,22 @@ export default function QueryForm({
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
               className="w-full flex flex-col items-center text-center py-8 sm:py-12"
             >
-              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-400/80 flex items-center justify-center text-emerald-400 mb-6 shadow-xl shadow-emerald-500/10">
+              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-emerald-500/15 border-2 border-emerald-600/60 flex items-center justify-center text-emerald-600 mb-6 shadow-md">
                 <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 stroke-[2.2]" />
               </div>
 
-              <h4 className="font-smooch text-4xl sm:text-6xl text-white font-semibold tracking-wide mb-2 tshadow-md">
+              <h4 className="font-smooch text-4xl sm:text-6xl text-[#5A182B] font-semibold tracking-wide mb-2">
                 Query Received!
               </h4>
 
-              <p className="font-jakarta text-sm sm:text-base font-medium text-white/90 max-w-md mb-8 leading-relaxed tshadow-sm">
-                Thank you, <strong className="font-extrabold text-white">{formData.firstName}</strong>. We have received your query and IEEE UVCE will respond as soon as possible.
+              <p className="font-jakarta text-sm sm:text-base font-medium text-stone-700 max-w-md mb-8 leading-relaxed">
+                Thank you, <strong className="font-extrabold text-[#5A182B]">{formData.firstName}</strong>. We have received your query and IEEE UVCE will respond as soon as possible.
               </p>
 
               <button
                 type="button"
                 onClick={handleReset}
-                className="bg-[#8a1c1c] hover:bg-[#a12222] text-white font-outfit font-extrabold text-sm sm:text-base py-3.5 px-8 rounded-2xl shadow-xl border-2 border-white/80 hover:scale-105 active:scale-95 transition-glass duration-300 uppercase tracking-wider cursor-pointer"
+                className="kagada-paper-card hover:brightness-105 text-[#5A182B] font-outfit font-extrabold text-sm sm:text-base py-3.5 px-8 rounded-2xl shadow-xl border-2 border-[#5A182B]/30 transition-glass duration-200 uppercase tracking-wider cursor-pointer"
               >
                 Send Another Query
               </button>
@@ -151,10 +147,10 @@ export default function QueryForm({
             >
               {/* Form Title & Subtitle */}
               <div className="text-center mb-4 sm:mb-5">
-                <h3 className="font-smooch text-3xl sm:text-4xl lg:text-5xl text-white font-semibold tracking-wide leading-tight tshadow-md">
+                <h3 className="font-smooch text-3xl sm:text-4xl lg:text-5xl text-[#5A182B] font-semibold tracking-wide leading-tight">
                   Have a Query?
                 </h3>
-                <p className="font-roboto-mono text-xs font-semibold text-white/90 uppercase tracking-wider mt-0.5 tshadow-sm">
+                <p className="font-roboto-mono text-xs font-bold text-[#5A182B]/80 uppercase tracking-wider mt-0.5">
                   Send us your question and our team will get back to you
                 </p>
               </div>
@@ -164,9 +160,9 @@ export default function QueryForm({
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-4 p-3 rounded-2xl bg-red-600/20 border border-red-500/60 backdrop-blur-md flex items-center gap-3 text-red-100 font-jakarta text-xs sm:text-sm shadow-md"
+                  className="mb-4 p-3 rounded-2xl bg-red-600/15 border border-red-600/40 flex items-center gap-3 text-red-800 font-jakarta text-xs sm:text-sm shadow-sm"
                 >
-                  <AlertCircle className="w-5 h-5 text-red-300 shrink-0" />
+                  <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
                   <span>{errorMessage}</span>
                 </motion.div>
               )}
@@ -176,9 +172,9 @@ export default function QueryForm({
                 <div className="flex flex-col text-left">
                   <label
                     htmlFor="firstName"
-                    className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1 drop-shadow-sm"
+                    className="font-roboto-mono text-xs font-bold text-[#5A182B] tracking-wider uppercase mb-1"
                   >
-                    First name <span className="text-amber-300">*</span>
+                    First name <span className="text-[#5A182B] font-black">*</span>
                   </label>
                   <input
                     type="text"
@@ -189,14 +185,14 @@ export default function QueryForm({
                     placeholder="John"
                     required
                     disabled={status === "submitting"}
-                    className="w-full bg-white/85 hover:bg-white/95 focus:bg-white border-2 border-white/90 focus:border-amber-400 focus:ring-2 focus:ring-amber-300/40 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
+                    className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
                   />
                 </div>
 
                 <div className="flex flex-col text-left">
                   <label
                     htmlFor="lastName"
-                    className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1 drop-shadow-sm"
+                    className="font-roboto-mono text-xs font-bold text-[#5A182B] tracking-wider uppercase mb-1"
                   >
                     Last name
                   </label>
@@ -208,7 +204,7 @@ export default function QueryForm({
                     onChange={handleChange}
                     placeholder="Doe"
                     disabled={status === "submitting"}
-                    className="w-full bg-white/85 hover:bg-white/95 focus:bg-white border-2 border-white/90 focus:border-amber-400 focus:ring-2 focus:ring-amber-300/40 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
+                    className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
                   />
                 </div>
               </div>
@@ -217,9 +213,9 @@ export default function QueryForm({
               <div className="flex flex-col text-left mb-3 sm:mb-3.5">
                 <label
                   htmlFor="email"
-                  className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1 drop-shadow-sm"
+                  className="font-roboto-mono text-xs font-bold text-[#5A182B] tracking-wider uppercase mb-1"
                 >
-                  Email <span className="text-amber-300">*</span>
+                  Email <span className="text-[#5A182B] font-black">*</span>
                 </label>
                 <input
                   type="email"
@@ -230,7 +226,7 @@ export default function QueryForm({
                   placeholder="john.doe@example.com"
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-white/85 hover:bg-white/95 focus:bg-white border-2 border-white/90 focus:border-amber-400 focus:ring-2 focus:ring-amber-300/40 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
+                  className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm"
                 />
               </div>
 
@@ -238,9 +234,9 @@ export default function QueryForm({
               <div className="flex flex-col text-left mb-5 sm:mb-6">
                 <label
                   htmlFor="message"
-                  className="font-roboto-mono text-xs font-bold text-white tracking-wider uppercase mb-1 drop-shadow-sm"
+                  className="font-roboto-mono text-xs font-bold text-[#5A182B] tracking-wider uppercase mb-1"
                 >
-                  What can we help you with? <span className="text-amber-300">*</span>
+                  What can we help you with? <span className="text-[#5A182B] font-black">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -251,7 +247,7 @@ export default function QueryForm({
                   placeholder="Ask about presentation tracks, registration details, eligibility, or event schedule..."
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-white/85 hover:bg-white/95 focus:bg-white border-2 border-white/90 focus:border-amber-400 focus:ring-2 focus:ring-amber-300/40 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-slate-400 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm resize-none custom-scrollbar min-h-[85px] sm:min-h-[95px]"
+                  className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-glass duration-150 shadow-sm resize-none custom-scrollbar min-h-[85px] sm:min-h-[95px]"
                 />
               </div>
 
@@ -260,20 +256,20 @@ export default function QueryForm({
                 type="submit"
                 disabled={status === "submitting"}
                 className={cn(
-                  "w-full sm:w-auto self-center bg-[#8a1c1c] hover:bg-[#a12222] text-white font-outfit font-black text-sm sm:text-base py-3 sm:py-3.5 px-8 rounded-2xl shadow-xl border-2 border-white/80",
-                  "transition-glass duration-300 uppercase tracking-wider flex items-center justify-center gap-2 group cursor-pointer",
-                  "hover:scale-105 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  "w-full sm:w-auto self-center kagada-paper-card hover:brightness-105 text-[#5A182B] font-outfit font-black text-sm sm:text-base py-3 sm:py-3.5 px-8 rounded-2xl shadow-xl border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60",
+                  "transition-glass duration-200 uppercase tracking-wider flex items-center justify-center gap-2 group cursor-pointer",
+                  "disabled:opacity-60 disabled:cursor-not-allowed"
                 )}
               >
                 {status === "submitting" ? (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Loader2 className="w-5 h-5 animate-spin text-[#5A182B]" />
                     <span>Submitting Query...</span>
                   </>
                 ) : (
                   <>
                     <span>Submit Query</span>
-                    <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    <Send className="w-4 h-4 text-[#5A182B] transition-transform group-hover:translate-x-1" />
                   </>
                 )}
               </button>
@@ -282,6 +278,6 @@ export default function QueryForm({
         </AnimatePresence>
       </div>
     </div>
-  </ScrollReveal>
+  </div>
 );
 }

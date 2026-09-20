@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { cn } from '@/lib/utils'
-import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 interface GalleryItem {
   id: number
@@ -62,7 +61,6 @@ function MarqueeRow({
       <div
         className={cn(
           "flex w-max transform-gpu will-change-transform",
-          "marquee-pause-hover hover:[animation-play-state:paused]",
           direction === "left" ? "animate-marquee" : "animate-marquee-reverse"
         )}
         style={{
@@ -79,13 +77,9 @@ function MarqueeRow({
               key={`b1-${item.id}-${idx}`}
               data-marquee-copy={item.copy}
               className={cn(
-                "relative shrink-0 overflow-hidden cursor-zoom-in group rounded-3xl",
-                // No backdrop-blur here: the <img> below fills the card edge-to-edge
-                // (w-full h-full object-cover) so the blurred backdrop was never
-                // visible, yet it forced the compositor to re-snapshot and re-blur
-                // the textured background every frame of the infinite marquee.
-                "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-glass duration-500 hover:scale-[1.03] hover:bg-white/45 hover:border-white",
+                "relative shrink-0 overflow-hidden group rounded-3xl",
+                "bg-stone-900 border-2 border-white/95 shadow-md shadow-black/20",
+                "transition-glass duration-300 hover:shadow-xl hover:border-white",
                 item.shape
               )}
             >
@@ -94,9 +88,8 @@ function MarqueeRow({
                 alt="Kagada Event Photo"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 select-none cursor-zoom-in pointer-events-auto"
+                className="w-full h-full object-cover select-none pointer-events-none"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/30 pointer-events-none rounded-3xl" />
             </div>
           ))}
         </div>
@@ -108,13 +101,9 @@ function MarqueeRow({
               key={`b2-${item.id}-${idx}`}
               data-marquee-copy={item.copy}
               className={cn(
-                "relative shrink-0 overflow-hidden cursor-zoom-in group rounded-3xl",
-                // No backdrop-blur here: the <img> below fills the card edge-to-edge
-                // (w-full h-full object-cover) so the blurred backdrop was never
-                // visible, yet it forced the compositor to re-snapshot and re-blur
-                // the textured background every frame of the infinite marquee.
-                "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-glass duration-500 hover:scale-[1.03] hover:bg-white/45 hover:border-white",
+                "relative shrink-0 overflow-hidden group rounded-3xl",
+                "bg-stone-900 border-2 border-white/95 shadow-md shadow-black/20",
+                "transition-glass duration-300 hover:shadow-xl hover:border-white",
                 item.shape
               )}
             >
@@ -123,9 +112,8 @@ function MarqueeRow({
                 alt="Kagada Event Photo"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 select-none cursor-zoom-in pointer-events-auto"
+                className="w-full h-full object-cover select-none pointer-events-none"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/30 pointer-events-none rounded-3xl" />
             </div>
           ))}
         </div>
@@ -136,20 +124,20 @@ function MarqueeRow({
 
 export function GallerySection() {
   return (
-    <section id="gallery" className="relative w-full overflow-hidden py-4 sm:py-8 flex flex-col gap-6 sm:gap-10 select-none min-h-[480px] scroll-mt-6 z-10">
+    <section id="gallery" className="relative w-full overflow-hidden py-8 sm:py-12 flex flex-col gap-4 sm:gap-6 select-none scroll-mt-6 z-10">
       {/* Section Title */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4">
-        <ScrollReveal direction="down" duration={500}>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-white tshadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none">
+        <div>
+          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-1.5 sm:mb-2 tracking-tight text-center select-none">
             Event <span className="text-amber-400 tshadow-md">Gallery</span>
           </h2>
-        </ScrollReveal>
+        </div>
 
-        <ScrollReveal direction="up" delay={60} duration={500}>
-          <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center tshadow-sm mb-6 sm:mb-10 max-w-2xl">
+        <div>
+          <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-2 sm:mb-3 max-w-2xl">
             Capturing unforgettable moments across KAGADA editions.
           </p>
-        </ScrollReveal>
+        </div>
       </div>
 
       {/* ROW 1: Moves Continuously to the RIGHT at smooth speed */}

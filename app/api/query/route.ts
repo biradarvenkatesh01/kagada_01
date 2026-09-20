@@ -77,7 +77,7 @@ function renderQueryEmailHtml({
 
         <!-- header -->
         <tr>
-          <td style="background-color:#8a1c1c;padding:24px 28px;">
+          <td style="background-color:#5A182B;padding:24px 28px;">
             <p style="margin:0 0 4px 0;color:#e8b4b4;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;">
               New Query
             </p>
@@ -98,7 +98,7 @@ function renderQueryEmailHtml({
                 <td style="padding:0 0 14px 0;">
                   <p style="margin:0 0 2px 0;color:#94a3b8;font-size:11px;letter-spacing:0.8px;text-transform:uppercase;font-weight:700;">From</p>
                   <p style="margin:0;color:#0f172a;font-size:17px;font-weight:600;">${safeName}</p>
-                  <a href="${replyMailtoUrl}" style="color:#8a1c1c;font-size:14px;text-decoration:none;">${safeEmail}</a>
+                  <a href="${replyMailtoUrl}" style="color:#5A182B;font-size:14px;text-decoration:none;">${safeEmail}</a>
                 </td>
               </tr>
               <tr>
@@ -114,7 +114,7 @@ function renderQueryEmailHtml({
         <!-- message -->
         <tr>
           <td style="padding:0 28px;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f8fafc;border-radius:10px;border-left:4px solid #8a1c1c;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f8fafc;border-radius:10px;border-left:4px solid #5A182B;">
               <tr>
                 <td style="padding:18px 20px;">
                   <p style="margin:0 0 10px 0;color:#94a3b8;font-size:11px;letter-spacing:0.8px;text-transform:uppercase;font-weight:700;">Message</p>
@@ -130,7 +130,7 @@ function renderQueryEmailHtml({
           <td style="padding:24px 28px 28px 28px;">
             <table role="presentation" cellpadding="0" cellspacing="0">
               <tr>
-                <td style="background-color:#8a1c1c;border-radius:8px;">
+                <td style="background-color:#5A182B;border-radius:8px;">
                   <a href="${replyMailtoUrl}"
                      style="display:inline-block;padding:12px 26px;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;">
                     Reply to ${safeName}

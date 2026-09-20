@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { marked } from "marked";
 
 function sanitizeHtml(html: string): string {
   return html
@@ -16,15 +15,39 @@ function sanitizeHtml(html: string): string {
     .replace(/href\s*=\s*(?:'javascript:[^']*'|"javascript:[^"]*"|javascript:[^\s>]+)/gi, 'href="#"');
 }
 
+// `marked` is ~40KB and is only ever needed once the user opens the chat, but a
+// static import put it in the bundle every visitor downloads before the hero
+// paints. It is fetched on first open instead; until it resolves, assistant
+// replies render as escaped plain text, which is what the fallback below
+// already did on a parse error.
+type MarkedParse = (src: string, opts: { async: false; breaks: boolean }) => string;
+let markedParse: MarkedParse | null = null;
+let markedLoad: Promise<void> | null = null;
+
+function loadMarked(): Promise<void> {
+  markedLoad ??= import("marked").then(({ marked }) => {
+    markedParse = marked.parse as MarkedParse;
+  });
+  return markedLoad;
+}
+
+function escapeHtml(text: string): string {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
 function renderMarkdown(content: string): string {
+  if (!markedParse) return escapeHtml(content);
   try {
-    const rawHtml = marked.parse(content, { async: false, breaks: true }) as string;
+    const rawHtml = markedParse(content, { async: false, breaks: true });
     const cleanHtml = sanitizeHtml(rawHtml);
     return cleanHtml
       .replaceAll("<table>", '<div class="chat-table-scroll" data-lenis-prevent="true"><table>')
       .replaceAll("</table>", "</table></div>");
   } catch {
-    return content;
+    return escapeHtml(content);
   }
 }
 
@@ -35,6 +58,7 @@ interface AIChatCardProps {
 
 export default function AIChatCard({ className, isVisible = true }: AIChatCardProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [, setMarkdownReady] = useState(false);
   const [messages, setMessages] = useState<{ sender: "ai" | "user"; text: string }[]>([
     {
       sender: "ai",
@@ -46,6 +70,19 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   const [showGreeting, setShowGreeting] = useState(false);
   const hasGreetedRef = useRef(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+  // Fetch the markdown renderer the first time the chat is opened, then
+  // re-render so any messages already on screen pick it up.
+  useEffect(() => {
+    if (!isOpen) return;
+    let cancelled = false;
+    loadMarked().then(() => {
+      if (!cancelled) setMarkdownReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [isOpen]);
 
   // Trigger brief 'Heyy' greeting once user reaches the hero page after initial video
   useEffect(() => {
@@ -100,7 +137,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
       });
 
       const data = await res.json();
-      const aiReply = data?.reply || "KAGADA 2026 is provisionally scheduled for 10th October 2026 at UVCE, KR Circle, Bengaluru!";
+      const aiReply = data?.reply || "KAGADA 2026 is provisionally scheduled for 24th October 2026 at UVCE, KR Circle, Bengaluru!";
       const modelUsed = data?.model || "Unknown Model";
 
       if (process.env.NODE_ENV !== "production") {
@@ -114,7 +151,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         ...prev,
         {
           sender: "ai",
-          text: "KAGADA 2026 is provisionally scheduled for 10th October 2026 at UVCE, KR Circle. Ask me about tracks (Paper, Poster, Project) or the ₹40,000 prize pool!",
+          text: "KAGADA 2026 is provisionally scheduled for 24th October 2026 at UVCE, KR Circle. Ask me about tracks (Paper, Poster, Project) or the ₹40,000 prize pool!",
         },
       ]);
     } finally {
@@ -128,21 +165,21 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
       <AnimatePresence>
         {showGreeting && !isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 16, scale: 0.88 }}
+            initial={{ opacity: 0, y: 15, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.88, transition: { duration: 0.25 } }}
-            transition={{ type: "spring", stiffness: 320, damping: 24 }}
+            exit={{ opacity: 0, y: 15, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 300, damping: 24 }}
             onClick={() => {
               setShowGreeting(false);
               setIsOpen(true);
             }}
-            className="fixed bottom-22 sm:bottom-25 right-5 sm:right-7 z-50 cursor-pointer select-none"
+            className="fixed bottom-20 sm:bottom-24 right-5 sm:right-7 z-50 cursor-pointer select-none"
           >
-            <div className="relative bg-white/95 backdrop-blur-lg text-[#8a1c1c] border-2 border-white px-4 py-3 rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs hover:scale-[1.03] transition-glass duration-200 group">
-              <div className="w-8 h-8 rounded-full bg-[#8a1c1c]/10 flex items-center justify-center shrink-0 border border-[#8a1c1c]/20 text-[#8a1c1c]">
-                <Bot className="w-5 h-5 stroke-[2.2]" />
+            <div className="relative kagada-paper-card text-[#5A182B] border-2 border-white/95 px-4 py-3 !rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs transition-glass duration-200 group">
+              <div className="w-8 h-8 !rounded-full bg-[#5A182B]/10 flex items-center justify-center shrink-0 border border-[#5A182B]/20 text-[#5A182B]">
+                <Bot className="w-5 h-5 stroke-[2.2] text-[#5A182B]" />
               </div>
-              <p className="text-xs sm:text-sm font-bold font-jakarta text-[#2d080e] leading-snug flex-1">
+              <p className="text-xs sm:text-sm font-bold font-jakarta text-[#5A182B] leading-snug flex-1">
                 Heyy! Have questions about Kagada 2026?
               </p>
               <button
@@ -150,20 +187,20 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
                   e.stopPropagation();
                   setShowGreeting(false);
                 }}
-                className="p-1 rounded-full text-[#8a1c1c]/50 hover:text-[#8a1c1c] hover:bg-black/5 transition-colors self-center -mr-1"
+                className="p-1 !rounded-full text-[#5A182B]/50 hover:text-[#5A182B] hover:bg-black/5 transition-colors self-center -mr-1 cursor-pointer"
                 aria-label="Dismiss greeting"
               >
                 <X className="w-3.5 h-3.5 stroke-[2.5]" />
               </button>
 
               {/* Speech bubble downward triangular pointer pointing toward launcher button */}
-              <div className="absolute -bottom-2 right-6 sm:right-7 w-3.5 h-3.5 bg-white border-r-2 border-b-2 border-white rotate-45 shadow-sm" />
+              <div className="absolute -bottom-2 right-6 sm:right-7 w-3.5 h-3.5 bg-[#D8D3C7] border-r-2 border-b-2 border-white/80 rotate-45 shadow-sm" />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Pure Circular Glassmorphic Launcher Button (Matched in size to BackToTop) */}
+      {/* Pure Circular Launcher Button: Off-White Bg with Deep Burgundy Maroon Icon */}
       <motion.button
         onClick={() => {
           setShowGreeting(false);
@@ -171,24 +208,22 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         }}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.92 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className={cn(
-          "fixed bottom-5 sm:bottom-7 right-5 sm:right-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-2xl select-none group",
-          "bg-[#8a1c1c]/90 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] hover:border-white transition-glass duration-300",
-          isOpen && "bg-[#8a1c1c] border-white ring-4 ring-white/30"
+          "fixed bottom-5 sm:bottom-7 right-5 sm:right-7 z-50 w-12 h-12 sm:w-14 sm:h-14 !rounded-full flex items-center justify-center text-[#5A182B] shadow-2xl select-none group cursor-pointer",
+          "kagada-paper-card border-2 border-[#5A182B]/30 shadow-2xl shadow-black/40 hover:brightness-105 hover:border-[#5A182B]/60 transition-glass duration-300",
+          isOpen && "border-[#5A182B] ring-4 ring-[#5A182B]/20"
         )}
         aria-label="Toggle AI Chatbot"
       >
         {isOpen ? (
-          <X className="w-7 h-7 sm:w-8 sm:h-8 text-white stroke-[2.5]" />
+          <X className="w-6 h-6 sm:w-7 sm:h-7 text-[#5A182B] stroke-[2.5]" />
         ) : (
-          <Bot className="w-8 h-8 sm:w-9 sm:h-9 text-white stroke-[2.2] drop-shadow-md group-hover:rotate-12 transition-transform duration-300" />
+          <Bot className="w-6 h-6 sm:w-7 sm:h-7 text-[#5A182B] stroke-[2.2] drop-shadow-sm group-hover:rotate-12 transition-transform duration-300" />
         )}
       </motion.button>
 
-      {/* Simple Glassmorphism Chat Window */}
+      {/* Authentic Paper AI Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -198,38 +233,21 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
             data-lenis-prevent="true"
             className={cn(
-              // The old max-height (100vh - 7rem) only reserved room for the
-              // panel's own bottom offset, not for the fixed navbar. On any
-              // viewport shorter than ~642px — every landscape phone, and any
-              // short desktop window — the panel grew until its top sat 8px
-              // from the top of the screen and ran 80px underneath the navbar,
-              // which hid the "KAGADA AI Assistant" header.
-              //
-              // Reserve navbar bottom edge + the panel's own bottom offset + a
-              // 1rem gap: 4.5rem + 5.5rem + 1rem = 11rem (mobile, plus the
-              // safe-area inset the navbar itself is pushed down by), and
-              // 5.5rem + 6.5rem + 1rem = 13rem from the sm breakpoint up.
-              "fixed bottom-22 sm:bottom-26 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
+              "fixed bottom-20 sm:bottom-24 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
               "h-[530px] max-h-[calc(100dvh_-_11rem_-_env(safe-area-inset-top,0px))] sm:max-h-[calc(100dvh_-_13rem)]",
-              // Above the navbar (z-999): if a viewport is ever short enough for
-              // the two to meet, the panel the user is actively typing into must
-              // win rather than being painted over.
-              "z-[1000] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
-              "bg-[#8a1c1c]/80 backdrop-blur-lg border-2 border-white/80 shadow-2xl shadow-black/80",
+              "z-[1000] !rounded-2xl sm:!rounded-3xl overflow-hidden shadow-2xl flex flex-col",
+              "kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/80",
               className
             )}
           >
-            {/* Subtle Interior Reflection Shimmer */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/20 pointer-events-none rounded-3xl" />
-
             {/* Chat Header */}
-            <div className="relative z-10 px-5 py-3.5 border-b border-white/30 flex items-center justify-between bg-white/10 backdrop-blur-md shrink-0">
-              <h2 className="text-base font-outfit font-extrabold text-white tracking-wide leading-tight tshadow-sm">
+            <div className="relative z-10 px-5 py-3.5 border-b border-[#5A182B]/20 flex items-center justify-between bg-[#5A182B] shrink-0">
+              <h2 className="text-base font-outfit font-extrabold text-[#D8D3C7] tracking-wide leading-tight tshadow-sm">
                 KAGADA AI Assistant
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-full bg-white/10 hover:bg-white/30 text-white/90 hover:text-white transition-colors"
+                className="p-1.5 rounded-full bg-white/10 hover:bg-white/30 text-[#D8D3C7]/90 hover:text-[#D8D3C7] transition-colors cursor-pointer"
                 aria-label="Close Chat"
               >
                 <X className="w-4 h-4 stroke-[2.5]" />
@@ -249,13 +267,13 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
                   className={cn(
                     "px-3.5 py-2.5 rounded-2xl drop-shadow-sm font-jakarta min-w-0 break-words",
                     msg.sender === "ai"
-                      ? "bg-white/20 backdrop-blur-md border border-white/40 text-white rounded-tl-xs max-w-[94%] leading-relaxed text-xs sm:text-sm overflow-hidden"
-                      : "bg-white text-[#8a1c1c] font-bold ml-auto rounded-tr-xs shadow-md max-w-[85%] whitespace-pre-wrap text-xs sm:text-sm"
+                      ? "bg-white border-2 border-[#5A182B]/15 text-stone-900 rounded-tl-xs max-w-[94%] leading-relaxed text-xs sm:text-sm overflow-hidden shadow-sm"
+                      : "bg-[#5A182B] text-[#D8D3C7] font-bold ml-auto rounded-tr-xs shadow-md max-w-[85%] whitespace-pre-wrap text-xs sm:text-sm"
                   )}
                 >
                   {msg.sender === "ai" ? (
                     <div
-                      className="chat-markdown w-full min-w-0 max-w-full overflow-hidden"
+                      className="chat-markdown w-full min-w-0 max-w-full overflow-hidden text-stone-900"
                       dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.text) }}
                     />
                   ) : (
@@ -266,18 +284,18 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
 
               {/* AI Typing Indicator */}
               {isTyping && (
-                <div className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl max-w-[35%] bg-white/20 border border-white/40">
-                  <span className="w-2 h-2 rounded-full bg-white animate-bounce"></span>
-                  <span className="w-2 h-2 rounded-full bg-white animate-bounce [animation-delay:0.2s]"></span>
-                  <span className="w-2 h-2 rounded-full bg-white animate-bounce [animation-delay:0.4s]"></span>
+                <div className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl max-w-[35%] bg-white border-2 border-[#5A182B]/15 shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] animate-bounce"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] animate-bounce [animation-delay:0.2s]"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] animate-bounce [animation-delay:0.4s]"></span>
                 </div>
               )}
             </div>
 
             {/* Chat Input Section */}
-            <div className="relative z-10 p-3 border-t border-white/30 bg-black/20 backdrop-blur-md flex items-center gap-2 shrink-0">
+            <div className="relative z-10 p-3 border-t border-[#5A182B]/20 bg-[#D8D3C7] flex items-center gap-2 shrink-0">
               <input
-                className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white/20 backdrop-blur-md rounded-xl border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/80 font-jakarta"
+                className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white rounded-xl border-2 border-[#5A182B]/20 text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-[#5A182B] font-jakarta"
                 placeholder="Ask about tracks, date, prizes..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -286,10 +304,10 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isTyping}
-                className="p-2.5 rounded-xl bg-white text-[#8a1c1c] hover:bg-white/90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed transition-glass duration-200 shadow-md font-bold"
+                className="p-2.5 rounded-xl kagada-paper-card hover:brightness-105 text-[#5A182B] border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 shadow-md font-bold cursor-pointer"
                 aria-label="Send Message"
               >
-                <Send className="w-4 h-4 stroke-[2.5]" />
+                <Send className="w-4 h-4 text-[#5A182B] stroke-[2.5]" />
               </button>
             </div>
           </motion.div>

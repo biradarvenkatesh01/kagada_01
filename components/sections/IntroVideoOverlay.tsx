@@ -28,11 +28,16 @@ export const IntroVideoOverlay = memo(function IntroVideoOverlay({
       {!isVideoHidden && (
         <motion.div
           key="intro-video-container"
-          initial={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          // No `filter: blur()` here. Animating blur on a full-viewport element
+          // forces the compositor to re-run a separable Gaussian over the entire
+          // screen every frame for 1.8s, at device pixel ratio, while a video is
+          // decoding into that same surface -- the worst possible moment on a
+          // mid-range phone, right as the hero behind it is being laid out.
+          // `opacity` and `scale` are compositor-only and give the same dissolve.
+          initial={{ opacity: 1, scale: 1 }}
           animate={{
             opacity: isVideoFading ? 0 : 1,
             scale: isVideoFading ? 1.04 : 1,
-            filter: isVideoFading ? "blur(4px)" : "blur(0px)",
           }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
@@ -61,11 +66,11 @@ export const IntroVideoOverlay = memo(function IntroVideoOverlay({
                 e.stopPropagation();
                 onSkip();
               }}
-              className="absolute top-[calc(1.2rem+env(safe-area-inset-top,0px))] sm:top-7 right-5 sm:right-8 z-[60] flex items-center gap-2 px-4.5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-[#8a1c1c] hover:bg-[#a12222] border-2 border-amber-400 text-white font-outfit text-xs sm:text-sm font-black tracking-wider uppercase transition-all duration-200 shadow-2xl shadow-black/80 hover:scale-105 active:scale-95 group cursor-pointer"
+              className="intro-skip-btn absolute top-[calc(1.2rem+env(safe-area-inset-top,0px))] sm:top-7 right-5 sm:right-8 z-[60] flex items-center gap-2 px-4.5 py-2.5 sm:px-6 sm:py-3 !rounded-none kagada-paper-card hover:brightness-105 border-2 border-[#5A182B]/30 text-[#5A182B] font-outfit text-xs sm:text-sm font-black tracking-wider uppercase transition-glass duration-200 shadow-2xl shadow-black/60 group cursor-pointer"
               aria-label="Skip Intro Video"
             >
-              <span className="leading-none drop-shadow-sm">Skip</span>
-              <SkipForward className="w-4 h-4 text-amber-300 group-hover:text-white stroke-[2.5] transition-transform group-hover:translate-x-0.5" />
+              <span className="leading-none font-black text-[#5A182B]">Skip</span>
+              <SkipForward className="w-4 h-4 text-[#5A182B] stroke-[2.5] transition-transform group-hover:translate-x-0.5" />
             </motion.button>
           )}
         </motion.div>

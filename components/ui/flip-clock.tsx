@@ -12,7 +12,7 @@ import {
 } from "react";
 
 const flipUnitVariants = cva(
-  "relative subpixel-antialiased rounded-md overflow-hidden",
+  "flip-unit relative subpixel-antialiased !rounded-none overflow-hidden",
   {
     variants: {
       size: {
@@ -22,7 +22,7 @@ const flipUnitVariants = cva(
         xl: "w-20 min-w-20 h-28 text-7xl sm:w-22 sm:min-w-22 sm:h-32 sm:text-8xl", // Extra Large
       },
       variant: {
-        default: "bg-[#8a1c1c]/80 text-white",
+        default: "bg-[#5A182B] text-[#D8D3C7]",
         secondary: "bg-secondary text-secondary-foreground",
         destructive: "bg-destructive text-destructive-foreground",
         outline: "border border-input bg-background text-foreground",
@@ -53,7 +53,7 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
     <div
       className={cn(
         flipUnitVariants({ size, variant }),
-        "flex items-center justify-center font-mono font-bold shadow-sm",
+        "flex items-center justify-center font-mono font-bold shadow-sm !rounded-none",
         className
       )}
       suppressHydrationWarning
@@ -61,9 +61,6 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
       <span className="leading-none select-none tracking-tight" suppressHydrationWarning>
         {digit}
       </span>
-
-      {/* Subtle center divider maintaining the exact split-flap card aesthetic */}
-      <div className="absolute top-1/2 left-0 w-full h-px -translate-y-1/2 bg-black/30 pointer-events-none" />
     </div>
   );
 });
@@ -98,7 +95,7 @@ function ClockSeparator({ size = "md" }: { size?: FlipClockSize }) {
     <div className="flex h-7.5 min-[340px]:h-8.5 min-[380px]:h-10 min-[430px]:h-11.5 sm:h-14 items-center justify-center shrink-0 px-0.5">
       <span
         className={cn(
-          "text-center text-[#8a1c1c]/80 font-bold leading-none self-center select-none text-xs min-[340px]:text-sm min-[380px]:text-base min-[430px]:text-xl sm:text-3xl",
+          "text-center text-[#5A182B]/80 font-bold leading-none self-center select-none text-xs min-[340px]:text-sm min-[380px]:text-base min-[430px]:text-xl sm:text-3xl",
           size !== "sm" && heightMap[size],
         )}
       >
@@ -232,7 +229,7 @@ const FlipClock = memo(function FlipClock({
                 />
               ))}
             </div>
-            <span className="font-roboto-mono text-[0.48rem] min-[340px]:text-[0.55rem] min-[380px]:text-[0.62rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-0.5 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+            <span className="font-roboto-mono text-[0.48rem] min-[340px]:text-[0.55rem] min-[380px]:text-[0.62rem] sm:text-xs font-bold text-[#5A182B]/80 mt-0.5 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
               DAYS
             </span>
           </div>
@@ -252,7 +249,7 @@ const FlipClock = memo(function FlipClock({
               />
             ))}
           </div>
-          <span className="font-roboto-mono text-[0.48rem] min-[340px]:text-[0.55rem] min-[380px]:text-[0.62rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-0.5 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+          <span className="font-roboto-mono text-[0.48rem] min-[340px]:text-[0.55rem] min-[380px]:text-[0.62rem] sm:text-xs font-bold text-[#5A182B]/80 mt-0.5 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
             HOURS
           </span>
         </div>
@@ -271,7 +268,7 @@ const FlipClock = memo(function FlipClock({
               />
             ))}
           </div>
-          <span className="font-roboto-mono text-[0.48rem] min-[340px]:text-[0.55rem] min-[380px]:text-[0.62rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-0.5 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+          <span className="font-roboto-mono text-[0.48rem] min-[340px]:text-[0.55rem] min-[380px]:text-[0.62rem] sm:text-xs font-bold text-[#5A182B]/80 mt-0.5 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
             MINS
           </span>
         </div>
@@ -290,7 +287,7 @@ const FlipClock = memo(function FlipClock({
               />
             ))}
           </div>
-          <span className="font-roboto-mono text-[0.48rem] min-[340px]:text-[0.55rem] min-[380px]:text-[0.62rem] sm:text-xs font-bold text-[#8a1c1c]/80 mt-0.5 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
+          <span className="font-roboto-mono text-[0.48rem] min-[340px]:text-[0.55rem] min-[380px]:text-[0.62rem] sm:text-xs font-bold text-[#5A182B]/80 mt-0.5 sm:mt-1.5 tracking-wider sm:tracking-widest uppercase select-none">
             SECS
           </span>
         </div>

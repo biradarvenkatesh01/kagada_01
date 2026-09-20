@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { FileText, Image as ImageIcon, Cpu, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 // 3 Winner Track Red-Tinted Glass Cards (Allocated statically once)
 const WINNER_CARDS = [
@@ -86,13 +85,13 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
   }, [activeCard]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-6xl my-4 sm:my-8 px-0 sm:px-4">
+    <div className="flex flex-col items-center justify-center w-full max-w-5xl my-3 sm:my-6 px-0 sm:px-4">
       {/* 3 Horizontal Cards Container: Grid in Laptop/Desktop View, Full-Width 1-Card Carousel in Mobile View. */}
-      <ScrollReveal direction="up" className="w-full">
+      <div className="w-full">
         <div
           ref={scrollContainerRef}
           onScroll={handleScroll}
-          className="w-full flex md:grid md:grid-cols-3 gap-0 md:gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory py-4 md:py-0 select-none scrollbar-none"
+          className="w-full flex md:grid md:grid-cols-3 gap-0 md:gap-5 lg:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory py-4 md:py-0 select-none scrollbar-none"
         >
           {WINNER_CARDS.map((card) => (
             <div
@@ -102,39 +101,34 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
               <div className="w-full flex justify-center">
                 <div
                   className={cn(
-                    "w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[360px] md:max-w-none md:w-full h-[360px] sm:h-[400px] lg:h-[440px]",
-                    "rounded-3xl border-2 border-white/90 shadow-md shadow-black/10 backdrop-blur-lg bg-white/25",
-                    "p-4 sm:p-8 flex flex-col justify-between items-center overflow-hidden select-none cursor-pointer group",
-                    "hover:-translate-y-2 hover:scale-[1.02] hover:border-white hover:bg-white/35 transition-glass duration-300"
+                    "w-full max-w-[280px] xs:max-w-[300px] sm:max-w-[320px] md:max-w-[310px] lg:max-w-[330px] md:w-full h-[320px] sm:h-[360px] lg:h-[390px]",
+                    "kagada-paper-card rounded-3xl border-2 border-white/95 shadow-xl shadow-black/25",
+                    "p-4 sm:p-6 flex flex-col justify-between items-center overflow-hidden select-none cursor-pointer group",
+                    "hover:shadow-2xl hover:border-white transition-glass duration-300"
                   )}
                 >
-                  {/* Subtle Glass Interior Shimmer */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/10 to-transparent pointer-events-none rounded-3xl" />
-
                   {/* Card Header: Title Centered Horizontally */}
                   <div className="flex items-center justify-center w-full z-10 text-center px-1">
-                    <h3 className="font-smooch text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-semibold text-white tracking-wide tshadow-md text-center leading-tight whitespace-normal break-words">
+                    <h3 className="font-smooch text-3xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#5A182B] tracking-wide text-center leading-tight whitespace-normal break-words">
                       {card.title}
                     </h3>
                   </div>
 
-                  {/* Center Prominent Red Glass SVG Icon Badge */}
-                  <div className="flex-1 my-3 sm:my-6 flex items-center justify-center z-10">
-                    <div className="w-22 h-22 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full bg-white/30 border-2 border-white/80 text-white flex items-center justify-center shadow-md shadow-black/10 group-hover:scale-110 transition-transform duration-300">
-                      <card.icon className="w-11 h-11 sm:w-14 sm:h-14 lg:w-16 lg:h-16 stroke-[1.8] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]" />
-                    </div>
+                  {/* Center Prominent Burgundy SVG Icon (without circular frame) */}
+                  <div className="flex-1 my-2 sm:my-4 flex items-center justify-center z-10">
+                    <card.icon className="w-20 h-20 sm:w-26 sm:h-26 lg:w-30 lg:h-30 stroke-[1.6] text-[#5A182B] drop-shadow-sm group-hover:scale-105 transition-transform duration-300" />
                   </div>
 
-                  {/* Bottom CTA Red Glass Button */}
+                  {/* Bottom CTA Button: Off-White Bg with Burgundy Maroon text */}
                   <div className="w-full z-10">
                     <a
                       href={card.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-3 px-5 sm:py-3.5 sm:px-6 rounded-2xl bg-white/30 border border-white/80 text-white font-jakarta text-xs sm:text-base font-extrabold tracking-wide group-hover:bg-white/45 active:scale-[0.98] transition-glass duration-150 shadow-md shadow-black/10 flex items-center justify-center gap-2 group/btn cursor-pointer"
+                      className="w-full py-2.5 px-4 sm:py-3 sm:px-5 rounded-2xl kagada-paper-card hover:brightness-105 border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 text-[#5A182B] font-jakarta text-xs sm:text-sm font-extrabold tracking-wide transition-glass duration-200 shadow-md shadow-black/15 flex items-center justify-center gap-2 group/btn cursor-pointer"
                     >
                       <span>Explore Winners</span>
-                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-1" />
+                      <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#5A182B] transition-transform group-hover/btn:translate-x-1" />
                     </a>
                   </div>
                 </div>
@@ -142,7 +136,7 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
             </div>
           ))}
         </div>
-      </ScrollReveal>
+      </div>
 
       {/* Mobile Navigation Controls: Arrows + Indicator Dots */}
       <div className="flex md:hidden items-center justify-center gap-4 mt-5 z-20">
@@ -151,10 +145,10 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
           onClick={() => scrollToIndex(Math.max(0, activeCard - 1))}
           disabled={activeCard === 0}
           className={cn(
-            "p-2 rounded-full border border-white/60 bg-white/20 backdrop-blur-md text-white transition-glass duration-150",
+            "p-2 rounded-full border-2 border-[#5A182B]/30 kagada-paper-card text-[#5A182B] shadow-md transition-glass duration-150",
             activeCard === 0
               ? "opacity-30 cursor-not-allowed"
-              : "hover:bg-white/40 active:scale-95 cursor-pointer"
+              : "hover:bg-white active:bg-white/80 cursor-pointer"
           )}
           aria-label="Previous card"
         >
@@ -167,10 +161,10 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
               key={`dot-${card.id}`}
               onClick={() => scrollToIndex(i)}
               className={cn(
-                "h-2.5 rounded-full transition-glass duration-300 cursor-pointer",
+                "h-2.5 rounded-full transition-[width,background-color] duration-300 cursor-pointer",
                 activeCard === i
-                  ? "w-8 bg-white"
-                  : "w-2.5 bg-white/40 hover:bg-white/70"
+                  ? "w-8 bg-[#5A182B]"
+                  : "w-2.5 bg-[#D8D3C7]/60 hover:bg-[#D8D3C7]"
               )}
               aria-label={`Go to slide ${i + 1}`}
             />
@@ -182,10 +176,10 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
           onClick={() => scrollToIndex(Math.min(WINNER_CARDS.length - 1, activeCard + 1))}
           disabled={activeCard === WINNER_CARDS.length - 1}
           className={cn(
-            "p-2 rounded-full border border-white/60 bg-white/20 backdrop-blur-md text-white transition-glass duration-150",
+            "p-2 rounded-full border-2 border-[#5A182B]/30 kagada-paper-card text-[#5A182B] shadow-md transition-glass duration-150",
             activeCard === WINNER_CARDS.length - 1
               ? "opacity-30 cursor-not-allowed"
-              : "hover:bg-white/40 active:scale-95 cursor-pointer"
+              : "hover:bg-white active:bg-white/80 cursor-pointer"
           )}
           aria-label="Next card"
         >

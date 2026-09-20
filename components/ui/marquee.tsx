@@ -35,7 +35,7 @@ export function Marquee({
           className={cn(
             "flex w-max transform-gpu will-change-transform",
             direction === "right" ? "animate-marquee-reverse" : "animate-marquee",
-            pauseOnHover && "marquee-pause-hover hover:[animation-play-state:paused]"
+            pauseOnHover && "hover:[animation-play-state:paused]"
           )}
           style={{
             "--duration": `${speed}s`,
