@@ -114,9 +114,11 @@
    #videos and #hero are deliberately excluded: they contain `position: fixed`
    children (the aftermovie lightbox, the intro overlay), and a layout-contained
    ancestor becomes their containing block, which would break full-screen. */
-/* ─── FAQ Isolation ─── */
+/* ─── FAQ Isolation & High Performance Card ─── */
 #faq .kagada-paper-card {
   isolation: isolate;
+  background-image: none !important;
+  background-color: #D8D3C7 !important;
 }
 
 #about,

@@ -56,6 +56,26 @@ const FAQCard = memo(function FAQCard({
   isOpen: boolean
   onToggle: (index: number) => void
 }) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [contentHeight, setContentHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setContentHeight(contentRef.current.scrollHeight);
+    }
+  }, [faq.answer]);
+
+  // Re-measure on window resize to ensure accuracy across mobile and desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (contentRef.current) {
+        setContentHeight(contentRef.current.scrollHeight);
+      }
+    };
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div
       className={cn(
@@ -80,7 +100,7 @@ const FAQCard = memo(function FAQCard({
           className={cn(
             "w-7 h-7 sm:w-8 sm:h-8 rounded-full shrink-0 flex items-center justify-center",
             "bg-[#5A182B]/10 border border-[#5A182B]/25 text-[#5A182B] shadow-sm",
-            "transition-transform duration-200 ease-out transform-gpu",
+            "transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] transform-gpu",
             isOpen && "rotate-180 bg-[#5A182B] text-[#D8D3C7] border-[#5A182B]"
           )}
         >
@@ -88,29 +108,22 @@ const FAQCard = memo(function FAQCard({
         </div>
       </button>
 
-      {/* Accordion body with smooth zero-jank grid transition */}
+      {/* Accordion body with butter-smooth GPU-optimized height animation */}
       <div
         id={`faq-panel-${idx}`}
         role="region"
         aria-labelledby={`faq-header-${idx}`}
-        className={cn(
-          "grid transition-[grid-template-rows] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
-          isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        )}
+        style={{
+          maxHeight: isOpen ? `${contentHeight || 350}px` : "0px",
+          opacity: isOpen ? 1 : 0,
+        }}
+        className="overflow-hidden transition-[max-height,opacity] duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]"
       >
-        <div className="overflow-hidden min-h-0">
-          <div
-            className={cn(
-              "px-4 pb-3 sm:px-5 sm:pb-3.5 pt-0 text-left",
-              "transition-opacity duration-200 ease-out",
-              isOpen ? "opacity-100" : "opacity-0"
-            )}
-          >
-            <div className="pt-2.5 sm:pt-3 border-t border-[#5A182B]/20">
-              <p className="font-jakarta text-xs sm:text-sm md:text-base font-medium text-stone-800 leading-relaxed whitespace-pre-line select-text">
-                {faq.answer}
-              </p>
-            </div>
+        <div ref={contentRef} className="px-4 pb-3.5 sm:px-5 sm:pb-4 pt-0 text-left">
+          <div className="pt-2.5 sm:pt-3 border-t border-[#5A182B]/20">
+            <p className="font-jakarta text-xs sm:text-sm md:text-base font-medium text-stone-800 leading-relaxed whitespace-pre-line select-text">
+              {faq.answer}
+            </p>
           </div>
         </div>
       </div>
