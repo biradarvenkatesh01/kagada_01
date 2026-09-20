@@ -428,6 +428,13 @@ html.lenis, html.lenis body {
   box-shadow: 0 14px 40px -8px rgba(90, 24, 43, 0.22), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
+/* ─── Translucent Paper Glass on Hero Section Boxes (Only Hero) ─── */
+#hero .kagada-paper-card {
+  background-color: rgba(216, 211, 199, 0.70) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
 /* ─── Kagada Fine Woven Cotton Fabric Background Texture (Deep Burgundy tone) ── */
 .kagada-fabric-bg-texture {
   background-image:
