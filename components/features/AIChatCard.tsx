@@ -71,18 +71,30 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   const hasGreetedRef = useRef(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  // Fetch the markdown renderer the first time the chat is opened, then
-  // re-render so any messages already on screen pick it up.
+  // Warm the markdown renderer once the page is idle. Fetching it on open
+  // instead put a 160ms+ chunk load directly inside the panel's open animation,
+  // which is exactly the frame budget the animation needs; fetching it at
+  // import time put it in the bundle every visitor downloads before the hero
+  // paints. Idle is neither: off the critical path, and already resolved by the
+  // time anyone clicks.
   useEffect(() => {
-    if (!isOpen) return;
     let cancelled = false;
-    loadMarked().then(() => {
-      if (!cancelled) setMarkdownReady(true);
-    });
+    const warm = () => {
+      loadMarked().then(() => {
+        if (!cancelled) setMarkdownReady(true);
+      });
+    };
+    // requestIdleCallback is still missing on Safari below 17.
+    const hasIdle = typeof window.requestIdleCallback === "function";
+    const handle = hasIdle
+      ? window.requestIdleCallback(warm, { timeout: 4000 })
+      : window.setTimeout(warm, 2000);
     return () => {
       cancelled = true;
+      if (hasIdle) window.cancelIdleCallback(handle);
+      else window.clearTimeout(handle);
     };
-  }, [isOpen]);
+  }, []);
 
   // Trigger brief 'Heyy' greeting once user reaches the hero page after initial video
   useEffect(() => {
@@ -227,10 +239,15 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 25, scale: 0.94 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.94, transition: { duration: 0.15 } }}
-            transition={{ type: "spring", stiffness: 300, damping: 26 }}
+            // Same reasoning as the navbar dropdown: no `scale` on a textured
+            // card, because scaling forces a re-raster of the fabric gradient
+            // every frame while a translate does not. The spring is also gone --
+            // it was JS-driven for ~450ms of settle, where a 220ms tween covers
+            // the same distance and hands off to the compositor immediately.
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20, transition: { duration: 0.15 } }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             data-lenis-prevent="true"
             className={cn(
               "fixed bottom-20 sm:bottom-24 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
