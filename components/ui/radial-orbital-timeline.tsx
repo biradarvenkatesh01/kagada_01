@@ -12,6 +12,9 @@ export interface TimelineItem {
   imageSrc?: string;
   icon: React.ElementType;
   relatedIds: number[];
+  fee?: number;
+  teamSize?: string;
+  hasRegistration?: boolean;
 }
 
 interface RadialOrbitalTimelineProps {
@@ -419,13 +422,30 @@ export default function RadialOrbitalTimeline({
                             </div>
                           )}
 
-                          {/* Description Paragraph (Right Column on PC) */}
-                          <div className={`${item.imageSrc ? "md:col-span-7" : "md:col-span-12"} flex flex-col space-y-4 text-left`}>
+                          {/* Description Paragraph & Event Details (Right Column on PC) */}
+                          <div className={`${item.imageSrc ? "md:col-span-7" : "md:col-span-12"} flex flex-col justify-center space-y-4 text-left w-full h-full`}>
                             {(item.description || item.content) && (
                               <p className="font-jakarta text-xs sm:text-sm md:text-base text-slate-800 leading-relaxed font-medium">
                                 {item.description || item.content}
                               </p>
                             )}
+                            
+                            {/* Fee & Team Size Box (Only shows if defined) */}
+                            {(item.fee || item.teamSize) && (
+                              <div className="bg-[#D8D3C7]/40 rounded-xl py-3 px-4 w-full text-center text-[0.8rem] sm:text-sm text-[#5A182B] font-semibold mt-2 shadow-inner border border-[#5A182B]/20">
+                                {item.fee && <p className="mb-1">Fee: ₹{item.fee} per team</p>}
+                                {item.teamSize && <p>Team Size: {item.teamSize}</p>}
+                              </div>
+                            )}
+
+                            {/* Registration Button (Matching SKIP button theme) */}
+                            {/* 
+                            {item.hasRegistration && (
+                              <button className="w-full bg-[#EAE5D9] hover:bg-[#D8D3C7] text-[#5A182B] font-roboto-mono font-bold py-3 sm:py-3.5 rounded-none text-[0.75rem] sm:text-[0.85rem] uppercase tracking-widest transition-all active:scale-[0.98] mt-1 border-2 border-[#5A182B]/40 shadow-[2px_2px_6px_rgba(0,0,0,0.15)] flex items-center justify-center gap-2">
+                                Registrations closed <span className="opacity-70 font-normal">→</span>
+                              </button>
+                            )}
+                            */}
                           </div>
                         </div>
 
