@@ -22,6 +22,9 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     imageSrc: "/optimized/tracks/paper.webp",
     icon: FileText,
     relatedIds: [2, 3],
+    fee: 200,
+    teamSize: "1-5 members",
+    hasRegistration: true,
   },
   {
     id: 2,
@@ -32,6 +35,9 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     imageSrc: "/optimized/tracks/poster.webp",
     icon: ImageIcon,
     relatedIds: [1, 3],
+    fee: 150,
+    teamSize: "1-3 members",
+    hasRegistration: true,
   },
   {
     id: 3,
@@ -42,6 +48,9 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     imageSrc: "/optimized/tracks/project.webp",
     icon: Cpu,
     relatedIds: [1, 2],
+    fee: 180,
+    teamSize: "1-4 members",
+    hasRegistration: true,
   },
   {
     id: 4,
