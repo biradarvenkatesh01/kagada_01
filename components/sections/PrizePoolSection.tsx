@@ -8,7 +8,7 @@ export function PrizePoolSection() {
     >
       <div className="relative z-10 w-full max-w-xl md:max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
-        <h2 className="font-saman text-4xl sm:text-6xl md:text-7xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 tracking-tight text-center select-none">
+        <h2 data-reveal className="font-saman text-4xl sm:text-6xl md:text-7xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 tracking-tight text-center select-none">
           Prize <span className="text-amber-400 tshadow-md">Pool</span>
         </h2>
 

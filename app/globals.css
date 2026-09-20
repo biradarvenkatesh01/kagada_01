@@ -2,7 +2,12 @@
 
 @font-face {
   font-family: 'Saman';
-  src: url('/fonts/SAMAN___.TTF') format('truetype');
+  /* woff2 is Brotli-compressed; the .ttf was being served raw. 58.4 KB -> 21.1 KB
+     for a face that sets every section heading on the page. The .ttf stays as a
+     fallback for anything that cannot take woff2 (nothing current, but it costs
+     one line and no bytes unless it is actually used). */
+  src: url('/fonts/SAMAN___.woff2') format('woff2'),
+       url('/fonts/SAMAN___.TTF') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -10,7 +15,9 @@
 
 @font-face {
   font-family: 'Smooch Sans';
-  src: url('/fonts/SmoochSans-VariableFont_wght.ttf') format('truetype');
+  /* 91.5 KB -> 37.6 KB. */
+  src: url('/fonts/SmoochSans-VariableFont_wght.woff2') format('woff2'),
+       url('/fonts/SmoochSans-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -500,6 +507,42 @@ html.lenis, html.lenis body {
     radial-gradient(circle at 1.7px 1.7px, rgba(20, 2, 6, 0.35) 0.6px, transparent 0.9px),
     radial-gradient(circle at 0px 0px, rgba(240, 100, 130, 0.15) 0.5px, transparent 0.8px);
   background-size: auto, auto, auto, auto, 3.5px 3.5px, 3.5px 3.5px;
+}
+
+/* ─── Reveal on scroll ────────────────────────────────────
+   Elements marked `data-reveal` fade and rise as they scroll into view.
+
+   This is a CSS scroll-driven animation, not an IntersectionObserver: the
+   browser runs it on the compositor off the main thread, so it costs nothing
+   per frame and cannot be delayed by JavaScript the way an observer callback
+   can. `opacity` and `translate` are the only properties touched, and both are
+   composited, so no layout or paint is involved either.
+
+   Everything is gated behind @supports. Where scroll-driven animations are not
+   implemented (Firefox, older Safari) the rule never applies and content
+   renders plainly — there is no JS-dependent hidden state that could strand
+   content invisible, which is the usual failure mode of reveal-on-scroll. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    [data-reveal] {
+      animation: kagada-reveal linear both;
+      animation-timeline: view();
+      /* Finish well before the element reaches the middle of the screen, so it
+         is fully settled by the time it is actually being read. */
+      animation-range: entry 0% entry 45%;
+    }
+  }
+}
+
+@keyframes kagada-reveal {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
 ::selection {

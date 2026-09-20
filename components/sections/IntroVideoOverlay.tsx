@@ -44,15 +44,27 @@ export const IntroVideoOverlay = memo(function IntroVideoOverlay({
           onClick={onUnmute}
           className="fixed inset-0 w-screen h-screen min-h-[100dvh] z-[9999] bg-black cursor-pointer transform-gpu pointer-events-auto overflow-hidden touch-none select-none overscroll-none"
         >
+          {/* Two encodes of the same 8s clip. The source was 1080x1920 at
+              4104 kb/s -- 4.23MB, which on a throttled 4G profile took ~5s to
+              transfer and spent that time competing with the hero image, the
+              fonts and the JS bundle while the page sat scroll-locked.
+              Re-encoded at CRF it is 3.52MB, and phones (where the bandwidth
+              actually hurts, and where the viewport is portrait so the clip is
+              barely scaled) get a 720x1280 cut at 2.13MB instead -- half the
+              original. The browser picks by `media` before it fetches, so only
+              one is ever downloaded. Both keep `+faststart`, so playback begins
+              on the first chunk rather than the last. */}
           <video
             ref={videoRef}
-            src="/video-intro.mp4"
             autoPlay
             playsInline
             onTimeUpdate={onTimeUpdate}
             onEnded={onEnded}
             className="w-full h-full min-h-[100dvh] object-cover"
-          />
+          >
+            <source src="/video-intro-mobile.mp4" type="video/mp4" media="(max-width: 820px)" />
+            <source src="/video-intro.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-white/18 pointer-events-none z-[51]" />
 
           {/* ⏭️ SKIP INTRO BUTTON */}

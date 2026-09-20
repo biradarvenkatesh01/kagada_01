@@ -160,8 +160,8 @@ export default function RootLayout({
         <link
           rel="preload"
           as="font"
-          type="font/ttf"
-          href="/fonts/SAMAN___.TTF"
+          type="font/woff2"
+          href="/fonts/SAMAN___.woff2"
           crossOrigin="anonymous"
         />
         {/* Explicit Favicons for Google Search & Web Crawlers */}
