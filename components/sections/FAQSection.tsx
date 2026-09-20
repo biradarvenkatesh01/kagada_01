@@ -56,30 +56,10 @@ const FAQCard = memo(function FAQCard({
   isOpen: boolean
   onToggle: (index: number) => void
 }) {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [contentHeight, setContentHeight] = useState<number>(0);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
-    }
-  }, [faq.answer]);
-
-  // Re-measure on window resize to ensure accuracy across mobile and desktop
-  useEffect(() => {
-    const handleResize = () => {
-      if (contentRef.current) {
-        setContentHeight(contentRef.current.scrollHeight);
-      }
-    };
-    window.addEventListener("resize", handleResize, { passive: true });
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
     <div
       className={cn(
-        "relative overflow-hidden border-2",
+        "relative overflow-hidden border-2 !rounded-none",
         "kagada-paper-card border-white/90 shadow-md shadow-black/15",
         isOpen && "border-white"
       )}
@@ -96,34 +76,42 @@ const FAQCard = memo(function FAQCard({
         <h3 className="font-outfit font-bold text-base sm:text-lg text-[#5A182B] tracking-wide leading-snug">
           {faq.question}
         </h3>
+        {/* Stable Circular Badge: stays perfectly round, never squishes */}
         <div
           className={cn(
-            "w-7 h-7 sm:w-8 sm:h-8 rounded-full shrink-0 flex items-center justify-center",
-            "bg-[#5A182B]/10 border border-[#5A182B]/25 text-[#5A182B] shadow-sm",
-            "transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] transform-gpu",
-            isOpen && "rotate-180 bg-[#5A182B] text-[#D8D3C7] border-[#5A182B]"
+            "w-7 h-7 sm:w-8 sm:h-8 !rounded-full shrink-0 flex items-center justify-center",
+            "border shadow-sm transition-colors duration-200",
+            isOpen
+              ? "bg-[#5A182B] text-[#D8D3C7] border-[#5A182B]"
+              : "bg-[#5A182B]/10 border-[#5A182B]/25 text-[#5A182B]"
           )}
         >
-          <ChevronDown className="w-4 h-4 stroke-[2.5]" />
+          <ChevronDown
+            className={cn(
+              "w-4 h-4 stroke-[2.5] transition-transform duration-250 ease-out transform-gpu",
+              isOpen && "rotate-180"
+            )}
+          />
         </div>
       </button>
 
-      {/* Accordion body with butter-smooth GPU-optimized height animation */}
+      {/* Accordion body with smooth hardware-accelerated grid transition */}
       <div
         id={`faq-panel-${idx}`}
         role="region"
         aria-labelledby={`faq-header-${idx}`}
-        style={{
-          maxHeight: isOpen ? `${contentHeight || 350}px` : "0px",
-          opacity: isOpen ? 1 : 0,
-        }}
-        className="overflow-hidden transition-[max-height,opacity] duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]"
+        className={cn(
+          "grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.25,1,0.5,1)]",
+          isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        )}
       >
-        <div ref={contentRef} className="px-4 pb-3.5 sm:px-5 sm:pb-4 pt-0 text-left">
-          <div className="pt-2.5 sm:pt-3 border-t border-[#5A182B]/20">
-            <p className="font-jakarta text-xs sm:text-sm md:text-base font-medium text-stone-800 leading-relaxed whitespace-pre-line select-text">
-              {faq.answer}
-            </p>
+        <div className="overflow-hidden min-h-0">
+          <div className="px-4 pb-3.5 sm:px-5 sm:pb-4 pt-0 text-left">
+            <div className="pt-2 sm:pt-2.5 border-t border-[#5A182B]/20">
+              <p className="font-jakarta text-xs sm:text-sm md:text-base font-medium text-stone-800 leading-relaxed whitespace-pre-line select-text">
+                {faq.answer}
+              </p>
+            </div>
           </div>
         </div>
       </div>

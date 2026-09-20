@@ -132,6 +132,11 @@ footer {
   contain: layout style;
 }
 
+#contact iframe {
+  contain: strict;
+  transform: translateZ(0);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
