@@ -60,9 +60,14 @@ export const HeroSection = memo(function HeroSection({ isIntroActive = false }: 
       >
         {/* Title Paper Box containing Title + Subtitle */}
         <div className="w-full px-2.5 min-[360px]:px-3 sm:px-10 py-4 min-[360px]:py-5 sm:py-8 !rounded-2xl sm:!rounded-3xl kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/15 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
-          <h1 className="whitespace-nowrap font-saman font-normal text-[2.65rem] min-[360px]:text-[3.1rem] xs:text-[3.6rem] sm:text-6xl md:text-7xl lg:text-[8.5rem] text-[#5A182B] tracking-[-0.015em] tshadow-sm select-none leading-none text-center mx-auto">
-            K<span className="inline-block ml-[0.03em]">a</span>g<span className="inline-block ml-[0.03em]">a</span>d<span className="inline-block ml-[0.03em]">a</span> 2026
-          </h1>
+          <img
+            src="/kagada-2026-header-maroon.png"
+            alt="Kagada 2026"
+            width={800}
+            height={200}
+            className="w-full max-w-[280px] min-[360px]:max-w-[320px] sm:max-w-[420px] md:max-w-[550px] lg:max-w-[720px] h-auto object-contain mx-auto select-none"
+            draggable={false}
+          />
 
           {/* Subtitle in Roboto Mono Font */}
           <p className="font-roboto-mono text-[0.7rem] min-[360px]:text-xs sm:text-base md:text-xl lg:text-2xl text-[#5A182B]/95 font-bold tracking-wider sm:tracking-widest mt-3 min-[360px]:mt-4 sm:mt-7 uppercase tshadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[95%] sm:max-w-none mx-auto">
