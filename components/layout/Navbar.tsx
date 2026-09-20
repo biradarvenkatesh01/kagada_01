@@ -149,10 +149,17 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
         {mobileMenuOpen && (
           <motion.div
             id="mobile-nav-dropdown"
-            initial={{ opacity: 0, y: -10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            transition={{ duration: 0.2 }}
+            // No `scale` here. This panel is a `.kagada-paper-card`, so its
+            // background is a six-layer procedural gradient; animating scale
+            // makes Chrome re-rasterise that texture at each step to keep it
+            // sharp, whereas a translate is a pure compositor transform on an
+            // already-rasterised layer. Dropping the 2% scale is invisible next
+            // to the slide and the fade, and it is the difference between
+            // re-painting the panel every frame and not.
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="absolute top-18 sm:top-20 left-0 right-0 kagada-paper-card border-2 border-white/95 !rounded-3xl p-6 shadow-2xl shadow-black/30 flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#5A182B] lg:hidden z-[1001]"
           >
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
