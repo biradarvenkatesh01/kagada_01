@@ -288,14 +288,14 @@ export function CardStack<T extends CardStackItem>({
 
                   // 3D Geometry: on mobile (<500px or mobile viewport), cards stack cleanly behind without overflowing screen edges
                   const radiusAngle = (off / maxOffset) * (Math.PI / 3.4);
-                  const x = isMobile ? off * 10 : Math.sin(radiusAngle) * (cardSpacing * 1.35);
+                  const x = isMobile ? 0 : Math.sin(radiusAngle) * (cardSpacing * 1.35);
                   const z = isMobile ? -abs * 35 : (Math.cos(radiusAngle) - 1) * depthPx * 1.8;
                   const rotateY = isMobile ? 0 : off * -7;
-                  const y = isMobile ? -abs * 10 : 0;
+                  const y = isMobile ? -abs * 15 : 0;
 
                   const isActive = off === 0;
 
-                  const scale = 1;
+                  const scale = isMobile ? 1 - abs * 0.04 : 1;
                   const lift = 0;
 
                   const zIndex = 100 - abs;

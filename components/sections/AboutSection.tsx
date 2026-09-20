@@ -7,7 +7,7 @@ import { ABOUT_CARDS } from "@/data/kagada-data";
 function renderAboutCard(item: CardStackItem) {
   if (item.type === "uvce") {
     return (
-      <div className="flex flex-col text-left select-text w-full">
+      <div className="flex flex-col text-justify select-text w-full">
         {/* Header Centered Horizontally in Smooch Sans Font */}
         <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-1.5 sm:pb-2.5 mb-2.5 sm:mb-4 lg:mb-5 w-full shrink-0">
           <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
@@ -53,7 +53,7 @@ function renderAboutCard(item: CardStackItem) {
 
   if (item.type === "ieee") {
     return (
-      <div className="flex flex-col justify-between text-left select-text w-full h-full flex-1">
+      <div className="flex flex-col justify-between text-justify select-text w-full h-full flex-1">
         {/* Header Centered Horizontally in Smooch Sans Font */}
         <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-1.5 sm:pb-2.5 mb-2.5 sm:mb-4 lg:mb-5 w-full shrink-0">
           <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
@@ -91,7 +91,7 @@ function renderAboutCard(item: CardStackItem) {
 
   if (item.type === "kagada") {
     return (
-      <div className="flex flex-col text-left select-text w-full">
+      <div className="flex flex-col text-justify select-text w-full">
         {/* Header Centered Horizontally in Smooch Sans Font */}
         <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-1.5 sm:pb-2.5 mb-2.5 sm:mb-4 lg:mb-5 w-full shrink-0">
           <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
