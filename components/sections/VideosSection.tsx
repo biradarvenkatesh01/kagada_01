@@ -181,7 +181,7 @@ export const VideosSection = memo(function VideosSection() {
       {/* Main Title: KAGADA - From the previous years! */}
       <div>
         <h2 data-reveal className="font-saman text-[#D8D3C7] text-4xl sm:text-6xl md:text-7xl lg:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
-          KAGADA - <span className="text-amber-400 tshadow-md">From the previous years!</span>
+          KAGADA <span className="font-jakarta font-medium mx-1 sm:mx-2">-</span> <span className="text-amber-400 tshadow-md">from the previous years!</span>
         </h2>
       </div>
 
