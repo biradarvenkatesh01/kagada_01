@@ -49,13 +49,11 @@ const FAQCard = memo(function FAQCard({
   faq,
   idx,
   isOpen,
-  isExpanded,
   onToggle,
 }: {
   faq: FAQItem
   idx: number
   isOpen: boolean
-  isExpanded: boolean
   onToggle: (index: number) => void
 }) {
   return (
@@ -91,41 +89,46 @@ const FAQCard = memo(function FAQCard({
       </button>
 
       {/* Accordion body.
-          This used to transition `grid-template-rows: 0fr -> 1fr`, which is a
-          LAYOUT animation: the browser re-ran style, layout and paint on every
-          frame, and because the card grew, so did everything after it in the
-          document. Measured on a 390x844 @DPR3 viewport at 6x CPU throttle,
-          opening one answer: p95 frame 41.8ms with 12.5% of frames dropped, and
-          the same interaction with the transition removed came in at 14ms and
-          1.4%. Swapping the transition to opacity alone (no size change) landed
-          at 20.8ms, which is what pinned the cost on the resize specifically
-          rather than on this card's fabric texture or its shadow -- both of
-          those were A/B'd out and neither moved the number.
+          The height genuinely animates here, which means `grid-template-rows`
+          is a layout animation and the browser re-runs style, layout and paint
+          on every frame of it. That is a deliberate choice, not an oversight:
+          snapping the row open in one frame measures far cheaper (14ms p95 at
+          6x CPU throttle versus about 40ms) but it reads as the answer being
+          thrown at you rather than opening, which is not what this should feel
+          like.
 
-          So the size change now happens in a single frame, and the reveal itself
-          is `transform` + `opacity`, which the compositor animates without ever
-          touching layout. The row stays expanded while a closing answer slides
-          back up (see `isExpanded` in FAQSection) so the collapse is not visible
-          mid-animation. */}
+          What is kept from that work is everything that made the animation
+          cheaper without changing how it looks:
+            - no `transform-gpu` or `will-change` on this element. It resizes,
+              so promoting it just forces a re-rasterise at a new size every
+              frame on top of the paint already happening, and
+              `grid-template-rows` has no compositor fast path for
+              `will-change` to hint at.
+            - `contain` on the card and on the sections below it, so the reflow
+              this causes cannot descend into the Google Maps iframe or the
+              contact form (see globals.css).
+          The card's fabric texture and its shadow were both A/B'd out while
+          measuring and neither affected the number, so neither is worth
+          degrading for this.
+
+          The answer fades in just behind the opening edge rather than sliding
+          the full height of the panel, which is what made the previous version
+          feel abrupt. */}
       <div
         id={`faq-panel-${idx}`}
         role="region"
         aria-labelledby={`faq-header-${idx}`}
-        className={cn("grid", isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
+        className={cn(
+          "grid transition-[grid-template-rows] duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        )}
       >
         <div className="overflow-hidden min-h-0">
           <div
             className={cn(
               "px-4 pb-3 sm:px-5 sm:pb-3.5 pt-0 text-left",
-              // `transform-gpu` is right here and was wrong on the old resizing
-              // wrapper: this element never changes size, so the compositor can
-              // rasterise it once and then just move it. Without the promotion
-              // Chrome repaints the clipped region on every frame of the slide.
-              // `translate`, not `transform`: Tailwind v4 compiles `-translate-y-*`
-              // to the independent `translate` property, so transitioning
-              // `transform` here animated nothing and the slide snapped.
-              "transition-[translate,opacity] duration-200 ease-out transform-gpu",
-              isOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
+              "faq-answer transition-opacity duration-[220ms] ease-out",
+              isOpen ? "opacity-100 delay-75" : "opacity-0 pointer-events-none"
             )}
           >
             <div className="pt-2.5 sm:pt-3 border-t border-[#5A182B]/20">
@@ -140,45 +143,24 @@ const FAQCard = memo(function FAQCard({
   )
 })
 
-// Matches the `duration-200` on the answer's transform/opacity transition. The
-// row it lives in has to stay expanded for exactly this long after the answer
-// starts sliding out, or the box would collapse out from under the animation.
-const COLLAPSE_MS = 200
+// The row's own `duration-[220ms]` open/close. Lenis is told to re-measure just
+// after it, so it reads the settled document height.
+const OPEN_MS = 220
 
 export const FAQSection = memo(function FAQSection() {
   // All FAQs closed initially
   const [openIndex, setOpenIndex] = useState<number | null>(null)
-  // The answer that is sliding out right now, if any. Only ever one, because
-  // only one answer can be open at a time.
-  const [closingIndex, setClosingIndex] = useState<number | null>(null)
-  const collapseTimerRef = useRef<number | null>(null)
   const resizeTimerRef = useRef<number | null>(null)
 
   useEffect(() => () => {
-    if (collapseTimerRef.current !== null) window.clearTimeout(collapseTimerRef.current)
     if (resizeTimerRef.current !== null) window.clearTimeout(resizeTimerRef.current)
   }, [])
 
   const toggleAccordion = useCallback((index: number) => {
-    setOpenIndex((prev) => {
-      const next = prev === index ? null : index
-
-      // Whichever answer was showing is now on its way out: hold its row open
-      // until it has finished sliding, then let the row collapse.
-      if (prev !== null && prev !== next) {
-        setClosingIndex(prev)
-        if (collapseTimerRef.current !== null) window.clearTimeout(collapseTimerRef.current)
-        collapseTimerRef.current = window.setTimeout(() => {
-          setClosingIndex(null)
-          collapseTimerRef.current = null
-        }, COLLAPSE_MS)
-      }
-
-      return next
-    })
+    setOpenIndex((prev) => (prev === index ? null : index))
 
     // Lenis measures the document once, so it needs telling when the page got
-    // taller. Deferred past the collapse so it measures the settled height.
+    // taller. Deferred past the transition so it measures the settled height.
     if (typeof window !== "undefined") {
       if (resizeTimerRef.current !== null) {
         window.clearTimeout(resizeTimerRef.current)
@@ -187,7 +169,7 @@ export const FAQSection = memo(function FAQSection() {
         const lenis = (window as unknown as { __lenis?: { resize: () => void } }).__lenis
         lenis?.resize()
         resizeTimerRef.current = null
-      }, COLLAPSE_MS + 20)
+      }, OPEN_MS + 20)
     }
   }, [])
 
@@ -216,7 +198,6 @@ export const FAQSection = memo(function FAQSection() {
               faq={faq}
               idx={idx}
               isOpen={openIndex === idx}
-              isExpanded={openIndex === idx || closingIndex === idx}
               onToggle={toggleAccordion}
             />
           ))}

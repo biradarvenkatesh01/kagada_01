@@ -2,8 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Plus_Jakarta_Sans, Outfit, Roboto_Mono } from "next/font/google";
 import SmoothScroll from "@/components/ui/smooth-scroll";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import DeferredAnalytics from "@/components/ui/deferred-analytics";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -198,12 +197,10 @@ export default function RootLayout({
         </Script>
         <SmoothScroll>{children}</SmoothScroll>
 
-        {/* Vercel Analytics (page views) and Speed Insights (Core Web Vitals).
-            Both only transmit on Vercel deployments — locally they no-op, so
-            they cost nothing in dev. Rendered last so their scripts queue
-            behind the page's own content. */}
-        <Analytics />
-        <SpeedInsights />
+        {/* Vercel Analytics (page views) and Speed Insights (Core Web Vitals),
+            mounted on idle. They no-op locally and only do real work on a
+            deployment, so their cost is invisible in dev — see the component. */}
+        <DeferredAnalytics />
       </body>
     </html>
   );

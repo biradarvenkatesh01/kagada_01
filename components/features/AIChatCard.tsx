@@ -252,8 +252,14 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             className={cn(
               "fixed bottom-20 sm:bottom-24 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
               "h-[530px] max-h-[calc(100dvh_-_11rem_-_env(safe-area-inset-top,0px))] sm:max-h-[calc(100dvh_-_13rem)]",
-              "z-[1000] !rounded-2xl sm:!rounded-3xl overflow-hidden shadow-2xl flex flex-col",
-              "kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/80",
+              "z-[1000] !rounded-2xl sm:!rounded-3xl overflow-hidden flex flex-col",
+              // `shadow-2xl shadow-black/80` was a 50px blur at 80% opacity, and
+              // it was declared twice on this element. The whole panel has to be
+              // painted inside the first frame of the open animation, and a blur
+              // that large over a 410x530 surface is the most expensive part of
+              // that paint. Precedent is in Navbar.tsx, where dropping 2xl to lg
+              // was measured as the single largest cost there.
+              "kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/50",
               className
             )}
           >
