@@ -93,33 +93,6 @@
   border-radius: 0 !important;
 }
 
-/* ─── Layout containment ───────────────────────────────────
-   Opening an FAQ answer animates `grid-template-rows`, which is a layout
-   property: the browser re-runs style, layout and paint on every frame of the
-   transition, and the card grows, so everything after it in the document flow
-   moves too.
-
-   `contain` bounds how far that work can spread:
-   - On the FAQ card, `paint` clips the invalidated region to the card, so the
-     growing panel stops dirtying the burgundy texture behind it, and `layout`
-     keeps the card's internal reflow from escaping into its siblings. It also
-     subsumes the `isolation: isolate` this rule used to carry, since paint
-     containment already forms a stacking and blend-isolation context.
-   - On the sections that follow it, `layout` lets the browser reposition each
-     box without descending into its subtree. That matters most for #contact,
-     which holds the Google Maps iframe and the query form; without it, every
-     frame of a 200ms accordion transition re-laid-out both.
-
-   #videos and #hero are deliberately excluded: they contain `position: fixed`
-   children (the aftermovie lightbox, the intro overlay), and a layout-contained
-   ancestor becomes their containing block, which would break full-screen. */
-/* ─── FAQ Isolation & High Performance Card ─── */
-#faq .kagada-paper-card {
-  isolation: isolate;
-  background-image: none !important;
-  background-color: #D8D3C7 !important;
-}
-
 #about,
 #prizes,
 #winners,
@@ -130,27 +103,24 @@ footer {
   contain: layout style;
 }
 
-/* ─── Super-Smooth Accordion (Direct scrollHeight Architecture) ─── */
-.accordion__item {
+/* ─── High-Performance FAQ Accordion ─── */
+.faq-card {
   display: flex;
   flex-direction: column;
   background-color: #D8D3C7;
   border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 0.75rem;
   border-radius: 0;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.15s ease;
   overflow: hidden;
-  contain: paint;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
-.accordion__item.active {
+.faq-card[data-open="true"] {
   border-color: #ffffff;
 }
 
-.item__header {
+.faq-trigger {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -165,31 +135,37 @@ footer {
   -webkit-tap-highlight-color: transparent;
 }
 
+.faq-trigger:focus-visible {
+  outline: 2px solid #5A182B;
+  outline-offset: -2px;
+}
+
 @media (min-width: 640px) {
-  .item__header {
+  .faq-trigger {
     padding: 1rem 1.5rem;
   }
 }
 
-.item__question {
+.faq-question {
   font-family: var(--font-outfit), sans-serif;
   font-size: 1.0625rem;
   font-weight: 700;
   color: #5A182B;
   line-height: 1.35;
   margin: 0;
+  padding-right: 0.75rem;
 }
 
 @media (min-width: 640px) {
-  .item__question {
+  .faq-question {
     font-size: 1.15rem;
   }
 }
 
-.item__icon {
-  flex: 0 0 30px;
-  height: 30px;
-  width: 30px;
+.faq-icon-box {
+  flex: 0 0 28px;
+  height: 28px;
+  width: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -201,41 +177,65 @@ footer {
   pointer-events: none;
 }
 
-.active .item__icon {
+@media (min-width: 640px) {
+  .faq-icon-box {
+    flex: 0 0 32px;
+    height: 32px;
+    width: 32px;
+  }
+}
+
+.faq-card[data-open="true"] .faq-icon-box {
   background: #5A182B;
   color: #D8D3C7;
   border-color: #5A182B;
 }
 
-.item__icon svg {
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
+.faq-icon {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 2.5;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   transform: rotate(0deg);
 }
 
-.active .item__icon svg {
+.faq-card[data-open="true"] .faq-icon {
   transform: rotate(180deg);
 }
 
-.item__content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 280ms cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: max-height;
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.item__body {
+.faq-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.faq-body {
   padding: 0.75rem 1.25rem 1rem 1.25rem;
   border-top: 1px solid rgba(90, 24, 43, 0.18);
+  transition: opacity 180ms ease;
+  opacity: 0;
 }
 
 @media (min-width: 640px) {
-  .item__body {
+  .faq-body {
     padding: 0.875rem 1.5rem 1.125rem 1.5rem;
   }
 }
 
-.item__answer {
+.faq-card[data-open="true"] .faq-body {
+  opacity: 1;
+}
+
+.faq-answer {
   font-family: var(--font-jakarta), sans-serif;
   font-size: 0.9375rem;
   line-height: 1.6;

@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { useRef } from 'react'
+import { useState, useCallback, memo } from 'react'
 import { ChevronDown } from 'lucide-react'
 
 interface FAQItem {
@@ -44,52 +44,17 @@ const FAQS: FAQItem[] = [
   },
 ]
 
-export default function FAQSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
+export const FAQSection = memo(function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-  // Direct 100% native DOM event handler (Matches the vanilla JS snippet exactly)
-  // No React state updates during click -> 0ms latency, 0 dropped frames on mobile
-  const handleItemClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const btn = e.currentTarget
-    const currentItem = btn.closest('.accordion__item') as HTMLElement | null
-    const currentContent = btn.nextElementSibling as HTMLElement | null
-    if (!currentItem || !currentContent) return
-
-    const isCurrentlyActive = currentItem.classList.contains('active')
-
-    // Collapse any other open accordion item instantly
-    if (containerRef.current) {
-      const allActiveItems = containerRef.current.querySelectorAll('.accordion__item.active')
-      allActiveItems.forEach((item) => {
-        if (item !== currentItem) {
-          item.classList.remove('active')
-          const headerBtn = item.querySelector('.item__header')
-          headerBtn?.setAttribute('aria-expanded', 'false')
-          const content = item.querySelector('.item__content') as HTMLElement | null
-          if (content) {
-            content.style.maxHeight = '0px'
-          }
-        }
-      })
-    }
-
-    // Toggle current item with native CSS 300ms transition
-    if (isCurrentlyActive) {
-      currentItem.classList.remove('active')
-      btn.setAttribute('aria-expanded', 'false')
-      currentContent.style.maxHeight = '0px'
-    } else {
-      currentItem.classList.add('active')
-      btn.setAttribute('aria-expanded', 'true')
-      currentContent.style.maxHeight = `${currentContent.scrollHeight}px`
-    }
-  }
+  const toggleItem = useCallback((index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index))
+  }, [])
 
   return (
     <section
       id="faq"
       className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10"
-      style={{ contain: 'paint' }}
     >
       {/* Main Section Title */}
       <div>
@@ -105,42 +70,49 @@ export default function FAQSection() {
         </p>
       </div>
 
-      {/* FAQ Accordion List (Vanilla DOM Architecture) */}
-      <div className="w-full">
-        <div ref={containerRef} className="w-full flex flex-col">
-          {FAQS.map((faq, idx) => (
+      {/* FAQ Accordion List */}
+      <div className="w-full flex flex-col">
+        {FAQS.map((faq, idx) => {
+          const isOpen = openIndex === idx
+          return (
             <div
               key={`faq-${idx}`}
-              className="accordion__item"
+              className="faq-card"
+              data-open={isOpen}
             >
               <button
                 type="button"
-                onClick={handleItemClick}
-                className="item__header"
-                aria-expanded="false"
-                aria-controls={`faq-answer-${idx}`}
+                onClick={() => toggleItem(idx)}
+                className="faq-trigger"
+                aria-expanded={isOpen}
+                aria-controls={`faq-panel-${idx}`}
                 id={`faq-btn-${idx}`}
               >
-                <h3 className="item__question">{faq.question}</h3>
-                <div className="item__icon">
-                  <ChevronDown className="w-4 h-4 stroke-[2.5]" />
+                <h3 className="faq-question">{faq.question}</h3>
+                <div className="faq-icon-box">
+                  <ChevronDown className="faq-icon" />
                 </div>
               </button>
 
               <div
-                id={`faq-answer-${idx}`}
+                id={`faq-panel-${idx}`}
                 role="region"
                 aria-labelledby={`faq-btn-${idx}`}
-                className="item__content"
+                className="faq-panel"
+                data-open={isOpen}
               >
-                <div className="item__body">
-                  <p className="item__answer">{faq.answer}</p>
+                <div className="faq-panel-inner">
+                  <div className="faq-body">
+                    <p className="faq-answer">{faq.answer}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          )
+        })}
       </div>
     </section>
   )
-}
+})
+
+export default FAQSection
