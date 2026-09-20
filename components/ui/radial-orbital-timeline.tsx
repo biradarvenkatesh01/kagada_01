@@ -335,7 +335,7 @@ export default function RadialOrbitalTimeline({
                 <motion.div
                   className={`
                     relative z-20
-                    w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center
+                    w-10 h-10 sm:w-12 sm:h-12 !rounded-full flex items-center justify-center
                     ${
                       isExpanded
                         ? "bg-white text-[#5A182B] border-[#5A182B] shadow-2xl scale-125"
@@ -382,7 +382,7 @@ export default function RadialOrbitalTimeline({
                       className="absolute top-0 sm:top-8 md:top-10 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[9999] pointer-events-auto transform-gpu"
                     >
                       {/* 🌟 Authentic Parchment Paper Card Container */}
-                      <div className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[82vh] sm:max-h-none overflow-y-auto custom-scrollbar">
+                      <div className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[82vh] sm:max-h-none overflow-y-auto custom-scrollbar">
                         
                         {/* Top Floating Glass Close Button */}
                         <button
@@ -390,7 +390,7 @@ export default function RadialOrbitalTimeline({
                             e.stopPropagation();
                             toggleItem(item.id);
                           }}
-                          className="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-[#D8D3C7] border border-[#5A182B]/30 text-[#5A182B] hover:bg-white transition-colors flex items-center justify-center shadow-md cursor-pointer"
+                          className="absolute top-4 right-4 z-30 w-8 h-8 !rounded-full bg-[#D8D3C7] border border-[#5A182B]/30 text-[#5A182B] hover:bg-white transition-colors flex items-center justify-center shadow-md cursor-pointer"
                           aria-label="Close card"
                         >
                           <X className="w-4 h-4 text-[#5A182B]" />
@@ -408,7 +408,7 @@ export default function RadialOrbitalTimeline({
                           
                           {/* Image Box (Left Column on PC) */}
                           {item.imageSrc && (
-                            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group" data-no-lightbox="true">
+                            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 !rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group" data-no-lightbox="true">
                               <img
                                 src={item.imageSrc}
                                 alt={item.title}

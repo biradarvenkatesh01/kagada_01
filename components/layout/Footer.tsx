@@ -78,22 +78,22 @@ export function Footer() {
               Software Development SIG
             </span>
           </div>
-          <div className="flex flex-wrap justify-center sm:justify-start items-center gap-x-3 gap-y-2 font-roboto-mono text-sm sm:text-base font-semibold text-[#D8D3C7]/90">
+          <div className="flex flex-nowrap justify-center sm:justify-start items-center gap-1.5 min-[380px]:gap-2 sm:gap-3 font-roboto-mono text-[11px] min-[380px]:text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 max-w-full overflow-x-auto no-scrollbar">
             {DEVELOPERS.map((dev, idx) => (
-              <span key={dev.name} className="flex items-center gap-x-3">
+              <span key={dev.name} className="flex items-center gap-1.5 min-[380px]:gap-2 sm:gap-3 shrink-0">
                 <a
                   href={dev.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full kagada-paper-card border border-white/90 text-[#5A182B] hover:text-[#5A182B]/80 font-bold transition-colors shadow-sm"
+                  className="inline-flex items-center gap-1 sm:gap-1.5 px-2 min-[380px]:px-2.5 sm:px-3 py-1 !rounded-full kagada-paper-card border border-white/90 text-[#5A182B] hover:text-[#5A182B]/80 font-bold transition-colors shadow-sm whitespace-nowrap shrink-0"
                 >
-                  <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current shrink-0" viewBox="0 0 24 24">
                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                   </svg>
                   <span>{dev.name}</span>
                 </a>
                 {idx < DEVELOPERS.length - 1 && (
-                  <span className="text-red-200 font-extrabold px-0.5">&</span>
+                  <span className="text-red-200 font-extrabold px-0.5 shrink-0">&</span>
                 )}
               </span>
             ))}
@@ -111,7 +111,7 @@ export function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 sm:w-12 sm:h-12 kagada-paper-card border-2 border-white/95 rounded-full flex items-center justify-center text-[#5A182B] transition-colors duration-200 hover:border-white shadow-lg shadow-black/20"
+                  className="w-10 h-10 sm:w-12 sm:h-12 kagada-paper-card border-2 border-white/95 !rounded-full flex items-center justify-center text-[#5A182B] transition-colors duration-200 hover:border-white shadow-lg shadow-black/20"
                   aria-label={social.name}
                   title={social.name}
                 >

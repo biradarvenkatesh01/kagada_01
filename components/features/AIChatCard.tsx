@@ -136,10 +136,10 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
               setShowGreeting(false);
               setIsOpen(true);
             }}
-            className="fixed bottom-22 sm:bottom-25 right-5 sm:right-7 z-50 cursor-pointer select-none"
+            className="fixed bottom-18 sm:bottom-22 right-5 sm:right-7 z-50 cursor-pointer select-none"
           >
-            <div className="relative kagada-paper-card text-[#5A182B] border-2 border-white/95 px-4 py-3 rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs transition-all duration-200 group">
-              <div className="w-8 h-8 rounded-full bg-[#5A182B]/10 flex items-center justify-center shrink-0 border border-[#5A182B]/20 text-[#5A182B]">
+            <div className="relative kagada-paper-card text-[#5A182B] border-2 border-white/95 px-4 py-3 !rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs transition-all duration-200 group">
+              <div className="w-8 h-8 !rounded-full bg-[#5A182B]/10 flex items-center justify-center shrink-0 border border-[#5A182B]/20 text-[#5A182B]">
                 <Bot className="w-5 h-5 stroke-[2.2] text-[#5A182B]" />
               </div>
               <p className="text-xs sm:text-sm font-bold font-jakarta text-[#5A182B] leading-snug flex-1">
@@ -150,7 +150,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
                   e.stopPropagation();
                   setShowGreeting(false);
                 }}
-                className="p-1 rounded-full text-[#5A182B]/50 hover:text-[#5A182B] hover:bg-black/5 transition-colors self-center -mr-1 cursor-pointer"
+                className="p-1 !rounded-full text-[#5A182B]/50 hover:text-[#5A182B] hover:bg-black/5 transition-colors self-center -mr-1 cursor-pointer"
                 aria-label="Dismiss greeting"
               >
                 <X className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -173,16 +173,16 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className={cn(
-          "fixed bottom-5 sm:bottom-7 right-5 sm:right-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-[#5A182B] shadow-2xl select-none group cursor-pointer",
+          "fixed bottom-5 sm:bottom-7 right-5 sm:right-7 z-50 w-10 h-10 sm:w-12 sm:h-12 !rounded-full flex items-center justify-center text-[#5A182B] shadow-2xl select-none group cursor-pointer",
           "kagada-paper-card border-2 border-[#5A182B]/30 shadow-2xl shadow-black/40 hover:brightness-105 hover:border-[#5A182B]/60 transition-all duration-300",
           isOpen && "border-[#5A182B] ring-4 ring-[#5A182B]/20"
         )}
         aria-label="Toggle AI Chatbot"
       >
         {isOpen ? (
-          <X className="w-7 h-7 sm:w-8 sm:h-8 text-[#5A182B] stroke-[2.5]" />
+          <X className="w-5 h-5 sm:w-6 sm:h-6 text-[#5A182B] stroke-[2.5]" />
         ) : (
-          <Bot className="w-8 h-8 sm:w-9 sm:h-9 text-[#5A182B] stroke-[2.2] drop-shadow-sm group-hover:rotate-12 transition-transform duration-300" />
+          <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-[#5A182B] stroke-[2.2] drop-shadow-sm group-hover:rotate-12 transition-transform duration-300" />
         )}
       </motion.button>
 
@@ -196,9 +196,9 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
             data-lenis-prevent="true"
             className={cn(
-              "fixed bottom-22 sm:bottom-26 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
+              "fixed bottom-18 sm:bottom-22 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
               "h-[530px] max-h-[calc(100dvh_-_11rem_-_env(safe-area-inset-top,0px))] sm:max-h-[calc(100dvh_-_13rem)]",
-              "z-[1000] rounded-3xl overflow-hidden shadow-2xl flex flex-col",
+              "z-[1000] !rounded-2xl sm:!rounded-3xl overflow-hidden shadow-2xl flex flex-col",
               "kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/80",
               className
             )}

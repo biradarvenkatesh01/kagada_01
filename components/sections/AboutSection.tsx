@@ -27,7 +27,7 @@ function renderAboutCard(item: CardStackItem) {
 
           {/* Right Image & Stat Column */}
           <div className="lg:col-span-5 flex flex-col gap-2 sm:gap-3 lg:gap-4 items-center w-full">
-            <div className="w-full h-24 min-[360px]:h-28 sm:h-44 lg:h-52 rounded-xl sm:rounded-2xl overflow-hidden shadow-md border border-white/80 bg-black/5 shrink-0">
+            <div className="w-full h-24 min-[360px]:h-28 sm:h-44 lg:h-52 !rounded-xl sm:!rounded-2xl overflow-hidden shadow-md border border-white/80 bg-black/5 shrink-0">
               <img
                 src="/optimized/about/uvcecollege.webp"
                 alt="UVCE Campus"
@@ -39,7 +39,7 @@ function renderAboutCard(item: CardStackItem) {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="w-full py-1.5 px-3 sm:py-2.5 sm:px-4 rounded-xl sm:rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm">
+            <div className="w-full py-1.5 px-3 sm:py-2.5 sm:px-4 !rounded-xl sm:!rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm">
               <div className="font-roboto-mono text-lg sm:text-2xl lg:text-3xl font-extrabold text-[#5A182B] leading-none">
                 100+
               </div>
@@ -116,7 +116,7 @@ function renderAboutCard(item: CardStackItem) {
 
           {/* Right 4-Stat Grid Column */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-2 min-[380px]:gap-2.5 sm:gap-3.5 w-full">
-            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
+            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 !rounded-xl sm:!rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
               <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#5A182B]">
                 1000+
               </div>
@@ -125,7 +125,7 @@ function renderAboutCard(item: CardStackItem) {
               </div>
             </div>
 
-            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
+            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 !rounded-xl sm:!rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
               <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#5A182B]">
                 50+
               </div>
@@ -134,7 +134,7 @@ function renderAboutCard(item: CardStackItem) {
               </div>
             </div>
 
-            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
+            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 !rounded-xl sm:!rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
               <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#5A182B]">
                 ₹40K+
               </div>
@@ -143,7 +143,7 @@ function renderAboutCard(item: CardStackItem) {
               </div>
             </div>
 
-            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
+            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 !rounded-xl sm:!rounded-2xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
               <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#5A182B]">
                 20
               </div>

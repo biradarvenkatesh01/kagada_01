@@ -67,22 +67,19 @@
   --font-outfit: var(--font-outfit), 'Outfit', sans-serif;
   --font-jakarta: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
   --font-roboto-mono: var(--font-roboto-mono), 'Roboto Mono', monospace;
-  --radius: 0px;
-  --radius-xs: 0px;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 0px;
-  --radius-4xl: 0px;
-  --radius-full: 0px;
 }
 
-/* ─── Global Square Corners: Zero Curvature Across Entire Website ─── */
-*,
-*::before,
-*::after {
+/* ─── Architectural Square Corners on Content Sections ─── */
+#prizes .kagada-paper-card,
+#winners .kagada-paper-card,
+#videos .kagada-paper-card,
+#sponsors .kagada-paper-card,
+#faq .kagada-paper-card,
+#contact .kagada-paper-card,
+#contact iframe,
+#contact input,
+#contact textarea,
+.flip-unit {
   border-radius: 0 !important;
 }
 
