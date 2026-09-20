@@ -12,7 +12,7 @@ import {
 } from "react";
 
 const flipUnitVariants = cva(
-  "relative subpixel-antialiased rounded-md overflow-hidden",
+  "flip-unit relative subpixel-antialiased !rounded-none overflow-hidden",
   {
     variants: {
       size: {
@@ -53,7 +53,7 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
     <div
       className={cn(
         flipUnitVariants({ size, variant }),
-        "flex items-center justify-center font-mono font-bold shadow-sm",
+        "flex items-center justify-center font-mono font-bold shadow-sm !rounded-none",
         className
       )}
       suppressHydrationWarning

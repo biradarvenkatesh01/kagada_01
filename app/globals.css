@@ -69,7 +69,7 @@
   --font-roboto-mono: var(--font-roboto-mono), 'Roboto Mono', monospace;
 }
 
-/* ─── Architectural Square Corners on Content Sections ─── */
+/* ─── Architectural Square Corners on Content Sections & Timer ─── */
 #prizes .kagada-paper-card,
 #winners .kagada-paper-card,
 #videos .kagada-paper-card,
@@ -79,7 +79,8 @@
 #contact iframe,
 #contact input,
 #contact textarea,
-.flip-unit {
+.flip-unit,
+.hero-timer-box {
   border-radius: 0 !important;
 }
 
