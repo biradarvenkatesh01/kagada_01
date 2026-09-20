@@ -16,12 +16,23 @@ import OffscreenAnimationPause from "@/components/ui/marquee-auto-pause";
 export default function Home() {
   return (
     <main className="relative w-full bg-[#5A182B] overflow-x-hidden min-h-screen">
+      {/* Fixed Textured Burgundy Wallpaper (Completely detached from section height changes) */}
+      <BurgundyTexturedBackground />
+
       {/* Responsive Origami Intro & Hero Experience (with same-tab reload guard) */}
       <OrigamiHeroExperience />
 
-      {/* CONTINUOUS NON-HERO BURGUNDY TEXTURED CANVAS */}
+      {/* CONTINUOUS NON-HERO SECTIONS */}
       <div className="relative w-full overflow-hidden z-10">
-        <BurgundyTexturedBackground />
+        {/* Smooth Top Dissolve from Hero into Burgundy Sections */}
+        <div
+          aria-hidden="true"
+          className="absolute top-0 inset-x-0 h-44 pointer-events-none z-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(35, 5, 11, 0.65) 0%, rgba(55, 8, 17, 0.25) 50%, transparent 100%)",
+          }}
+        />
 
         {/* SECTION 2: ABOUT US */}
         <AboutSection />
