@@ -3,7 +3,6 @@
 import { memo } from "react";
 import { CardStack, CardStackItem } from "@/components/ui/card-stack";
 import { ABOUT_CARDS } from "@/data/kagada-data";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 function renderAboutCard(item: CardStackItem) {
   if (item.type === "uvce") {
@@ -31,7 +30,6 @@ function renderAboutCard(item: CardStackItem) {
               <img
                 src="/optimized/about/uvcecollege.webp"
                 alt="UVCE Campus"
-                data-no-lightbox="true"
                 loading="lazy"
                 decoding="async"
                 width={800}
@@ -78,7 +76,6 @@ function renderAboutCard(item: CardStackItem) {
               <img
                 src="/optimized/about/ieeebluelogo.webp"
                 alt="IEEE UVCE Logo"
-                data-no-lightbox="true"
                 loading="lazy"
                 decoding="async"
                 width={500}
@@ -165,18 +162,18 @@ export const AboutSection = memo(function AboutSection() {
   return (
     <section
       id="about"
-      className="relative w-full text-slate-900 flex flex-col items-center justify-center z-10 px-4 py-8 sm:py-12 scroll-mt-6"
+      className="relative w-full text-slate-900 flex flex-col items-center justify-center z-10 px-4 pt-16 pb-8 sm:pt-24 sm:pb-12 scroll-mt-6"
     >
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
-        <ScrollReveal direction="down" duration={450}>
+        <div>
           <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 tracking-tight text-center select-none">
             About <span className="text-amber-400 tshadow-md">Us</span>
           </h2>
-        </ScrollReveal>
+        </div>
 
         {/* 3D Circular Orbit Card Carousel with 3 Rich Cards */}
-        <ScrollReveal direction="scale" duration={400} delay={40} className="w-full flex items-center justify-center">
+        <div className="w-full flex items-center justify-center">
           <CardStack
             items={ABOUT_CARDS}
             initialIndex={0}
@@ -193,7 +190,7 @@ export const AboutSection = memo(function AboutSection() {
             springDamping={26}
             renderCard={renderAboutCard}
           />
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   );
