@@ -86,13 +86,13 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
   }, [activeCard]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-6xl my-4 sm:my-8 px-0 sm:px-4">
+    <div className="flex flex-col items-center justify-center w-full max-w-5xl my-3 sm:my-6 px-0 sm:px-4">
       {/* 3 Horizontal Cards Container: Grid in Laptop/Desktop View, Full-Width 1-Card Carousel in Mobile View. */}
       <ScrollReveal direction="up" className="w-full">
         <div
           ref={scrollContainerRef}
           onScroll={handleScroll}
-          className="w-full flex md:grid md:grid-cols-3 gap-0 md:gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory py-4 md:py-0 select-none scrollbar-none"
+          className="w-full flex md:grid md:grid-cols-3 gap-0 md:gap-5 lg:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory py-4 md:py-0 select-none scrollbar-none"
         >
           {WINNER_CARDS.map((card) => (
             <div
@@ -102,22 +102,22 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
               <div className="w-full flex justify-center">
                 <div
                   className={cn(
-                    "w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[360px] md:max-w-none md:w-full h-[360px] sm:h-[400px] lg:h-[440px]",
+                    "w-full max-w-[280px] xs:max-w-[300px] sm:max-w-[320px] md:max-w-[310px] lg:max-w-[330px] md:w-full h-[320px] sm:h-[360px] lg:h-[390px]",
                     "kagada-paper-card rounded-3xl border-2 border-white/95 shadow-xl shadow-black/25",
-                    "p-4 sm:p-8 flex flex-col justify-between items-center overflow-hidden select-none cursor-pointer group",
+                    "p-4 sm:p-6 flex flex-col justify-between items-center overflow-hidden select-none cursor-pointer group",
                     "hover:shadow-2xl hover:border-white transition-glass duration-300"
                   )}
                 >
                   {/* Card Header: Title Centered Horizontally */}
                   <div className="flex items-center justify-center w-full z-10 text-center px-1">
-                    <h3 className="font-smooch text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#5A182B] tracking-wide text-center leading-tight whitespace-normal break-words">
+                    <h3 className="font-smooch text-3xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#5A182B] tracking-wide text-center leading-tight whitespace-normal break-words">
                       {card.title}
                     </h3>
                   </div>
 
                   {/* Center Prominent Burgundy SVG Icon (without circular frame) */}
-                  <div className="flex-1 my-3 sm:my-6 flex items-center justify-center z-10">
-                    <card.icon className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 stroke-[1.6] text-[#5A182B] drop-shadow-sm group-hover:scale-105 transition-transform duration-300" />
+                  <div className="flex-1 my-2 sm:my-4 flex items-center justify-center z-10">
+                    <card.icon className="w-20 h-20 sm:w-26 sm:h-26 lg:w-30 lg:h-30 stroke-[1.6] text-[#5A182B] drop-shadow-sm group-hover:scale-105 transition-transform duration-300" />
                   </div>
 
                   {/* Bottom CTA Button: Off-White Bg with Burgundy Maroon text */}
@@ -126,10 +126,10 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
                       href={card.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-3 px-5 sm:py-3.5 sm:px-6 rounded-2xl kagada-paper-card hover:brightness-105 border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 text-[#5A182B] font-jakarta text-xs sm:text-base font-extrabold tracking-wide transition-all duration-200 shadow-md shadow-black/15 flex items-center justify-center gap-2 group/btn cursor-pointer"
+                      className="w-full py-2.5 px-4 sm:py-3 sm:px-5 rounded-2xl kagada-paper-card hover:brightness-105 border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 text-[#5A182B] font-jakarta text-xs sm:text-sm font-extrabold tracking-wide transition-all duration-200 shadow-md shadow-black/15 flex items-center justify-center gap-2 group/btn cursor-pointer"
                     >
                       <span>Explore Winners</span>
-                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#5A182B] transition-transform group-hover/btn:translate-x-1" />
+                      <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#5A182B] transition-transform group-hover/btn:translate-x-1" />
                     </a>
                   </div>
                 </div>

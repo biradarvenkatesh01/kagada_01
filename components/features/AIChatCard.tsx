@@ -136,7 +136,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
               setShowGreeting(false);
               setIsOpen(true);
             }}
-            className="fixed bottom-18 sm:bottom-22 right-5 sm:right-7 z-50 cursor-pointer select-none"
+            className="fixed bottom-20 sm:bottom-24 right-5 sm:right-7 z-50 cursor-pointer select-none"
           >
             <div className="relative kagada-paper-card text-[#5A182B] border-2 border-white/95 px-4 py-3 !rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs transition-all duration-200 group">
               <div className="w-8 h-8 !rounded-full bg-[#5A182B]/10 flex items-center justify-center shrink-0 border border-[#5A182B]/20 text-[#5A182B]">
@@ -173,16 +173,16 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className={cn(
-          "fixed bottom-5 sm:bottom-7 right-5 sm:right-7 z-50 w-10 h-10 sm:w-12 sm:h-12 !rounded-full flex items-center justify-center text-[#5A182B] shadow-2xl select-none group cursor-pointer",
+          "fixed bottom-5 sm:bottom-7 right-5 sm:right-7 z-50 w-12 h-12 sm:w-14 sm:h-14 !rounded-full flex items-center justify-center text-[#5A182B] shadow-2xl select-none group cursor-pointer",
           "kagada-paper-card border-2 border-[#5A182B]/30 shadow-2xl shadow-black/40 hover:brightness-105 hover:border-[#5A182B]/60 transition-all duration-300",
           isOpen && "border-[#5A182B] ring-4 ring-[#5A182B]/20"
         )}
         aria-label="Toggle AI Chatbot"
       >
         {isOpen ? (
-          <X className="w-5 h-5 sm:w-6 sm:h-6 text-[#5A182B] stroke-[2.5]" />
+          <X className="w-6 h-6 sm:w-7 sm:h-7 text-[#5A182B] stroke-[2.5]" />
         ) : (
-          <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-[#5A182B] stroke-[2.2] drop-shadow-sm group-hover:rotate-12 transition-transform duration-300" />
+          <Bot className="w-6 h-6 sm:w-7 sm:h-7 text-[#5A182B] stroke-[2.2] drop-shadow-sm group-hover:rotate-12 transition-transform duration-300" />
         )}
       </motion.button>
 
@@ -196,7 +196,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
             data-lenis-prevent="true"
             className={cn(
-              "fixed bottom-18 sm:bottom-22 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
+              "fixed bottom-20 sm:bottom-24 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
               "h-[530px] max-h-[calc(100dvh_-_11rem_-_env(safe-area-inset-top,0px))] sm:max-h-[calc(100dvh_-_13rem)]",
               "z-[1000] !rounded-2xl sm:!rounded-3xl overflow-hidden shadow-2xl flex flex-col",
               "kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/80",
