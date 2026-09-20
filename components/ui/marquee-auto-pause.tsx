@@ -33,9 +33,10 @@ export default function OffscreenAnimationPause() {
           (entry.target as HTMLElement).classList.toggle("anim-paused", !entry.isIntersecting);
         }
       },
-      // Generous margin so a row is already moving before any part of it is
-      // visible — no "starts on arrival" pop.
-      { rootMargin: "300px 0px 300px 0px", threshold: 0 }
+      // Tightened rootMargin: 0px on top so marquees immediately pause the moment
+      // they scroll above the viewport (such as when viewing the FAQ section right below),
+      // and 100px on bottom so they pre-start before scrolling into view.
+      { rootMargin: "0px 0px 100px 0px", threshold: 0 }
     );
 
     rows.forEach((row) => io.observe(row));
