@@ -79,8 +79,8 @@ function MarqueeRow({
               data-marquee-copy={item.copy}
               className={cn(
                 "relative shrink-0 overflow-hidden group rounded-3xl",
-                "kagada-paper-card border-2 border-white/95 shadow-md shadow-black/15",
-                "transition-glass duration-500 hover:shadow-xl hover:border-white",
+                "bg-stone-900 border-2 border-white/95 shadow-md shadow-black/20",
+                "transition-all duration-300 hover:shadow-xl hover:border-white",
                 item.shape
               )}
             >
@@ -103,8 +103,8 @@ function MarqueeRow({
               data-marquee-copy={item.copy}
               className={cn(
                 "relative shrink-0 overflow-hidden group rounded-3xl",
-                "kagada-paper-card border-2 border-white/95 shadow-md shadow-black/15",
-                "transition-glass duration-500 hover:shadow-xl hover:border-white",
+                "bg-stone-900 border-2 border-white/95 shadow-md shadow-black/20",
+                "transition-all duration-300 hover:shadow-xl hover:border-white",
                 item.shape
               )}
             >

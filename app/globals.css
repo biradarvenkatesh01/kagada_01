@@ -84,6 +84,10 @@
   border-radius: 0 !important;
 }
 
+#faq .kagada-paper-card {
+  isolation: isolate;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
