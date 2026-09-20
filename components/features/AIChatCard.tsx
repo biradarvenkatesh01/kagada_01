@@ -100,7 +100,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
       });
 
       const data = await res.json();
-      const aiReply = data?.reply || "KAGADA 2026 is provisionally scheduled for 10th October 2026 at UVCE, KR Circle, Bengaluru!";
+      const aiReply = data?.reply || "KAGADA 2026 is provisionally scheduled for 24th October 2026 at UVCE, KR Circle, Bengaluru!";
       const modelUsed = data?.model || "Unknown Model";
 
       if (process.env.NODE_ENV !== "production") {
@@ -114,7 +114,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         ...prev,
         {
           sender: "ai",
-          text: "KAGADA 2026 is provisionally scheduled for 10th October 2026 at UVCE, KR Circle. Ask me about tracks (Paper, Poster, Project) or the ₹40,000 prize pool!",
+          text: "KAGADA 2026 is provisionally scheduled for 24th October 2026 at UVCE, KR Circle. Ask me about tracks (Paper, Poster, Project) or the ₹40,000 prize pool!",
         },
       ]);
     } finally {

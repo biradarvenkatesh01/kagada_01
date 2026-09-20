@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://kagada2026.live"),
   title: "KAGADA 2026",
   description:
-    "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
+    "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 24th October, 2026 at UVCE, Bengaluru.",
   keywords: [
     "KAGADA",
     "KAGADA 2026",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "KAGADA 2026",
     description:
-      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
+      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 24th October, 2026 at UVCE, Bengaluru.",
     url: "https://kagada2026.live",
     siteName: "KAGADA 2026",
     images: [
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "KAGADA 2026",
     description:
-      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
+      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 24th October, 2026 at UVCE, Bengaluru.",
     images: ["/logo1.png"],
   },
   alternates: {
@@ -106,9 +106,9 @@ const structuredData = [
     "@type": "EducationEvent",
     name: "KAGADA 2026",
     description:
-      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026 at UVCE, Bengaluru.",
-    startDate: "2026-10-10T09:00:00+05:30",
-    endDate: "2026-10-10T18:00:00+05:30",
+      "What is KAGADA and when is it? KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 24th October, 2026 at UVCE, Bengaluru.",
+    startDate: "2026-10-24T09:00:00+05:30",
+    endDate: "2026-10-24T18:00:00+05:30",
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
     location: {

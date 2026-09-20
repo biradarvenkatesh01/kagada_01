@@ -12,7 +12,7 @@ YOUR STRICT DIRECTIVES:
 
 KAGADA 2026 COMPREHENSIVE KNOWLEDGE BASE:
 - Event Name: KAGADA 2026 (22nd Annual National-Level Technical Student Conference)
-- Provisional Event Date: 10th October, 2026
+- Provisional Event Date: 24th October, 2026
 - Venue: University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001
 - Organizer: IEEE UVCE (Institute of Electrical and Electronics Engineers - UVCE Student Branch)
 - Total Prize Pool: Overall ₹40,000 cash prizes distributed across Paper, Poster, and Project presentations (provisional).
@@ -149,10 +149,10 @@ export async function POST(req: Request) {
 
     // Fallback: Local Instant KAGADA 2026 Knowledge Engine
     const lastUserMsgLower = userMessage.toLowerCase();
-    let localReply = "KAGADA 2026 is the 22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE on 10th October, 2026 at UVCE KR Circle, Bengaluru. We have 3 tracks: Paper, Poster, and Project presentations with an overall ₹40,000 total prize pool.";
+    let localReply = "KAGADA 2026 is the 22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE on 24th October, 2026 at UVCE KR Circle, Bengaluru. We have 3 tracks: Paper, Poster, and Project presentations with an overall ₹40,000 total prize pool.";
 
     if (lastUserMsgLower.includes("when") || lastUserMsgLower.includes("date") || lastUserMsgLower.includes("time")) {
-      localReply = "The provisional date for KAGADA 2026 is 10th October, 2026 at UVCE, KR Circle, Bengaluru.";
+      localReply = "The provisional date for KAGADA 2026 is 24th October, 2026 at UVCE, KR Circle, Bengaluru.";
     } else if (lastUserMsgLower.includes("where") || lastUserMsgLower.includes("venue") || lastUserMsgLower.includes("location") || lastUserMsgLower.includes("map")) {
       localReply = "KAGADA 2026 will take place at University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001.";
     } else if (lastUserMsgLower.includes("prize") || lastUserMsgLower.includes("money") || lastUserMsgLower.includes("reward") || lastUserMsgLower.includes("cash")) {
@@ -171,7 +171,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("AI Chat Route Error:", error);
     return NextResponse.json(
-      { reply: "KAGADA 2026 is provisionally scheduled for 10th October 2026 at UVCE, KR Circle, Bengaluru. Feel free to ask about tracks, prize pool, or venue details.", model: "Error Fallback" },
+      { reply: "KAGADA 2026 is provisionally scheduled for 24th October 2026 at UVCE, KR Circle, Bengaluru. Feel free to ask about tracks, prize pool, or venue details.", model: "Error Fallback" },
       { status: 200 }
     );
   }

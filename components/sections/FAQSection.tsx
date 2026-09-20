@@ -16,7 +16,7 @@ const FAQS: FAQItem[] = [
   {
     question: "What is KAGADA and when is it?",
     answer:
-      "KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 10th October, 2026.",
+      "KAGADA is an Annual National-Level Technical Student Conference conducted by IEEE UVCE. It will be held on 24th October, 2026.",
   },
   {
     question: "What can I present in KAGADA?",
