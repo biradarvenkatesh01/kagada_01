@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { useState, useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
 
 interface FAQItem {
@@ -45,61 +45,52 @@ const FAQS: FAQItem[] = [
 ]
 
 export default function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-  const contentRefs = useRef<(HTMLDivElement | null)[]>([])
-  const resizeTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const handleToggle = (index: number) => {
-    const isCurrentlyOpen = openIndex === index
-    const content = contentRefs.current[index]
-    if (!content) return
+  // Direct 100% native DOM event handler (Matches the vanilla JS snippet exactly)
+  // No React state updates during click -> 0ms latency, 0 dropped frames on mobile
+  const handleItemClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const btn = e.currentTarget
+    const currentItem = btn.closest('.accordion__item') as HTMLElement | null
+    const currentContent = btn.nextElementSibling as HTMLElement | null
+    if (!currentItem || !currentContent) return
 
-    // Collapse previously open item synchronously on the DOM
-    if (openIndex !== null && openIndex !== index) {
-      const prevContent = contentRefs.current[openIndex]
-      if (prevContent) {
-        prevContent.style.maxHeight = "0px"
-      }
+    const isCurrentlyActive = currentItem.classList.contains('active')
+
+    // Collapse any other open accordion item instantly
+    if (containerRef.current) {
+      const allActiveItems = containerRef.current.querySelectorAll('.accordion__item.active')
+      allActiveItems.forEach((item) => {
+        if (item !== currentItem) {
+          item.classList.remove('active')
+          const headerBtn = item.querySelector('.item__header')
+          headerBtn?.setAttribute('aria-expanded', 'false')
+          const content = item.querySelector('.item__content') as HTMLElement | null
+          if (content) {
+            content.style.maxHeight = '0px'
+          }
+        }
+      })
     }
 
-    // Toggle clicked item synchronously on the DOM
-    if (isCurrentlyOpen) {
-      content.style.maxHeight = "0px"
-      setOpenIndex(null)
+    // Toggle current item with native CSS 300ms transition
+    if (isCurrentlyActive) {
+      currentItem.classList.remove('active')
+      btn.setAttribute('aria-expanded', 'false')
+      currentContent.style.maxHeight = '0px'
     } else {
-      content.style.maxHeight = content.scrollHeight + "px"
-      setOpenIndex(index)
-    }
-
-    // Notify Lenis after transition finishes so scroll height updates cleanly
-    if (typeof window !== "undefined") {
-      if (resizeTimerRef.current) clearTimeout(resizeTimerRef.current)
-      resizeTimerRef.current = setTimeout(() => {
-        const lenis = (window as unknown as { __lenis?: { resize: () => void } }).__lenis
-        lenis?.resize()
-      }, 320)
+      currentItem.classList.add('active')
+      btn.setAttribute('aria-expanded', 'true')
+      currentContent.style.maxHeight = `${currentContent.scrollHeight}px`
     }
   }
 
-  // Ensure height updates if window resizes while an item is open
-  useEffect(() => {
-    const handleResize = () => {
-      if (openIndex !== null) {
-        const content = contentRefs.current[openIndex]
-        if (content) {
-          content.style.maxHeight = content.scrollHeight + "px"
-        }
-      }
-    }
-    window.addEventListener("resize", handleResize)
-    return () => {
-      window.removeEventListener("resize", handleResize)
-      if (resizeTimerRef.current) clearTimeout(resizeTimerRef.current)
-    }
-  }, [openIndex])
-
   return (
-    <section id="faq" className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10">
+    <section
+      id="faq"
+      className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none px-4 py-8 sm:py-12 scroll-mt-6 z-10"
+      style={{ contain: 'paint' }}
+    >
       {/* Main Section Title */}
       <div>
         <h2 data-reveal className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-1.5 sm:mb-2">
@@ -114,46 +105,40 @@ export default function FAQSection() {
         </p>
       </div>
 
-      {/* FAQ Accordion List */}
+      {/* FAQ Accordion List (Vanilla DOM Architecture) */}
       <div className="w-full">
-        <div className="w-full flex flex-col">
-          {FAQS.map((faq, idx) => {
-            const isOpen = openIndex === idx
-            return (
-              <div
-                key={`faq-${idx}`}
-                className={`accordion__item ${isOpen ? "active" : ""}`}
+        <div ref={containerRef} className="w-full flex flex-col">
+          {FAQS.map((faq, idx) => (
+            <div
+              key={`faq-${idx}`}
+              className="accordion__item"
+            >
+              <button
+                type="button"
+                onClick={handleItemClick}
+                className="item__header"
+                aria-expanded="false"
+                aria-controls={`faq-answer-${idx}`}
+                id={`faq-btn-${idx}`}
               >
-                <button
-                  type="button"
-                  onClick={() => handleToggle(idx)}
-                  className="item__header"
-                  aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${idx}`}
-                  id={`faq-btn-${idx}`}
-                >
-                  <h3 className="item__question">{faq.question}</h3>
-                  <div className="item__icon">
-                    <ChevronDown className="w-4 h-4 stroke-[2.5]" />
-                  </div>
-                </button>
+                <h3 className="item__question">{faq.question}</h3>
+                <div className="item__icon">
+                  <ChevronDown className="w-4 h-4 stroke-[2.5]" />
+                </div>
+              </button>
 
-                <div
-                  id={`faq-answer-${idx}`}
-                  ref={(el) => {
-                    contentRefs.current[idx] = el
-                  }}
-                  role="region"
-                  aria-labelledby={`faq-btn-${idx}`}
-                  className="item__content"
-                >
-                  <div className="item__body">
-                    <p className="item__answer">{faq.answer}</p>
-                  </div>
+              <div
+                id={`faq-answer-${idx}`}
+                role="region"
+                aria-labelledby={`faq-btn-${idx}`}
+                className="item__content"
+              >
+                <div className="item__body">
+                  <p className="item__answer">{faq.answer}</p>
                 </div>
               </div>
-            )
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </section>
