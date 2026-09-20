@@ -80,7 +80,8 @@
 #contact input,
 #contact textarea,
 .flip-unit,
-.hero-timer-box {
+.hero-timer-box,
+.intro-skip-btn {
   border-radius: 0 !important;
 }
 

@@ -61,7 +61,7 @@ export const IntroVideoOverlay = memo(function IntroVideoOverlay({
                 e.stopPropagation();
                 onSkip();
               }}
-              className="absolute top-[calc(1.2rem+env(safe-area-inset-top,0px))] sm:top-7 right-5 sm:right-8 z-[60] flex items-center gap-2 px-4.5 py-2.5 sm:px-6 sm:py-3 rounded-full kagada-paper-card hover:brightness-105 border-2 border-[#5A182B]/30 text-[#5A182B] font-outfit text-xs sm:text-sm font-black tracking-wider uppercase transition-all duration-200 shadow-2xl shadow-black/60 group cursor-pointer"
+              className="intro-skip-btn absolute top-[calc(1.2rem+env(safe-area-inset-top,0px))] sm:top-7 right-5 sm:right-8 z-[60] flex items-center gap-2 px-4.5 py-2.5 sm:px-6 sm:py-3 !rounded-none kagada-paper-card hover:brightness-105 border-2 border-[#5A182B]/30 text-[#5A182B] font-outfit text-xs sm:text-sm font-black tracking-wider uppercase transition-all duration-200 shadow-2xl shadow-black/60 group cursor-pointer"
               aria-label="Skip Intro Video"
             >
               <span className="leading-none font-black text-[#5A182B]">Skip</span>
