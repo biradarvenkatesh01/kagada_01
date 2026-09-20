@@ -265,9 +265,10 @@ export function CardStack<T extends CardStackItem>({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-            {/* background wash / spotlight */}
+            {/* background wash / spotlight - OPTIMIZED: using radial-gradient instead of expensive blur-3xl */}
             <div
-              className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-56 w-[75%] rounded-full bg-[#5A182B]/10 blur-3xl"
+              className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[120%] w-[100%]"
+              style={{ background: 'radial-gradient(ellipse at center, rgba(90,24,43,0.08) 0%, transparent 60%)' }}
               aria-hidden="true"
             />
 
@@ -327,11 +328,11 @@ export function CardStack<T extends CardStackItem>({
                     <motion.div
                       key={item.id}
                       className={cn(
-                        "absolute !rounded-2xl sm:!rounded-3xl border-2 border-white/95 shadow-2xl kagada-paper-card",
-                        "select-none p-4 sm:p-7 md:p-8 flex flex-col overflow-hidden transform-gpu",
+                        "absolute !rounded-2xl sm:!rounded-3xl border-2 border-white/95 kagada-paper-card",
+                        "select-none p-4 sm:p-7 md:p-8 flex flex-col overflow-hidden transform-gpu will-change-transform",
                         isActive
-                          ? "cursor-grab active:cursor-grabbing ring-1 ring-white/80 shadow-black/20"
-                          : "cursor-pointer opacity-90 shadow-black/10 hover:opacity-100",
+                          ? "cursor-grab active:cursor-grabbing ring-1 ring-white/80"
+                          : "cursor-pointer opacity-90 hover:opacity-100",
                       )}
                       style={{
                         width: `min(92vw, ${cardWidth}px)`,
