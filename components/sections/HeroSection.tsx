@@ -26,32 +26,6 @@ export const HeroSection = memo(function HeroSection({ isVideoFading }: HeroSect
         className="absolute inset-0 w-full h-full min-h-[100dvh] object-cover z-0 pointer-events-none select-none"
       />
 
-      {/* ⚪ CODE-GENERATED WHITE PIXEL DOTS OVERLAY */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isVideoFading ? 0.75 : 0 }}
-        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 w-full h-full min-h-[100dvh] pointer-events-none select-none z-[2] transform-gpu"
-        aria-hidden="true"
-      >
-        <svg className="w-full h-full min-h-[100dvh] block" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern
-              id="hero-white-pixel-dots"
-              x="0"
-              y="0"
-              width="16"
-              height="16"
-              patternUnits="userSpaceOnUse"
-            >
-              <circle cx="8" cy="8" r="0.8" fill="#ffffff" fillOpacity="0.7" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hero-white-pixel-dots)" />
-        </svg>
-      </motion.div>
-
-
       {/* Hero Title & Subtitle Glass Box Container */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 30, x: "-50%" }}
