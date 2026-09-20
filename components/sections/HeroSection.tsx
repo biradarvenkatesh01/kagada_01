@@ -59,18 +59,19 @@ export const HeroSection = memo(function HeroSection({ isIntroActive = false }: 
         className="absolute top-[48%] sm:top-1/2 left-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
       >
         {/* Title Paper Box containing Title + Subtitle */}
-        <div className="w-full px-2.5 min-[360px]:px-3 sm:px-10 py-4 min-[360px]:py-5 sm:py-8 !rounded-2xl sm:!rounded-3xl kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/15 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
+        {/* Title Paper Box containing Title + Subtitle */}
+        <div className="w-full px-2 sm:px-4 md:px-6 pt-1 sm:pt-2 pb-2 sm:pb-3 md:pb-4 !rounded-2xl sm:!rounded-3xl kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/15 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
           <img
             src="/kagada-2026-header-maroon.png"
             alt="Kagada 2026"
             width={800}
             height={200}
-            className="w-full max-w-[280px] min-[360px]:max-w-[320px] sm:max-w-[420px] md:max-w-[550px] lg:max-w-[720px] h-auto object-contain mx-auto select-none"
+            className="w-full max-w-[280px] min-[360px]:max-w-[320px] sm:max-w-[420px] md:max-w-[550px] lg:max-w-[700px] h-auto object-contain mx-auto select-none -mt-6 sm:-mt-10 md:-mt-14 lg:-mt-20"
             draggable={false}
           />
 
           {/* Subtitle in Roboto Mono Font */}
-          <p className="font-roboto-mono text-[0.7rem] min-[360px]:text-xs sm:text-base md:text-xl lg:text-2xl text-[#5A182B]/95 font-bold tracking-wider sm:tracking-widest mt-3 min-[360px]:mt-4 sm:mt-7 uppercase tshadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[95%] sm:max-w-none mx-auto">
+          <p className="font-roboto-mono text-[0.7rem] min-[360px]:text-xs sm:text-base md:text-xl lg:text-2xl text-[#5A182B]/95 font-bold tracking-wider sm:tracking-widest -mt-4 min-[360px]:-mt-5 sm:-mt-7 md:-mt-10 lg:-mt-12 uppercase tshadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[95%] sm:max-w-none mx-auto">
             Annual National - Level Technical Student Conference
           </p>
         </div>

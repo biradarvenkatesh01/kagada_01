@@ -630,7 +630,7 @@ html.lenis, html.lenis body {
 
 /* ─── Translucent Paper Glass on Hero Section Boxes (Only Hero) ─── */
 #hero .kagada-paper-card {
-  background-color: rgba(216, 211, 199, 0.70) !important;
+  background-color: rgba(216, 211, 199, 0.90) !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
