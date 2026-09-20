@@ -235,107 +235,92 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         )}
       </motion.button>
 
-      {/* Authentic Paper AI Chat Window */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            // Same reasoning as the navbar dropdown: no `scale` on a textured
-            // card, because scaling forces a re-raster of the fabric gradient
-            // every frame while a translate does not. The spring is also gone --
-            // it was JS-driven for ~450ms of settle, where a 220ms tween covers
-            // the same distance and hands off to the compositor immediately.
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20, transition: { duration: 0.15 } }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            data-lenis-prevent="true"
-            className={cn(
-              "fixed bottom-20 sm:bottom-24 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
-              "h-[530px] max-h-[calc(100dvh_-_11rem_-_env(safe-area-inset-top,0px))] sm:max-h-[calc(100dvh_-_13rem)]",
-              "z-[1000] !rounded-2xl sm:!rounded-3xl overflow-hidden flex flex-col",
-              // `shadow-2xl shadow-black/80` was a 50px blur at 80% opacity, and
-              // it was declared twice on this element. The whole panel has to be
-              // painted inside the first frame of the open animation, and a blur
-              // that large over a 410x530 surface is the most expensive part of
-              // that paint. Precedent is in Navbar.tsx, where dropping 2xl to lg
-              // was measured as the single largest cost there.
-              "kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/50",
-              className
-            )}
+      {/* Authentic Paper AI Chat Window (Persistent in DOM for buttery-smooth zero-lag GPU open/close) */}
+      <div
+        data-lenis-prevent="true"
+        className={cn(
+          "fixed bottom-20 sm:bottom-24 right-4 sm:right-7 w-[calc(100vw-2rem)] sm:w-[410px]",
+          "h-[530px] max-h-[calc(100dvh_-_11rem_-_env(safe-area-inset-top,0px))] sm:max-h-[calc(100dvh_-_13rem)]",
+          "z-[1000] !rounded-none overflow-hidden flex flex-col",
+          "kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/40",
+          "transition-[opacity,transform,visibility] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu",
+          isOpen
+            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto visible"
+            : "opacity-0 translate-y-4 scale-[0.98] pointer-events-none invisible",
+          className
+        )}
+      >
+        {/* Chat Header */}
+        <div className="relative z-10 px-5 py-3.5 border-b border-[#5A182B]/20 flex items-center justify-between bg-[#5A182B] shrink-0 !rounded-none">
+          <h2 className="text-base font-outfit font-extrabold text-[#D8D3C7] tracking-wide leading-tight tshadow-sm">
+            KAGADA AI Assistant
+          </h2>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="p-1.5 !rounded-none bg-white/10 hover:bg-white/30 text-[#D8D3C7]/90 hover:text-[#D8D3C7] transition-colors cursor-pointer"
+            aria-label="Close Chat"
           >
-            {/* Chat Header */}
-            <div className="relative z-10 px-5 py-3.5 border-b border-[#5A182B]/20 flex items-center justify-between bg-[#5A182B] shrink-0">
-              <h2 className="text-base font-outfit font-extrabold text-[#D8D3C7] tracking-wide leading-tight tshadow-sm">
-                KAGADA AI Assistant
-              </h2>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-full bg-white/10 hover:bg-white/30 text-[#D8D3C7]/90 hover:text-[#D8D3C7] transition-colors cursor-pointer"
-                aria-label="Close Chat"
-              >
-                <X className="w-4 h-4 stroke-[2.5]" />
-              </button>
-            </div>
+            <X className="w-4 h-4 stroke-[2.5]" />
+          </button>
+        </div>
 
-            {/* Chat Messages Container */}
+        {/* Chat Messages Container */}
+        <div
+          ref={messagesContainerRef}
+          data-lenis-prevent="true"
+          className="relative z-10 flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain px-3.5 sm:px-4 py-3.5 space-y-3 text-xs sm:text-sm custom-scrollbar bg-black/[0.02]"
+          style={{ touchAction: "pan-y" }}
+        >
+          {messages.map((msg, i) => (
             <div
-              ref={messagesContainerRef}
-              data-lenis-prevent="true"
-              className="relative z-10 flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain px-3.5 sm:px-4 py-3.5 space-y-3 text-xs sm:text-sm custom-scrollbar"
-              style={{ touchAction: "pan-y" }}
+              key={i}
+              className={cn(
+                "px-3.5 py-2.5 !rounded-none drop-shadow-sm font-jakarta min-w-0 break-words",
+                msg.sender === "ai"
+                  ? "bg-[#ECE7DC] border-2 border-[#5A182B]/25 text-[#420E1E] max-w-[94%] leading-relaxed text-xs sm:text-sm overflow-hidden shadow-sm"
+                  : "bg-[#5A182B] text-[#D8D3C7] font-bold ml-auto shadow-md max-w-[85%] whitespace-pre-wrap text-xs sm:text-sm"
+              )}
             >
-              {messages.map((msg, i) => (
+              {msg.sender === "ai" ? (
                 <div
-                  key={i}
-                  className={cn(
-                    "px-3.5 py-2.5 rounded-2xl drop-shadow-sm font-jakarta min-w-0 break-words",
-                    msg.sender === "ai"
-                      ? "bg-white border-2 border-[#5A182B]/15 text-stone-900 rounded-tl-xs max-w-[94%] leading-relaxed text-xs sm:text-sm overflow-hidden shadow-sm"
-                      : "bg-[#5A182B] text-[#D8D3C7] font-bold ml-auto rounded-tr-xs shadow-md max-w-[85%] whitespace-pre-wrap text-xs sm:text-sm"
-                  )}
-                >
-                  {msg.sender === "ai" ? (
-                    <div
-                      className="chat-markdown w-full min-w-0 max-w-full overflow-hidden text-stone-900"
-                      dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.text) }}
-                    />
-                  ) : (
-                    msg.text
-                  )}
-                </div>
-              ))}
-
-              {/* AI Typing Indicator */}
-              {isTyping && (
-                <div className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl max-w-[35%] bg-white border-2 border-[#5A182B]/15 shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-[#5A182B] animate-bounce"></span>
-                  <span className="w-2 h-2 rounded-full bg-[#5A182B] animate-bounce [animation-delay:0.2s]"></span>
-                  <span className="w-2 h-2 rounded-full bg-[#5A182B] animate-bounce [animation-delay:0.4s]"></span>
-                </div>
+                  className="chat-markdown w-full min-w-0 max-w-full overflow-hidden text-[#420E1E]"
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.text) }}
+                />
+              ) : (
+                msg.text
               )}
             </div>
+          ))}
 
-            {/* Chat Input Section */}
-            <div className="relative z-10 p-3 border-t border-[#5A182B]/20 bg-[#D8D3C7] flex items-center gap-2 shrink-0">
-              <input
-                className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white rounded-xl border-2 border-[#5A182B]/20 text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-[#5A182B] font-jakarta"
-                placeholder="Ask about tracks, date, prizes..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSend()}
-              />
-              <button
-                onClick={handleSend}
-                disabled={!input.trim() || isTyping}
-                className="p-2.5 rounded-xl kagada-paper-card hover:brightness-105 text-[#5A182B] border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 shadow-md font-bold cursor-pointer"
-                aria-label="Send Message"
-              >
-                <Send className="w-4 h-4 text-[#5A182B] stroke-[2.5]" />
-              </button>
+          {/* AI Typing Indicator */}
+          {isTyping && (
+            <div className="flex items-center gap-1.5 px-4 py-2.5 !rounded-none max-w-[35%] bg-[#ECE7DC] border-2 border-[#5A182B]/25 shadow-sm">
+              <span className="w-2 h-2 !rounded-none bg-[#5A182B] animate-bounce"></span>
+              <span className="w-2 h-2 !rounded-none bg-[#5A182B] animate-bounce [animation-delay:0.2s]"></span>
+              <span className="w-2 h-2 !rounded-none bg-[#5A182B] animate-bounce [animation-delay:0.4s]"></span>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </div>
+
+        {/* Chat Input Section */}
+        <div className="relative z-10 p-3 border-t border-[#5A182B]/20 bg-[#D8D3C7] flex items-center gap-2 shrink-0 !rounded-none">
+          <input
+            className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white !rounded-none border-2 border-[#5A182B]/20 text-[#420E1E] placeholder:text-stone-500 focus:outline-none focus:border-[#5A182B] font-jakarta font-medium"
+            placeholder="Ask about tracks, date, prizes..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          />
+          <button
+            onClick={handleSend}
+            disabled={!input.trim() || isTyping}
+            className="p-2.5 !rounded-none kagada-paper-card hover:brightness-105 text-[#5A182B] border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 shadow-md font-bold cursor-pointer"
+            aria-label="Send Message"
+          >
+            <Send className="w-4 h-4 text-[#5A182B] stroke-[2.5]" />
+          </button>
+        </div>
+      </div>
     </>
   );
 }

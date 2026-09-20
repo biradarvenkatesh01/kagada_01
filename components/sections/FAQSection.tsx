@@ -59,9 +59,9 @@ const FAQCard = memo(function FAQCard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border-2 transition-colors duration-200",
+        "relative overflow-hidden border-2",
         "kagada-paper-card border-white/90 shadow-md shadow-black/15",
-        isOpen && "border-white shadow-lg"
+        isOpen && "border-white"
       )}
     >
       {/* Accordion Header Trigger Button */}
@@ -88,38 +88,13 @@ const FAQCard = memo(function FAQCard({
         </div>
       </button>
 
-      {/* Accordion body.
-          The height genuinely animates here, which means `grid-template-rows`
-          is a layout animation and the browser re-runs style, layout and paint
-          on every frame of it. That is a deliberate choice, not an oversight:
-          snapping the row open in one frame measures far cheaper (14ms p95 at
-          6x CPU throttle versus about 40ms) but it reads as the answer being
-          thrown at you rather than opening, which is not what this should feel
-          like.
-
-          What is kept from that work is everything that made the animation
-          cheaper without changing how it looks:
-            - no `transform-gpu` or `will-change` on this element. It resizes,
-              so promoting it just forces a re-rasterise at a new size every
-              frame on top of the paint already happening, and
-              `grid-template-rows` has no compositor fast path for
-              `will-change` to hint at.
-            - `contain` on the card and on the sections below it, so the reflow
-              this causes cannot descend into the Google Maps iframe or the
-              contact form (see globals.css).
-          The card's fabric texture and its shadow were both A/B'd out while
-          measuring and neither affected the number, so neither is worth
-          degrading for this.
-
-          The answer fades in just behind the opening edge rather than sliding
-          the full height of the panel, which is what made the previous version
-          feel abrupt. */}
+      {/* Accordion body with smooth zero-jank grid transition */}
       <div
         id={`faq-panel-${idx}`}
         role="region"
         aria-labelledby={`faq-header-${idx}`}
         className={cn(
-          "grid transition-[grid-template-rows] duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "grid transition-[grid-template-rows] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
           isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         )}
       >
@@ -127,8 +102,8 @@ const FAQCard = memo(function FAQCard({
           <div
             className={cn(
               "px-4 pb-3 sm:px-5 sm:pb-3.5 pt-0 text-left",
-              "faq-answer transition-opacity duration-[220ms] ease-out",
-              isOpen ? "opacity-100 delay-75" : "opacity-0 pointer-events-none"
+              "transition-opacity duration-200 ease-out",
+              isOpen ? "opacity-100" : "opacity-0"
             )}
           >
             <div className="pt-2.5 sm:pt-3 border-t border-[#5A182B]/20">
