@@ -52,8 +52,9 @@ export default function Home() {
         {/* SECTION 7: AFTERMOVIES */}
         <VideosSection />
 
-        {/* SECTION 8: SPONSORS */}
+        {/* SECTION 8: SPONSORS 
         <SponsorsSection />
+        */}
 
         {/* SECTION 9: FAQ ACCORDION */}
         <FAQSection />
