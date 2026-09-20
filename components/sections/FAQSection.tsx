@@ -67,7 +67,7 @@ export const FAQSection = memo(function FAQSection() {
       {/* Subtitle */}
       <div>
         <p data-reveal className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-4 sm:mb-6 max-w-2xl">
-          Everything you need to know about KAGADA conference, tracks, and events.
+          Everything you need to know about KAGADA conference, tracks and events.
         </p>
       </div>
 
