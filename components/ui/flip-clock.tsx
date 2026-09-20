@@ -22,7 +22,7 @@ const flipUnitVariants = cva(
         xl: "w-20 min-w-20 h-28 text-7xl sm:w-22 sm:min-w-22 sm:h-32 sm:text-8xl", // Extra Large
       },
       variant: {
-        default: "bg-[#5A182B] text-[#E8E5DC]",
+        default: "bg-[#5A182B] text-[#D8D3C7]",
         secondary: "bg-secondary text-secondary-foreground",
         destructive: "bg-destructive text-destructive-foreground",
         outline: "border border-input bg-background text-foreground",

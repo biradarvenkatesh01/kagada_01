@@ -161,7 +161,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="min-h-full flex flex-col text-[#E8E5DC] bg-[#5A182B] selection:bg-[#5A182B] selection:text-[#E8E5DC] overflow-x-hidden font-jakarta">
+      <body className="min-h-full flex flex-col text-[#D8D3C7] bg-[#5A182B] selection:bg-[#5A182B] selection:text-[#D8D3C7] overflow-x-hidden font-jakarta">
         {/* Google Analytics (gtag.js) placed in body for optimal Next.js hydration */}
         {/* lazyOnload defers analytics until the page is idle. With
             afterInteractive it booted during hydration and showed up as ~197ms

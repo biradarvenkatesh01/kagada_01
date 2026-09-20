@@ -13,7 +13,7 @@ export const TracksSection = memo(function TracksSection() {
     >
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-start text-center">
         {/* Section Heading */}
-        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#E8E5DC] tshadow-lg mb-1 tracking-tight text-center select-none">
+        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-1 tracking-tight text-center select-none">
           Tracks
         </ScrollReveal>
 

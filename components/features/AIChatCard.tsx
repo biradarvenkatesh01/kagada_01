@@ -157,7 +157,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
               </button>
 
               {/* Speech bubble downward triangular pointer pointing toward launcher button */}
-              <div className="absolute -bottom-2 right-6 sm:right-7 w-3.5 h-3.5 bg-[#E8E5DC] border-r-2 border-b-2 border-white/80 rotate-45 shadow-sm" />
+              <div className="absolute -bottom-2 right-6 sm:right-7 w-3.5 h-3.5 bg-[#D8D3C7] border-r-2 border-b-2 border-white/80 rotate-45 shadow-sm" />
             </div>
           </motion.div>
         )}
@@ -205,12 +205,12 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
           >
             {/* Chat Header */}
             <div className="relative z-10 px-5 py-3.5 border-b border-[#5A182B]/20 flex items-center justify-between bg-[#5A182B] shrink-0">
-              <h2 className="text-base font-outfit font-extrabold text-[#E8E5DC] tracking-wide leading-tight tshadow-sm">
+              <h2 className="text-base font-outfit font-extrabold text-[#D8D3C7] tracking-wide leading-tight tshadow-sm">
                 KAGADA AI Assistant
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-full bg-white/10 hover:bg-white/30 text-[#E8E5DC]/90 hover:text-[#E8E5DC] transition-colors cursor-pointer"
+                className="p-1.5 rounded-full bg-white/10 hover:bg-white/30 text-[#D8D3C7]/90 hover:text-[#D8D3C7] transition-colors cursor-pointer"
                 aria-label="Close Chat"
               >
                 <X className="w-4 h-4 stroke-[2.5]" />
@@ -231,7 +231,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
                     "px-3.5 py-2.5 rounded-2xl drop-shadow-sm font-jakarta min-w-0 break-words",
                     msg.sender === "ai"
                       ? "bg-white border-2 border-[#5A182B]/15 text-stone-900 rounded-tl-xs max-w-[94%] leading-relaxed text-xs sm:text-sm overflow-hidden shadow-sm"
-                      : "bg-[#5A182B] text-[#E8E5DC] font-bold ml-auto rounded-tr-xs shadow-md max-w-[85%] whitespace-pre-wrap text-xs sm:text-sm"
+                      : "bg-[#5A182B] text-[#D8D3C7] font-bold ml-auto rounded-tr-xs shadow-md max-w-[85%] whitespace-pre-wrap text-xs sm:text-sm"
                   )}
                 >
                   {msg.sender === "ai" ? (
@@ -256,7 +256,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             </div>
 
             {/* Chat Input Section */}
-            <div className="relative z-10 p-3 border-t border-[#5A182B]/20 bg-[#E8E5DC] flex items-center gap-2 shrink-0">
+            <div className="relative z-10 p-3 border-t border-[#5A182B]/20 bg-[#D8D3C7] flex items-center gap-2 shrink-0">
               <input
                 className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white rounded-xl border-2 border-[#5A182B]/20 text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-[#5A182B] font-jakarta"
                 placeholder="Ask about tracks, date, prizes..."

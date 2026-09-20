@@ -186,7 +186,7 @@ export default function QueryForm({
                     placeholder="John"
                     required
                     disabled={status === "submitting"}
-                    className="w-full bg-[#E8E5DC]/80 hover:bg-[#E8E5DC] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm"
+                    className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm"
                   />
                 </div>
 
@@ -205,7 +205,7 @@ export default function QueryForm({
                     onChange={handleChange}
                     placeholder="Doe"
                     disabled={status === "submitting"}
-                    className="w-full bg-[#E8E5DC]/80 hover:bg-[#E8E5DC] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm"
+                    className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm"
                   />
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default function QueryForm({
                   placeholder="john.doe@example.com"
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-[#E8E5DC]/80 hover:bg-[#E8E5DC] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm"
+                  className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm"
                 />
               </div>
 
@@ -248,7 +248,7 @@ export default function QueryForm({
                   placeholder="Ask about presentation tracks, registration details, eligibility, or event schedule..."
                   required
                   disabled={status === "submitting"}
-                  className="w-full bg-[#E8E5DC]/80 hover:bg-[#E8E5DC] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm resize-none custom-scrollbar min-h-[85px] sm:min-h-[95px]"
+                  className="w-full bg-[#D8D3C7]/80 hover:bg-[#D8D3C7] focus:bg-white border-2 border-[#5A182B]/20 focus:border-[#5A182B] focus:ring-2 focus:ring-[#5A182B]/20 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 text-slate-900 placeholder:text-stone-500 font-jakarta text-sm font-medium focus:outline-none transition-all duration-150 shadow-sm resize-none custom-scrollbar min-h-[85px] sm:min-h-[95px]"
                 />
               </div>
 

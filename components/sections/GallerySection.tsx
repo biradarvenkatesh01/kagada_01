@@ -129,13 +129,13 @@ export function GallerySection() {
       {/* Section Title */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center px-4">
         <ScrollReveal direction="down" duration={500}>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#E8E5DC] tshadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none">
+          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-3 sm:mb-4 tracking-tight text-center select-none">
             Event <span className="text-amber-400 tshadow-md">Gallery</span>
           </h2>
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={60} duration={500}>
-          <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#E8E5DC]/90 uppercase tracking-widest text-center tshadow-sm mb-6 sm:mb-10 max-w-2xl">
+          <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-6 sm:mb-10 max-w-2xl">
             Capturing unforgettable moments across KAGADA editions.
           </p>
         </ScrollReveal>

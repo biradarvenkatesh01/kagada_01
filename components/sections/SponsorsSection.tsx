@@ -51,14 +51,14 @@ export function SponsorsSection() {
     <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-6 sm:py-10 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-[#E8E5DC] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+        <h2 className="font-saman text-[#D8D3C7] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
           Our <span className="text-amber-400 tshadow-md">Sponsors</span>
         </h2>
       </ScrollReveal>
 
       {/* Subtitle */}
       <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#E8E5DC]/90 uppercase tracking-widest text-center tshadow-sm mb-8 sm:mb-12 max-w-2xl">
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#D8D3C7]/90 uppercase tracking-widest text-center tshadow-sm mb-8 sm:mb-12 max-w-2xl">
           Honoring the partners and organizations supporting KAGADA’s legacy.
         </p>
       </ScrollReveal>

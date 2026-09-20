@@ -9,7 +9,7 @@ export function PrizePoolSection() {
     >
       <div className="relative z-10 w-full max-w-xl md:max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
-        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-4xl sm:text-6xl md:text-7xl text-[#E8E5DC] tshadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none">
+        <ScrollReveal as="h2" y={15} duration={0.4} className="font-saman text-4xl sm:text-6xl md:text-7xl text-[#D8D3C7] tshadow-lg mb-6 sm:mb-8 tracking-tight text-center select-none">
           Prize <span className="text-amber-400 tshadow-md">Pool</span>
         </ScrollReveal>
 

@@ -71,14 +71,14 @@ export function Footer() {
       <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 max-w-6xl mx-auto">
         {/* Left side - Developer credit */}
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left gap-3 sm:gap-4">
-          <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2.5 text-xs sm:text-base lg:text-xl font-roboto-mono font-bold text-[#E8E5DC] drop-shadow-sm whitespace-nowrap">
-            <Code className="text-[#E8E5DC] stroke-[2.5] w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+          <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2.5 text-xs sm:text-base lg:text-xl font-roboto-mono font-bold text-[#D8D3C7] drop-shadow-sm whitespace-nowrap">
+            <Code className="text-[#D8D3C7] stroke-[2.5] w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
             <span className="shrink-0">Developed by</span>
-            <span className="font-extrabold text-[#E8E5DC] shrink-0">
+            <span className="font-extrabold text-[#D8D3C7] shrink-0">
               Software Development SIG
             </span>
           </div>
-          <div className="flex flex-wrap justify-center sm:justify-start items-center gap-x-3 gap-y-2 font-roboto-mono text-sm sm:text-base font-semibold text-[#E8E5DC]/90">
+          <div className="flex flex-wrap justify-center sm:justify-start items-center gap-x-3 gap-y-2 font-roboto-mono text-sm sm:text-base font-semibold text-[#D8D3C7]/90">
             {DEVELOPERS.map((dev, idx) => (
               <span key={dev.name} className="flex items-center gap-x-3">
                 <a

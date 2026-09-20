@@ -165,7 +165,7 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
                 "h-2.5 rounded-full transition-all duration-300 cursor-pointer",
                 activeCard === i
                   ? "w-8 bg-[#5A182B]"
-                  : "w-2.5 bg-[#E8E5DC]/60 hover:bg-[#E8E5DC]"
+                  : "w-2.5 bg-[#D8D3C7]/60 hover:bg-[#D8D3C7]"
               )}
               aria-label={`Go to slide ${i + 1}`}
             />
