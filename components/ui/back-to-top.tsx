@@ -45,13 +45,11 @@ export default function BackToTop() {
           initial={{ opacity: 0, scale: 0.5, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.92 }}
           transition={{ type: "spring", stiffness: 280, damping: 20 }}
-          className="fixed bottom-5 sm:bottom-7 left-5 sm:left-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center bg-[#8a1c1c]/90 backdrop-blur-lg border-2 border-white/80 text-white shadow-2xl shadow-black/60 hover:bg-[#8a1c1c] hover:border-white transition-glass duration-300 group select-none cursor-pointer"
+          className="fixed bottom-5 sm:bottom-7 left-5 sm:left-7 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center kagada-paper-card border-2 border-white/95 text-[#5A182B] shadow-2xl shadow-black/40 hover:border-white transition-all duration-300 group select-none cursor-pointer"
           aria-label="Back to Top"
         >
-          <ArrowUp className="w-6 h-6 sm:w-7 sm:h-7 text-white stroke-[3] group-hover:-translate-y-1 transition-transform duration-300 drop-shadow-md" />
+          <ArrowUp className="w-6 h-6 sm:w-7 sm:h-7 text-[#5A182B] stroke-[3] group-hover:-translate-y-1 transition-transform duration-300" />
         </motion.button>
       )}
     </AnimatePresence>

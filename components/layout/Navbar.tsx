@@ -53,7 +53,7 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
       // once for about a second and never again, but those pinned a compositor
       // layer for the life of the page. Framer Motion sets the transform itself
       // while animating, which promotes it for exactly as long as it is needed.
-      className="fixed top-[calc(1rem+env(safe-area-inset-top,0px))] sm:top-6 left-1/2 z-[999] w-[94%] sm:w-[92%] max-w-7xl h-14 sm:h-16 rounded-full bg-white/45 backdrop-blur-lg border-2 border-white/80 shadow-lg shadow-black/15 px-4 sm:px-8 flex flex-nowrap items-center justify-between pointer-events-auto"
+      className="fixed top-[calc(1rem+env(safe-area-inset-top,0px))] sm:top-6 left-1/2 z-[999] w-[94%] sm:w-[92%] max-w-7xl h-14 sm:h-16 rounded-full kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/20 px-4 sm:px-8 flex flex-nowrap items-center justify-between pointer-events-auto"
     >
       {/* Left Brand Logo (Constant Kagada Red Filter) */}
       <a href="#hero" className="flex items-center gap-2 select-none py-0 shrink-0">
@@ -72,63 +72,63 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
           height={455}
           fetchPriority="high"
           decoding="async"
-          className="h-10 sm:h-12 xl:h-14 w-auto object-contain transition-glass duration-300 hover:scale-105 shrink-0"
+          className="h-10 sm:h-12 xl:h-14 w-auto object-contain transition-glass duration-300 shrink-0"
         />
       </a>
 
       {/* Desktop Navigation Links — Strictly Single Line With Generous Spacing */}
-      <nav className="hidden lg:flex flex-nowrap items-center gap-3.5 xl:gap-6 2xl:gap-8 font-roboto-mono text-xs xl:text-sm font-bold tracking-wider text-[#8a1c1c] shrink-0">
+      <nav className="hidden lg:flex flex-nowrap items-center gap-3.5 xl:gap-6 2xl:gap-8 font-roboto-mono text-xs xl:text-sm font-bold tracking-wider text-[#5A182B] shrink-0">
         <a
           href="#about"
-          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           About Us
         </a>
         <a
           href="#tracks"
-          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           Tracks
         </a>
         <a
           href="#prizes"
-          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           Prize Pool
         </a>
         <a
           href="#winners"
-          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           Winners
         </a>
         <a
           href="#gallery"
-          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           Gallery
         </a>
         <a
           href="#videos"
-          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           Aftermovies
         </a>
         <a
           href="#sponsors"
-          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           Sponsors
         </a>
         <a
           href="#faq"
-          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           FAQ
         </a>
         <a
           href="#contact"
-          className="whitespace-nowrap shrink-0 transition-glass duration-300 hover:scale-105 hover:text-[#8a1c1c]/70"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           Contact
         </a>
@@ -137,7 +137,7 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
       {/* Mobile & Tablet Toggle Button */}
       <button
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#8a1c1c] hover:text-[#8a1c1c]/70 transition-colors shrink-0"
+        className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#5A182B] hover:text-[#5A182B]/70 transition-colors shrink-0 cursor-pointer"
         aria-label="Toggle Menu"
         aria-expanded={mobileMenuOpen}
         aria-controls="mobile-nav-dropdown"
@@ -154,7 +154,7 @@ export const Navbar = memo(function Navbar({ isVideoFading }: NavbarProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-18 sm:top-20 left-0 right-0 bg-white/85 backdrop-blur-lg border-2 border-white/80 rounded-3xl p-6 shadow-2xl shadow-black/25 flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#8a1c1c] lg:hidden z-[1001]"
+            className="absolute top-18 sm:top-20 left-0 right-0 kagada-paper-card border-2 border-white/95 rounded-3xl p-6 shadow-2xl shadow-black/30 flex flex-col gap-4 font-roboto-mono text-base font-bold text-[#5A182B] lg:hidden z-[1001]"
           >
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
               About Us

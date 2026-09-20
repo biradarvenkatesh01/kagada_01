@@ -27,7 +27,7 @@ function replicate(base: SponsorItem[], copies: number): MarqueeSponsor[] {
 
 // Real Kagada Sponsor Image Assets & Official External Links
 const SPONSORS_BASE_1: SponsorItem[] = [
-  { id: 1, src: "/optimized/sponsors/spo1.webp", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org", invertWhite: true },
+  { id: 1, src: "/optimized/sponsors/spo1.webp", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org" },
   { id: 2, src: "/optimized/sponsors/spo2.webp", alt: "IEEE Cybersecurity STC", url: "https://cybersecurity.ieee.org" },
   { id: 3, src: "/optimized/sponsors/spo3.webp", alt: "BLUMM", url: "https://blumm.in" },
   { id: 4, src: "/optimized/sponsors/spo4.webp", alt: "IEEE SIGHT", url: "https://sight.ieee.org" },
@@ -37,7 +37,7 @@ const SPONSORS_BASE_2: SponsorItem[] = [
   { id: 5, src: "/optimized/sponsors/spo5.webp", alt: "InsightsIAS", url: "https://www.insightsonindia.com" },
   { id: 6, src: "/optimized/sponsors/spo6.webp", alt: "IEEE Foundation", url: "https://www.ieeefoundation.org" },
   { id: 7, src: "/optimized/sponsors/spon5.webp", alt: "Kagada Sponsor", url: "https://ieeeuvce.org" },
-  { id: 8, src: "/optimized/sponsors/spo1.webp", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org", invertWhite: true },
+  { id: 8, src: "/optimized/sponsors/spo1.webp", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org" },
 ];
 
 // Replicated to 12 items to ensure seamless, gap-free infinite looping on all
@@ -51,21 +51,21 @@ export function SponsorsSection() {
     <section id="sponsors" className="relative w-full flex flex-col items-center select-none py-6 sm:py-10 scroll-mt-6 z-10">
       {/* Main Section Title */}
       <ScrollReveal direction="up" duration={500}>
-        <h2 className="font-saman text-white text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
+        <h2 className="font-saman text-[#E8E5DC] text-5xl sm:text-7xl md:text-8xl tshadow-lg tracking-tight text-center select-none leading-tight mb-4">
           Our <span className="text-amber-400 tshadow-md">Sponsors</span>
         </h2>
       </ScrollReveal>
 
       {/* Subtitle */}
       <ScrollReveal direction="up" delay={60} duration={500}>
-        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-white/90 uppercase tracking-widest text-center tshadow-sm mb-8 sm:mb-12 max-w-2xl">
+        <p className="font-roboto-mono text-xs sm:text-sm font-semibold text-[#E8E5DC]/90 uppercase tracking-widest text-center tshadow-sm mb-8 sm:mb-12 max-w-2xl">
           Honoring the partners and organizations supporting KAGADA’s legacy.
         </p>
       </ScrollReveal>
 
-      {/* Glassmorphic Sponsor Image Marquee Loop Row 1 */}
+      {/* Sponsor Image Marquee Loop Row 1 */}
       <div className="w-full flex flex-col gap-6 sm:gap-10">
-        <Marquee speed={48} mobileSpeed={48 / SPONSOR_COPIES} pauseOnHover={true} direction="left">
+        <Marquee speed={48} mobileSpeed={48 / SPONSOR_COPIES} pauseOnHover={false} direction="left">
           {SPONSORS_ROW_1.map((item, idx) => (
             <a
               key={`sponsor-r1-${item.id}-${idx}`}
@@ -75,14 +75,8 @@ export function SponsorsSection() {
               rel="noopener noreferrer"
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-pointer group p-3.5 sm:p-6 flex items-center justify-center text-center rounded-3xl",
-                // No backdrop-blur: unlike a static glass card, these sit in a
-                // permanently-running marquee, so the compositor had to re-read
-                // and re-blur the backdrop for all 48 of them on every frame,
-                // forever. At 4px over a smooth gradient already washed out by
-                // bg-white/25 the result is visually indistinguishable (verified
-                // by A/B screenshot with the animation paused).
-                "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-glass duration-500 hover:scale-105 hover:bg-white/45 hover:border-white",
+                "kagada-paper-card border-2 border-white/95 shadow-md shadow-black/15",
+                "transition-glass duration-500 hover:shadow-xl hover:border-white",
                 "min-w-[210px] min-[360px]:min-w-[260px] sm:min-w-[320px] h-[100px] sm:h-[135px]"
               )}
             >
@@ -92,20 +86,14 @@ export function SponsorsSection() {
                 alt={item.alt}
                 loading="lazy"
                 decoding="async"
-                className={cn(
-                  "max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-md transition-transform duration-500 group-hover:scale-105",
-                  item.invertWhite && "brightness-0 invert drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
-                )}
+                className="max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-sm"
               />
-
-              {/* Subtle Glass Interior Shimmer */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
             </a>
           ))}
         </Marquee>
 
-        {/* Glassmorphic Sponsor Image Marquee Loop Row 2 */}
-        <Marquee speed={52} mobileSpeed={52 / SPONSOR_COPIES} pauseOnHover={true} direction="right">
+        {/* Sponsor Image Marquee Loop Row 2 */}
+        <Marquee speed={52} mobileSpeed={52 / SPONSOR_COPIES} pauseOnHover={false} direction="right">
           {SPONSORS_ROW_2.map((item, idx) => (
             <a
               key={`sponsor-r2-${item.id}-${idx}`}
@@ -115,14 +103,8 @@ export function SponsorsSection() {
               rel="noopener noreferrer"
               className={cn(
                 "relative shrink-0 overflow-hidden cursor-pointer group p-3.5 sm:p-6 flex items-center justify-center text-center rounded-3xl",
-                // No backdrop-blur: unlike a static glass card, these sit in a
-                // permanently-running marquee, so the compositor had to re-read
-                // and re-blur the backdrop for all 48 of them on every frame,
-                // forever. At 4px over a smooth gradient already washed out by
-                // bg-white/25 the result is visually indistinguishable (verified
-                // by A/B screenshot with the animation paused).
-                "bg-white/25 border-2 border-white/90 shadow-md shadow-black/10",
-                "transition-glass duration-500 hover:scale-105 hover:bg-white/45 hover:border-white",
+                "kagada-paper-card border-2 border-white/95 shadow-md shadow-black/15",
+                "transition-glass duration-500 hover:shadow-xl hover:border-white",
                 "min-w-[210px] min-[360px]:min-w-[260px] sm:min-w-[320px] h-[100px] sm:h-[135px]"
               )}
             >
@@ -132,14 +114,8 @@ export function SponsorsSection() {
                 alt={item.alt}
                 loading="lazy"
                 decoding="async"
-                className={cn(
-                  "max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-md transition-transform duration-500 group-hover:scale-105",
-                  item.invertWhite && "brightness-0 invert drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
-                )}
+                className="max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-sm"
               />
-
-              {/* Subtle Glass Interior Shimmer */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20 pointer-events-none rounded-3xl" />
             </a>
           ))}
         </Marquee>

@@ -10,9 +10,9 @@ function renderAboutCard(item: CardStackItem) {
     return (
       <div className="flex flex-col text-left select-text w-full">
         {/* Header Centered Horizontally in Smooch Sans Font */}
-        <div className="flex items-center justify-center border-b border-white/60 pb-1.5 sm:pb-2.5 mb-2.5 sm:mb-4 lg:mb-5 w-full shrink-0">
-          <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#8a1c1c] tracking-wide whitespace-nowrap text-center leading-none">
-            About <span className="text-[#8a1c1c]">UVCE</span>
+        <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-1.5 sm:pb-2.5 mb-2.5 sm:mb-4 lg:mb-5 w-full shrink-0">
+          <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
+            About <span className="text-[#5A182B]">UVCE</span>
           </h3>
         </div>
 
@@ -39,8 +39,8 @@ function renderAboutCard(item: CardStackItem) {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="w-full py-1.5 px-3 sm:py-2.5 sm:px-4 rounded-xl sm:rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm">
-              <div className="font-roboto-mono text-lg sm:text-2xl lg:text-3xl font-extrabold text-[#8a1c1c] leading-none">
+            <div className="w-full py-1.5 px-3 sm:py-2.5 sm:px-4 rounded-xl sm:rounded-2xl bg-[#E8E5DC]/80 border border-[#5A182B]/20 text-center shadow-sm">
+              <div className="font-roboto-mono text-lg sm:text-2xl lg:text-3xl font-extrabold text-[#5A182B] leading-none">
                 100+
               </div>
               <div className="font-jakarta text-[10px] sm:text-xs font-semibold text-slate-800 tracking-wider mt-0.5">
@@ -57,9 +57,9 @@ function renderAboutCard(item: CardStackItem) {
     return (
       <div className="flex flex-col justify-between text-left select-text w-full h-full flex-1">
         {/* Header Centered Horizontally in Smooch Sans Font */}
-        <div className="flex items-center justify-center border-b border-white/60 pb-1.5 sm:pb-2.5 mb-2.5 sm:mb-4 lg:mb-5 w-full shrink-0">
-          <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#8a1c1c] tracking-wide whitespace-nowrap text-center leading-none">
-            About <span className="text-[#8a1c1c]">IEEE UVCE</span>
+        <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-1.5 sm:pb-2.5 mb-2.5 sm:mb-4 lg:mb-5 w-full shrink-0">
+          <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
+            About <span className="text-[#5A182B]">IEEE UVCE</span>
           </h3>
         </div>
 
@@ -96,9 +96,9 @@ function renderAboutCard(item: CardStackItem) {
     return (
       <div className="flex flex-col text-left select-text w-full">
         {/* Header Centered Horizontally in Smooch Sans Font */}
-        <div className="flex items-center justify-center border-b border-white/60 pb-1.5 sm:pb-2.5 mb-2.5 sm:mb-4 lg:mb-5 w-full shrink-0">
-          <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#8a1c1c] tracking-wide whitespace-nowrap text-center leading-none">
-            About <span className="text-[#8a1c1c]">KAGADA</span>
+        <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-1.5 sm:pb-2.5 mb-2.5 sm:mb-4 lg:mb-5 w-full shrink-0">
+          <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
+            About <span className="text-[#5A182B]">KAGADA</span>
           </h3>
         </div>
 
@@ -116,8 +116,8 @@ function renderAboutCard(item: CardStackItem) {
 
           {/* Right 4-Stat Grid Column */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-2 min-[380px]:gap-2.5 sm:gap-3.5 w-full">
-            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
-              <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#8a1c1c]">
+            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#E8E5DC]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
+              <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#5A182B]">
                 1000+
               </div>
               <div className="font-jakarta text-[9px] min-[380px]:text-[10px] sm:text-xs font-semibold text-slate-800 mt-0.5 leading-tight">
@@ -125,8 +125,8 @@ function renderAboutCard(item: CardStackItem) {
               </div>
             </div>
 
-            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
-              <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#8a1c1c]">
+            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#E8E5DC]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
+              <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#5A182B]">
                 50+
               </div>
               <div className="font-jakarta text-[9px] min-[380px]:text-[10px] sm:text-xs font-semibold text-slate-800 mt-0.5 leading-tight">
@@ -134,8 +134,8 @@ function renderAboutCard(item: CardStackItem) {
               </div>
             </div>
 
-            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
-              <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#8a1c1c]">
+            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#E8E5DC]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
+              <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#5A182B]">
                 ₹40K+
               </div>
               <div className="font-jakarta text-[9px] min-[380px]:text-[10px] sm:text-xs font-semibold text-slate-800 mt-0.5 leading-tight">
@@ -143,8 +143,8 @@ function renderAboutCard(item: CardStackItem) {
               </div>
             </div>
 
-            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/70 border border-white/80 text-center shadow-sm flex flex-col items-center justify-center">
-              <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#8a1c1c]">
+            <div className="p-2 min-[380px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#E8E5DC]/80 border border-[#5A182B]/20 text-center shadow-sm flex flex-col items-center justify-center">
+              <div className="font-roboto-mono text-base min-[380px]:text-lg sm:text-2xl font-extrabold text-[#5A182B]">
                 20
               </div>
               <div className="font-jakarta text-[9px] min-[380px]:text-[10px] sm:text-xs font-semibold text-slate-800 mt-0.5 leading-tight">
@@ -170,7 +170,7 @@ export const AboutSection = memo(function AboutSection() {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
         <ScrollReveal direction="down" duration={450}>
-          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-white tshadow-lg mb-12 sm:mb-16 md:mb-20 tracking-tight text-center select-none">
+          <h2 className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#E8E5DC] tshadow-lg mb-12 sm:mb-16 md:mb-20 tracking-tight text-center select-none">
             About <span className="text-amber-400 tshadow-md">Us</span>
           </h2>
         </ScrollReveal>

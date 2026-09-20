@@ -20,14 +20,20 @@ export function ScrollReveal({
   className,
   as: Component = "div",
   style,
-  delay: _delay,
-  duration: _duration,
-  direction: _direction,
-  x: _x,
-  y: _y,
-  scale: _scale,
+  delay,
+  duration,
+  direction,
+  x,
+  y,
+  scale,
   ...props
 }: ScrollRevealProps) {
+  void delay;
+  void duration;
+  void direction;
+  void x;
+  void y;
+  void scale;
   return (
     <Component
       className={cn("scroll-reveal", className)}

@@ -11,7 +11,6 @@ import ContactSection from "@/components/sections/ContactSection";
 import IntroExperience from "@/components/sections/IntroExperience";
 import BurgundyTexturedBackground from "@/components/ui/burgundy-textured-background";
 import BackToTop from "@/components/ui/back-to-top";
-import ImageLightbox from "@/components/ui/image-lightbox";
 import OffscreenAnimationPause from "@/components/ui/marquee-auto-pause";
 
 export default function Home() {
@@ -22,7 +21,7 @@ export default function Home() {
     // Lenis re-measure) at the exact moment the hero faded in. The intro
     // overlay is a fixed, opaque, full-viewport layer, so keeping the height
     // static looks identical; scroll locking is done via body overflow instead.
-    <main className="relative w-full bg-transparent overflow-x-hidden min-h-screen">
+    <main className="relative w-full bg-[#5A182B] overflow-x-hidden min-h-screen">
       <IntroExperience>
         {/* CONTINUOUS NON-HERO BURGUNDY TEXTURED CANVAS */}
         <div className="relative w-full overflow-hidden z-10">
@@ -62,9 +61,6 @@ export default function Home() {
 
       {/* FLOATING BACK TO TOP BUTTON */}
       <BackToTop />
-
-      {/* FULLSCREEN IMAGE LIGHTBOX MODAL */}
-      <ImageLightbox />
 
       {/* Pauses the gallery/sponsor marquees and the Tracks gear while they are
           off-screen. Mounted globally so those sections stay Server Components. */}

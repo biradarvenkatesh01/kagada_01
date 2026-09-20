@@ -39,12 +39,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #8a1c1c;
+  --primary: #5A182B;
   --primary-foreground: #ffffff;
   --secondary: rgba(255, 255, 255, 0.4);
-  --secondary-foreground: #8a1c1c;
+  --secondary-foreground: #5A182B;
   --muted: rgba(255, 255, 255, 0.2);
-  --muted-foreground: #8a1c1c;
+  --muted-foreground: #5A182B;
   --border: rgba(255, 255, 255, 0.5);
   --input: rgba(255, 255, 255, 0.5);
 }
@@ -67,6 +67,23 @@
   --font-outfit: var(--font-outfit), 'Outfit', sans-serif;
   --font-jakarta: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
   --font-roboto-mono: var(--font-roboto-mono), 'Roboto Mono', monospace;
+  --radius: 0px;
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+  --radius-full: 0px;
+}
+
+/* ─── Global Square Corners: Zero Curvature Across Entire Website ─── */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -223,9 +240,6 @@ html.lenis, html.lenis body {
   }
 }
 
-.marquee-pause-hover:hover {
-  animation-play-state: paused;
-}
 
 
 /* Accessibility & Reduced Motion Standard */
@@ -247,15 +261,7 @@ html.lenis, html.lenis body {
   }
 }
 
-/* Universal Lightbox Image Hover Affordance */
-img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-lightbox="true"]) {
-  cursor: zoom-in;
-}
 
-#hero img,
-#tracks img {
-  cursor: default !important;
-}
 
 /* Chatbot Markdown Styling */
 .chat-markdown {
@@ -298,7 +304,7 @@ img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-li
   max-width: 100%;
   overflow-x: auto;
   margin: 0.6rem 0;
-  border-radius: 0.5rem;
+  border-radius: 0px;
   border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(0, 0, 0, 0.2);
   -webkit-overflow-scrolling: touch;
@@ -308,7 +314,7 @@ img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-li
 }
 .chat-table-scroll::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.4);
-  border-radius: 4px;
+  border-radius: 0px;
 }
 .chat-table-scroll table,
 .chat-markdown table {
@@ -338,7 +344,7 @@ img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-li
 .chat-markdown code {
   background-color: rgba(0, 0, 0, 0.3);
   padding: 0.15rem 0.35rem;
-  border-radius: 0.25rem;
+  border-radius: 0px;
   font-size: 0.72rem;
   font-family: var(--font-roboto-mono), monospace;
   word-break: break-all;
@@ -354,11 +360,11 @@ img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-li
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.1);
-  border-radius: 9999px;
+  border-radius: 0px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.4);
-  border-radius: 9999px;
+  border-radius: 0px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.7);
@@ -375,6 +381,95 @@ img:not(header img):not(nav img):not(#hero img):not(#tracks img):not([data-no-li
 .scroll-reveal {
   opacity: 1;
   transform: none;
+}
+
+/* ─── Kagada Fine Woven Cotton Fabric Weave Card (Code-Generated) ── */
+.kagada-paper-card {
+  background-color: #E8E5DC;
+  background-image:
+    /* 1. Primary diagonal twill knit ridges (55deg) */
+    repeating-linear-gradient(
+      55deg,
+      rgba(90, 24, 43, 0.05) 0px,
+      rgba(90, 24, 43, 0.05) 1px,
+      transparent 1px,
+      transparent 3.5px
+    ),
+    /* 2. Primary thread highlight reflection */
+    repeating-linear-gradient(
+      55deg,
+      rgba(255, 255, 255, 0.65) 1.2px,
+      rgba(255, 255, 255, 0.65) 2.4px,
+      transparent 2.4px,
+      transparent 3.5px
+    ),
+    /* 3. Interlocking perpendicular cross-thread loops (-35deg) */
+    repeating-linear-gradient(
+      -35deg,
+      rgba(90, 24, 43, 0.04) 0px,
+      rgba(90, 24, 43, 0.04) 1px,
+      transparent 1px,
+      transparent 3.5px
+    ),
+    /* 4. Cross-thread highlight reflection */
+    repeating-linear-gradient(
+      -35deg,
+      rgba(255, 255, 255, 0.5) 1.2px,
+      rgba(255, 255, 255, 0.5) 2.4px,
+      transparent 2.4px,
+      transparent 3.5px
+    ),
+    /* 5. Microscopic knit pores / thread intersection depressions */
+    radial-gradient(circle at 1.7px 1.7px, rgba(90, 24, 43, 0.06) 0.6px, transparent 0.9px),
+    radial-gradient(circle at 0px 0px, rgba(255, 255, 255, 0.5) 0.5px, transparent 0.8px);
+  background-size: auto, auto, auto, auto, 3.5px 3.5px, 3.5px 3.5px;
+  box-shadow: 0 14px 40px -8px rgba(90, 24, 43, 0.22), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+/* ─── Kagada Fine Woven Cotton Fabric Background Texture (Deep Burgundy tone) ── */
+.kagada-fabric-bg-texture {
+  background-image:
+    /* 1. Primary diagonal twill knit ridges (55deg) */
+    repeating-linear-gradient(
+      55deg,
+      rgba(25, 3, 8, 0.32) 0px,
+      rgba(25, 3, 8, 0.32) 1px,
+      transparent 1px,
+      transparent 3.5px
+    ),
+    /* 2. Primary thread highlight reflection */
+    repeating-linear-gradient(
+      55deg,
+      rgba(225, 75, 105, 0.16) 1.2px,
+      rgba(225, 75, 105, 0.16) 2.4px,
+      transparent 2.4px,
+      transparent 3.5px
+    ),
+    /* 3. Interlocking perpendicular cross-thread loops (-35deg) */
+    repeating-linear-gradient(
+      -35deg,
+      rgba(25, 3, 8, 0.25) 0px,
+      rgba(25, 3, 8, 0.25) 1px,
+      transparent 1px,
+      transparent 3.5px
+    ),
+    /* 4. Cross-thread highlight reflection */
+    repeating-linear-gradient(
+      -35deg,
+      rgba(225, 75, 105, 0.12) 1.2px,
+      rgba(225, 75, 105, 0.12) 2.4px,
+      transparent 2.4px,
+      transparent 3.5px
+    ),
+    /* 5. Microscopic knit pores / thread intersection depressions */
+    radial-gradient(circle at 1.7px 1.7px, rgba(20, 2, 6, 0.35) 0.6px, transparent 0.9px),
+    radial-gradient(circle at 0px 0px, rgba(240, 100, 130, 0.15) 0.5px, transparent 0.8px);
+  background-size: auto, auto, auto, auto, 3.5px 3.5px, 3.5px 3.5px;
+}
+
+::selection {
+  background-color: #5A182B;
+  color: #E8E5DC;
 }
 
 /* ─── Video Player Controls Hardening ────────────────────────────── */
