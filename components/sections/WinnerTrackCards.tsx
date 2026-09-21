@@ -18,14 +18,14 @@ const WINNER_CARDS: WinnerCardItem[] = [
     id: 0,
     line1: "Paper",
     line2: "Presentation",
-    artSrc: "/winners/track-paper-art.webp",
+    artSrc: "/winners/paper-presentation.jpg?v=3",
     link: "https://drive.google.com/drive/folders/1lRi76mdAld0b2_vnPImVYjpB2j2Zz0iW",
   },
   {
     id: 1,
     line1: "Poster",
     line2: "Presentation",
-    artSrc: "/winners/track-poster-art.webp",
+    artSrc: "/winners/poster-presentation.jpg?v=3",
     link: "https://drive.google.com/drive/folders/1AKdGbdqLyxHwr6ZWauQmmgjjFBfO59uS",
   },
   {
@@ -111,7 +111,7 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
               <div className="w-full flex justify-center">
                 <div
                   className={cn(
-                    "w-full max-w-[310px] xs:max-w-[330px] sm:max-w-[350px] md:max-w-[320px] lg:max-w-[350px] md:w-full h-[450px] sm:h-[480px] lg:h-[510px]",
+                    "w-[310px] sm:w-[320px] lg:w-[350px] shrink-0 h-[450px] sm:h-[480px] lg:h-[510px]",
                     "kagada-paper-card border border-white/80 shadow-2xl shadow-black/25",
                     "p-6 sm:p-7 flex flex-col justify-between items-center select-none group",
                     "hover:shadow-[0_20px_45px_rgba(0,0,0,0.35)] transition-all duration-300"
@@ -127,13 +127,13 @@ export const WinnerTrackCards = memo(function WinnerTrackCards() {
                   </div>
 
                   {/* Center Scrapbook Collage Artwork (with angled polaroid, masking tape & torn paper) */}
-                  <div className="flex-1 my-2 sm:my-3 flex items-center justify-center w-full overflow-visible z-10">
+                  <div className="flex-1 my-2 sm:my-3 flex items-center justify-center w-full overflow-hidden z-10">
                     <img
                       src={card.artSrc}
                       alt={`${card.line1} ${card.line2} Showcase`}
                       loading="lazy"
                       decoding="async"
-                      className="w-full max-w-[270px] sm:max-w-[285px] h-auto max-h-[250px] sm:max-h-[270px] object-contain transition-transform duration-300 ease-out group-hover:scale-105 select-none pointer-events-none drop-shadow-sm"
+                      className="w-full max-w-[320px] sm:max-w-[340px] h-[250px] sm:h-[280px] object-contain transition-transform duration-300 ease-out group-hover:scale-105 select-none pointer-events-none drop-shadow-sm"
                     />
                   </div>
 
