@@ -67,10 +67,23 @@ export default function RadialOrbitalTimeline({
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (activeNodeId !== null) {
-      const prevOverflow = document.body.style.overflow;
+      const prevBodyOverflow = document.body.style.overflow;
+      const prevHtmlOverflow = document.documentElement.style.overflow;
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+
+      // Stop Lenis virtualized scroll engine completely while modal is open
+      const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
+      if (lenis) {
+        lenis.stop();
+      }
+
       return () => {
-        document.body.style.overflow = prevOverflow;
+        document.body.style.overflow = prevBodyOverflow;
+        document.documentElement.style.overflow = prevHtmlOverflow;
+        if (lenis) {
+          lenis.start();
+        }
       };
     }
   }, [activeNodeId]);
@@ -308,7 +321,10 @@ export default function RadialOrbitalTimeline({
 
   // 📄 Shared parchment card layout for both desktop and mobile
   const renderCardContent = (item: TimelineItem) => (
-    <div className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[85vh] overflow-y-auto custom-scrollbar">
+    <div
+      data-lenis-prevent="true"
+      className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[85vh] overflow-y-auto overscroll-contain custom-scrollbar"
+    >
       {/* Top Floating Glass Close Button */}
         <button
           onClick={(e) => {
@@ -484,7 +500,10 @@ export default function RadialOrbitalTimeline({
       {mounted && typeof document !== "undefined" && createPortal(
         <AnimatePresence>
           {activeItem && (
-            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8">
+            <div
+              data-lenis-prevent="true"
+              className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8 overscroll-none"
+            >
               {/* Slight tinted low opacity burgundy textured layer */}
               <motion.div
                 initial={{ opacity: 0 }}
@@ -496,7 +515,9 @@ export default function RadialOrbitalTimeline({
                   setActiveNodeId(null);
                   setAutoRotate(true);
                 }}
-                className="fixed inset-0 cursor-pointer overflow-hidden"
+                onWheel={(e) => e.preventDefault()}
+                onTouchMove={(e) => e.preventDefault()}
+                className="fixed inset-0 cursor-pointer overflow-hidden touch-none"
                 aria-label="Close card backdrop"
               >
                 {/* Base tinted burgundy layer */}
