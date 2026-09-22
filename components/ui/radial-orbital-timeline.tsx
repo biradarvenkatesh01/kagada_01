@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useLayoutEffect, useRef, useCallback, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence, animate } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
 export interface TimelineItem {
@@ -63,6 +63,51 @@ export default function RadialOrbitalTimeline({
     getMountedServerSnapshot
   );
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const orbitRef = useRef<HTMLDivElement>(null);
+  const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const rafRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number | null>(null);
+  const rotationAngleRef = useRef<number>(0);
+
+  // 🖼️ Preload track card images on mount so card renders instantly with zero decode stutter
+  useEffect(() => {
+    timelineData.forEach((item) => {
+      if (item.imageSrc) {
+        const img = new Image();
+        img.src = item.imageSrc;
+      }
+    });
+  }, [timelineData]);
+
+  // ⚡ High-performance card close: clean transition, resumes RAF only after modal unmounts
+  const closeCard = useCallback(() => {
+    setActiveNodeId(null);
+    setExpandedItems({});
+    // Delay resuming auto-rotation until the exit animation (~200ms) completes
+    // so the exit animation runs at a solid 60-120fps with zero background RAF competition
+    window.setTimeout(() => {
+      setAutoRotate(true);
+    }, 240);
+  }, []);
+
+  const openCard = useCallback((id: number) => {
+    setAutoRotate(false);
+    setExpandedItems({ [id]: true });
+    setActiveNodeId(id);
+  }, []);
+
+  const toggleItem = useCallback(
+    (id: number) => {
+      if (activeNodeId === id) {
+        closeCard();
+      } else {
+        openCard(id);
+      }
+    },
+    [activeNodeId, closeCard, openCard]
+  );
+
   // 🔒 Modal scroll lock: prevent background page scrolling when card is open (mobile & desktop)
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -93,21 +138,12 @@ export default function RadialOrbitalTimeline({
     if (activeNodeId === null) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setExpandedItems({});
-        setActiveNodeId(null);
-        setAutoRotate(true);
+        closeCard();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeNodeId]);
-  
-  const containerRef = useRef<HTMLDivElement>(null);
-  const orbitRef = useRef<HTMLDivElement>(null);
-  const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
-  const rafRef = useRef<number | null>(null);
-  const lastTimeRef = useRef<number | null>(null);
-  const rotationAngleRef = useRef<number>(0);
+  }, [activeNodeId, closeCard]);
 
   // 📱 Track visibility to avoid 60fps RAF re-renders when off-screen
   useEffect(() => {
@@ -133,9 +169,7 @@ export default function RadialOrbitalTimeline({
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === containerRef.current || e.target === orbitRef.current) {
-      setExpandedItems({});
-      setActiveNodeId(null);
-      setAutoRotate(true);
+      closeCard();
     }
   };
 
@@ -194,62 +228,7 @@ export default function RadialOrbitalTimeline({
     applyRotation(rotationAngleRef.current);
   }, [expandedItems, activeNodeId, timelineData, applyRotation]);
 
-  // 🚀 HIGH-PERFORMANCE SPRING ROTATION TO TOP CENTER (270°)
-  const centerViewOnNode = useCallback(
-    (nodeId: number) => {
-      const nodeIndex = timelineData.findIndex((item) => item.id === nodeId);
-      if (nodeIndex === -1) return;
 
-      const totalNodes = timelineData.length;
-      // Target top-center angle is 270° (top of orbit)
-      const rawTargetAngle = 270 - (nodeIndex / totalNodes) * 360;
-
-      const currentAngle = rotationAngleRef.current;
-      const normalizedCurrent = ((currentAngle % 360) + 360) % 360;
-      const normalizedTarget = ((rawTargetAngle % 360) + 360) % 360;
-
-      let delta = normalizedTarget - normalizedCurrent;
-      if (delta > 180) delta -= 360;
-      if (delta < -180) delta += 360;
-
-      const targetAngle = currentAngle + delta;
-
-      // Physics-optimized spring rotation: fast start, zero overshoot
-      animate(currentAngle, targetAngle, {
-        type: "spring",
-        stiffness: 75,
-        damping: 19,
-        mass: 0.8,
-        onUpdate: (latest) => {
-          rotationAngleRef.current = latest;
-          applyRotation(latest);
-        },
-      });
-    },
-    [timelineData, applyRotation]
-  );
-
-  const toggleItem = (id: number) => {
-    // ⚡ INSTANT CARD OPENING: Update expanded state immediately on click
-    setExpandedItems((prev) => {
-      const newState: Record<number, boolean> = {};
-      const isCurrentlyExpanded = !!prev[id];
-
-      if (!isCurrentlyExpanded) {
-        newState[id] = true;
-        setActiveNodeId(id);
-        setAutoRotate(false);
-
-        // 🎯 Glide node & open card to top center smoothly right as it pops open
-        centerViewOnNode(id);
-      } else {
-        setActiveNodeId(null);
-        setAutoRotate(true);
-      }
-
-      return newState;
-    });
-  };
 
   // 🚀 HARDWARE-ACCELERATED RAF ROTATION (20°/sec = 18s 1:1 match with center gear)
   // Pauses automatically when off-screen or tab hidden to eliminate 60fps main-thread React re-renders
@@ -323,13 +302,13 @@ export default function RadialOrbitalTimeline({
   const renderCardContent = (item: TimelineItem) => (
     <div
       data-lenis-prevent="true"
-      className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[85vh] overflow-y-auto overscroll-contain custom-scrollbar"
+      className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[85vh] overflow-y-auto overscroll-contain custom-scrollbar transform-gpu"
     >
       {/* Top Floating Glass Close Button */}
         <button
           onClick={(e) => {
             e.stopPropagation();
-            toggleItem(item.id);
+            closeCard();
           }}
           className="absolute top-4 right-4 z-30 w-8 h-8 !rounded-full bg-[#D8D3C7] border border-[#5A182B]/30 text-[#5A182B] hover:bg-white transition-colors flex items-center justify-center shadow-md cursor-pointer"
           aria-label="Close card"
@@ -348,11 +327,11 @@ export default function RadialOrbitalTimeline({
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-center w-full">
           {/* Image Box (Left Column on PC) */}
           {item.imageSrc && (
-            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 !rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group">
+            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 !rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-[#D8D3C7]/40 relative group">
               <img
                 src={item.imageSrc}
                 alt={item.title}
-                loading="lazy"
+                loading="eager"
                 decoding="async"
                 className="w-full h-full object-cover select-none pointer-events-none"
               />
@@ -509,44 +488,38 @@ export default function RadialOrbitalTimeline({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.22, ease: "easeOut" }}
-                onClick={() => {
-                  setExpandedItems({});
-                  setActiveNodeId(null);
-                  setAutoRotate(true);
-                }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                onClick={closeCard}
                 onWheel={(e) => e.preventDefault()}
                 onTouchMove={(e) => e.preventDefault()}
-                className="fixed inset-0 cursor-pointer overflow-hidden touch-none"
+                className="fixed inset-0 cursor-pointer overflow-hidden touch-none transform-gpu will-change-opacity"
                 aria-label="Close card backdrop"
               >
-                {/* Base tinted burgundy layer */}
-                <div className="absolute inset-0 bg-[#5A182B]/85 backdrop-blur-[2px]" />
+                {/* Base tinted burgundy layer - smooth pure color without expensive backdrop-blur */}
+                <div className="absolute inset-0 bg-[#5A182B]/90" />
                 {/* Fabric weave texture overlay */}
-                <div className="absolute inset-0 opacity-70 kagada-fabric-bg-texture pointer-events-none" />
+                <div className="absolute inset-0 opacity-60 kagada-fabric-bg-texture pointer-events-none transform-gpu" />
                 {/* Soft vignette for visual depth */}
                 <div
                   className="absolute inset-0 pointer-events-none"
                   style={{
                     background:
-                      "radial-gradient(circle at center, transparent 35%, rgba(20, 2, 6, 0.45) 100%)",
+                      "radial-gradient(circle at center, transparent 35%, rgba(15, 1, 4, 0.5) 100%)",
                   }}
                 />
               </motion.div>
 
-              {/* Centered card container (phone & pc view - preserving authentic card dimensions) */}
+              {/* Centered card container (phone & pc view - silky-smooth GPU-accelerated transition) */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.88, y: 16 }}
+                initial={{ opacity: 0, scale: 0.94, y: 12 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.88, y: 16 }}
+                exit={{ opacity: 0, scale: 0.95, y: 8 }}
                 transition={{
-                  type: "spring",
-                  stiffness: 340,
-                  damping: 26,
-                  mass: 0.6,
+                  duration: 0.22,
+                  ease: [0.16, 1, 0.3, 1],
                 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative z-10 w-[92vw] max-w-[360px] sm:max-w-xl md:max-w-3xl lg:max-w-4xl pointer-events-auto transform-gpu"
+                className="relative z-10 w-[92vw] max-w-[360px] sm:max-w-xl md:max-w-3xl lg:max-w-4xl pointer-events-auto transform-gpu will-change-transform will-change-opacity"
               >
                 {renderCardContent(activeItem)}
               </motion.div>
