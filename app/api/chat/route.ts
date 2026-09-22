@@ -19,7 +19,7 @@ KAGADA 2026 COMPREHENSIVE KNOWLEDGE BASE:
 - Certificates: Every participant receives an official Certificate of Participation.
 
 PRESENTATION TRACKS (3 Main Category Tracks):
-1. Paper Presentation: Participants present original technical research papers across CSE, AI/ML, ECE, EEE, Mechanical, Civil & Architecture (UG/PG categories). Conducted in hybrid/presentation format with feedback from domain experts.
+1. Paper Presentation: Participants present original technical research papers across CSE, AI/ML, ECE, EEE, Mechanical, Civil & Architecture (UG/PG categories). Conducted in online presentation format with feedback from domain experts.
 2. Poster Presentation: Participants showcase creative technical posters summarizing innovative concepts and societal solutions.
 3. Project Presentation: Live technical working prototype model presentation demonstrating hardware/software innovation to solve real-world problems.
 
