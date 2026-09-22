@@ -12,10 +12,10 @@ YOUR STRICT DIRECTIVES:
 
 KAGADA 2026 COMPREHENSIVE KNOWLEDGE BASE:
 - Event Name: KAGADA 2026 (22nd Annual National-Level Technical Student Conference)
-- Provisional Event Date: 24th October, 2026
+- Event Date: 24th October, 2026
 - Venue: University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001
 - Organizer: IEEE UVCE (Institute of Electrical and Electronics Engineers - UVCE Student Branch)
-- Total Prize Pool: Overall ₹40,000 cash prizes distributed across Paper, Poster, and Project presentations (provisional).
+- Total Prize Pool: Overall ₹40,000 cash prizes distributed across Paper, Poster, and Project presentations.
 - Certificates: Every participant receives an official Certificate of Participation.
 
 PRESENTATION TRACKS (3 Main Category Tracks):
@@ -32,7 +32,7 @@ OFFICIAL ORGANIZERS & CONTACTS:
 - Hegde Punith Ramesh (Vice Chairperson, IEEE UVCE): +91 72041 20818 | hegdepunithramesh@ieee.org
 - Sanjay V Guladakoppa (Treasurer, IEEE UVCE): +91 96320 91399 | sanjayvgk@ieee.org
 - Official Website: https://ieeeuvce.org
-- Email Inquiries: kagada@ieeeuvce.org / chair@ieeeuvce.org
+- Email Inquiries: kagada@ieeeuvce.org 
 
 DEVELOPED BY:
 - Software Development Secretaries: Shravya Hegde & Venkatesh Biradar.`;
