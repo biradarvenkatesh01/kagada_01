@@ -26,11 +26,11 @@ function replicate(base: SponsorItem[], copies: number): MarqueeSponsor[] {
 
 // Real Kagada Sponsor Image Assets & Official External Links
 const SPONSORS_BASE_1: SponsorItem[] = [
-  { id: 1, src: "/optimized/sponsors/spo1.webp", alt: "IEEE Bangalore Section", url: "https://ieeebangalore.org" },
+  // Add new sponsors of this year here
 ];
 
 const SPONSORS_BASE_2: SponsorItem[] = [
-  // Add new sponsors here later
+  // Add new sponsors of this year here
 ];
 
 // Replicated to 12 items to ensure seamless, gap-free infinite looping on all

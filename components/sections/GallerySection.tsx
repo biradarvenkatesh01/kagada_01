@@ -57,7 +57,7 @@ function MarqueeRow({
   speed?: number
 }) {
   return (
-    <div className="flex w-full overflow-hidden py-3 sm:py-4 select-none">
+    <div data-marquee-track className="flex w-full overflow-hidden py-3 sm:py-4 select-none">
       <div
         className={cn(
           "flex w-max transform-gpu will-change-transform",

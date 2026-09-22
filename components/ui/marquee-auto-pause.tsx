@@ -3,55 +3,96 @@
 import { useEffect } from "react";
 
 /**
- * Pauses every marquee animation on the page while it is off-screen.
- *
- * A CSS animation keeps running at full rate even when its element is nowhere
- * near the viewport — the browser does not stop it for you. The gallery and
- * sponsor marquees animate ~4000px-wide composited layers, and were measured
- * still reporting `playState: "running"` while scrolled entirely out of view.
- *
- * On a low-end device this was one of the two dominant costs: stopping the
- * marquees took dropped frames from 90.1% to 55.9% at 6x CPU throttle
- * (390x844 @DPR3). Pausing something the user cannot see is invisible to them,
- * and a paused CSS animation resumes from exactly where it left off.
- *
- * This is a single mounted client component rather than a hook so that
- * GallerySection and SponsorsSection can stay Server Components — using a hook
- * inside them would have forced the whole subtree (and all those <img> tags)
- * to hydrate on the client for no benefit.
+ * Ensures all marquees and rotating animations on the page run uninterrupted
+ * while visible in the viewport, and stop completely when scrolled out of view
+ * to consume 0% CPU/GPU.
  */
 export default function OffscreenAnimationPause() {
   useEffect(() => {
-    const rows = Array.from(
-      document.querySelectorAll<HTMLElement>(".animate-marquee, .animate-marquee-reverse, .animate-gear-spin")
+    // 1. Gather all stationary track containers and animated elements
+    const rawElements = document.querySelectorAll<HTMLElement>(
+      "[data-marquee-track], .animate-marquee, .animate-marquee-reverse, .animate-gear-spin"
     );
-    if (rows.length === 0) return;
 
+    const containers: HTMLElement[] = [];
+
+    rawElements.forEach((el) => {
+      // Observe the stationary container (rather than the horizontally transforming inner div)
+      // to eliminate any bounding-box jitter or false intersection triggers during translation
+      const container = el.hasAttribute("data-marquee-track")
+        ? el
+        : el.closest<HTMLElement>("[data-marquee-track]") || el.parentElement || el;
+
+      if (container && !containers.includes(container)) {
+        containers.push(container);
+      }
+    });
+
+    if (containers.length === 0) return;
+
+    // 2. Geometry check with a generous 80px vertical buffer
+    const isElementInViewport = (el: HTMLElement) => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const buffer = 80;
+      return rect.bottom >= -buffer && rect.top <= vh + buffer;
+    };
+
+    const updatePlayState = (el: HTMLElement, inView: boolean) => {
+      if (inView) {
+        el.classList.remove("anim-paused");
+        // Also clear any descendant with anim-paused
+        el.querySelectorAll(".anim-paused").forEach((inner) =>
+          inner.classList.remove("anim-paused")
+        );
+      } else {
+        el.classList.add("anim-paused");
+      }
+    };
+
+    // 3. IntersectionObserver: 80px buffer above & below ensures smooth continuous playback
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          (entry.target as HTMLElement).classList.toggle("anim-paused", !entry.isIntersecting);
+          updatePlayState(entry.target as HTMLElement, entry.isIntersecting);
         }
       },
-      // Tightened rootMargin: 0px on top so marquees immediately pause the moment
-      // they scroll above the viewport (such as when viewing the FAQ section right below),
-      // and 100px on bottom so they pre-start before scrolling into view.
-      { rootMargin: "0px 0px 100px 0px", threshold: 0 }
+      {
+        rootMargin: "80px 0px 80px 0px",
+        threshold: 0,
+      }
     );
 
-    rows.forEach((row) => io.observe(row));
+    containers.forEach((c) => {
+      io.observe(c);
+      // Immediately evaluate and set proper initial state on mount
+      updatePlayState(c, isElementInViewport(c));
+    });
 
-    // Also stop them when the tab is backgrounded.
-    const onVisibility = () => {
-      if (document.hidden) rows.forEach((r) => r.classList.add("anim-paused"));
-      else rows.forEach((r) => io.observe(r)); // re-evaluate against the viewport
+    // 4. Tab visibility changes: pause when tab is backgrounded, instantly resume when tab is active
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        containers.forEach((c) => c.classList.add("anim-paused"));
+      } else {
+        containers.forEach((c) => updatePlayState(c, isElementInViewport(c)));
+      }
     };
-    document.addEventListener("visibilitychange", onVisibility);
+
+    // 5. Window resize / orientation change safety listener
+    const onResize = () => {
+      containers.forEach((c) => updatePlayState(c, isElementInViewport(c)));
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("resize", onResize, { passive: true });
+    window.addEventListener("orientationchange", onResize, { passive: true });
 
     return () => {
       io.disconnect();
-      document.removeEventListener("visibilitychange", onVisibility);
-      rows.forEach((r) => r.classList.remove("anim-paused"));
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
+      containers.forEach((c) => c.classList.remove("anim-paused"));
     };
   }, []);
 

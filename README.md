@@ -1,3 +1,4 @@
-kagada 2026 website
+## Logs
 
-waiting for changes now :P
+1. **Website Confirmed** — 22/09/26
+2. **"Website is Live" broadcast** — 22/09/26

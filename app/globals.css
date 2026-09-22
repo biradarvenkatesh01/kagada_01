@@ -377,10 +377,14 @@ html.lenis, html.lenis body {
 
 .animate-marquee {
   animation: marquee var(--duration, 30s) linear infinite;
+  animation-play-state: running;
+  will-change: transform;
 }
 
 .animate-marquee-reverse {
   animation: marquee-reverse var(--duration, 30s) linear infinite;
+  animation-play-state: running;
+  will-change: transform;
 }
 
 /* ─── Mobile marquee trimming ──────────────────────────────────────────

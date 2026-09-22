@@ -114,12 +114,12 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
         >
           Aftermovies
         </a>
-        <a
+        {/* <a
           href="#sponsors"
           className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           Sponsors
-        </a>
+        </a> */}
         <a
           href="#faq"
           className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
@@ -199,9 +199,9 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
           <a href="#videos" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             Aftermovies
           </a>
-          <a href="#sponsors" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+          {/* <a href="#sponsors" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             Sponsors
-          </a>
+          </a> */}
           <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             FAQ
           </a>

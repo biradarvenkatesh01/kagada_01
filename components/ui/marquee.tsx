@@ -15,7 +15,6 @@ interface MarqueeProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function Marquee({
   children,
-  pauseOnHover = false,
   direction = "left",
   speed = 30,
   mobileSpeed,
@@ -24,6 +23,7 @@ export function Marquee({
 }: MarqueeProps) {
   return (
     <div 
+      data-marquee-track
       className={cn(
         "w-full overflow-hidden z-10 py-2 select-none",
         className
@@ -34,8 +34,7 @@ export function Marquee({
         <div 
           className={cn(
             "flex w-max transform-gpu will-change-transform",
-            direction === "right" ? "animate-marquee-reverse" : "animate-marquee",
-            pauseOnHover && "hover:[animation-play-state:paused]"
+            direction === "right" ? "animate-marquee-reverse" : "animate-marquee"
           )}
           style={{
             "--duration": `${speed}s`,

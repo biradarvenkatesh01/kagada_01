@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useLayoutEffect, useRef, useCallback, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence, animate } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -43,6 +44,10 @@ const getOrbitRadiusSnapshot = () => {
 
 const getOrbitRadiusServerSnapshot = () => 240;
 
+const emptySubscribe = () => () => {};
+const getMountedClientSnapshot = () => true;
+const getMountedServerSnapshot = () => false;
+
 export default function RadialOrbitalTimeline({
   timelineData,
 }: RadialOrbitalTimelineProps) {
@@ -52,6 +57,37 @@ export default function RadialOrbitalTimeline({
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
   const [isInView, setIsInView] = useState<boolean>(false);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    getMountedClientSnapshot,
+    getMountedServerSnapshot
+  );
+
+  // 🔒 Modal scroll lock: prevent background page scrolling when card is open (mobile & desktop)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (activeNodeId !== null) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
+  }, [activeNodeId]);
+
+  // ⌨️ Close card on Escape key
+  useEffect(() => {
+    if (activeNodeId === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setExpandedItems({});
+        setActiveNodeId(null);
+        setAutoRotate(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeNodeId]);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
@@ -265,6 +301,72 @@ export default function RadialOrbitalTimeline({
     return relatedItems.includes(itemId);
   };
 
+  const activeItem =
+    activeNodeId !== null
+      ? timelineData.find((item) => item.id === activeNodeId)
+      : null;
+
+  // 📄 Shared parchment card layout for both desktop and mobile
+  const renderCardContent = (item: TimelineItem) => (
+    <div className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[85vh] overflow-y-auto custom-scrollbar">
+      {/* Top Floating Glass Close Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleItem(item.id);
+          }}
+          className="absolute top-4 right-4 z-30 w-8 h-8 !rounded-full bg-[#D8D3C7] border border-[#5A182B]/30 text-[#5A182B] hover:bg-white transition-colors flex items-center justify-center shadow-md cursor-pointer"
+          aria-label="Close card"
+        >
+          <X className="w-4 h-4 text-[#5A182B]" />
+        </button>
+
+        {/* Smooch Sans Title Header (Centered at top in Deep Burgundy Maroon) */}
+        <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-2.5 mb-3 sm:mb-6 w-full">
+          <h3 className="font-smooch text-4xl sm:text-6xl md:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
+            {item.title}
+          </h3>
+        </div>
+
+        {/* Card Content Layout: 2-Column Horizontal Side-by-Side Grid on PC, Stacked on Mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-center w-full">
+          {/* Image Box (Left Column on PC) */}
+          {item.imageSrc && (
+            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 !rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group">
+              <img
+                src={item.imageSrc}
+                alt={item.title}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover select-none pointer-events-none"
+              />
+            </div>
+          )}
+
+          {/* Description Paragraph & Event Details (Right Column on PC) */}
+          <div
+            className={`${
+              item.imageSrc ? "md:col-span-7" : "md:col-span-12"
+            } flex flex-col justify-center space-y-4 text-left w-full h-full`}
+          >
+            {(item.description || item.content) && (
+              <p className="font-jakarta text-xs sm:text-sm md:text-base text-slate-800 leading-relaxed font-medium">
+                {item.description || item.content}
+              </p>
+            )}
+
+            {/* Fee & Team Size Box (Only shows if defined) */}
+            {(item.fee || item.teamSize) && (
+              <div className="bg-[#D8D3C7]/40 rounded-xl py-3 px-4 w-full text-center text-[0.8rem] sm:text-sm text-[#5A182B] font-semibold mt-2 shadow-inner border border-[#5A182B]/20">
+                {item.fee && <p className="mb-1">Fee: ₹{item.fee} per team</p>}
+                {item.teamSize && <p>Team Size: {item.teamSize}</p>}
+              </div>
+            )}
+          </div>
+      </div>
+    </div>
+  );
+
   return (
     <div
       className="w-full min-h-[380px] sm:min-h-[580px] md:min-h-[620px] flex flex-col items-center justify-start bg-transparent overflow-visible py-0 select-none -mt-4 sm:-mt-6"
@@ -287,7 +389,7 @@ export default function RadialOrbitalTimeline({
                   isAnyCardOpen ? "opacity-0" : "opacity-100"
                 }`}
               >
-                <div className="animate-gear-spin flex items-center justify-center transform-gpu will-change-transform bg-transparent">
+                <div data-marquee-track className="animate-gear-spin flex items-center justify-center transform-gpu will-change-transform bg-transparent">
                   <svg
                     viewBox="0 0 32 32"
                     className="w-16 h-16 sm:w-44 sm:h-44 text-[#D8D3C7] fill-current"
@@ -298,12 +400,9 @@ export default function RadialOrbitalTimeline({
                 </div>
               </div>
 
-              {/* 🌌 ORBITING CIRCULAR NODES & INSTANT EXPANDING CARDS */}
+              {/* 🌌 ORBITING CIRCULAR NODES */}
               {timelineData.map((index_item, index) => {
                 const item = index_item;
-                // Rendered at the orbit's neutral angle. The layout effect above
-                // overwrites transform/zIndex/opacity with the live rotation
-                // synchronously before paint, so this is never visible.
                 const position = calculateNodePosition(
                   index,
                   timelineData.length,
@@ -321,145 +420,120 @@ export default function RadialOrbitalTimeline({
                   transition: "opacity 0.3s ease-out",
                 };
 
-            return (
-              <div
-                key={item.id}
-                ref={(el) => {
-                  nodeRefs.current[item.id] = el;
-                }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto cursor-pointer transform-gpu will-change-transform"
-                style={nodeStyle}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleItem(item.id);
-                }}
-              >
-                {/* ⚪ CIRCULAR NODE BUTTON: Off-White Bg with Deep Burgundy Maroon Icon */}
-                <motion.div
-                  className={`
-                    relative z-20
-                    w-10 h-10 sm:w-12 sm:h-12 !rounded-full flex items-center justify-center
-                    ${
-                      isExpanded
-                        ? "bg-white text-[#5A182B] border-[#5A182B] shadow-2xl scale-125"
-                        : isRelated
-                        ? "bg-[#D8D3C7] text-[#5A182B] border-[#5A182B]/50 shadow-lg"
-                        : "bg-[#D8D3C7] text-[#5A182B] border-[#5A182B]/30 shadow-md shadow-black/50"
-                    }
-                    border-2 
-                    transition-glass duration-300 transform-gpu cursor-pointer
-                  `}
-                >
-                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75] text-[#5A182B]" />
-                </motion.div>
-
-                {/* Node Label Title Below Button (z-20 so text sits in front of hanging string) */}
-                <div
-                  className={`
-                    absolute top-11 sm:top-14 left-1/2 -translate-x-1/2 z-20
-                    max-w-[105px] sm:max-w-none text-center leading-tight whitespace-normal sm:whitespace-nowrap
-                    font-roboto-mono text-xs sm:text-base font-extrabold tracking-wide
-                    transition-glass duration-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]
-                    ${isExpanded ? "text-[#D8D3C7] scale-115" : "text-[#D8D3C7]/95"}
-                  `}
-                >
-                  {item.title === "Food for Cause" ? (
-                    <>
-                      Food for
-                      <br />
-                      Cause
-                    </>
-                  ) : (
-                    item.title
-                  )}
-                </div>
-
-                {/* ⚡ INSTANTLY OPENING EXPANDABLE GLASS CARD HANGING FROM NODE BUTTON */}
-                <AnimatePresence>
-                  {isExpanded && (
+                return (
+                  <div
+                    key={item.id}
+                    ref={(el) => {
+                      nodeRefs.current[item.id] = el;
+                    }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto cursor-pointer transform-gpu will-change-transform"
+                    style={nodeStyle}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleItem(item.id);
+                    }}
+                  >
+                    {/* ⚪ CIRCULAR NODE BUTTON: Off-White Bg with Deep Burgundy Maroon Icon */}
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.6, y: 15 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.6, y: 15 }}
-                      transition={{ type: "spring", stiffness: 320, damping: 24, mass: 0.6 }}
-                      className="absolute top-0 sm:top-8 md:top-10 left-1/2 -translate-x-1/2 w-[92vw] max-w-[360px] md:max-w-3xl lg:max-w-4xl z-[9999] pointer-events-auto transform-gpu"
+                      className={`
+                        relative z-20
+                        w-10 h-10 sm:w-12 sm:h-12 !rounded-full flex items-center justify-center
+                        ${
+                          isExpanded
+                            ? "bg-white text-[#5A182B] border-[#5A182B] shadow-2xl scale-125"
+                            : isRelated
+                            ? "bg-[#D8D3C7] text-[#5A182B] border-[#5A182B]/50 shadow-lg"
+                            : "bg-[#D8D3C7] text-[#5A182B] border-[#5A182B]/30 shadow-md shadow-black/50"
+                        }
+                        border-2 
+                        transition-glass duration-300 transform-gpu cursor-pointer
+                      `}
                     >
-                      {/* 🌟 Authentic Parchment Paper Card Container */}
-                      <div className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[82vh] sm:max-h-none overflow-y-auto custom-scrollbar">
-                        
-                        {/* Top Floating Glass Close Button */}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleItem(item.id);
-                          }}
-                          className="absolute top-4 right-4 z-30 w-8 h-8 !rounded-full bg-[#D8D3C7] border border-[#5A182B]/30 text-[#5A182B] hover:bg-white transition-colors flex items-center justify-center shadow-md cursor-pointer"
-                          aria-label="Close card"
-                        >
-                          <X className="w-4 h-4 text-[#5A182B]" />
-                        </button>
-
-                        {/* Smooch Sans Title Header (Centered at top in Deep Burgundy Maroon) */}
-                        <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-2.5 mb-3 sm:mb-6 w-full">
-                          <h3 className="font-smooch text-4xl sm:text-6xl md:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
-                            {item.title}
-                          </h3>
-                        </div>
-
-                        {/* Card Content Layout: 2-Column Horizontal Side-by-Side Grid on PC, Stacked on Mobile */}
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-center w-full">
-                          
-                          {/* Image Box (Left Column on PC) */}
-                          {item.imageSrc && (
-                            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 !rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-slate-100 relative group">
-                              <img
-                                src={item.imageSrc}
-                                alt={item.title}
-                                loading="lazy"
-                                decoding="async"
-                                className="w-full h-full object-cover select-none pointer-events-none"
-                              />
-                            </div>
-                          )}
-
-                          {/* Description Paragraph & Event Details (Right Column on PC) */}
-                          <div className={`${item.imageSrc ? "md:col-span-7" : "md:col-span-12"} flex flex-col justify-center space-y-4 text-left w-full h-full`}>
-                            {(item.description || item.content) && (
-                              <p className="font-jakarta text-xs sm:text-sm md:text-base text-slate-800 leading-relaxed font-medium">
-                                {item.description || item.content}
-                              </p>
-                            )}
-                            
-                            {/* Fee & Team Size Box (Only shows if defined) */}
-                            {(item.fee || item.teamSize) && (
-                              <div className="bg-[#D8D3C7]/40 rounded-xl py-3 px-4 w-full text-center text-[0.8rem] sm:text-sm text-[#5A182B] font-semibold mt-2 shadow-inner border border-[#5A182B]/20">
-                                {item.fee && <p className="mb-1">Fee: ₹{item.fee} per team</p>}
-                                {item.teamSize && <p>Team Size: {item.teamSize}</p>}
-                              </div>
-                            )}
-
-                            {/* Registration Button (Matching SKIP button theme) */}
-                            {/* 
-                            {item.hasRegistration && (
-                              <button className="w-full bg-[#EAE5D9] hover:bg-[#D8D3C7] text-[#5A182B] font-roboto-mono font-bold py-3 sm:py-3.5 rounded-none text-[0.75rem] sm:text-[0.85rem] uppercase tracking-widest transition-all active:scale-[0.98] mt-1 border-2 border-[#5A182B]/40 shadow-[2px_2px_6px_rgba(0,0,0,0.15)] flex items-center justify-center gap-2">
-                                Registrations closed <span className="opacity-70 font-normal">→</span>
-                              </button>
-                            )}
-                            */}
-                          </div>
-                        </div>
-
-                      </div>
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75] text-[#5A182B]" />
                     </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </div>
-      );
-    })()}
-  </div>
-</div>
-);
+
+                    {/* Node Label Title Below Button */}
+                    <div
+                      className={`
+                        absolute top-11 sm:top-14 left-1/2 -translate-x-1/2 z-20
+                        max-w-[105px] sm:max-w-none text-center leading-tight whitespace-normal sm:whitespace-nowrap
+                        font-roboto-mono text-xs sm:text-base font-extrabold tracking-wide
+                        transition-glass duration-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]
+                        ${isExpanded ? "text-[#D8D3C7] scale-115" : "text-[#D8D3C7]/95"}
+                      `}
+                    >
+                      {item.title === "Food for Cause" ? (
+                        <>
+                          Food for
+                          <br />
+                          Cause
+                        </>
+                      ) : (
+                        item.title
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
+      </div>
+
+      {/* 📱💻 FULL-VIEWPORT TINTED BURGUNDY TEXTURED BACKDROP + CENTERED CARD (MOBILE & PC) */}
+      {mounted && typeof document !== "undefined" && createPortal(
+        <AnimatePresence>
+          {activeItem && (
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8">
+              {/* Slight tinted low opacity burgundy textured layer */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+                onClick={() => {
+                  setExpandedItems({});
+                  setActiveNodeId(null);
+                  setAutoRotate(true);
+                }}
+                className="fixed inset-0 cursor-pointer overflow-hidden"
+                aria-label="Close card backdrop"
+              >
+                {/* Base tinted burgundy layer */}
+                <div className="absolute inset-0 bg-[#5A182B]/85 backdrop-blur-[2px]" />
+                {/* Fabric weave texture overlay */}
+                <div className="absolute inset-0 opacity-70 kagada-fabric-bg-texture pointer-events-none" />
+                {/* Soft vignette for visual depth */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle at center, transparent 35%, rgba(20, 2, 6, 0.45) 100%)",
+                  }}
+                />
+              </motion.div>
+
+              {/* Centered card container (phone & pc view - preserving authentic card dimensions) */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.88, y: 16 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.88, y: 16 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 340,
+                  damping: 26,
+                  mass: 0.6,
+                }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative z-10 w-[92vw] max-w-[360px] sm:max-w-xl md:max-w-3xl lg:max-w-4xl pointer-events-auto transform-gpu"
+              >
+                {renderCardContent(activeItem)}
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
+    </div>
+  );
 }

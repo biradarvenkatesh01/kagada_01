@@ -6,7 +6,7 @@ import PrizePoolSection from "@/components/sections/PrizePoolSection";
 import WinnersSection from "@/components/sections/WinnersSection";
 import GallerySection from "@/components/sections/GallerySection";
 import VideosSection from "@/components/sections/VideosSection";
-import SponsorsSection from "@/components/sections/SponsorsSection";
+// import SponsorsSection from "@/components/sections/SponsorsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import ContactSection from "@/components/sections/ContactSection";
 import BurgundyTexturedBackground from "@/components/ui/burgundy-textured-background";
