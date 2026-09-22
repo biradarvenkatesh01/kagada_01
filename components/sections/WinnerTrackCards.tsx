@@ -32,7 +32,7 @@ const WINNER_CARDS: WinnerCardItem[] = [
     id: 2,
     line1: "Project",
     line2: "Presentation",
-    artSrc: "/winners/track-project-art.webp",
+    artSrc: "/winners/project-presentation.jpg?v=3",
     link: "https://drive.google.com/drive/folders/1Xzn2vQoLUEN9mUnCeG4UOiWyjex2m-YY",
   },
 ];
