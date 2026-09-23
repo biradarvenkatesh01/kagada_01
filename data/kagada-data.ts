@@ -49,7 +49,7 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     icon: Cpu,
     relatedIds: [1, 2],
     fee: 180,
-    teamSize: "1-4 members",
+    teamSize: "1-5 members",
     hasRegistration: true,
   },
   {
