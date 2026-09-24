@@ -243,15 +243,15 @@ export const HeroSection = memo(function HeroSection({
           damping: 18,
           delay: isIntroActive ? 0 : 0.4,
         }}
-        className="absolute bottom-3 sm:bottom-6 left-1/2 z-20 flex flex-col items-center gap-1.5 sm:gap-3 group pointer-events-auto transform-gpu"
+        className="absolute bottom-4 sm:bottom-8 left-1/2 z-20 flex flex-col items-center gap-1.5 sm:gap-2.5 group pointer-events-auto transform-gpu"
       >
-        <div className="px-5 py-1.5 sm:px-8 sm:py-2.5 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
-          <span className="font-roboto-mono text-xs sm:text-sm font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
+        <div className="px-6 py-2 sm:px-9 sm:py-3 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
+          <span className="font-roboto-mono text-xs min-[360px]:text-sm sm:text-base font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
             Explore Tracks
           </span>
         </div>
 
-        <div className="w-9 h-9 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
           <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.8]" />
         </div>
       </motion.a>
