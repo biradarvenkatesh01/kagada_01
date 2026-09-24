@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronDown,
   X,
-  Sparkles,
   FileText,
   Image as ImageIcon,
   Cpu,
@@ -209,11 +208,10 @@ export const HeroSection = memo(function HeroSection({
           <button
             type="button"
             onClick={() => setIsRegisterModalOpen(true)}
-            className="w-full sm:w-auto px-7 sm:px-10 py-2.5 sm:py-3.5 bg-[#EAE5D9] hover:bg-white active:bg-[#D8D3C7] text-[#5A182B] font-roboto-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-widest border-2 border-[#5A182B]/40 hover:border-[#5A182B] shadow-lg hover:shadow-2xl shadow-black/20 transition-all duration-200 active:scale-95 flex items-center justify-center gap-2.5 cursor-pointer rounded-none group"
+            className="w-full sm:w-auto px-7 sm:px-10 py-2.5 sm:py-3.5 kagada-paper-card border-2 border-white/95 hover:border-white text-[#5A182B] font-roboto-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-widest shadow-lg hover:shadow-2xl shadow-black/20 hover:brightness-105 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none"
             aria-label="Register for Kagada 2026 tracks"
           >
             <span>Register Now</span>
-            <Sparkles className="w-4 h-4 text-[#5A182B] group-hover:rotate-12 transition-transform" />
           </button>
         </div>
       </motion.div>
