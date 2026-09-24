@@ -124,6 +124,30 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
     }
   }, [messages, isTyping, isOpen]);
 
+  // Listen for custom event from Navbar to close chatbot if navbar dropdown is opened
+  useEffect(() => {
+    const handleClose = () => setIsOpen(false);
+    window.addEventListener("kagada:close-chat", handleClose);
+    return () => window.removeEventListener("kagada:close-chat", handleClose);
+  }, []);
+
+  const handleOpenChat = () => {
+    setShowGreeting(false);
+    setIsOpen(true);
+    window.dispatchEvent(new CustomEvent("kagada:close-dropdown"));
+  };
+
+  const handleToggleChat = () => {
+    setShowGreeting(false);
+    setIsOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        window.dispatchEvent(new CustomEvent("kagada:close-dropdown"));
+      }
+      return next;
+    });
+  };
+
   // If hidden, don't render
   if (!isVisible) return null;
 
@@ -181,10 +205,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 15, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 300, damping: 24 }}
-            onClick={() => {
-              setShowGreeting(false);
-              setIsOpen(true);
-            }}
+            onClick={handleOpenChat}
             className="fixed bottom-20 sm:bottom-24 right-5 sm:right-7 z-50 cursor-pointer select-none"
           >
             <div className="relative kagada-paper-card text-[#5A182B] border-2 border-white/95 px-4 py-3 !rounded-2xl shadow-2xl shadow-black/30 flex items-center gap-3 max-w-[280px] sm:max-w-xs transition-glass duration-200 group">
@@ -214,10 +235,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
 
       {/* Pure Circular Launcher Button: Off-White Bg with Deep Burgundy Maroon Icon */}
       <motion.button
-        onClick={() => {
-          setShowGreeting(false);
-          setIsOpen(!isOpen);
-        }}
+        onClick={handleToggleChat}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}

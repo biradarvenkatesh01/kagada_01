@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -11,23 +11,90 @@ interface NavbarProps {
 
 export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
-  // Close mobile menu on Escape.
-  // The early return matters: previously this listener was attached whenever the
-  // component was mounted — i.e. always — so every keystroke anywhere on the page
-  // ran a handler that then checked `mobileMenuOpen` and usually did nothing.
-  // Now nothing is bound to `keydown` at all unless the menu is actually open.
+  // Close mobile menu on Escape or click outside.
   useEffect(() => {
     if (!mobileMenuOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMobileMenuOpen(false);
     };
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMobileMenuOpen(false);
+      }
+    };
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside, { passive: true });
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, [mobileMenuOpen]);
+
+  // Close mobile dropdown automatically when the user scrolls or wheels while it is open.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const initialScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      if (Math.abs(window.scrollY - initialScrollY) > 8) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > 4 || Math.abs(e.deltaX) > 4) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    let startTouchY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      startTouchY = e.touches[0].clientY;
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      if (Math.abs(e.touches[0].clientY - startTouchY) > 10) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [mobileMenuOpen]);
+
+  // Listen for custom event from AIChatCard to close dropdown if chatbot is opened
+  useEffect(() => {
+    const handleClose = () => setMobileMenuOpen(false);
+    window.addEventListener("kagada:close-dropdown", handleClose);
+    return () => window.removeEventListener("kagada:close-dropdown", handleClose);
+  }, []);
+
+  const handleToggleMenu = () => {
+    setMobileMenuOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        // Automatically close AI chat if dropdown is opened
+        window.dispatchEvent(new CustomEvent("kagada:close-chat"));
+      }
+      return next;
+    });
+  };
 
   return (
     <motion.header
+      ref={headerRef}
       initial={{ y: -80, opacity: 0, x: "-50%" }}
       animate={{
         y: isIntroActive ? -80 : 0,
@@ -136,7 +203,7 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
 
       {/* Mobile & Tablet Toggle Button */}
       <button
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        onClick={handleToggleMenu}
         className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#5A182B] hover:text-[#5A182B]/70 transition-colors shrink-0 cursor-pointer"
         aria-label="Toggle Menu"
         aria-expanded={mobileMenuOpen}
