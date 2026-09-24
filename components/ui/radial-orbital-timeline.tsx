@@ -151,7 +151,7 @@ export default function RadialOrbitalTimeline({
     return () => window.removeEventListener("kagada:open-track", handleOpenTrack);
   }, [openCard]);
 
-  // 🔄 Seamless carousel navigation in exact orbital sequence
+  // Seamless carousel navigation in exact orbital sequence
   const navigateCard = useCallback(
     (direction: number) => {
       const currentId = activeNodeIdRef.current;
@@ -174,6 +174,26 @@ export default function RadialOrbitalTimeline({
     [timelineData]
   );
 
+  // Direct carousel navigation to specific card index
+  const goToIndex = useCallback(
+    (targetIndex: number) => {
+      const currentId = activeNodeIdRef.current;
+      if (currentId === null) return;
+      const currentIndex = timelineData.findIndex((item) => item.id === currentId);
+      if (currentIndex === -1 || currentIndex === targetIndex) return;
+
+      const direction = targetIndex > currentIndex ? 1 : -1;
+      const nextItem = timelineData[targetIndex];
+      if (!nextItem) return;
+
+      activeNodeIdRef.current = nextItem.id;
+      setSlideDirection(direction);
+      setActiveNodeId(nextItem.id);
+      setExpandedItems({ [nextItem.id]: true });
+    },
+    [timelineData]
+  );
+
   const toggleItem = useCallback(
     (id: number) => {
       if (activeNodeId === id) {
@@ -185,7 +205,7 @@ export default function RadialOrbitalTimeline({
     [activeNodeId, closeCard, openCard]
   );
 
-  // 👆 Touch swipe gesture handlers (native touch events with pan-y scrolling tolerance)
+  // Touch swipe gesture handlers (native touch events with pan-y scrolling tolerance)
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (e.touches.length > 0) {
       touchStartXRef.current = e.touches[0].clientX;
@@ -216,7 +236,7 @@ export default function RadialOrbitalTimeline({
     [navigateCard]
   );
 
-  // 🔒 Modal scroll lock: prevent background page scrolling when card is open (mobile & desktop)
+  // Modal scroll lock: prevent background page scrolling when card is open (mobile & desktop)
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (activeNodeId !== null) {
@@ -660,35 +680,62 @@ export default function RadialOrbitalTimeline({
               </button>
 
               {/* Slidable centered card container with AnimatePresence */}
-              <AnimatePresence custom={slideDirection} mode="wait">
-                {activeItem && (
-                  <motion.div
-                    key={activeItem.id}
-                    custom={slideDirection}
-                    variants={cardVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    drag="x"
-                    dragDirectionLock
-                    dragConstraints={{ left: 0, right: 0 }}
-                    dragElastic={0.2}
-                    onDragEnd={(_, info) => {
-                      if (info.offset.x < -50 || info.velocity.x < -300) {
-                        navigateCard(1);
-                      } else if (info.offset.x > 50 || info.velocity.x > 300) {
-                        navigateCard(-1);
-                      }
-                    }}
-                    onTouchStart={handleTouchStart}
-                    onTouchEnd={handleTouchEnd}
-                    onClick={(e) => e.stopPropagation()}
-                    className="relative z-10 w-[92vw] max-w-[360px] sm:max-w-xl md:max-w-3xl lg:max-w-4xl pointer-events-auto transform-gpu will-change-transform will-change-opacity touch-pan-y cursor-grab active:cursor-grabbing select-none"
-                  >
-                    {renderCardContent(activeItem)}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div className="relative z-10 flex flex-col items-center pointer-events-auto w-[92vw] max-w-[360px] sm:max-w-xl md:max-w-3xl lg:max-w-4xl">
+                <AnimatePresence custom={slideDirection} mode="wait">
+                  {activeItem && (
+                    <motion.div
+                      key={activeItem.id}
+                      custom={slideDirection}
+                      variants={cardVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      drag="x"
+                      dragDirectionLock
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.2}
+                      onDragEnd={(_, info) => {
+                        if (info.offset.x < -50 || info.velocity.x < -300) {
+                          navigateCard(1);
+                        } else if (info.offset.x > 50 || info.velocity.x > 300) {
+                          navigateCard(-1);
+                        }
+                      }}
+                      onTouchStart={handleTouchStart}
+                      onTouchEnd={handleTouchEnd}
+                      onClick={(e) => e.stopPropagation()}
+                      className="w-full pointer-events-auto transform-gpu will-change-transform will-change-opacity touch-pan-y cursor-grab active:cursor-grabbing select-none"
+                    >
+                      {renderCardContent(activeItem)}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Carousel Progress / Pagination Indicator below card */}
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="mt-2.5 sm:mt-3.5 flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-1.5 !rounded-full bg-black/35 backdrop-blur-sm border border-white/20 shadow-lg select-none"
+                  aria-label="Track cards pagination"
+                >
+                  {timelineData.map((item, index) => {
+                    const isActive = item.id === activeNodeId;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => goToIndex(index)}
+                        className={`transition-all duration-300 rounded-full cursor-pointer border ${
+                          isActive
+                            ? "w-6 sm:w-8 h-2 sm:h-2.5 bg-[#D8D3C7] border-white shadow-sm"
+                            : "w-2 sm:w-2.5 h-2 sm:h-2.5 bg-white/40 border-white/50 hover:bg-white/80"
+                        }`}
+                        aria-label={`Go to ${item.title}`}
+                        title={item.title}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           )}
         </AnimatePresence>,
