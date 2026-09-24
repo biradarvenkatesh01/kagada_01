@@ -220,7 +220,7 @@ export const HeroSection = memo(function HeroSection({
           <button
             type="button"
             onClick={() => setIsRegisterModalOpen(true)}
-            className="w-full sm:w-auto px-7 sm:px-10 py-2.5 sm:py-3.5 kagada-paper-card border-2 border-white/95 hover:border-white text-[#5A182B] font-roboto-mono font-bold text-xs sm:text-sm md:text-base uppercase tracking-widest shadow-lg hover:shadow-2xl shadow-black/20 hover:brightness-105 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none"
+            className="w-fit px-3.5 sm:px-4 py-1.5 sm:py-2 kagada-paper-card border-2 border-white/95 hover:border-white text-[#5A182B] font-roboto-mono font-bold text-xs sm:text-sm uppercase tracking-widest shadow-lg hover:shadow-2xl shadow-black/20 hover:brightness-105 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
             aria-label="Register for Kagada 2026 tracks"
           >
             <span>Register Now</span>
