@@ -22,19 +22,16 @@ const REGISTER_TRACKS = [
   {
     id: 1,
     name: "Paper Track",
-    subtitle: "Paper Presentation",
     icon: FileText,
   },
   {
     id: 2,
     name: "Poster Track",
-    subtitle: "Poster Presentation",
     icon: ImageIcon,
   },
   {
     id: 3,
     name: "Project Track",
-    subtitle: "Project Presentation",
     icon: Cpu,
   },
 ];
@@ -80,8 +77,30 @@ export const HeroSection = memo(function HeroSection({
 
   // 🎯 Navigate to the selected track card in the tracks section
   const handleSelectTrack = useCallback((trackId: number) => {
+    // 1. Immediately unlock scroll so both native and Lenis can scroll without waiting for React unmount cycle
+    document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
+
+    const lenis = (
+      window as unknown as {
+        __lenis?: {
+          start: () => void;
+          scrollTo: (
+            target: HTMLElement | string,
+            options?: Record<string, unknown>
+          ) => void;
+        };
+      }
+    ).__lenis;
+
+    if (lenis) {
+      lenis.start();
+    }
+
+    // 2. Close modal
     setIsRegisterModalOpen(false);
 
+    // 3. Scroll to tracks first, then open the track card once arrived
     const tracksElem = document.getElementById("tracks");
     if (!tracksElem) {
       window.dispatchEvent(
@@ -89,17 +108,6 @@ export const HeroSection = memo(function HeroSection({
       );
       return;
     }
-
-    const lenis = (
-      window as unknown as {
-        __lenis?: {
-          scrollTo: (
-            target: HTMLElement,
-            options?: Record<string, unknown>
-          ) => void;
-        };
-      }
-    ).__lenis;
 
     let opened = false;
     const triggerOpen = () => {
@@ -112,21 +120,25 @@ export const HeroSection = memo(function HeroSection({
 
     if (lenis) {
       lenis.scrollTo(tracksElem, {
-        offset: -20,
-        duration: 0.8,
-        onComplete: triggerOpen,
+        offset: -40,
+        duration: 1.0,
+        easing: (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+        onComplete: () => {
+          setTimeout(triggerOpen, 150);
+        },
       });
-      window.setTimeout(triggerOpen, 850);
+      // Safety fallback timer in case onComplete doesn't fire
+      window.setTimeout(triggerOpen, 1250);
     } else {
-      tracksElem.scrollIntoView({ behavior: "smooth" });
-      window.setTimeout(triggerOpen, 650);
+      tracksElem.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.setTimeout(triggerOpen, 1000);
     }
   }, []);
 
   return (
     <section
       id="hero"
-      className="relative w-full min-h-[110dvh] sm:min-h-[105dvh] lg:min-h-[100dvh] overflow-hidden flex items-center justify-center z-10 bg-black"
+      className="relative w-full h-[100dvh] min-h-[100dvh] max-h-[100dvh] overflow-hidden flex items-center justify-center z-10 bg-black"
     >
       {/* Hero Background Responsive Origami Art Layer */}
       <motion.picture
@@ -191,7 +203,7 @@ export const HeroSection = memo(function HeroSection({
         </div>
 
         {/* Flip Clock Countdown Timer Paper Box */}
-        <div className="mt-3.5 sm:mt-6 w-full max-w-[94vw] sm:max-w-fit mx-auto flex justify-center pointer-events-auto">
+        <div className="mt-2.5 sm:mt-5 w-full max-w-[94vw] sm:max-w-fit mx-auto flex justify-center pointer-events-auto">
           <div className="hero-timer-box w-full sm:w-fit px-2.5 min-[340px]:px-3.5 min-[380px]:px-5 sm:px-6 py-2 min-[340px]:py-2.5 sm:py-3.5 !rounded-none kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 text-[#5A182B] flex items-center justify-center text-center mx-auto overflow-hidden">
             <FlipClock
               countdown={true}
@@ -204,7 +216,7 @@ export const HeroSection = memo(function HeroSection({
         </div>
 
         {/* 🌟 Register Now Button (Below Clock, Above Explore Tracks) */}
-        <div className="mt-3 sm:mt-5 w-full flex justify-center pointer-events-auto">
+        <div className="mt-2.5 sm:mt-4 w-full flex justify-center pointer-events-auto">
           <button
             type="button"
             onClick={() => setIsRegisterModalOpen(true)}
@@ -231,15 +243,15 @@ export const HeroSection = memo(function HeroSection({
           damping: 18,
           delay: isIntroActive ? 0 : 0.4,
         }}
-        className="absolute bottom-4 sm:bottom-6 left-1/2 z-20 flex flex-col items-center gap-2 sm:gap-3 group pointer-events-auto transform-gpu"
+        className="absolute bottom-3 sm:bottom-6 left-1/2 z-20 flex flex-col items-center gap-1.5 sm:gap-3 group pointer-events-auto transform-gpu"
       >
-        <div className="px-6 py-2 sm:px-8 sm:py-2.5 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
+        <div className="px-5 py-1.5 sm:px-8 sm:py-2.5 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
           <span className="font-roboto-mono text-xs sm:text-sm font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
             Explore Tracks
           </span>
         </div>
 
-        <div className="w-10 h-10 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
+        <div className="w-9 h-9 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
           <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.8]" />
         </div>
       </motion.a>
@@ -324,14 +336,9 @@ export const HeroSection = memo(function HeroSection({
                               <div className="w-10 h-10 rounded-full bg-white/80 border border-[#5A182B]/20 flex items-center justify-center text-[#5A182B] group-hover:scale-110 transition-transform shrink-0">
                                 <Icon className="w-5 h-5 stroke-[2]" />
                               </div>
-                              <div className="text-left">
-                                <p className="font-roboto-mono font-bold text-xs sm:text-sm uppercase tracking-wider text-[#5A182B] leading-tight">
-                                  {track.name}
-                                </p>
-                                <p className="font-jakarta text-[0.7rem] sm:text-xs text-slate-600 font-medium">
-                                  {track.subtitle}
-                                </p>
-                              </div>
+                              <span className="font-roboto-mono font-bold text-xs sm:text-sm uppercase tracking-wider text-[#5A182B]">
+                                {track.name}
+                              </span>
                             </div>
                             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#5A182B]/60 group-hover:text-[#5A182B] group-hover:translate-x-1 transition-all shrink-0" />
                           </button>
