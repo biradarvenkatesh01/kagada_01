@@ -16,6 +16,7 @@ export interface TimelineItem {
   fee?: number;
   teamSize?: string;
   hasRegistration?: boolean;
+  registrationLink?: string;
 }
 
 interface RadialOrbitalTimelineProps {
@@ -356,6 +357,18 @@ export default function RadialOrbitalTimeline({
                 {item.fee && <p className="mb-1">Fee: ₹{item.fee} per team</p>}
                 {item.teamSize && <p>Team Size: {item.teamSize}</p>}
               </div>
+            )}
+
+            {/* Registration Button */}
+            {item.hasRegistration && (
+              <a
+                href={item.registrationLink || "#"}
+                target={item.registrationLink ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                className="w-full bg-[#EAE5D9] hover:bg-[#D8D3C7] text-[#5A182B] font-roboto-mono font-bold py-3 sm:py-3.5 rounded-none text-[0.75rem] sm:text-[0.85rem] uppercase tracking-widest transition-all active:scale-[0.98] mt-1 border-2 border-[#5A182B]/40 shadow-[2px_2px_6px_rgba(0,0,0,0.15)] flex items-center justify-center gap-2"
+              >
+                {item.registrationLink ? "Register Now" : "Registrations Opening Soon"}
+              </a>
             )}
           </div>
       </div>
