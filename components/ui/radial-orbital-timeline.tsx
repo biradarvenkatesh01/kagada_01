@@ -119,6 +119,7 @@ export default function RadialOrbitalTimeline({
 
   // ⚡ High-performance card close: clean transition, resumes RAF only after modal unmounts
   const closeCard = useCallback(() => {
+    activeNodeIdRef.current = null;
     setSlideDirection(0);
     setActiveNodeId(null);
     setExpandedItems({});
@@ -131,6 +132,7 @@ export default function RadialOrbitalTimeline({
 
   const openCard = useCallback((id: number) => {
     setAutoRotate(false);
+    activeNodeIdRef.current = id;
     setSlideDirection(0);
     setExpandedItems({ [id]: true });
     setActiveNodeId(id);
@@ -151,6 +153,7 @@ export default function RadialOrbitalTimeline({
       const newIndex = (currentIndex + direction + total) % total;
       const nextItem = timelineData[newIndex];
 
+      activeNodeIdRef.current = nextItem.id;
       setSlideDirection(direction);
       setActiveNodeId(nextItem.id);
       setExpandedItems({ [nextItem.id]: true });
