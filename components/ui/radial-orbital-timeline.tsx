@@ -23,7 +23,7 @@ interface RadialOrbitalTimelineProps {
   timelineData: TimelineItem[];
 }
 
-// 📱 RESPONSIVE ORBIT RADIUS SUBSCRIPTION (118px phone < 480px, 165px tablet < 640px, 240px desktop)
+// Responsive orbit radius subscription (118px phone < 480px, 165px tablet < 640px, 240px desktop)
 const subscribeOrbitRadius = (callback: () => void) => {
   if (typeof window === "undefined") return () => {};
   const mqlPhone = window.matchMedia("(max-width: 479px)");
@@ -49,7 +49,7 @@ const emptySubscribe = () => () => {};
 const getMountedClientSnapshot = () => true;
 const getMountedServerSnapshot = () => false;
 
-// 🎴 Slidable card animation variants (horizontal swipe transitions & smooth initial entry)
+// Slidable card animation variants (horizontal swipe transitions & smooth initial entry)
 const cardVariants: Variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 100 : direction < 0 ? -100 : 0,
@@ -407,78 +407,83 @@ export default function RadialOrbitalTimeline({
       ? timelineData.find((item) => item.id === activeNodeId)
       : null;
 
-  // 📄 Shared parchment card layout for both desktop and mobile
+  // Shared parchment card layout for both desktop and mobile
   const renderCardContent = (item: TimelineItem) => (
     <div
       data-lenis-prevent="true"
-      className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[85vh] overflow-y-auto overscroll-contain custom-scrollbar transform-gpu"
+      className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-3.5 min-[360px]:p-4 sm:p-5 md:p-6 lg:p-7 text-slate-900 flex flex-col max-h-[92dvh] sm:max-h-[88vh] overflow-y-auto overscroll-contain custom-scrollbar transform-gpu"
     >
       {/* Top Floating Glass Close Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            closeCard();
-          }}
-          className="absolute top-4 right-4 z-30 w-8 h-8 !rounded-full bg-[#D8D3C7] border border-[#5A182B]/30 text-[#5A182B] hover:bg-white transition-colors flex items-center justify-center shadow-md cursor-pointer"
-          aria-label="Close card"
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          closeCard();
+        }}
+        className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-30 w-7 h-7 sm:w-8 sm:h-8 !rounded-full bg-[#D8D3C7] border border-[#5A182B]/30 text-[#5A182B] hover:bg-white transition-colors flex items-center justify-center shadow-md cursor-pointer"
+        aria-label="Close card"
+      >
+        <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#5A182B]" />
+      </button>
+
+      {/* Smooch Sans Title Header (Centered at top in Deep Burgundy Maroon) */}
+      <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-1 mb-1.5 sm:pb-2 sm:mb-3.5 md:mb-4 w-full pr-8 sm:pr-0">
+        <h3 className="font-smooch text-3xl min-[360px]:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
+          {item.title}
+        </h3>
+      </div>
+
+      {/* Card Content Layout: 2-Column Horizontal Side-by-Side Grid on Tablet/PC, Compact Stacked on Mobile */}
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 min-[360px]:gap-2.5 sm:gap-4 md:gap-6 items-center w-full">
+        {/* Image Box (Left Column on Tablet/PC) */}
+        {item.imageSrc && (
+          <div className="sm:col-span-5 w-full h-24 min-[360px]:h-28 sm:h-40 md:h-48 lg:h-56 !rounded-xl sm:!rounded-2xl overflow-hidden border-2 border-white/80 shadow-md bg-[#D8D3C7]/40 relative group shrink-0">
+            <img
+              src={item.imageSrc}
+              alt={item.title}
+              loading="eager"
+              decoding="async"
+              className="w-full h-full object-cover select-none pointer-events-none"
+            />
+          </div>
+        )}
+
+        {/* Description Paragraph & Event Details (Right Column on Tablet/PC) */}
+        <div
+          className={`${
+            item.imageSrc ? "sm:col-span-7" : "sm:col-span-12"
+          } flex flex-col justify-center space-y-1.5 min-[360px]:space-y-2 sm:space-y-2.5 text-left w-full`}
         >
-          <X className="w-4 h-4 text-[#5A182B]" />
-        </button>
+          {(item.description || item.content) && (
+            <p className="font-jakarta text-[0.7rem] min-[360px]:text-[0.76rem] sm:text-xs md:text-sm lg:text-[0.92rem] text-slate-800 leading-snug sm:leading-relaxed font-medium">
+              {item.description || item.content}
+            </p>
+          )}
 
-        {/* Smooch Sans Title Header (Centered at top in Deep Burgundy Maroon) */}
-        <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-2.5 mb-3 sm:mb-6 w-full">
-          <h3 className="font-smooch text-4xl sm:text-6xl md:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
-            {item.title}
-          </h3>
-        </div>
-
-        {/* Card Content Layout: 2-Column Horizontal Side-by-Side Grid on PC, Stacked on Mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-center w-full">
-          {/* Image Box (Left Column on PC) */}
-          {item.imageSrc && (
-            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 !rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-[#D8D3C7]/40 relative group">
-              <img
-                src={item.imageSrc}
-                alt={item.title}
-                loading="eager"
-                decoding="async"
-                className="w-full h-full object-cover select-none pointer-events-none"
-              />
+          {/* Fee & Team Size Box (Only shows if defined) */}
+          {(item.fee || item.teamSize) && (
+            <div className="bg-[#D8D3C7]/45 rounded-lg py-1 px-2.5 min-[360px]:py-1.5 min-[360px]:px-3 sm:py-1.5 sm:px-3.5 w-full flex items-center justify-around text-[0.68rem] min-[360px]:text-xs sm:text-sm text-[#5A182B] font-bold shadow-inner border border-[#5A182B]/20">
+              {item.fee && <span>Fee: ₹{item.fee} per team</span>}
+              {item.fee && item.teamSize && <span className="opacity-40">•</span>}
+              {item.teamSize && <span>Team: {item.teamSize}</span>}
             </div>
           )}
 
-          {/* Description Paragraph & Event Details (Right Column on PC) */}
-          <div
-            className={`${
-              item.imageSrc ? "md:col-span-7" : "md:col-span-12"
-            } flex flex-col justify-center space-y-4 text-left w-full h-full`}
-          >
-            {(item.description || item.content) && (
-              <p className="font-jakarta text-xs sm:text-sm md:text-base text-slate-800 leading-relaxed font-medium">
-                {item.description || item.content}
-              </p>
-            )}
-
-            {/* Fee & Team Size Box (Only shows if defined) */}
-            {(item.fee || item.teamSize) && (
-              <div className="bg-[#D8D3C7]/40 rounded-xl py-3 px-4 w-full text-center text-[0.8rem] sm:text-sm text-[#5A182B] font-semibold mt-2 shadow-inner border border-[#5A182B]/20">
-                {item.fee && <p className="mb-1">Fee: ₹{item.fee} per team</p>}
-                {item.teamSize && <p>Team Size: {item.teamSize}</p>}
-              </div>
-            )}
-
-            {/* Registration Button */}
-            {item.hasRegistration && (
-              <a
-                href={item.registrationLink || "#"}
-                target={item.registrationLink ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                className="w-full bg-[#EAE5D9] hover:bg-[#D8D3C7] text-[#5A182B] font-roboto-mono font-bold py-3 sm:py-3.5 rounded-none text-[0.75rem] sm:text-[0.85rem] uppercase tracking-widest transition-all active:scale-[0.98] mt-1 border-2 border-[#5A182B]/40 shadow-[2px_2px_6px_rgba(0,0,0,0.15)] flex items-center justify-center gap-2"
-              >
-                {item.registrationLink ? "Register Now" : "Registrations Opening Soon"}
-              </a>
-            )}
-          </div>
+          {/* Registration Button */}
+          {item.hasRegistration && (
+            <a
+              href={item.registrationLink || "#"}
+              target={item.registrationLink ? "_blank" : undefined}
+              rel="noopener noreferrer"
+              className={`w-full font-roboto-mono font-extrabold py-2 min-[360px]:py-2.5 sm:py-2.5 md:py-3 rounded-none text-xs sm:text-sm uppercase tracking-widest transition-all active:scale-[0.98] border-2 flex items-center justify-center gap-2 select-none shadow-md hover:shadow-lg ${
+                item.registrationLink
+                  ? "bg-[#5A182B] hover:bg-[#431220] text-white border-white/95 hover:brightness-110"
+                  : "bg-[#EAE5D9] hover:bg-[#D8D3C7] text-[#5A182B] border-[#5A182B]/40 cursor-default"
+              }`}
+            >
+              {item.registrationLink ? "Register Now" : "Registrations Opening Soon"}
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -499,7 +504,7 @@ export default function RadialOrbitalTimeline({
               ref={orbitRef}
               style={{ perspective: isAnyCardOpen ? "none" : "1000px" }}
             >
-              {/* ⚙️ PURE WHITE VECTOR GEAR (gear-svgrepo-com.svg) - Fades out when any card is open */}
+              {/* Pure white vector gear (gear-svgrepo-com.svg) - Fades out when any card is open */}
               <div
                 className={`absolute z-20 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${
                   isAnyCardOpen ? "opacity-0" : "opacity-100"
@@ -516,7 +521,7 @@ export default function RadialOrbitalTimeline({
                 </div>
               </div>
 
-              {/* 🌌 ORBITING CIRCULAR NODES */}
+              {/* Orbiting circular nodes */}
               {timelineData.map((index_item, index) => {
                 const item = index_item;
                 const position = calculateNodePosition(
@@ -549,7 +554,7 @@ export default function RadialOrbitalTimeline({
                       toggleItem(item.id);
                     }}
                   >
-                    {/* ⚪ CIRCULAR NODE BUTTON: Off-White Bg with Deep Burgundy Maroon Icon */}
+                    {/* Circular node button: Off-White Bg with Deep Burgundy Maroon Icon */}
                     <motion.div
                       className={`
                         relative z-20
@@ -596,13 +601,13 @@ export default function RadialOrbitalTimeline({
         })()}
       </div>
 
-      {/* 📱💻 FULL-VIEWPORT TINTED BURGUNDY TEXTURED BACKDROP + CENTERED CARD (MOBILE & PC) */}
+      {/* Full-viewport tinted burgundy textured backdrop and centered card (mobile and desktop) */}
       {mounted && typeof document !== "undefined" && createPortal(
         <AnimatePresence>
           {activeNodeId !== null && (
             <div
               data-lenis-prevent="true"
-              className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8 overscroll-none"
+              className="fixed inset-0 z-[9999] flex items-center justify-center p-2.5 min-[360px]:p-3 sm:p-5 md:p-8 overscroll-none"
             >
               {/* Slight tinted low opacity burgundy textured layer */}
               <motion.div
@@ -683,7 +688,7 @@ export default function RadialOrbitalTimeline({
                     onTouchStart={handleTouchStart}
                     onTouchEnd={handleTouchEnd}
                     onClick={(e) => e.stopPropagation()}
-                    className="relative z-10 w-[92vw] max-w-[360px] sm:max-w-xl md:max-w-3xl lg:max-w-4xl pointer-events-auto transform-gpu will-change-transform will-change-opacity touch-pan-y cursor-grab active:cursor-grabbing select-none"
+                    className="relative z-10 w-[94vw] max-w-[420px] sm:max-w-xl md:max-w-3xl lg:max-w-4xl pointer-events-auto transform-gpu will-change-transform will-change-opacity touch-pan-y cursor-grab active:cursor-grabbing select-none"
                   >
                     {renderCardContent(activeItem)}
                   </motion.div>
