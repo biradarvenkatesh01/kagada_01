@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useLayoutEffect, useRef, useCallback, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 export interface TimelineItem {
   id: number;
@@ -22,6 +22,41 @@ export interface TimelineItem {
 interface RadialOrbitalTimelineProps {
   timelineData: TimelineItem[];
 }
+
+// 🎬 Snappy Apple-style slide & modal variants
+const slideVariants: Variants = {
+  initialModal: {
+    opacity: 0,
+    scale: 0.94,
+    y: 12,
+  },
+  enter: (dir: number) => ({
+    x: dir > 0 ? 80 : -80,
+    opacity: 0,
+    scale: 0.97,
+  }),
+  center: {
+    x: 0,
+    y: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      x: { type: "spring", stiffness: 350, damping: 32 },
+      opacity: { duration: 0.2 },
+      scale: { duration: 0.2 },
+    },
+  },
+  exit: (dir: number) => ({
+    x: dir < 0 ? 80 : -80,
+    opacity: 0,
+    scale: 0.97,
+    transition: {
+      x: { type: "spring", stiffness: 350, damping: 32 },
+      opacity: { duration: 0.16 },
+      scale: { duration: 0.16 },
+    },
+  }),
+};
 
 // 📱 RESPONSIVE ORBIT RADIUS SUBSCRIPTION (118px phone < 480px, 165px tablet < 640px, 240px desktop)
 const subscribeOrbitRadius = (callback: () => void) => {
@@ -57,6 +92,8 @@ export default function RadialOrbitalTimeline({
   );
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [direction, setDirection] = useState<number>(0);
   const [isInView, setIsInView] = useState<boolean>(false);
   const mounted = useSyncExternalStore(
     emptySubscribe,
@@ -85,6 +122,7 @@ export default function RadialOrbitalTimeline({
   const closeCard = useCallback(() => {
     setActiveNodeId(null);
     setExpandedItems({});
+    setDirection(0);
     // Delay resuming auto-rotation until the exit animation (~200ms) completes
     // so the exit animation runs at a solid 60-120fps with zero background RAF competition
     window.setTimeout(() => {
@@ -92,11 +130,49 @@ export default function RadialOrbitalTimeline({
     }, 240);
   }, []);
 
-  const openCard = useCallback((id: number) => {
-    setAutoRotate(false);
-    setExpandedItems({ [id]: true });
-    setActiveNodeId(id);
-  }, []);
+  const openCard = useCallback(
+    (id: number) => {
+      setAutoRotate(false);
+      const idx = timelineData.findIndex((item) => item.id === id);
+      setDirection(0);
+      setActiveIndex(idx !== -1 ? idx : 0);
+      setExpandedItems({ [id]: true });
+      setActiveNodeId(id);
+    },
+    [timelineData]
+  );
+
+  const paginate = useCallback(
+    (newDirection: number) => {
+      setDirection(newDirection);
+      setActiveIndex((prev) => {
+        const nextIndex =
+          (prev + newDirection + timelineData.length) % timelineData.length;
+        const nextItem = timelineData[nextIndex];
+        if (nextItem) {
+          setActiveNodeId(nextItem.id);
+          setExpandedItems({ [nextItem.id]: true });
+        }
+        return nextIndex;
+      });
+    },
+    [timelineData]
+  );
+
+  const goToIndex = useCallback(
+    (targetIndex: number) => {
+      if (targetIndex === activeIndex) return;
+      const newDirection = targetIndex > activeIndex ? 1 : -1;
+      setDirection(newDirection);
+      setActiveIndex(targetIndex);
+      const nextItem = timelineData[targetIndex];
+      if (nextItem) {
+        setActiveNodeId(nextItem.id);
+        setExpandedItems({ [nextItem.id]: true });
+      }
+    },
+    [activeIndex, timelineData]
+  );
 
   const toggleItem = useCallback(
     (id: number) => {
@@ -134,17 +210,21 @@ export default function RadialOrbitalTimeline({
     }
   }, [activeNodeId]);
 
-  // ⌨️ Close card on Escape key
+  // ⌨️ Close card on Escape, slide with ArrowLeft / ArrowRight
   useEffect(() => {
     if (activeNodeId === null) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         closeCard();
+      } else if (e.key === "ArrowLeft") {
+        paginate(-1);
+      } else if (e.key === "ArrowRight") {
+        paginate(1);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeNodeId, closeCard]);
+  }, [activeNodeId, closeCard, paginate]);
 
   // 📱 Track visibility to avoid 60fps RAF re-renders when off-screen
   useEffect(() => {
@@ -295,82 +375,99 @@ export default function RadialOrbitalTimeline({
   };
 
   const activeItem =
-    activeNodeId !== null
-      ? timelineData.find((item) => item.id === activeNodeId)
+    activeNodeId !== null && timelineData[activeIndex]
+      ? timelineData[activeIndex]
       : null;
 
   // 📄 Shared parchment card layout for both desktop and mobile
   const renderCardContent = (item: TimelineItem) => (
     <div
       data-lenis-prevent="true"
-      className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-5 sm:p-7 md:p-8 text-slate-900 flex flex-col max-h-[85vh] overflow-y-auto overscroll-contain custom-scrollbar transform-gpu"
+      className="relative kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl p-3.5 sm:p-5 md:p-6 lg:p-7 text-slate-900 flex flex-col max-h-[86vh] sm:max-h-[82vh] overflow-y-auto overscroll-contain custom-scrollbar transform-gpu"
     >
       {/* Top Floating Glass Close Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            closeCard();
-          }}
-          className="absolute top-4 right-4 z-30 w-8 h-8 !rounded-full bg-[#D8D3C7] border border-[#5A182B]/30 text-[#5A182B] hover:bg-white transition-colors flex items-center justify-center shadow-md cursor-pointer"
-          aria-label="Close card"
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          closeCard();
+        }}
+        className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 z-30 w-7 h-7 sm:w-8 sm:h-8 !rounded-full bg-[#D8D3C7] border border-[#5A182B]/30 text-[#5A182B] hover:bg-white transition-colors flex items-center justify-center shadow-md cursor-pointer"
+        aria-label="Close card"
+      >
+        <X className="w-4 h-4 text-[#5A182B]" />
+      </button>
+
+      {/* Smooch Sans Title Header (Centered at top in Deep Burgundy Maroon) */}
+      <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-1.5 sm:pb-2 mb-2 sm:mb-3 md:mb-4 w-full pr-7 pl-2 sm:pr-0">
+        <h3 className="font-smooch text-3xl sm:text-5xl md:text-6xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
+          {item.title}
+        </h3>
+      </div>
+
+      {/* Card Content Layout: 2-Column Horizontal Side-by-Side Grid on PC, Responsive on Mobile */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-2.5 sm:gap-4 md:gap-6 items-center w-full">
+        {/* Image Box (Left Column on PC) */}
+        {item.imageSrc && (
+          <div className="md:col-span-5 w-full h-28 min-[380px]:h-32 sm:h-44 md:h-52 lg:h-60 !rounded-xl sm:!rounded-2xl overflow-hidden border-2 border-white/80 shadow-md bg-[#D8D3C7]/40 relative group shrink-0">
+            <img
+              src={item.imageSrc}
+              alt={item.title}
+              loading="eager"
+              decoding="async"
+              className="w-full h-full object-cover select-none pointer-events-none"
+            />
+          </div>
+        )}
+
+        {/* Description Paragraph & Event Details (Right Column on PC) */}
+        <div
+          className={`${
+            item.imageSrc ? "md:col-span-7" : "md:col-span-12"
+          } flex flex-col justify-center space-y-2 sm:space-y-2.5 md:space-y-3 text-left w-full h-full`}
         >
-          <X className="w-4 h-4 text-[#5A182B]" />
-        </button>
+          {(item.description || item.content) && (
+            <p className="font-jakarta text-[0.76rem] min-[380px]:text-[0.82rem] sm:text-xs md:text-sm text-slate-800 leading-snug sm:leading-relaxed font-medium">
+              {item.description || item.content}
+            </p>
+          )}
 
-        {/* Smooch Sans Title Header (Centered at top in Deep Burgundy Maroon) */}
-        <div className="flex items-center justify-center border-b border-[#5A182B]/20 pb-2.5 mb-3 sm:mb-6 w-full">
-          <h3 className="font-smooch text-4xl sm:text-6xl md:text-7xl font-semibold text-[#5A182B] tracking-wide whitespace-nowrap text-center leading-none">
-            {item.title}
-          </h3>
-        </div>
-
-        {/* Card Content Layout: 2-Column Horizontal Side-by-Side Grid on PC, Stacked on Mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-center w-full">
-          {/* Image Box (Left Column on PC) */}
-          {item.imageSrc && (
-            <div className="md:col-span-5 w-full h-40 sm:h-56 md:h-64 !rounded-2xl overflow-hidden border-2 border-white/80 shadow-lg bg-[#D8D3C7]/40 relative group">
-              <img
-                src={item.imageSrc}
-                alt={item.title}
-                loading="eager"
-                decoding="async"
-                className="w-full h-full object-cover select-none pointer-events-none"
-              />
+          {/* Fee & Team Size Boxes (Symmetrically Aligned 2-Column Grid) */}
+          {(item.fee || item.teamSize) && (
+            <div
+              className={`grid ${
+                item.fee && item.teamSize ? "grid-cols-2" : "grid-cols-1"
+              } gap-2 sm:gap-2.5 w-full`}
+            >
+              {item.fee && (
+                <div className="bg-[#D8D3C7]/60 border border-[#5A182B]/25 py-1.5 sm:py-2 px-1.5 sm:px-2.5 rounded-lg sm:rounded-xl shadow-inner flex items-center justify-center flex-nowrap text-center overflow-hidden">
+                  <span className="text-[0.66rem] min-[350px]:text-[0.72rem] min-[400px]:text-[0.76rem] sm:text-xs md:text-sm font-bold text-[#5A182B] whitespace-nowrap">
+                    Fee: ₹{item.fee} <span className="font-semibold text-[0.62rem] min-[350px]:text-[0.68rem] sm:text-xs text-[#5A182B]/75">/ team</span>
+                  </span>
+                </div>
+              )}
+              {item.teamSize && (
+                <div className="bg-[#D8D3C7]/60 border border-[#5A182B]/25 py-1.5 sm:py-2 px-1.5 sm:px-2.5 rounded-lg sm:rounded-xl shadow-inner flex items-center justify-center flex-nowrap text-center overflow-hidden">
+                  <span className="text-[0.66rem] min-[350px]:text-[0.72rem] min-[400px]:text-[0.76rem] sm:text-xs md:text-sm font-bold text-[#5A182B] whitespace-nowrap">
+                    Team Size: {item.teamSize}
+                  </span>
+                </div>
+              )}
             </div>
           )}
 
-          {/* Description Paragraph & Event Details (Right Column on PC) */}
-          <div
-            className={`${
-              item.imageSrc ? "md:col-span-7" : "md:col-span-12"
-            } flex flex-col justify-center space-y-4 text-left w-full h-full`}
-          >
-            {(item.description || item.content) && (
-              <p className="font-jakarta text-xs sm:text-sm md:text-base text-slate-800 leading-relaxed font-medium">
-                {item.description || item.content}
-              </p>
-            )}
-
-            {/* Fee & Team Size Box (Only shows if defined) */}
-            {(item.fee || item.teamSize) && (
-              <div className="bg-[#D8D3C7]/40 rounded-xl py-3 px-4 w-full text-center text-[0.8rem] sm:text-sm text-[#5A182B] font-semibold mt-2 shadow-inner border border-[#5A182B]/20">
-                {item.fee && <p className="mb-1">Fee: ₹{item.fee} per team</p>}
-                {item.teamSize && <p>Team Size: {item.teamSize}</p>}
-              </div>
-            )}
-
-            {/* Registration Button */}
-            {item.hasRegistration && (
-              <a
-                href={item.registrationLink || "#"}
-                target={item.registrationLink ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                className="w-full bg-[#EAE5D9] hover:bg-[#D8D3C7] text-[#5A182B] font-roboto-mono font-bold py-3 sm:py-3.5 rounded-none text-[0.75rem] sm:text-[0.85rem] uppercase tracking-widest transition-all active:scale-[0.98] mt-1 border-2 border-[#5A182B]/40 shadow-[2px_2px_6px_rgba(0,0,0,0.15)] flex items-center justify-center gap-2"
-              >
-                {item.registrationLink ? "Register Now" : "Registrations Opening Soon"}
-              </a>
-            )}
-          </div>
+          {/* Registration Button */}
+          {item.hasRegistration && (
+            <a
+              href={item.registrationLink || "#"}
+              target={item.registrationLink ? "_blank" : undefined}
+              rel="noopener noreferrer"
+              className="w-full bg-[#EAE5D9] hover:bg-[#D8D3C7] text-[#5A182B] font-roboto-mono font-bold py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-none text-[0.72rem] min-[380px]:text-[0.78rem] sm:text-[0.85rem] uppercase tracking-wider sm:tracking-widest transition-all active:scale-[0.98] mt-0.5 border-2 border-[#5A182B]/40 shadow-[2px_2px_6px_rgba(0,0,0,0.15)] flex items-center justify-center gap-2"
+            >
+              {item.registrationLink ? "Register Now" : "Registrations Opening Soon"}
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -488,13 +585,13 @@ export default function RadialOrbitalTimeline({
         })()}
       </div>
 
-      {/* 📱💻 FULL-VIEWPORT TINTED BURGUNDY TEXTURED BACKDROP + CENTERED CARD (MOBILE & PC) */}
+      {/* 📱💻 FULL-VIEWPORT TINTED BURGUNDY TEXTURED BACKDROP + SLIDABLE CARD (MOBILE & PC) */}
       {mounted && typeof document !== "undefined" && createPortal(
         <AnimatePresence>
           {activeItem && (
             <div
               data-lenis-prevent="true"
-              className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8 overscroll-none"
+              className="fixed inset-0 z-[9999] flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 overscroll-none"
             >
               {/* Slight tinted low opacity burgundy textured layer */}
               <motion.div
@@ -522,20 +619,123 @@ export default function RadialOrbitalTimeline({
                 />
               </motion.div>
 
-              {/* Centered card container (phone & pc view - silky-smooth GPU-accelerated transition) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.94, y: 12 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 8 }}
-                transition={{
-                  duration: 0.22,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+              {/* Main Slider Wrapper: Chevrons + Animated Slidable Card */}
+              <div className="relative z-10 w-full flex items-center justify-center max-w-[96vw] sm:max-w-4xl md:max-w-5xl lg:max-w-6xl gap-2 sm:gap-4 md:gap-6">
+                {/* Desktop Left Navigation Chevron */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    paginate(-1);
+                  }}
+                  className="hidden md:flex items-center justify-center w-12 h-12 !rounded-full bg-[#D8D3C7] hover:bg-white text-[#5A182B] border-2 border-white/95 shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer z-30 shrink-0"
+                  aria-label="Previous track"
+                  title="Previous track (Left Arrow)"
+                >
+                  <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+                </button>
+
+                {/* Card Slide Container with AnimatePresence */}
+                <div className="w-full flex items-center justify-center overflow-visible">
+                  <AnimatePresence mode="wait" custom={direction}>
+                    <motion.div
+                      key={activeIndex}
+                      custom={direction}
+                      variants={slideVariants}
+                      initial={direction === 0 ? "initialModal" : "enter"}
+                      animate="center"
+                      exit="exit"
+                      drag="x"
+                      dragDirectionLock
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.2}
+                      onDragEnd={(_e, { offset, velocity }) => {
+                        const swipeThreshold = 50;
+                        const swipeVelocity = 350;
+                        if (offset.x < -swipeThreshold || velocity.x < -swipeVelocity) {
+                          paginate(1);
+                        } else if (offset.x > swipeThreshold || velocity.x > swipeVelocity) {
+                          paginate(-1);
+                        }
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                      className="relative z-10 w-[94vw] max-w-[420px] sm:max-w-xl md:max-w-3xl lg:max-w-4xl pointer-events-auto transform-gpu will-change-transform will-change-opacity touch-pan-y cursor-grab active:cursor-grabbing"
+                    >
+                      {renderCardContent(activeItem)}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Desktop Right Navigation Chevron */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    paginate(1);
+                  }}
+                  className="hidden md:flex items-center justify-center w-12 h-12 !rounded-full bg-[#D8D3C7] hover:bg-white text-[#5A182B] border-2 border-white/95 shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer z-30 shrink-0"
+                  aria-label="Next track"
+                  title="Next track (Right Arrow)"
+                >
+                  <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+                </button>
+              </div>
+
+              {/* Bottom Navigation & Track Sequence Dots */}
+              <div
                 onClick={(e) => e.stopPropagation()}
-                className="relative z-10 w-[92vw] max-w-[360px] sm:max-w-xl md:max-w-3xl lg:max-w-4xl pointer-events-auto transform-gpu will-change-transform will-change-opacity"
+                className="relative z-20 flex items-center justify-center gap-2 sm:gap-3 mt-2 sm:mt-3"
               >
-                {renderCardContent(activeItem)}
-              </motion.div>
+                {/* Mobile Prev Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    paginate(-1);
+                  }}
+                  className="md:hidden flex items-center justify-center w-8 h-8 !rounded-full bg-[#D8D3C7] text-[#5A182B] border border-[#5A182B]/30 shadow-md active:scale-90 transition-all cursor-pointer"
+                  aria-label="Previous track"
+                >
+                  <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
+                </button>
+
+                {/* Track Sequence Dots */}
+                <div className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
+                  {timelineData.map((track, i) => {
+                    const isCurrent = i === activeIndex;
+                    return (
+                      <button
+                        key={track.id}
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToIndex(i);
+                        }}
+                        className={`transition-all duration-300 rounded-full cursor-pointer ${
+                          isCurrent
+                            ? "w-6 sm:w-8 h-2 bg-[#D8D3C7] shadow-sm shadow-black/50"
+                            : "w-2 h-2 bg-white/40 hover:bg-white/80"
+                        }`}
+                        aria-label={`Go to ${track.title}`}
+                        title={track.title}
+                      />
+                    );
+                  })}
+                </div>
+
+                {/* Mobile Next Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    paginate(1);
+                  }}
+                  className="md:hidden flex items-center justify-center w-8 h-8 !rounded-full bg-[#D8D3C7] text-[#5A182B] border border-[#5A182B]/30 shadow-md active:scale-90 transition-all cursor-pointer"
+                  aria-label="Next track"
+                >
+                  <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+                </button>
+              </div>
             </div>
           )}
         </AnimatePresence>,
