@@ -138,6 +138,19 @@ export default function RadialOrbitalTimeline({
     setActiveNodeId(id);
   }, []);
 
+  // 🎯 External event listener to open a track card (e.g. from Hero Register Now modal)
+  useEffect(() => {
+    const handleOpenTrack = (e: Event) => {
+      const customEvent = e as CustomEvent<{ id: number }>;
+      const trackId = customEvent.detail?.id;
+      if (typeof trackId === "number") {
+        openCard(trackId);
+      }
+    };
+    window.addEventListener("kagada:open-track", handleOpenTrack);
+    return () => window.removeEventListener("kagada:open-track", handleOpenTrack);
+  }, [openCard]);
+
   // 🔄 Seamless carousel navigation in exact orbital sequence
   const navigateCard = useCallback(
     (direction: number) => {
