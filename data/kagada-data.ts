@@ -25,6 +25,7 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     fee: 200,
     teamSize: "1-5 members",
     hasRegistration: true,
+    registrationLink: "https://bit.ly/KAGADA2026_CallforPaperTrack",
   },
   {
     id: 2,
@@ -38,6 +39,7 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     fee: 150,
     teamSize: "1-3 members",
     hasRegistration: true,
+    registrationLink: "https://bit.ly/KAGADA2026_CallforPosterTrack",
   },
   {
     id: 3,
@@ -51,6 +53,7 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     fee: 180,
     teamSize: "1-5 members",
     hasRegistration: true,
+    registrationLink: "https://bit.ly/KAGADA2026_CallforProjectTrack",
   },
   {
     id: 4,
