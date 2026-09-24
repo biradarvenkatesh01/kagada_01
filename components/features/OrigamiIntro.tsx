@@ -447,10 +447,13 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
   return (
     <motion.div
       ref={containerRef}
+      data-lenis-prevent="true"
       initial={{ opacity: 1 }}
       animate={{ opacity: isExiting ? 0 : 1 }}
       transition={{ duration: 0.7, ease: "easeInOut" }}
-      className={`fixed inset-0 z-50 overflow-hidden bg-[#f3ede1] select-none ${
+      onWheel={(e) => e.preventDefault()}
+      onTouchMove={(e) => e.preventDefault()}
+      className={`fixed inset-0 w-full h-[100dvh] min-h-[100dvh] z-[99999] overflow-hidden bg-[#f3ede1] select-none touch-none ${
         isDone ? "origami-done" : ""
       }`}
     >
