@@ -41,7 +41,7 @@ export const HeroSection = memo(function HeroSection({
 }: HeroSectionProps) {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
-  // 🔒 Scroll lock while register modal is open
+  // Scroll lock while register modal is open
   useEffect(() => {
     if (!isRegisterModalOpen) return;
     const prevBodyOverflow = document.body.style.overflow;
@@ -75,7 +75,7 @@ export const HeroSection = memo(function HeroSection({
     };
   }, [isRegisterModalOpen]);
 
-  // 🎯 Navigate to the selected track card in the tracks section
+  // Navigate to the selected track card in the tracks section
   const handleSelectTrack = useCallback((trackId: number) => {
     // 1. Immediately unlock scroll so both native and Lenis can scroll without waiting for React unmount cycle
     document.body.style.overflow = "";

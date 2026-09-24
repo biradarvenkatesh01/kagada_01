@@ -107,7 +107,7 @@ export default function RadialOrbitalTimeline({
   const touchStartYRef = useRef<number | null>(null);
   const lastNavigatedRef = useRef<number>(0);
 
-  // 🖼️ Preload track card images on mount so card renders instantly with zero decode stutter
+  // Preload track card images on mount so card renders instantly with zero decode stutter
   useEffect(() => {
     timelineData.forEach((item) => {
       if (item.imageSrc) {
@@ -117,7 +117,7 @@ export default function RadialOrbitalTimeline({
     });
   }, [timelineData]);
 
-  // ⚡ High-performance card close: clean transition, resumes RAF only after modal unmounts
+  // High-performance card close: clean transition, resumes RAF only after modal unmounts
   const closeCard = useCallback(() => {
     activeNodeIdRef.current = null;
     setSlideDirection(0);
@@ -138,7 +138,7 @@ export default function RadialOrbitalTimeline({
     setActiveNodeId(id);
   }, []);
 
-  // 🎯 External event listener to open a track card (e.g. from Hero Register Now modal)
+  // External event listener to open a track card (e.g. from Hero Register Now modal)
   useEffect(() => {
     const handleOpenTrack = (e: Event) => {
       const customEvent = e as CustomEvent<{ id: number }>;
@@ -277,7 +277,7 @@ export default function RadialOrbitalTimeline({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeNodeId, closeCard, navigateCard]);
 
-  // 📱 Track visibility to avoid 60fps RAF re-renders when off-screen
+  // Track visibility to avoid 60fps RAF re-renders when off-screen
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -292,7 +292,7 @@ export default function RadialOrbitalTimeline({
     return () => io.disconnect();
   }, []);
 
-  // 📱 RESPONSIVE ORBIT RADIUS (referentially stable)
+  // Responsive orbit radius (referentially stable)
   const orbitRadius = useSyncExternalStore(
     subscribeOrbitRadius,
     getOrbitRadiusSnapshot,
@@ -321,7 +321,7 @@ export default function RadialOrbitalTimeline({
 
 
 
-  // ⚡ Writes orbit geometry straight to the DOM with GPU translate3d.
+  // Writes orbit geometry straight to the DOM with GPU translate3d.
   // CRITICAL PERFORMANCE: Only updates `transform` on the rAF loop.
   // Mutating `zIndex` on every degree of rotation forced Chromium to run Recalculate Style
   // and rebuild the LayerTree 60-120 times/sec.
@@ -359,7 +359,7 @@ export default function RadialOrbitalTimeline({
 
 
 
-  // 🚀 HARDWARE-ACCELERATED RAF ROTATION (20°/sec = 18s 1:1 match with center gear)
+  // Hardware-accelerated RAF rotation (20deg/sec = 18s 1:1 match with center gear)
   // Pauses automatically when off-screen or tab hidden to eliminate 60fps main-thread React re-renders
   useEffect(() => {
     const prefersReducedMotion =
