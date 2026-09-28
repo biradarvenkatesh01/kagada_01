@@ -97,9 +97,11 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
     e.preventDefault();
     onClose();
     setTimeout(() => {
-      const elem = document.getElementById("kagathon");
+      const elem =
+        document.getElementById("kagathon-register") ||
+        document.getElementById("kagathon");
       if (!elem) {
-        window.location.hash = "kagathon";
+        window.location.hash = "kagathon-register";
         return;
       }
       const lenis = (
@@ -108,9 +110,9 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
         }
       ).__lenis;
       if (lenis?.scrollTo) {
-        lenis.scrollTo(elem, { offset: -80 });
+        lenis.scrollTo(elem, { offset: -140 });
       } else {
-        elem.scrollIntoView({ behavior: "smooth" });
+        elem.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }, 120);
   };
@@ -205,7 +207,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
             {/* Registration Action Button & Maybe Later */}
             <div className="w-full flex flex-col items-center gap-2 mt-5 sm:mt-6">
               <a
-                href="#kagathon"
+                href="#kagathon-register"
                 onClick={handleRegisterClick}
                 className="w-full py-3 px-4 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 text-white font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-widest rounded-none shadow-lg flex items-center justify-center transition-colors select-none text-center"
               >

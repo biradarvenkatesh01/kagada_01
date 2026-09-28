@@ -102,8 +102,9 @@ export const KagathonSection = memo(function KagathonSection() {
               </div>
 
               {/* Registration Button */}
-              <div className="pt-1">
+              <div id="kagathon-register" className="pt-1 scroll-mt-32">
                 <a
+                  id="kagathon-register-btn"
                   href="https://bit.ly/KAGADA2026-Kagathon"
                   target="_blank"
                   rel="noopener noreferrer"
