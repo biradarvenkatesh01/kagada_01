@@ -9,7 +9,6 @@ import OrigamiIntro from "@/components/features/OrigamiIntro";
 import KagathonPopup from "@/components/features/KagathonPopup";
 
 const SESSION_KEY = "kagada_origami_intro_seen";
-const KAGATHON_POPUP_KEY = "kagada_kagathon_popup_seen";
 
 function subscribe() {
   return () => {};
@@ -34,25 +33,13 @@ export default function OrigamiHeroExperience() {
 
   const showIntro = sessionStatus === "unseen" && !dismissed;
 
-  // Trigger Kagathon announcement popup after origami intro completes
+  // Trigger Kagathon announcement popup after origami intro completes on every reload
   useEffect(() => {
     if (showIntro) return;
-    try {
-      const seen = sessionStorage.getItem(KAGATHON_POPUP_KEY);
-      if (!seen) {
-        const timer = setTimeout(() => {
-          setIsKagathonOpen(true);
-          try {
-            sessionStorage.setItem(KAGATHON_POPUP_KEY, "true");
-          } catch {
-            // ignore storage errors
-          }
-        }, 900);
-        return () => clearTimeout(timer);
-      }
-    } catch {
-      // ignore storage errors
-    }
+    const timer = setTimeout(() => {
+      setIsKagathonOpen(true);
+    }, 900);
+    return () => clearTimeout(timer);
   }, [showIntro]);
 
   const handleClose = useCallback(() => {

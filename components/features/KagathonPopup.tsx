@@ -137,19 +137,19 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
             animate="animate"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="relative z-10 w-[92vw] max-w-[390px] sm:max-w-[420px] flex flex-col kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl overflow-hidden pointer-events-auto transform-gpu select-none"
+            className="relative z-10 w-[92vw] max-w-[400px] sm:max-w-[440px] max-h-[90dvh] flex flex-col kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl overflow-hidden pointer-events-auto transform-gpu select-none"
           >
-            {/* Compact content wrapper - completely scroll-free */}
+            {/* Scrollable content wrapper */}
             <div
               data-lenis-prevent="true"
-              className="p-4 sm:p-5 flex flex-col items-center gap-2.5 sm:gap-3 text-slate-900"
+              className="flex-1 min-h-0 overflow-y-auto overscroll-contain custom-scrollbar p-4 sm:p-5 flex flex-col items-center gap-2.5 sm:gap-3 text-slate-900"
             >
-              {/* Reduced size poster frame */}
-              <div className="w-24 h-24 sm:w-28 sm:h-28 aspect-square !rounded-xl overflow-hidden border-2 border-white/80 shadow-md relative bg-[#D8D3C7]/40 shrink-0">
+              {/* Increased size poster frame */}
+              <div className="w-36 h-36 min-[400px]:w-44 min-[400px]:h-44 sm:w-52 sm:h-52 aspect-square !rounded-xl overflow-hidden border-2 border-white/85 shadow-md relative bg-[#D8D3C7]/40 shrink-0 mx-auto">
                 <img
                   src="/optimized/kagathon/kagathon-poster-720.webp"
                   srcSet="/optimized/kagathon/kagathon-poster-720.webp 720w, /optimized/kagathon/kagathon-poster.webp 1200w"
-                  sizes="112px"
+                  sizes="(max-width: 640px) 176px, 208px"
                   width={1200}
                   height={1200}
                   alt="Kagathon - Your Only Limit Is You"
@@ -177,44 +177,45 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
                 &ldquo;A marathon is a reminder that every finish starts with a beginning!&rdquo;
               </p>
 
-              {/* 4-Item Details Grid: Date, Time, Venue, Last Date to Apply */}
-              <div className="grid grid-cols-2 gap-2 w-full text-center">
-                <div className="!rounded-xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 shadow-sm py-1.5 px-2">
-                  <span className="font-roboto-mono text-[0.65rem] sm:text-[0.7rem] font-bold text-[#5A182B]/75 uppercase tracking-wider block">
-                    Date
+              {/* Event details list (without boxes) */}
+              <ul className="w-full max-w-[320px] mx-auto space-y-1.5 text-xs sm:text-sm text-slate-800 text-left pt-1">
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5A182B] shrink-0" />
+                  <span className="font-roboto-mono font-bold text-[#5A182B] uppercase text-[11px] sm:text-xs tracking-wide">
+                    Date:
                   </span>
-                  <span className="font-roboto-mono text-xs sm:text-sm font-extrabold text-[#5A182B] mt-0.5 block">
-                    18 Oct, 2026
+                  <span className="font-jakarta font-semibold text-slate-900">
+                    18th October, 2026
                   </span>
-                </div>
-
-                <div className="!rounded-xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 shadow-sm py-1.5 px-2">
-                  <span className="font-roboto-mono text-[0.65rem] sm:text-[0.7rem] font-bold text-[#5A182B]/75 uppercase tracking-wider block">
-                    Time
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5A182B] shrink-0" />
+                  <span className="font-roboto-mono font-bold text-[#5A182B] uppercase text-[11px] sm:text-xs tracking-wide">
+                    Time:
                   </span>
-                  <span className="font-roboto-mono text-xs sm:text-sm font-extrabold text-[#5A182B] mt-0.5 block">
+                  <span className="font-jakarta font-semibold text-slate-900">
                     6:30 AM
                   </span>
-                </div>
-
-                <div className="!rounded-xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 shadow-sm py-1.5 px-2">
-                  <span className="font-roboto-mono text-[0.65rem] sm:text-[0.7rem] font-bold text-[#5A182B]/75 uppercase tracking-wider block">
-                    Venue
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5A182B] shrink-0" />
+                  <span className="font-roboto-mono font-bold text-[#5A182B] uppercase text-[11px] sm:text-xs tracking-wide">
+                    Venue:
                   </span>
-                  <span className="font-roboto-mono text-xs sm:text-sm font-extrabold text-[#5A182B] mt-0.5 block leading-tight">
+                  <span className="font-jakarta font-semibold text-slate-900">
                     Quadrangle, UVCE
                   </span>
-                </div>
-
-                <div className="!rounded-xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 shadow-sm py-1.5 px-2">
-                  <span className="font-roboto-mono text-[0.65rem] sm:text-[0.7rem] font-bold text-[#5A182B]/75 uppercase tracking-wider block">
-                    Last Date To Apply
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5A182B] shrink-0" />
+                  <span className="font-roboto-mono font-bold text-[#5A182B] uppercase text-[11px] sm:text-xs tracking-wide">
+                    Last Date to Apply:
                   </span>
-                  <span className="font-roboto-mono text-xs sm:text-sm font-extrabold text-[#5A182B] mt-0.5 block">
-                    13 Oct, 2026
+                  <span className="font-jakarta font-bold text-[#5A182B]">
+                    13th October, 2026
                   </span>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
 
             {/* Pinned footer */}
