@@ -177,6 +177,12 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
                 &ldquo;A marathon is a reminder that every finish starts with a beginning!&rdquo;
               </p>
 
+              {/* Catchy broadcast line */}
+              <p className="font-jakarta text-xs sm:text-[0.8rem] text-slate-800 text-center px-2 leading-relaxed">
+                Step into a morning of <strong>live DJ, dance, fun games, treats</strong>, and a{" "}
+                <strong>certificate to remember</strong>!
+              </p>
+
               {/* Last date to register */}
               <div className="text-center pt-0.5">
                 <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B]">
