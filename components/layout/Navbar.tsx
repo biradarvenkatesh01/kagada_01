@@ -153,9 +153,10 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
         </a>
         <a
           href="#kagathon"
-          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
+          className="relative whitespace-nowrap shrink-0 px-3 py-1 -my-1 rounded-full bg-[#5A182B] text-amber-300 border border-amber-400/50 shadow-sm shadow-black/20 hover:bg-[#431220] hover:text-amber-200 hover:border-amber-300 transition-all duration-200 flex items-center gap-1.5"
         >
-          Kagathon
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shrink-0" />
+          <span>Kagathon</span>
         </a>
         <a
           href="#tracks"
@@ -257,8 +258,18 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
           <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             About Us
           </a>
-          <a href="#kagathon-register" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
-            Kagathon
+          <a
+            href="#kagathon-register"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center justify-between px-3 py-2 -mx-1 rounded-xl bg-[#5A182B] text-amber-300 border border-amber-400/40 shadow-sm hover:bg-[#431220] transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
+              <span>Kagathon</span>
+            </div>
+            <span className="text-[10px] font-roboto-mono uppercase tracking-wider text-amber-400 font-bold bg-[#431220] px-2 py-0.5 rounded-full">
+              Special
+            </span>
           </a>
           <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             Tracks

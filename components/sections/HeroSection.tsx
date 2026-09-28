@@ -215,16 +215,24 @@ export const HeroSection = memo(function HeroSection({
           </div>
         </div>
 
-        {/* Register Now Button (Below Clock, Above Explore Tracks) */}
-        <div className="mt-3 sm:mt-5 w-full flex justify-center pointer-events-auto">
+        {/* Registration CTA Buttons Group: Tracks & Kagathon */}
+        <div className="mt-3 sm:mt-5 w-full flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3.5 pointer-events-auto px-2">
           <button
             type="button"
             onClick={() => setIsRegisterModalOpen(true)}
-            className="w-fit px-6 sm:px-8 py-2.5 sm:py-3.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/40 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
+            className="w-full sm:w-auto px-5 sm:px-7 py-2.5 sm:py-3 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/40 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
             aria-label="Register for Kagada 2026 tracks"
           >
-            <span>Register Now!</span>
+            <span>Register for Tracks</span>
           </button>
+
+          <a
+            href="#kagathon-register"
+            className="w-full sm:w-auto px-5 sm:px-7 py-2.5 sm:py-3 bg-[#D8D3C7] hover:bg-white border-2 border-[#5A182B] hover:border-[#431220] text-[#5A182B] font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/25 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
+            aria-label="Register for Kagathon"
+          >
+            <span>Register for Kagathon &rarr;</span>
+          </a>
         </div>
       </motion.div>
 
