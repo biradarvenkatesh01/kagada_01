@@ -137,7 +137,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
             animate="animate"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="relative z-10 w-[92vw] max-w-[400px] sm:max-w-[440px] max-h-[90dvh] flex flex-col kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl overflow-hidden pointer-events-auto transform-gpu select-none"
+            className="relative z-10 w-[92vw] max-w-[420px] sm:max-w-[460px] max-h-[90dvh] flex flex-col kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl overflow-hidden pointer-events-auto transform-gpu select-none"
           >
             {/* Scrollable content wrapper */}
             <div
@@ -145,11 +145,11 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
               className="flex-1 min-h-0 overflow-y-auto overscroll-contain custom-scrollbar p-4 sm:p-5 flex flex-col items-center gap-2.5 sm:gap-3 text-slate-900"
             >
               {/* Enriched prominent poster frame */}
-              <div className="w-52 h-52 min-[380px]:w-60 min-[380px]:h-60 sm:w-72 sm:h-72 aspect-square !rounded-xl sm:!rounded-2xl overflow-hidden border-2 border-white/85 shadow-lg relative bg-[#D8D3C7]/40 shrink-0 mx-auto">
+              <div className="w-64 h-64 min-[380px]:w-72 min-[380px]:h-72 sm:w-80 sm:h-80 aspect-square !rounded-xl sm:!rounded-2xl overflow-hidden border-2 border-white/85 shadow-lg relative bg-[#D8D3C7]/40 shrink-0 mx-auto">
                 <img
                   src="/optimized/kagathon/kagathon-poster-720.webp"
                   srcSet="/optimized/kagathon/kagathon-poster-720.webp 720w, /optimized/kagathon/kagathon-poster.webp 1200w"
-                  sizes="(max-width: 640px) 240px, 288px"
+                  sizes="(max-width: 640px) 288px, 320px"
                   width={1200}
                   height={1200}
                   alt="Kagathon - Your Only Limit Is You"
