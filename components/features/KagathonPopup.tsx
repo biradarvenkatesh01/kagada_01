@@ -137,19 +137,19 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
             animate="animate"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="relative z-10 w-[92vw] max-w-[420px] sm:max-w-[460px] max-h-[90dvh] flex flex-col kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl overflow-hidden pointer-events-auto transform-gpu select-none"
+            className="relative z-10 w-[90vw] max-w-[380px] sm:max-w-[420px] h-[80dvh] max-h-[640px] min-h-[460px] flex flex-col justify-between kagada-paper-card border-2 border-white/95 shadow-2xl shadow-black/40 !rounded-2xl sm:!rounded-3xl overflow-hidden pointer-events-auto transform-gpu select-none"
           >
-            {/* Scrollable content wrapper */}
+            {/* Static content wrapper - completely scroll-free, perfectly fitted */}
             <div
               data-lenis-prevent="true"
-              className="flex-1 min-h-0 overflow-y-auto overscroll-contain custom-scrollbar p-4 sm:p-5 flex flex-col items-center gap-2.5 sm:gap-3 text-[#5A182B]"
+              className="flex-1 flex flex-col items-center justify-evenly p-3 sm:p-4 text-[#5A182B] overflow-hidden select-none"
             >
-              {/* Enriched prominent poster frame */}
-              <div className="w-64 h-64 min-[380px]:w-72 min-[380px]:h-72 sm:w-80 sm:h-80 aspect-square !rounded-xl sm:!rounded-2xl overflow-hidden border-2 border-white/85 shadow-lg relative bg-[#D8D3C7]/40 shrink-0 mx-auto">
+              {/* Reduced poster frame */}
+              <div className="w-32 h-32 min-[370px]:w-36 min-[370px]:h-36 sm:w-44 sm:h-44 aspect-square !rounded-xl overflow-hidden border-2 border-white/85 shadow-md relative bg-[#D8D3C7]/40 shrink-0 mx-auto">
                 <img
                   src="/optimized/kagathon/kagathon-poster-720.webp"
                   srcSet="/optimized/kagathon/kagathon-poster-720.webp 720w, /optimized/kagathon/kagathon-poster.webp 1200w"
-                  sizes="(max-width: 640px) 288px, 320px"
+                  sizes="(max-width: 640px) 144px, 176px"
                   width={1200}
                   height={1200}
                   alt="Kagathon - Your Only Limit Is You"
@@ -163,38 +163,38 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
               <div className="text-center">
                 <h2
                   id="kagathon-popup-title"
-                  className="font-smooch text-4xl sm:text-5xl font-semibold text-[#5A182B] leading-none tracking-wide"
+                  className="font-smooch text-3xl min-[370px]:text-4xl sm:text-5xl font-semibold text-[#5A182B] leading-none tracking-wide"
                 >
                   Kagathon
                 </h2>
-                <p className="font-roboto-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5A182B]/85 mt-1">
+                <p className="font-roboto-mono text-[9px] min-[370px]:text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5A182B]/85 mt-0.5">
                   THE CURTAIN RAISER FOR KAGADA 2026
                 </p>
               </div>
 
               {/* Catchy quote */}
-              <p className="font-jakarta italic text-center text-xs sm:text-[0.85rem] text-[#5A182B] font-semibold px-2 leading-snug">
+              <p className="font-jakarta italic text-center text-[11px] min-[370px]:text-xs sm:text-[0.8rem] text-[#5A182B] font-semibold px-2 leading-snug">
                 &ldquo;A marathon is a reminder that every finish starts with a beginning!&rdquo;
               </p>
 
               {/* Catchy broadcast line */}
-              <p className="font-jakarta text-xs sm:text-[0.8rem] text-[#5A182B] text-center px-2 leading-relaxed">
+              <p className="font-jakarta text-[11px] min-[370px]:text-xs sm:text-[0.8rem] text-[#5A182B] text-center px-2 leading-snug">
                 Step into a morning of <strong>live DJ, dance, fun games, treats</strong>, and a{" "}
                 <strong>certificate to remember</strong>!
               </p>
 
               {/* Registration deadlines */}
-              <div className="text-center pt-0.5 space-y-1">
-                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B]">
-                  <span className="uppercase text-[#5A182B]/80 text-[11px] sm:text-xs tracking-wider">
+              <div className="text-center space-y-0.5">
+                <p className="font-roboto-mono text-[10px] min-[370px]:text-xs sm:text-sm font-bold text-[#5A182B]">
+                  <span className="uppercase text-[#5A182B]/80 text-[9px] min-[370px]:text-[10px] sm:text-xs tracking-wider">
                     T-Shirt Registration Deadline:
                   </span>{" "}
                   <span className="font-jakarta font-extrabold text-[#5A182B]">
                     8th October, 2026
                   </span>
                 </p>
-                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B]">
-                  <span className="uppercase text-[#5A182B]/80 text-[11px] sm:text-xs tracking-wider">
+                <p className="font-roboto-mono text-[10px] min-[370px]:text-xs sm:text-sm font-bold text-[#5A182B]">
+                  <span className="uppercase text-[#5A182B]/80 text-[9px] min-[370px]:text-[10px] sm:text-xs tracking-wider">
                     Final Registration Deadline:
                   </span>{" "}
                   <span className="font-jakarta font-extrabold text-[#5A182B]">
@@ -205,12 +205,12 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
             </div>
 
             {/* Pinned footer */}
-            <div className="shrink-0 border-t border-[#5A182B]/20 bg-[#D8D3C7]/60 p-3 sm:p-3.5 flex flex-col items-center gap-1.5 w-full">
+            <div className="shrink-0 border-t border-[#5A182B]/20 bg-[#D8D3C7]/60 p-2.5 sm:p-3 flex flex-col items-center gap-1 w-full">
               <a
                 href="https://bit.ly/KAGADA2026-Kagathon"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 sm:py-3 px-4 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 text-white font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-widest rounded-none shadow-lg flex items-center justify-center transition-colors select-none text-center"
+                className="w-full py-2 sm:py-2.5 px-4 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 text-white font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-widest rounded-none shadow-lg flex items-center justify-center transition-colors select-none text-center"
               >
                 <span>REGISTER FOR KAGATHON &rarr;</span>
               </a>
@@ -218,7 +218,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
                 ref={maybeLaterBtnRef}
                 type="button"
                 onClick={onClose}
-                className="font-roboto-mono text-xs uppercase tracking-wider text-[#5A182B]/75 hover:text-[#5A182B] transition-colors cursor-pointer py-0.5"
+                className="font-roboto-mono text-[11px] sm:text-xs uppercase tracking-wider text-[#5A182B]/75 hover:text-[#5A182B] transition-colors cursor-pointer py-0.5"
               >
                 MAYBE LATER
               </button>
