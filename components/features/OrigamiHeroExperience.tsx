@@ -6,8 +6,10 @@ import { Navbar } from "@/components/layout/Navbar";
 import { HeroSection } from "@/components/sections/HeroSection";
 import AIChatCard from "@/components/features/AIChatCard";
 import OrigamiIntro from "@/components/features/OrigamiIntro";
+import KagathonPopup from "@/components/features/KagathonPopup";
 
 const SESSION_KEY = "kagada_origami_intro_seen";
+const KAGATHON_POPUP_KEY = "kagada_kagathon_popup_seen";
 
 function subscribe() {
   return () => {};
@@ -28,8 +30,34 @@ function getServerSnapshot() {
 export default function OrigamiHeroExperience() {
   const sessionStatus = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [dismissed, setDismissed] = useState(false);
+  const [isKagathonOpen, setIsKagathonOpen] = useState(false);
 
   const showIntro = sessionStatus === "unseen" && !dismissed;
+
+  // Trigger Kagathon announcement popup after origami intro completes
+  useEffect(() => {
+    if (showIntro) return;
+    try {
+      const seen = sessionStorage.getItem(KAGATHON_POPUP_KEY);
+      if (!seen) {
+        const timer = setTimeout(() => {
+          setIsKagathonOpen(true);
+          try {
+            sessionStorage.setItem(KAGATHON_POPUP_KEY, "true");
+          } catch {
+            // ignore storage errors
+          }
+        }, 900);
+        return () => clearTimeout(timer);
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, [showIntro]);
+
+  const handleClose = useCallback(() => {
+    setIsKagathonOpen(false);
+  }, []);
 
   // Prevent background page scrolling while the origami intro is assembling
   useEffect(() => {
@@ -122,7 +150,10 @@ export default function OrigamiHeroExperience() {
       <HeroSection isIntroActive={showIntro} />
 
       {/* AI Assistant Chatbot */}
-      <AIChatCard isVisible={!showIntro} />
+      <AIChatCard isVisible={!showIntro && !isKagathonOpen} />
+
+      {/* Kagathon Announcement Popup */}
+      <KagathonPopup isOpen={isKagathonOpen} onClose={handleClose} />
     </>
   );
 }
