@@ -142,7 +142,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
             {/* Scrollable content wrapper */}
             <div
               data-lenis-prevent="true"
-              className="flex-1 min-h-0 overflow-y-auto overscroll-contain custom-scrollbar p-4 sm:p-5 flex flex-col items-center gap-2.5 sm:gap-3 text-slate-900"
+              className="flex-1 min-h-0 overflow-y-auto overscroll-contain custom-scrollbar p-4 sm:p-5 flex flex-col items-center gap-2.5 sm:gap-3 text-[#5A182B]"
             >
               {/* Enriched prominent poster frame */}
               <div className="w-64 h-64 min-[380px]:w-72 min-[380px]:h-72 sm:w-80 sm:h-80 aspect-square !rounded-xl sm:!rounded-2xl overflow-hidden border-2 border-white/85 shadow-lg relative bg-[#D8D3C7]/40 shrink-0 mx-auto">
@@ -178,7 +178,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
               </p>
 
               {/* Catchy broadcast line */}
-              <p className="font-jakarta text-xs sm:text-[0.8rem] text-slate-800 text-center px-2 leading-relaxed">
+              <p className="font-jakarta text-xs sm:text-[0.8rem] text-[#5A182B] text-center px-2 leading-relaxed">
                 Step into a morning of <strong>live DJ, dance, fun games, treats</strong>, and a{" "}
                 <strong>certificate to remember</strong>!
               </p>
