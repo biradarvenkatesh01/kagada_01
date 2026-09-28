@@ -1,7 +1,6 @@
 "use client";
 
 import { memo } from "react";
-import { Calendar, Clock, MapPin, Sparkles, Award } from "lucide-react";
 
 export const KagathonSection = memo(function KagathonSection() {
   return (
@@ -10,12 +9,6 @@ export const KagathonSection = memo(function KagathonSection() {
       className="relative w-full text-slate-900 flex flex-col items-center justify-center z-20 px-4 py-12 sm:py-16 lg:py-20 scroll-mt-20 sm:scroll-mt-24 overflow-visible"
     >
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
-        {/* Glowing Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 font-roboto-mono text-xs sm:text-sm font-bold uppercase tracking-widest shadow-md backdrop-blur-sm mb-3 sm:mb-4 select-none">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>Curtain Raiser for Kagada 2026</span>
-        </div>
-
         {/* Section Heading */}
         <h2
           data-reveal
@@ -56,85 +49,58 @@ export const KagathonSection = memo(function KagathonSection() {
             <div className="lg:col-span-7 flex flex-col justify-between gap-4 sm:gap-5 text-[#5A182B]">
               {/* Card Header & Description */}
               <div>
-                <h3 className="font-smooch text-4xl sm:text-5xl lg:text-6xl font-semibold leading-none tracking-wide text-[#5A182B]">
-                  The Curtain Raiser Marathon
+                <h3 className="font-smooch text-2xl min-[360px]:text-3xl min-[480px]:text-4xl sm:text-5xl lg:text-6xl font-semibold leading-none tracking-wide text-[#5A182B] whitespace-nowrap">
+                  The Curtain Raiser for Kagada 2026
                 </h3>
                 <p className="font-jakarta text-xs sm:text-sm lg:text-base text-slate-800 leading-relaxed font-medium mt-2">
                   Step into a morning of <strong>live DJ beats, dance, games, and delicious treats</strong> at sunrise in the UVCE Quadrangle. Challenge your limits, celebrate with friends, and commemorate the morning with an <strong>official certificate</strong>!
                 </p>
               </div>
 
-              {/* 4 Key Details Tiles */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 w-full">
-                <div className="!rounded-xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 p-3 flex items-center gap-3 shadow-sm">
-                  <div className="w-9 h-9 rounded-full bg-[#5A182B]/10 border border-[#5A182B]/25 flex items-center justify-center shrink-0 text-[#5A182B]">
-                    <Calendar className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="font-roboto-mono text-[10px] sm:text-xs font-bold text-[#5A182B]/75 uppercase tracking-wider block">
-                      Date
-                    </span>
-                    <span className="font-roboto-mono text-xs sm:text-sm font-extrabold text-[#5A182B]">
-                      18th October, 2026
-                    </span>
-                  </div>
-                </div>
+              {/* Event Details as Bullet Points */}
+              <ul className="space-y-2 sm:space-y-2.5 font-jakarta text-xs sm:text-sm lg:text-base text-slate-800 py-1">
+                <li className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
+                  <span>
+                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Date:</strong>{" "}
+                    <span className="font-semibold text-slate-900">18th October, 2026</span>
+                  </span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
+                  <span>
+                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Time:</strong>{" "}
+                    <span className="font-semibold text-slate-900">6:30 AM (Sunrise)</span>
+                  </span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
+                  <span>
+                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Venue:</strong>{" "}
+                    <span className="font-semibold text-slate-900">Quadrangle, UVCE</span>
+                  </span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
+                  <span>
+                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Included:</strong>{" "}
+                    <span className="font-semibold text-slate-900">Live DJ, Official Tee, Morning Treats & Certificate</span>
+                  </span>
+                </li>
+              </ul>
 
-                <div className="!rounded-xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 p-3 flex items-center gap-3 shadow-sm">
-                  <div className="w-9 h-9 rounded-full bg-[#5A182B]/10 border border-[#5A182B]/25 flex items-center justify-center shrink-0 text-[#5A182B]">
-                    <Clock className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="font-roboto-mono text-[10px] sm:text-xs font-bold text-[#5A182B]/75 uppercase tracking-wider block">
-                      Time
-                    </span>
-                    <span className="font-roboto-mono text-xs sm:text-sm font-extrabold text-[#5A182B]">
-                      6:30 AM (Sunrise)
-                    </span>
-                  </div>
-                </div>
-
-                <div className="!rounded-xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 p-3 flex items-center gap-3 shadow-sm">
-                  <div className="w-9 h-9 rounded-full bg-[#5A182B]/10 border border-[#5A182B]/25 flex items-center justify-center shrink-0 text-[#5A182B]">
-                    <MapPin className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="font-roboto-mono text-[10px] sm:text-xs font-bold text-[#5A182B]/75 uppercase tracking-wider block">
-                      Venue
-                    </span>
-                    <span className="font-roboto-mono text-xs sm:text-sm font-extrabold text-[#5A182B]">
-                      Quadrangle, UVCE
-                    </span>
-                  </div>
-                </div>
-
-                <div className="!rounded-xl bg-[#D8D3C7]/80 border border-[#5A182B]/20 p-3 flex items-center gap-3 shadow-sm">
-                  <div className="w-9 h-9 rounded-full bg-[#5A182B]/10 border border-[#5A182B]/25 flex items-center justify-center shrink-0 text-[#5A182B]">
-                    <Award className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="font-roboto-mono text-[10px] sm:text-xs font-bold text-[#5A182B]/75 uppercase tracking-wider block">
-                      Included
-                    </span>
-                    <span className="font-jakarta text-xs sm:text-sm font-bold text-[#5A182B]">
-                      DJ, Tee, Treats & Cert
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Deadlines Box */}
-              <div className="!rounded-xl bg-[#5A182B]/10 border border-[#5A182B]/25 p-3.5 sm:p-4 text-center sm:text-left space-y-1">
-                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B]">
-                  <span className="uppercase text-[#5A182B]/80 text-[10px] sm:text-xs tracking-wider">
+              {/* Deadlines Box - Always in single lines */}
+              <div className="!rounded-xl bg-[#5A182B]/10 border border-[#5A182B]/25 p-3 sm:p-4 space-y-1.5 overflow-x-auto custom-scrollbar">
+                <p className="font-roboto-mono text-[11px] sm:text-xs md:text-sm font-bold text-[#5A182B] whitespace-nowrap">
+                  <span className="uppercase text-[#5A182B]/80 tracking-wider">
                     T-Shirt Registration Deadline:
                   </span>{" "}
                   <span className="font-jakarta font-extrabold text-[#5A182B]">
                     8th October, 2026
                   </span>
                 </p>
-                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B]">
-                  <span className="uppercase text-[#5A182B]/80 text-[10px] sm:text-xs tracking-wider">
+                <p className="font-roboto-mono text-[11px] sm:text-xs md:text-sm font-bold text-[#5A182B] whitespace-nowrap">
+                  <span className="uppercase text-[#5A182B]/80 tracking-wider">
                     Final Registration Deadline:
                   </span>{" "}
                   <span className="font-jakarta font-extrabold text-[#5A182B]">
