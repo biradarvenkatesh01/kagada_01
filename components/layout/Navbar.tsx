@@ -257,7 +257,7 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
           <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             About Us
           </a>
-          <a href="#kagathon" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
+          <a href="#kagathon-register" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             Kagathon
           </a>
           <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
