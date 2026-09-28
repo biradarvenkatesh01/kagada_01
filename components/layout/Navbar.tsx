@@ -7,11 +7,21 @@ import { cn } from "@/lib/utils";
 
 interface NavbarProps {
   isIntroActive?: boolean;
+  onOpenKagathon?: () => void;
 }
 
-export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProps) {
+export const Navbar = memo(function Navbar({
+  isIntroActive = false,
+  onOpenKagathon,
+}: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+
+  const handleKagathonClick = () => {
+    setMobileMenuOpen(false);
+    onOpenKagathon?.();
+    window.dispatchEvent(new CustomEvent("kagada:open-kagathon"));
+  };
 
   // Close mobile menu on Escape or click outside.
   useEffect(() => {
@@ -151,6 +161,13 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
         >
           About Us
         </a>
+        <button
+          type="button"
+          onClick={handleKagathonClick}
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70 cursor-pointer font-bold"
+        >
+          Kagathon
+        </button>
         <a
           href="#tracks"
           className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
@@ -251,6 +268,13 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
           <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             About Us
           </a>
+          <button
+            type="button"
+            onClick={handleKagathonClick}
+            className="text-left hover:opacity-80 transition-opacity cursor-pointer font-bold"
+          >
+            Kagathon
+          </button>
           <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             Tracks
           </a>
