@@ -12,18 +12,10 @@ export const KagathonSection = memo(function KagathonSection() {
         {/* Section Heading */}
         <h2
           data-reveal
-          className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-2 tracking-tight text-center select-none"
+          className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-6 sm:mb-10 tracking-tight text-center select-none"
         >
           Kaga<span className="text-amber-400 tshadow-md">thon</span>
         </h2>
-
-        {/* Quote */}
-        <p
-          data-reveal
-          className="font-jakarta italic text-sm sm:text-base md:text-lg text-amber-200/90 font-medium max-w-2xl text-center px-4 leading-relaxed mb-6 sm:mb-10"
-        >
-          &ldquo;A marathon is a reminder that every finish starts with a beginning!&rdquo;
-        </p>
 
         {/* Main Showcase Card */}
         <div className="w-full kagada-paper-card border-2 border-white/95 !rounded-2xl sm:!rounded-3xl shadow-2xl shadow-black/35 overflow-hidden p-5 sm:p-8 lg:p-10 text-left">
