@@ -72,7 +72,6 @@ interface FlipClockProps
   showDays?: "auto" | "always" | "never";
   size?: "sm" | "md" | "lg" | "xl";
   variant?: "default" | "secondary" | "destructive" | "outline" | "muted";
-  paused?: boolean;
 }
 
 interface TimeLeft {
@@ -112,7 +111,6 @@ const FlipClock = memo(function FlipClock({
   size = "sm",
   variant = "default",
   showDays = "auto",
-  paused = false,
   className,
   ...props
 }: FlipClockProps) {
@@ -120,8 +118,6 @@ const FlipClock = memo(function FlipClock({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (paused) return;
-
     const update = () => {
       const nextTime = getTime(countdown, targetDate);
       setTime((prev) => {
@@ -192,7 +188,7 @@ const FlipClock = memo(function FlipClock({
       if (io) io.disconnect();
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [countdown, targetDate, paused]);
+  }, [countdown, targetDate]);
 
   // 2 digits for days (e.g. 44)
   const daysStr = String(time.days).padStart(2, "0");

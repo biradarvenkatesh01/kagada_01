@@ -18,7 +18,10 @@ export const KagathonSection = memo(function KagathonSection() {
         </h2>
 
         {/* Main Showcase Card */}
-        <div className="w-full kagada-paper-card border-2 border-white/95 !rounded-2xl sm:!rounded-3xl shadow-2xl shadow-black/35 overflow-hidden p-5 sm:p-8 lg:p-10 text-left">
+        <div
+          data-reveal
+          className="w-full kagada-paper-card border-2 border-white/95 !rounded-2xl sm:!rounded-3xl shadow-2xl shadow-black/35 overflow-hidden p-5 sm:p-8 lg:p-10 text-left transform-gpu"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
             {/* Left Column: Official Poster */}
             <div className="lg:col-span-5 flex flex-col items-center">
