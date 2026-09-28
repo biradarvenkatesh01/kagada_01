@@ -30,6 +30,7 @@ export default function OrigamiHeroExperience() {
   const sessionStatus = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [dismissed, setDismissed] = useState(false);
   const [isHeroReady, setIsHeroReady] = useState(false);
+  const [isBackgroundPaused, setIsBackgroundPaused] = useState(false);
   const [isKagathonOpen, setIsKagathonOpen] = useState(false);
 
   const showIntro = sessionStatus === "unseen" && !dismissed;
@@ -42,27 +43,43 @@ export default function OrigamiHeroExperience() {
   useEffect(() => {
     if (showIntro || !isHeroReady) return;
 
-    // Preload only the 720w poster in idle state now that hero is completely rendered
+    // 1. Immediately pause background activity so CPU/GPU are completely freed before popup loads
+    const pauseTimer = setTimeout(() => {
+      setIsBackgroundPaused(true);
+    }, 700);
+
+    // 2. Preload only the 720w poster in idle state now that hero is completely rendered
     if (typeof window !== "undefined") {
       const img = new Image();
       img.src = "/optimized/kagathon/kagathon-poster-720.webp";
     }
 
-    // Allow user to comfortably view and absorb the hero section before displaying popup
-    const timer = setTimeout(() => {
+    // 3. Gracefully open the popup once the background is fully stopped
+    const openTimer = setTimeout(() => {
       setIsKagathonOpen(true);
-    }, 1200);
+    }, 950);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(pauseTimer);
+      clearTimeout(openTimer);
+    };
   }, [showIntro, isHeroReady]);
 
   const handleClose = useCallback(() => {
     setIsKagathonOpen(false);
+    // Resume background activity smoothly after popup exit animation finishes
+    const timer = setTimeout(() => {
+      setIsBackgroundPaused(false);
+    }, 320);
+    return () => clearTimeout(timer);
   }, []);
 
   // Listen for custom event to open Kagathon popup
   useEffect(() => {
-    const handleOpen = () => setIsKagathonOpen(true);
+    const handleOpen = () => {
+      setIsBackgroundPaused(true);
+      setIsKagathonOpen(true);
+    };
     window.addEventListener("kagada:open-kagathon", handleOpen);
     return () => window.removeEventListener("kagada:open-kagathon", handleOpen);
   }, []);
@@ -151,15 +168,21 @@ export default function OrigamiHeroExperience() {
         )}
       </AnimatePresence>
 
-      {/* Floating Header Navigation */}
-      <Navbar isIntroActive={showIntro} />
+      {/* Background layer container with disabled pointer events while popup is loading or active */}
+      <div
+        className={isKagathonOpen || isBackgroundPaused ? "pointer-events-none select-none" : undefined}
+        aria-hidden={isKagathonOpen}
+      >
+        {/* Floating Header Navigation */}
+        <Navbar isIntroActive={showIntro} />
 
-      {/* Section 1: Hero */}
-      <HeroSection
-        isIntroActive={showIntro}
-        isPaused={isKagathonOpen}
-        onReady={handleHeroReady}
-      />
+        {/* Section 1: Hero */}
+        <HeroSection
+          isIntroActive={showIntro}
+          isPaused={isBackgroundPaused || isKagathonOpen}
+          onReady={handleHeroReady}
+        />
+      </div>
 
       {/* AI Assistant Chatbot */}
       <AIChatCard isVisible={!showIntro && !isKagathonOpen} />

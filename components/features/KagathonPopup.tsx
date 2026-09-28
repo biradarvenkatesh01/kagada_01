@@ -12,22 +12,25 @@ interface KagathonPopupProps {
 const cardVariants = {
   initial: {
     opacity: 0,
-    y: 18,
+    y: 20,
+    scale: 0.96,
   },
   animate: {
     opacity: 1,
     y: 0,
+    scale: 1,
     transition: {
-      duration: 0.32,
+      duration: 0.38,
       ease: [0.16, 1, 0.3, 1] as const,
     },
   },
   exit: {
     opacity: 0,
-    y: 10,
+    y: 12,
+    scale: 0.97,
     transition: {
-      duration: 0.18,
-      ease: [0.4, 0, 1, 1] as const,
+      duration: 0.28,
+      ease: [0.22, 1, 0.36, 1] as const,
     },
   },
 };
@@ -112,7 +115,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
       } else {
         elem.scrollIntoView({ behavior: "smooth", block: "center" });
       }
-    }, 120);
+    }, 300);
   };
 
   if (!isMounted || typeof document === "undefined") return null;
@@ -127,26 +130,26 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
           aria-labelledby="kagathon-popup-title"
           className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 overscroll-none"
         >
-          {/* Backdrop with slight blur, tinted burgundy, fabric texture, and vignette */}
+          {/* Backdrop with rich burgundy tint, fabric texture, and vignette */}
           <motion.div
             key="kagathon-popup-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] as const }}
             onClick={onClose}
             onWheel={(e) => e.preventDefault()}
             onTouchMove={(e) => e.preventDefault()}
-            className="fixed inset-0 cursor-pointer overflow-hidden touch-none transform-gpu will-change-opacity backdrop-blur-[3px]"
+            className="fixed inset-0 cursor-pointer overflow-hidden touch-none transform-gpu will-change-opacity bg-black/60"
             aria-label="Close Kagathon announcement"
           >
-            <div className="absolute inset-0 bg-[#5A182B]/80" />
-            <div className="absolute inset-0 opacity-50 kagada-fabric-bg-texture pointer-events-none transform-gpu" />
+            <div className="absolute inset-0 bg-[#5A182B]/85" />
+            <div className="absolute inset-0 opacity-50 kagada-fabric-bg-texture pointer-events-none" />
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(circle at center, transparent 35%, rgba(15, 1, 4, 0.5) 100%)",
+                  "radial-gradient(circle at center, transparent 35%, rgba(15, 1, 4, 0.6) 100%)",
               }}
             />
           </motion.div>
