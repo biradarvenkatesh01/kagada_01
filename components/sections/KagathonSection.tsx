@@ -76,7 +76,7 @@ export const KagathonSection = memo(function KagathonSection() {
                   <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
                   <span>
                     <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Included:</strong>{" "}
-                    <span className="font-semibold text-slate-900">Live DJ, Official Tee, Morning Treats & Certificate</span>
+                    <span className="font-semibold text-slate-900">Live DJ, Treats & Certificates</span>
                   </span>
                 </li>
               </ul>

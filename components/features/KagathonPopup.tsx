@@ -41,12 +41,10 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
   const maybeLaterBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    // Preload the poster on mount with new Image() so it is already decoded when popup opens
+    if (!isOpen) return;
     const img720 = new Image();
     img720.src = "/optimized/kagathon/kagathon-poster-720.webp";
-    const img1200 = new Image();
-    img1200.src = "/optimized/kagathon/kagathon-poster.webp";
-  }, []);
+  }, [isOpen]);
 
   // Scroll lock, lenis pause, escape key, and mutual exclusivity events
   useEffect(() => {

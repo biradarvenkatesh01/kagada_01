@@ -16,6 +16,7 @@ import { KAGADA_EVENT_DATE } from "@/data/kagada-data";
 
 interface HeroSectionProps {
   isIntroActive?: boolean;
+  onReady?: () => void;
 }
 
 const REGISTER_TRACKS = [
@@ -38,8 +39,18 @@ const REGISTER_TRACKS = [
 
 export const HeroSection = memo(function HeroSection({
   isIntroActive = false,
+  onReady,
 }: HeroSectionProps) {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
+  // Notify when hero section is properly rendered and entrance animations settle
+  useEffect(() => {
+    if (isIntroActive) return;
+    const timer = setTimeout(() => {
+      onReady?.();
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [isIntroActive, onReady]);
 
   // Scroll lock while register modal is open
   useEffect(() => {
@@ -242,6 +253,11 @@ export const HeroSection = memo(function HeroSection({
           stiffness: 80,
           damping: 18,
           delay: isIntroActive ? 0 : 0.4,
+        }}
+        onAnimationComplete={() => {
+          if (!isIntroActive) {
+            onReady?.();
+          }
         }}
         className="absolute bottom-4 sm:bottom-8 left-1/2 z-20 flex flex-col items-center gap-1.5 sm:gap-2.5 group pointer-events-auto transform-gpu"
       >

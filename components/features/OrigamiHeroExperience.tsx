@@ -29,18 +29,32 @@ function getServerSnapshot() {
 export default function OrigamiHeroExperience() {
   const sessionStatus = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [dismissed, setDismissed] = useState(false);
+  const [isHeroReady, setIsHeroReady] = useState(false);
   const [isKagathonOpen, setIsKagathonOpen] = useState(false);
 
   const showIntro = sessionStatus === "unseen" && !dismissed;
 
-  // Trigger Kagathon announcement popup after origami intro completes on every reload
+  const handleHeroReady = useCallback(() => {
+    setIsHeroReady(true);
+  }, []);
+
+  // Trigger Kagathon announcement popup ONLY after the hero section is properly rendered and settled
   useEffect(() => {
-    if (showIntro) return;
+    if (showIntro || !isHeroReady) return;
+
+    // Preload only the 720w poster in idle state now that hero is completely rendered
+    if (typeof window !== "undefined") {
+      const img = new Image();
+      img.src = "/optimized/kagathon/kagathon-poster-720.webp";
+    }
+
+    // Allow user to comfortably view and absorb the hero section before displaying popup
     const timer = setTimeout(() => {
       setIsKagathonOpen(true);
-    }, 900);
+    }, 1200);
+
     return () => clearTimeout(timer);
-  }, [showIntro]);
+  }, [showIntro, isHeroReady]);
 
   const handleClose = useCallback(() => {
     setIsKagathonOpen(false);
@@ -141,7 +155,7 @@ export default function OrigamiHeroExperience() {
       <Navbar isIntroActive={showIntro} />
 
       {/* Section 1: Hero */}
-      <HeroSection isIntroActive={showIntro} />
+      <HeroSection isIntroActive={showIntro} onReady={handleHeroReady} />
 
       {/* AI Assistant Chatbot */}
       <AIChatCard isVisible={!showIntro && !isKagathonOpen} />
