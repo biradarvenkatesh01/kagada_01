@@ -183,11 +183,19 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
                 <strong>certificate to remember</strong>!
               </p>
 
-              {/* Last date to register */}
-              <div className="text-center pt-0.5">
+              {/* Registration deadlines */}
+              <div className="text-center pt-0.5 space-y-1">
                 <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B]">
                   <span className="uppercase text-[#5A182B]/80 text-[11px] sm:text-xs tracking-wider">
-                    Last Date to Register:
+                    T-Shirt Registration Deadline:
+                  </span>{" "}
+                  <span className="font-jakarta font-extrabold text-[#5A182B]">
+                    8th October, 2026
+                  </span>
+                </p>
+                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B]">
+                  <span className="uppercase text-[#5A182B]/80 text-[11px] sm:text-xs tracking-wider">
+                    Final Registration Deadline:
                   </span>{" "}
                   <span className="font-jakarta font-extrabold text-[#5A182B]">
                     13th October, 2026
