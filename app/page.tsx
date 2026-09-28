@@ -1,6 +1,7 @@
 import OrigamiHeroExperience from "@/components/features/OrigamiHeroExperience";
 import Footer from "@/components/layout/Footer";
 import AboutSection from "@/components/sections/AboutSection";
+import KagathonSection from "@/components/sections/KagathonSection";
 import TracksSection from "@/components/sections/TracksSection";
 import PrizePoolSection from "@/components/sections/PrizePoolSection";
 import WinnersSection from "@/components/sections/WinnersSection";
@@ -36,6 +37,9 @@ export default function Home() {
 
         {/* SECTION 2: ABOUT US */}
         <AboutSection />
+
+        {/* SECTION 2.5: KAGATHON CURTAIN RAISER */}
+        <KagathonSection />
 
         {/* SECTION 3: TRACKS */}
         <TracksSection />

@@ -46,10 +46,6 @@ export default function OrigamiHeroExperience() {
     setIsKagathonOpen(false);
   }, []);
 
-  const handleOpenKagathon = useCallback(() => {
-    setIsKagathonOpen(true);
-  }, []);
-
   // Listen for custom event to open Kagathon popup
   useEffect(() => {
     const handleOpen = () => setIsKagathonOpen(true);
@@ -142,7 +138,7 @@ export default function OrigamiHeroExperience() {
       </AnimatePresence>
 
       {/* Floating Header Navigation */}
-      <Navbar isIntroActive={showIntro} onOpenKagathon={handleOpenKagathon} />
+      <Navbar isIntroActive={showIntro} />
 
       {/* Section 1: Hero */}
       <HeroSection isIntroActive={showIntro} />
