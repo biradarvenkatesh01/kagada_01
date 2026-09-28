@@ -49,8 +49,8 @@ export const KagathonSection = memo(function KagathonSection() {
             <div className="lg:col-span-7 flex flex-col justify-between gap-4 sm:gap-5 text-[#5A182B]">
               {/* Card Header & Description */}
               <div>
-                <h3 className="font-smooch text-2xl min-[360px]:text-3xl min-[480px]:text-4xl sm:text-5xl lg:text-6xl font-semibold leading-none tracking-wide text-[#5A182B] whitespace-nowrap">
-                  The Curtain Raiser for Kagada 2026
+                <h3 className="font-smooch text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight tracking-wide text-[#5A182B] text-center">
+                  The Curtain Raiser<br />for Kagada 2026
                 </h3>
                 <p className="font-jakarta text-xs sm:text-sm lg:text-base text-slate-800 leading-relaxed font-medium mt-2">
                   Step into a morning of <strong>live DJ beats, dance, games, and delicious treats</strong> at sunrise in the UVCE Quadrangle. Challenge your limits, celebrate with friends, and commemorate the morning with an <strong>official certificate</strong>!
@@ -89,20 +89,20 @@ export const KagathonSection = memo(function KagathonSection() {
                 </li>
               </ul>
 
-              {/* Deadlines Box - Always in single lines */}
-              <div className="!rounded-xl bg-[#5A182B]/10 border border-[#5A182B]/25 p-3 sm:p-4 space-y-1.5 overflow-x-auto custom-scrollbar">
-                <p className="font-roboto-mono text-[11px] sm:text-xs md:text-sm font-bold text-[#5A182B] whitespace-nowrap">
-                  <span className="uppercase text-[#5A182B]/80 tracking-wider">
-                    T-Shirt Registration Deadline:
-                  </span>{" "}
+              {/* Deadlines Box */}
+              <div className="!rounded-xl bg-[#5A182B]/10 border border-[#5A182B]/25 p-3 sm:p-4 text-center space-y-2">
+                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B] leading-snug">
+                  <span className="uppercase text-[#5A182B]/80 text-[10px] sm:text-xs tracking-wider block min-[440px]:inline">
+                    T-Shirt Registration Deadline:{" "}
+                  </span>
                   <span className="font-jakarta font-extrabold text-[#5A182B]">
                     8th October, 2026
                   </span>
                 </p>
-                <p className="font-roboto-mono text-[11px] sm:text-xs md:text-sm font-bold text-[#5A182B] whitespace-nowrap">
-                  <span className="uppercase text-[#5A182B]/80 tracking-wider">
-                    Final Registration Deadline:
-                  </span>{" "}
+                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B] leading-snug">
+                  <span className="uppercase text-[#5A182B]/80 text-[10px] sm:text-xs tracking-wider block min-[440px]:inline">
+                    Final Registration Deadline:{" "}
+                  </span>
                   <span className="font-jakarta font-extrabold text-[#5A182B]">
                     13th October, 2026 &middot; 11:59 PM
                   </span>

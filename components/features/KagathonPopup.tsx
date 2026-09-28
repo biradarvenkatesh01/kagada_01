@@ -167,7 +167,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
                 >
                   Kagathon
                 </h2>
-                <p className="font-roboto-mono text-[9px] min-[370px]:text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5A182B]/85 mt-0.5 whitespace-nowrap">
+                <p className="font-roboto-mono text-[9px] min-[370px]:text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5A182B]/85 mt-0.5">
                   THE CURTAIN RAISER FOR KAGADA 2026
                 </p>
               </div>
@@ -185,7 +185,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
 
               {/* Registration deadlines */}
               <div className="text-center space-y-0.5">
-                <p className="font-roboto-mono text-[10px] min-[370px]:text-xs sm:text-sm font-bold text-[#5A182B] whitespace-nowrap">
+                <p className="font-roboto-mono text-[10px] min-[370px]:text-xs sm:text-sm font-bold text-[#5A182B]">
                   <span className="uppercase text-[#5A182B]/80 text-[9px] min-[370px]:text-[10px] sm:text-xs tracking-wider">
                     T-Shirt Registration Deadline:
                   </span>{" "}
@@ -193,7 +193,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
                     8th October, 2026
                   </span>
                 </p>
-                <p className="font-roboto-mono text-[10px] min-[370px]:text-xs sm:text-sm font-bold text-[#5A182B] whitespace-nowrap">
+                <p className="font-roboto-mono text-[10px] min-[370px]:text-xs sm:text-sm font-bold text-[#5A182B]">
                   <span className="uppercase text-[#5A182B]/80 text-[9px] min-[370px]:text-[10px] sm:text-xs tracking-wider">
                     Final Registration Deadline:
                   </span>{" "}
