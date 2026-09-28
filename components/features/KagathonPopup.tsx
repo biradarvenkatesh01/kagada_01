@@ -144,12 +144,12 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
               data-lenis-prevent="true"
               className="flex-1 min-h-0 overflow-y-auto overscroll-contain custom-scrollbar p-4 sm:p-5 flex flex-col items-center gap-2.5 sm:gap-3 text-slate-900"
             >
-              {/* Increased size poster frame */}
-              <div className="w-36 h-36 min-[400px]:w-44 min-[400px]:h-44 sm:w-52 sm:h-52 aspect-square !rounded-xl overflow-hidden border-2 border-white/85 shadow-md relative bg-[#D8D3C7]/40 shrink-0 mx-auto">
+              {/* Enriched prominent poster frame */}
+              <div className="w-52 h-52 min-[380px]:w-60 min-[380px]:h-60 sm:w-72 sm:h-72 aspect-square !rounded-xl sm:!rounded-2xl overflow-hidden border-2 border-white/85 shadow-lg relative bg-[#D8D3C7]/40 shrink-0 mx-auto">
                 <img
                   src="/optimized/kagathon/kagathon-poster-720.webp"
                   srcSet="/optimized/kagathon/kagathon-poster-720.webp 720w, /optimized/kagathon/kagathon-poster.webp 1200w"
-                  sizes="(max-width: 640px) 176px, 208px"
+                  sizes="(max-width: 640px) 240px, 288px"
                   width={1200}
                   height={1200}
                   alt="Kagathon - Your Only Limit Is You"
@@ -173,49 +173,21 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
               </div>
 
               {/* Catchy quote */}
-              <p className="font-jakarta italic text-center text-xs sm:text-[0.8rem] text-[#5A182B] font-semibold px-2 leading-snug">
+              <p className="font-jakarta italic text-center text-xs sm:text-[0.85rem] text-[#5A182B] font-semibold px-2 leading-snug">
                 &ldquo;A marathon is a reminder that every finish starts with a beginning!&rdquo;
               </p>
 
-              {/* Event details list (without boxes) */}
-              <ul className="w-full max-w-[320px] mx-auto space-y-1.5 text-xs sm:text-sm text-slate-800 text-left pt-1">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#5A182B] shrink-0" />
-                  <span className="font-roboto-mono font-bold text-[#5A182B] uppercase text-[11px] sm:text-xs tracking-wide">
-                    Date:
-                  </span>
-                  <span className="font-jakarta font-semibold text-slate-900">
-                    18th October, 2026
-                  </span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#5A182B] shrink-0" />
-                  <span className="font-roboto-mono font-bold text-[#5A182B] uppercase text-[11px] sm:text-xs tracking-wide">
-                    Time:
-                  </span>
-                  <span className="font-jakarta font-semibold text-slate-900">
-                    6:30 AM
-                  </span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#5A182B] shrink-0" />
-                  <span className="font-roboto-mono font-bold text-[#5A182B] uppercase text-[11px] sm:text-xs tracking-wide">
-                    Venue:
-                  </span>
-                  <span className="font-jakarta font-semibold text-slate-900">
-                    Quadrangle, UVCE
-                  </span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#5A182B] shrink-0" />
-                  <span className="font-roboto-mono font-bold text-[#5A182B] uppercase text-[11px] sm:text-xs tracking-wide">
-                    Last Date to Apply:
-                  </span>
-                  <span className="font-jakarta font-bold text-[#5A182B]">
+              {/* Last date to register */}
+              <div className="text-center pt-0.5">
+                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B]">
+                  <span className="uppercase text-[#5A182B]/80 text-[11px] sm:text-xs tracking-wider">
+                    Last Date to Register:
+                  </span>{" "}
+                  <span className="font-jakarta font-extrabold text-[#5A182B]">
                     13th October, 2026
                   </span>
-                </li>
-              </ul>
+                </p>
+              </div>
             </div>
 
             {/* Pinned footer */}
