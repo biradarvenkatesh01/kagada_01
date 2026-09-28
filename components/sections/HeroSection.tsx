@@ -16,6 +16,7 @@ import { KAGADA_EVENT_DATE } from "@/data/kagada-data";
 
 interface HeroSectionProps {
   isIntroActive?: boolean;
+  isPaused?: boolean;
   onReady?: () => void;
 }
 
@@ -39,6 +40,7 @@ const REGISTER_TRACKS = [
 
 export const HeroSection = memo(function HeroSection({
   isIntroActive = false,
+  isPaused = false,
   onReady,
 }: HeroSectionProps) {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -222,6 +224,7 @@ export const HeroSection = memo(function HeroSection({
               size="sm"
               variant="default"
               showDays="always"
+              paused={isPaused}
             />
           </div>
         </div>
@@ -267,7 +270,10 @@ export const HeroSection = memo(function HeroSection({
           </span>
         </div>
 
-        <div className="w-10 h-10 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
+        <div
+          style={{ animationPlayState: isPaused ? "paused" : "running" }}
+          className="w-10 h-10 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white"
+        >
           <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.8]" />
         </div>
       </motion.a>

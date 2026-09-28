@@ -155,7 +155,11 @@ export default function OrigamiHeroExperience() {
       <Navbar isIntroActive={showIntro} />
 
       {/* Section 1: Hero */}
-      <HeroSection isIntroActive={showIntro} onReady={handleHeroReady} />
+      <HeroSection
+        isIntroActive={showIntro}
+        isPaused={isKagathonOpen}
+        onReady={handleHeroReady}
+      />
 
       {/* AI Assistant Chatbot */}
       <AIChatCard isVisible={!showIntro && !isKagathonOpen} />
