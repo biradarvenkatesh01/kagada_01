@@ -141,15 +141,6 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
             }}
             className="relative z-10 w-[92vw] max-w-[360px] sm:max-w-[390px] flex flex-col items-center border-2 border-white/95 shadow-2xl shadow-black/50 !rounded-2xl sm:!rounded-3xl overflow-hidden p-5 sm:p-6"
           >
-            {/* Top Close Button */}
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close"
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-8 h-8 rounded-full bg-[#5A182B]/10 hover:bg-[#5A182B]/20 text-[#5A182B] flex items-center justify-center transition-colors cursor-pointer text-lg font-bold leading-none"
-            >
-              &times;
-            </button>
 
             {/* Poster Showcase Container */}
             <div className="w-[210px] h-[210px] min-[360px]:w-[240px] min-[360px]:h-[240px] sm:w-[260px] sm:h-[260px] aspect-square !rounded-xl sm:!rounded-2xl overflow-hidden border-2 border-white/90 shadow-xl relative bg-[#D8D3C7]/40 shrink-0 mx-auto mt-1 sm:mt-2">

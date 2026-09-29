@@ -96,23 +96,32 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
     };
   }, []);
 
-  // Trigger brief 'Heyy' greeting once user loads the page
+  // Trigger brief greeting only after user scrolls down past the hero section
   useEffect(() => {
-    if (isVisible && !hasGreetedRef.current) {
-      hasGreetedRef.current = true;
-      const showTimer = setTimeout(() => {
+    if (!isVisible || hasGreetedRef.current) return;
+
+    let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const handleScroll = () => {
+      if (hasGreetedRef.current) return;
+      const scrollThreshold = Math.min(window.innerHeight * 0.45, 400);
+      if (window.scrollY > scrollThreshold) {
+        hasGreetedRef.current = true;
         setShowGreeting(true);
-      }, 900);
+        hideTimer = setTimeout(() => {
+          setShowGreeting(false);
+        }, 7000);
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
 
-      const hideTimer = setTimeout(() => {
-        setShowGreeting(false);
-      }, 6500);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
-      return () => {
-        clearTimeout(showTimer);
-        clearTimeout(hideTimer);
-      };
-    }
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (hideTimer) clearTimeout(hideTimer);
+    };
   }, [isVisible]);
 
   useEffect(() => {
@@ -197,14 +206,15 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
 
   return (
     <>
-      {/* Welcome Speech Bubble Tooltip ("Heyy from the bot") */}
+      {/* Welcome Speech Bubble Tooltip ("Heyy from the bot") - scroll triggered, without cancel button */}
       <AnimatePresence>
         {showGreeting && !isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 15, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 15, scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 300, damping: 24 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
             onClick={handleOpenChat}
             className="fixed bottom-20 sm:bottom-24 right-5 sm:right-7 z-50 cursor-pointer select-none"
           >
@@ -215,16 +225,6 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
               <p className="text-xs sm:text-sm font-bold font-jakarta text-[#5A182B] leading-snug flex-1">
                 Heyy! Have questions about Kagada 2026?
               </p>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowGreeting(false);
-                }}
-                className="p-1 !rounded-full text-[#5A182B]/50 hover:text-[#5A182B] hover:bg-black/5 transition-colors self-center -mr-1 cursor-pointer"
-                aria-label="Dismiss greeting"
-              >
-                <X className="w-3.5 h-3.5 stroke-[2.5]" />
-              </button>
 
               {/* Speech bubble downward triangular pointer pointing toward launcher button */}
               <div className="absolute -bottom-2 right-6 sm:right-7 w-3.5 h-3.5 bg-[#D8D3C7] border-r-2 border-b-2 border-white/80 rotate-45 shadow-sm" />

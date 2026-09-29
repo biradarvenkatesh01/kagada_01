@@ -169,100 +169,101 @@ export const HeroSection = memo(function HeroSection({
       </motion.picture>
 
       {/* Hero Title & Subtitle Glass Box Container */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20, x: "-50%" }}
-        animate={{
-          opacity: isIntroActive ? 0 : 1,
-          scale: isIntroActive ? 0.95 : 1,
-          y: isIntroActive ? "calc(-50% + 20px)" : "-50%",
-          x: "-50%",
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 85,
-          damping: 20,
-          delay: isIntroActive ? 0 : 0.25,
-        }}
-        className="absolute top-[44%] sm:top-[46%] left-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
-      >
-        {/* Title Paper Box containing Title + Subtitle */}
-        <div className="w-full px-2 sm:px-4 md:px-6 pt-1 sm:pt-2 pb-2 sm:pb-3 md:pb-4 !rounded-2xl sm:!rounded-3xl kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/15 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
-          <img
-            src="/kagada-2026-header-maroon.png"
-            alt="Kagada 2026"
-            width={800}
-            height={200}
-            className="w-full max-w-[280px] min-[360px]:max-w-[320px] sm:max-w-[420px] md:max-w-[550px] lg:max-w-[700px] h-auto object-contain mx-auto select-none -mt-6 sm:-mt-10 md:-mt-14 lg:-mt-20"
-            draggable={false}
-          />
-
-          {/* Subtitle in Roboto Mono Font */}
-          <p className="font-roboto-mono text-[0.7rem] min-[360px]:text-xs sm:text-base md:text-xl lg:text-2xl text-[#5A182B]/95 font-bold tracking-wider sm:tracking-widest -mt-4 min-[360px]:-mt-5 sm:-mt-7 md:-mt-10 lg:-mt-12 uppercase tshadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[95%] sm:max-w-none mx-auto">
-            Annual National - Level Technical Student Conference
-          </p>
-        </div>
-
-        {/* Flip Clock Countdown Timer Paper Box */}
-        <div className="mt-2 sm:mt-3 w-full max-w-[94vw] sm:max-w-fit mx-auto flex justify-center pointer-events-auto">
-          <div className="hero-timer-box w-full sm:w-fit px-2.5 min-[340px]:px-3.5 min-[380px]:px-5 sm:px-6 py-2 min-[340px]:py-2.5 sm:py-3.5 !rounded-none kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 text-[#5A182B] flex items-center justify-center text-center mx-auto overflow-hidden">
-            <FlipClock
-              countdown={true}
-              targetDate={KAGADA_EVENT_DATE}
-              size="sm"
-              variant="default"
-              showDays="always"
+      <div className="absolute top-[44%] sm:top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0, y: 22 }}
+          animate={{
+            opacity: isIntroActive ? 0 : 1,
+            y: isIntroActive ? 22 : 0,
+          }}
+          transition={{
+            duration: 0.85,
+            ease: [0.16, 1, 0.3, 1],
+            delay: isIntroActive ? 0 : 0.12,
+          }}
+          style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
+          className="w-full flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
+        >
+          {/* Title Paper Box containing Title + Subtitle */}
+          <div className="w-full px-2 sm:px-4 md:px-6 pt-1 sm:pt-2 pb-2 sm:pb-3 md:pb-4 !rounded-2xl sm:!rounded-3xl kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/15 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
+            <img
+              src="/kagada-2026-header-maroon.png"
+              alt="Kagada 2026"
+              width={800}
+              height={200}
+              className="w-full max-w-[280px] min-[360px]:max-w-[320px] sm:max-w-[420px] md:max-w-[550px] lg:max-w-[700px] h-auto object-contain mx-auto select-none -mt-6 sm:-mt-10 md:-mt-14 lg:-mt-20"
+              draggable={false}
             />
+
+            {/* Subtitle in Roboto Mono Font */}
+            <p className="font-roboto-mono text-[0.7rem] min-[360px]:text-xs sm:text-base md:text-xl lg:text-2xl text-[#5A182B]/95 font-bold tracking-wider sm:tracking-widest -mt-4 min-[360px]:-mt-5 sm:-mt-7 md:-mt-10 lg:-mt-12 uppercase tshadow-sm select-none whitespace-normal sm:whitespace-nowrap leading-snug sm:leading-none max-w-[95%] sm:max-w-none mx-auto">
+              Annual National - Level Technical Student Conference
+            </p>
           </div>
-        </div>
 
-        {/* Registration CTA Buttons Group: Tracks & Kagathon */}
-        <div className="mt-2.5 sm:mt-3.5 w-full flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 pointer-events-auto px-2">
-          <button
-            type="button"
-            onClick={() => setIsRegisterModalOpen(true)}
-            className="w-full sm:w-auto px-5 sm:px-6 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/40 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
-            aria-label="Register for Kagada 2026 tracks"
-          >
-            <span>Register for Tracks</span>
-          </button>
+          {/* Flip Clock Countdown Timer Paper Box */}
+          <div className="mt-2 sm:mt-3 w-full max-w-[94vw] sm:max-w-fit mx-auto flex justify-center pointer-events-auto">
+            <div className="hero-timer-box w-full sm:w-fit px-2.5 min-[340px]:px-3.5 min-[380px]:px-5 sm:px-6 py-2 min-[340px]:py-2.5 sm:py-3.5 !rounded-none kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 text-[#5A182B] flex items-center justify-center text-center mx-auto overflow-hidden">
+              <FlipClock
+                countdown={true}
+                targetDate={KAGADA_EVENT_DATE}
+                size="sm"
+                variant="default"
+                showDays="always"
+              />
+            </div>
+          </div>
 
-          <a
-            href="#kagathon"
-            className="w-full sm:w-auto px-5 sm:px-6 py-2 sm:py-2.5 bg-[#D8D3C7] hover:bg-white border-2 border-[#5A182B] hover:border-[#431220] text-[#5A182B] font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/25 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
-            aria-label="Register for Kagathon"
-          >
-            <span>Register for Kagathon &rarr;</span>
-          </a>
-        </div>
-      </motion.div>
+          {/* Registration CTA Buttons Group: Tracks & Kagathon */}
+          <div className="mt-2.5 sm:mt-3.5 w-full flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 pointer-events-auto px-2">
+            <button
+              type="button"
+              onClick={() => setIsRegisterModalOpen(true)}
+              className="w-full sm:w-auto px-5 sm:px-6 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/40 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
+              aria-label="Register for Kagada 2026 tracks"
+            >
+              <span>Register for Tracks</span>
+            </button>
+
+            <a
+              href="#kagathon"
+              className="w-full sm:w-auto px-5 sm:px-6 py-2 sm:py-2.5 bg-[#D8D3C7] hover:bg-white border-2 border-[#5A182B] hover:border-[#431220] text-[#5A182B] font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/25 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
+              aria-label="Register for Kagathon"
+            >
+              <span>Register for Kagathon &rarr;</span>
+            </a>
+          </div>
+        </motion.div>
+      </div>
 
       {/* Bottom "Explore Tracks" CTA Indicator */}
-      <motion.a
-        href="#tracks"
-        initial={{ opacity: 0, y: 20, x: "-50%" }}
-        animate={{
-          opacity: isIntroActive ? 0 : 1,
-          y: isIntroActive ? 20 : 0,
-          x: "-50%",
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 80,
-          damping: 18,
-          delay: isIntroActive ? 0 : 0.4,
-        }}
-        className="absolute bottom-3 sm:bottom-6 left-1/2 z-20 flex flex-col items-center gap-1.5 sm:gap-2 group pointer-events-auto transform-gpu"
-      >
-        <div className="px-6 py-2 sm:px-9 sm:py-3 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
-          <span className="font-roboto-mono text-xs min-[360px]:text-sm sm:text-base font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
-            Explore Tracks
-          </span>
-        </div>
+      <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-auto">
+        <motion.a
+          href="#tracks"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{
+            opacity: isIntroActive ? 0 : 1,
+            y: isIntroActive ? 20 : 0,
+          }}
+          transition={{
+            duration: 0.85,
+            ease: [0.16, 1, 0.3, 1],
+            delay: isIntroActive ? 0 : 0.28,
+          }}
+          style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
+          className="flex flex-col items-center gap-1.5 sm:gap-2 group pointer-events-auto transform-gpu"
+        >
+          <div className="px-6 py-2 sm:px-9 sm:py-3 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
+            <span className="font-roboto-mono text-xs min-[360px]:text-sm sm:text-base font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
+              Explore Tracks
+            </span>
+          </div>
 
-        <div className="w-10 h-10 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
-          <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.8]" />
-        </div>
-      </motion.a>
+          <div className="w-10 h-10 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
+            <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.8]" />
+          </div>
+        </motion.a>
+      </div>
 
       {/* Track Registration Selection Modal */}
       {typeof document !== "undefined" &&
