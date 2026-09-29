@@ -57,8 +57,14 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
     window.dispatchEvent(new CustomEvent("kagada:close-dropdown"));
     window.dispatchEvent(new CustomEvent("kagada:close-chat"));
 
+    // Handle scroll lock, Lenis pause, and escape key without horizontal layout twitching
     const prevBodyOverflow = document.body.style.overflow;
     const prevHtmlOverflow = document.documentElement.style.overflow;
+    const prevPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
 
@@ -85,6 +91,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
     return () => {
       document.body.style.overflow = prevBodyOverflow;
       document.documentElement.style.overflow = prevHtmlOverflow;
+      document.body.style.paddingRight = prevPaddingRight;
       if (lenis) {
         lenis.start();
       }
