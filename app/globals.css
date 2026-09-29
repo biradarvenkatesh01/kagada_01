@@ -697,21 +697,21 @@ html.lenis, html.lenis body {
   overflow: hidden;
 }
 
-.lenis.lenis-scrolling iframe {
+.lenis.lenis-scrolling iframe,
+.lenis.lenis-scrolling video {
   pointer-events: none;
 }
 
 /* ─── Reveal on scroll ────────────────────────────────────
    Elements marked `data-reveal` fade and rise as they scroll into view.
-   Compositor-accelerated with GPU transforms. */
+   Compositor-accelerated with GPU transforms. Settles early at entry 40%
+   so rapid scrolling never shows jitter or unfinished states. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     [data-reveal] {
       animation: kagada-reveal linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 50%;
-      will-change: transform, opacity;
-      transform: translateZ(0);
+      animation-range: entry 0% entry 40%;
     }
   }
 }
@@ -719,11 +719,11 @@ html.lenis, html.lenis body {
 @keyframes kagada-reveal {
   from {
     opacity: 0;
-    transform: translateY(26px) translateZ(0);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) translateZ(0);
+    transform: translateY(0);
   }
 }
 

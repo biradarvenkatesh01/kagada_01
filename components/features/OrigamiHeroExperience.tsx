@@ -33,12 +33,14 @@ export default function OrigamiHeroExperience() {
 
   const showIntro = sessionStatus === "unseen" && !dismissed;
 
-  // Open Kagathon announcement popup smoothly after the hero section settles completely
+  // Open Kagathon announcement popup smoothly after hero settles, but only if user hasn't scrolled away
   useEffect(() => {
     if (showIntro) return;
 
     const timer = setTimeout(() => {
-      setIsKagathonOpen(true);
+      if (typeof window !== "undefined" && window.scrollY < 260) {
+        setIsKagathonOpen(true);
+      }
     }, 4800);
 
     return () => clearTimeout(timer);
