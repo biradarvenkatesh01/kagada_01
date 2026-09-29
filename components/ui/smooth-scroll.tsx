@@ -67,21 +67,14 @@ export default function SmoothScroll({
       if (cancelled) return;
 
       lenis = new LenisCtor({
-        // Left at 0.14 deliberately. Raising it to 0.18 to make the viewport
-        // chase the wheel more closely measurably made things WORSE, not
-        // better: at 6x CPU throttle the navbar dropdown went from 27.8ms p95
-        // / 1.5% dropped to 34.7ms / 9.8%, and the FAQ answer from 20.8ms /
-        // 1.5% to 27.6ms / 4.9%. A tighter lerp keeps Lenis actively
-        // integrating for more frames, and that work lands on the same main
-        // thread the panel animations need.
-        lerp: 0.14,
+        lerp: 0.09,
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
-        wheelMultiplier: 1.0,
+        wheelMultiplier: 0.95,
         touchMultiplier: 1.0,
         syncTouch: false,
-        autoResize: false,
+        autoResize: true,
       });
 
       // Handle window resize cleanly without thrashing layout during scroll

@@ -102,9 +102,9 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
         x: "-50%",
       }}
       transition={{
-        duration: 0.85,
-        ease: [0.16, 1, 0.3, 1],
-        delay: isIntroActive ? 0 : 0.1,
+        duration: 1.3,
+        ease: [0.22, 1, 0.36, 1],
+        delay: isIntroActive ? 0 : 0.15,
       }}
       // `backdrop-blur-lg` stays: this is a FIXED element, so content scrolls
       // behind it constantly and the blur is genuinely visible — verified by A/B

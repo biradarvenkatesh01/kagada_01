@@ -680,27 +680,38 @@ html.lenis, html.lenis body {
   background-size: auto, auto, auto, auto, 3.5px 3.5px, 3.5px 3.5px;
 }
 
+/* ─── Lenis Smooth Scroll Foundation ─────────────────────────── */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
 /* ─── Reveal on scroll ────────────────────────────────────
    Elements marked `data-reveal` fade and rise as they scroll into view.
-
-   This is a CSS scroll-driven animation, not an IntersectionObserver: the
-   browser runs it on the compositor off the main thread, so it costs nothing
-   per frame and cannot be delayed by JavaScript the way an observer callback
-   can. `opacity` and `translate` are the only properties touched, and both are
-   composited, so no layout or paint is involved either.
-
-   Everything is gated behind @supports. Where scroll-driven animations are not
-   implemented (Firefox, older Safari) the rule never applies and content
-   renders plainly — there is no JS-dependent hidden state that could strand
-   content invisible, which is the usual failure mode of reveal-on-scroll. */
+   Compositor-accelerated with GPU transforms. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     [data-reveal] {
       animation: kagada-reveal linear both;
       animation-timeline: view();
-      /* Finish well before the element reaches the middle of the screen, so it
-         is fully settled by the time it is actually being read. */
-      animation-range: entry 0% entry 45%;
+      animation-range: entry 0% entry 50%;
+      will-change: transform, opacity;
+      transform: translateZ(0);
     }
   }
 }
@@ -708,11 +719,11 @@ html.lenis, html.lenis body {
 @keyframes kagada-reveal {
   from {
     opacity: 0;
-    translate: 0 24px;
+    transform: translateY(26px) translateZ(0);
   }
   to {
     opacity: 1;
-    translate: 0 0;
+    transform: translateY(0) translateZ(0);
   }
 }
 

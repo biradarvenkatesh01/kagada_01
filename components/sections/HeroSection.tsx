@@ -144,7 +144,7 @@ export const HeroSection = memo(function HeroSection({
       <motion.picture
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         className="absolute inset-0 w-full h-full min-h-full z-0 pointer-events-none select-none overflow-hidden"
       >
         {/* Desktop / PC widescreen view (>= 768px) */}
@@ -171,15 +171,15 @@ export const HeroSection = memo(function HeroSection({
       {/* Hero Title & Subtitle Glass Box Container */}
       <div className="absolute top-[44%] sm:top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center pointer-events-none">
         <motion.div
-          initial={{ opacity: 0, y: 22 }}
+          initial={{ opacity: 0, y: 35 }}
           animate={{
             opacity: isIntroActive ? 0 : 1,
-            y: isIntroActive ? 22 : 0,
+            y: isIntroActive ? 35 : 0,
           }}
           transition={{
-            duration: 0.85,
-            ease: [0.16, 1, 0.3, 1],
-            delay: isIntroActive ? 0 : 0.12,
+            duration: 1.5,
+            ease: [0.22, 1, 0.36, 1],
+            delay: isIntroActive ? 0 : 0.25,
           }}
           style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
           className="w-full flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
@@ -240,15 +240,15 @@ export const HeroSection = memo(function HeroSection({
       <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-auto">
         <motion.a
           href="#tracks"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={{
             opacity: isIntroActive ? 0 : 1,
-            y: isIntroActive ? 20 : 0,
+            y: isIntroActive ? 28 : 0,
           }}
           transition={{
-            duration: 0.85,
-            ease: [0.16, 1, 0.3, 1],
-            delay: isIntroActive ? 0 : 0.28,
+            duration: 1.5,
+            ease: [0.22, 1, 0.36, 1],
+            delay: isIntroActive ? 0 : 0.6,
           }}
           style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
           className="flex flex-col items-center gap-1.5 sm:gap-2 group pointer-events-auto transform-gpu"

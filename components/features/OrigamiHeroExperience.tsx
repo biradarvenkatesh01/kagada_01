@@ -39,7 +39,7 @@ export default function OrigamiHeroExperience() {
 
     const timer = setTimeout(() => {
       setIsKagathonOpen(true);
-    }, 2200);
+    }, 4800);
 
     return () => clearTimeout(timer);
   }, [showIntro]);
@@ -48,13 +48,9 @@ export default function OrigamiHeroExperience() {
     setIsKagathonOpen(false);
   }, []);
 
-  // Prevent background page scrolling while the origami intro is assembling
+  // Prevent background page scrolling while the origami intro is assembling without layout shifts
   useEffect(() => {
     if (!showIntro) return;
-    const prevBodyOverflow = document.body.style.overflow;
-    const prevHtmlOverflow = document.documentElement.style.overflow;
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
 
     // Stop Lenis smooth scroll engine
     const checkLenis = () => {
@@ -99,8 +95,6 @@ export default function OrigamiHeroExperience() {
     window.addEventListener("keydown", preventKeyScroll);
 
     return () => {
-      document.body.style.overflow = prevBodyOverflow;
-      document.documentElement.style.overflow = prevHtmlOverflow;
       const lenis = (
         window as unknown as {
           __lenis?: { stop: () => void; start: () => void };

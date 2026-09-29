@@ -14,9 +14,11 @@ export function BurgundyTexturedBackground() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 w-full h-full pointer-events-none select-none overflow-hidden z-0"
+      className="fixed inset-0 w-full h-full pointer-events-none select-none overflow-hidden z-0 transform-gpu"
       style={{
         backgroundColor: "#5A182B",
+        transform: "translateZ(0)",
+        willChange: "transform",
       }}
     >
       {/* ── Layer A: Base Rich Deep Burgundy Maroon Surface (#5A182B) ── */}
