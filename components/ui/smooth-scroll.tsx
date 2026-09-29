@@ -34,25 +34,8 @@ export default function SmoothScroll({
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // A touch-primary device: no hover capability and a coarse pointer. This
-    // deliberately excludes touch-screen laptops, which have a fine pointer and
-    // therefore do benefit from smoothWheel.
-    const isTouchPrimary = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-
-    if (isTouchPrimary || prefersReducedMotion) {
-      // Touch-primary mobile devices: Preserve 120Hz OS-native momentum touch panning.
-      // Do NOT set root.style.scrollBehavior = 'smooth' globally on touch screens,
-      // as it causes finger flick momentum to jitter/fight browser physics.
-      const handleTouchAnchor = (e: MouseEvent) => {
-        const anchor = (e.target as HTMLElement)?.closest("a");
-        if (!anchor || !anchor.hash || !anchor.hash.startsWith("#")) return;
-        const elem = document.querySelector(anchor.hash);
-        if (!elem) return;
-        e.preventDefault();
-        elem.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
-      };
-      document.addEventListener("click", handleTouchAnchor);
-      return () => document.removeEventListener("click", handleTouchAnchor);
+    if (prefersReducedMotion) {
+      return;
     }
 
     let lenis: Lenis | null = null;
@@ -61,13 +44,12 @@ export default function SmoothScroll({
 
     const cleanupFns: Array<() => void> = [];
 
-    // Loaded on demand so the library is not in the critical path for the phones
-    // that will never instantiate it.
     import("lenis").then(({ default: LenisCtor }) => {
       if (cancelled) return;
 
       lenis = new LenisCtor({
-        lerp: 0.11,
+        duration: 1.15,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
@@ -128,8 +110,8 @@ export default function SmoothScroll({
         // so it reads as responsive rather than slow.
         lenis?.scrollTo(elem as HTMLElement, {
           offset: -80,
-          duration: 0.85,
-          easing: (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+          duration: 1.15,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
       };
       document.addEventListener("click", handleAnchorClick);

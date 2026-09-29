@@ -214,12 +214,12 @@ export const HeroSection = memo(function HeroSection({
             </div>
           </div>
 
-          {/* Registration CTA Buttons Group: Compact & Hugging Text */}
-          <div className="mt-2 sm:mt-3 w-full flex flex-row flex-wrap items-center justify-center gap-2 sm:gap-2.5 pointer-events-auto px-2">
+          {/* Registration CTA Buttons Group: One below the other */}
+          <div className="mt-2.5 sm:mt-3 w-full flex flex-col items-center justify-center gap-2 sm:gap-2.5 pointer-events-auto px-2">
             <button
               type="button"
               onClick={() => setIsRegisterModalOpen(true)}
-              className="w-fit px-4 sm:px-5 py-1.5 sm:py-2 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
+              className="w-fit min-w-[165px] sm:min-w-[185px] px-5 sm:px-6 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
               aria-label="Register for Kagada 2026 tracks"
             >
               <span>Register Now!</span>
@@ -227,7 +227,7 @@ export const HeroSection = memo(function HeroSection({
 
             <a
               href="#kagathon"
-              className="w-fit px-4 sm:px-5 py-1.5 sm:py-2 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
+              className="w-fit min-w-[165px] sm:min-w-[185px] px-5 sm:px-6 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
               aria-label="Register for Kagathon"
             >
               <span>Kagathon &rarr;</span>

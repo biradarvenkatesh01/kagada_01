@@ -26,9 +26,21 @@ export default function BackToTop() {
   }, []);
 
   const scrollToTop = () => {
-    const lenis = (window as unknown as { __lenis?: { scrollTo: (target: number, opts?: { duration?: number }) => void } }).__lenis;
+    const lenis = (
+      window as unknown as {
+        __lenis?: {
+          scrollTo: (
+            target: number,
+            opts?: { duration?: number; easing?: (t: number) => number }
+          ) => void;
+        };
+      }
+    ).__lenis;
     if (lenis) {
-      lenis.scrollTo(0, { duration: 1.2 });
+      lenis.scrollTo(0, {
+        duration: 1.15,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
     } else {
       window.scrollTo({
         top: 0,
