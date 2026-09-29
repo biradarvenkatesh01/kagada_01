@@ -258,7 +258,7 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
             About Us
           </a>
           <a
-            href="#kagathon-register"
+            href="#kagathon"
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center justify-between px-3.5 py-2 -mx-1 rounded-xl bg-[#5A182B] hover:bg-[#431220] text-white transition-colors"
           >

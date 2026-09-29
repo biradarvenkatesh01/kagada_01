@@ -227,7 +227,7 @@ export const HeroSection = memo(function HeroSection({
           </button>
 
           <a
-            href="#kagathon-register"
+            href="#kagathon"
             className="w-full sm:w-auto px-5 sm:px-6 py-2 sm:py-2.5 bg-[#D8D3C7] hover:bg-white border-2 border-[#5A182B] hover:border-[#431220] text-[#5A182B] font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/25 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
             aria-label="Register for Kagathon"
           >
