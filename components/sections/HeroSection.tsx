@@ -183,7 +183,7 @@ export const HeroSection = memo(function HeroSection({
           damping: 20,
           delay: isIntroActive ? 0 : 0.25,
         }}
-        className="absolute top-[40%] sm:top-[43%] left-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
+        className="absolute top-[44%] sm:top-[46%] left-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
       >
         {/* Title Paper Box containing Title + Subtitle */}
         <div className="w-full px-2 sm:px-4 md:px-6 pt-1 sm:pt-2 pb-2 sm:pb-3 md:pb-4 !rounded-2xl sm:!rounded-3xl kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/15 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
