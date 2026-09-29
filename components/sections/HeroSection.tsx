@@ -183,7 +183,7 @@ export const HeroSection = memo(function HeroSection({
           damping: 20,
           delay: isIntroActive ? 0 : 0.25,
         }}
-        className="absolute top-[48%] sm:top-1/2 left-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
+        className="absolute top-[40%] sm:top-[43%] left-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center text-center pointer-events-none transform-gpu"
       >
         {/* Title Paper Box containing Title + Subtitle */}
         <div className="w-full px-2 sm:px-4 md:px-6 pt-1 sm:pt-2 pb-2 sm:pb-3 md:pb-4 !rounded-2xl sm:!rounded-3xl kagada-paper-card border-2 border-white/95 shadow-xl shadow-black/15 flex flex-col items-center justify-center text-center mx-auto overflow-hidden">
@@ -203,7 +203,7 @@ export const HeroSection = memo(function HeroSection({
         </div>
 
         {/* Flip Clock Countdown Timer Paper Box */}
-        <div className="mt-2.5 sm:mt-5 w-full max-w-[94vw] sm:max-w-fit mx-auto flex justify-center pointer-events-auto">
+        <div className="mt-2 sm:mt-3 w-full max-w-[94vw] sm:max-w-fit mx-auto flex justify-center pointer-events-auto">
           <div className="hero-timer-box w-full sm:w-fit px-2.5 min-[340px]:px-3.5 min-[380px]:px-5 sm:px-6 py-2 min-[340px]:py-2.5 sm:py-3.5 !rounded-none kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 text-[#5A182B] flex items-center justify-center text-center mx-auto overflow-hidden">
             <FlipClock
               countdown={true}
@@ -216,11 +216,11 @@ export const HeroSection = memo(function HeroSection({
         </div>
 
         {/* Registration CTA Buttons Group: Tracks & Kagathon */}
-        <div className="mt-3 sm:mt-5 w-full flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3.5 pointer-events-auto px-2">
+        <div className="mt-2.5 sm:mt-3.5 w-full flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 pointer-events-auto px-2">
           <button
             type="button"
             onClick={() => setIsRegisterModalOpen(true)}
-            className="w-full sm:w-auto px-5 sm:px-7 py-2.5 sm:py-3 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/40 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
+            className="w-full sm:w-auto px-5 sm:px-6 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/40 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
             aria-label="Register for Kagada 2026 tracks"
           >
             <span>Register for Tracks</span>
@@ -228,7 +228,7 @@ export const HeroSection = memo(function HeroSection({
 
           <a
             href="#kagathon-register"
-            className="w-full sm:w-auto px-5 sm:px-7 py-2.5 sm:py-3 bg-[#D8D3C7] hover:bg-white border-2 border-[#5A182B] hover:border-[#431220] text-[#5A182B] font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/25 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
+            className="w-full sm:w-auto px-5 sm:px-6 py-2 sm:py-2.5 bg-[#D8D3C7] hover:bg-white border-2 border-[#5A182B] hover:border-[#431220] text-[#5A182B] font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-widest shadow-xl hover:shadow-2xl shadow-black/25 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap"
             aria-label="Register for Kagathon"
           >
             <span>Register for Kagathon &rarr;</span>
@@ -251,16 +251,16 @@ export const HeroSection = memo(function HeroSection({
           damping: 18,
           delay: isIntroActive ? 0 : 0.4,
         }}
-        className="absolute bottom-4 sm:bottom-8 left-1/2 z-20 flex flex-col items-center gap-1.5 sm:gap-2.5 group pointer-events-auto transform-gpu"
+        className="absolute bottom-2 sm:bottom-4 left-1/2 z-20 flex flex-col items-center gap-1 sm:gap-1.5 group pointer-events-auto transform-gpu"
       >
-        <div className="px-6 py-2 sm:px-9 sm:py-3 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
-          <span className="font-roboto-mono text-xs min-[360px]:text-sm sm:text-base font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
+        <div className="px-5 py-1.5 sm:px-7 sm:py-2 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
+          <span className="font-roboto-mono text-[11px] min-[360px]:text-xs sm:text-sm font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
             Explore Tracks
           </span>
         </div>
 
-        <div className="w-10 h-10 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
-          <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.8]" />
+        <div className="w-8 h-8 sm:w-9 sm:h-9 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
+          <ChevronDown className="w-4 h-4 sm:w-4.5 sm:h-4.5 stroke-[2.8]" />
         </div>
       </motion.a>
 

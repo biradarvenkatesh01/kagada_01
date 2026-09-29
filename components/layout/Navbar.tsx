@@ -153,10 +153,9 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
         </a>
         <a
           href="#kagathon"
-          className="relative whitespace-nowrap shrink-0 px-3 py-1 -my-1 rounded-full bg-[#5A182B] text-amber-300 border border-amber-400/50 shadow-sm shadow-black/20 hover:bg-[#431220] hover:text-amber-200 hover:border-amber-300 transition-all duration-200 flex items-center gap-1.5"
+          className="relative whitespace-nowrap shrink-0 px-3.5 py-1 -my-1 rounded-full bg-[#5A182B] hover:bg-[#431220] text-white font-roboto-mono font-bold tracking-wider text-xs xl:text-sm shadow-sm transition-colors duration-200"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.9)] shrink-0" />
-          <span>Kagathon</span>
+          Kagathon
         </a>
         <a
           href="#tracks"
@@ -261,14 +260,11 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
           <a
             href="#kagathon-register"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center justify-between px-3 py-2 -mx-1 rounded-xl bg-[#5A182B] text-amber-300 border border-amber-400/40 shadow-sm hover:bg-[#431220] transition-colors"
+            className="flex items-center justify-between px-3.5 py-2 -mx-1 rounded-xl bg-[#5A182B] hover:bg-[#431220] text-white transition-colors"
           >
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.9)] shrink-0" />
-              <span>Kagathon</span>
-            </div>
-            <span className="text-[10px] font-roboto-mono uppercase tracking-wider text-amber-400 font-bold bg-[#431220] px-2 py-0.5 rounded-full">
-              Special
+            <span className="font-bold">Kagathon</span>
+            <span className="text-[10px] font-roboto-mono uppercase tracking-wider text-white/80 font-bold bg-white/15 px-2 py-0.5 rounded-full">
+              Curtain Raiser
             </span>
           </a>
           <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
