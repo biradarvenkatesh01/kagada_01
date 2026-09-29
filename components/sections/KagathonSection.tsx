@@ -48,7 +48,7 @@ export const KagathonSection = memo(function KagathonSection() {
                   The Curtain Raiser<br />for Kagada 2026
                 </h3>
                 <p className="font-jakarta text-xs sm:text-sm lg:text-base text-slate-800 leading-relaxed font-medium mt-2">
-                  Step into a morning of <strong>live DJ beats, dance, games, and delicious treats</strong> at sunrise in the UVCE Quadrangle. Challenge your limits, celebrate with friends, and commemorate the morning with an <strong>official certificate</strong>!
+                  Step into a morning of <strong>live DJ beats, dance, games and delicious treats</strong> at sunrise in the UVCE Quadrangle. Challenge your limits, celebrate with friends and commemorate the morning with an <strong>official certificate</strong>!
                 </p>
               </div>
 
