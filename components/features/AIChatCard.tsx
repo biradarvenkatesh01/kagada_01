@@ -110,7 +110,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         setShowGreeting(true);
         hideTimer = setTimeout(() => {
           setShowGreeting(false);
-        }, 7000);
+        }, 4000);
         window.removeEventListener("scroll", handleScroll);
       }
     };
