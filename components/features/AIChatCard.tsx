@@ -62,7 +62,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   const [messages, setMessages] = useState<{ sender: "ai" | "user"; text: string }[]>([
     {
       sender: "ai",
-      text: "Hello! I am your KAGADA 2026 AI Assistant. Ask me anything about presentation tracks, registration, venue, total prize pool, or organizers!",
+      text: "Hello! I am your KAGADA 2026 AI Assistant. Ask me anything about presentation tracks, Kagathon (Curtain Raiser), registration, venue, total prize pool, or organizers!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -196,7 +196,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         ...prev,
         {
           sender: "ai",
-          text: "KAGADA 2026 is provisionally scheduled for 24th October 2026 at UVCE, KR Circle. Ask me about tracks (Paper, Poster, Project) or the ₹40,000 prize pool!",
+          text: "KAGADA 2026 is scheduled for 24th October 2026, and the Kagathon Curtain Raiser is on 18th October 2026 at UVCE! Ask me about tracks (Paper, Poster, Project), Kagathon registration, or the ₹40,000 prize pool!",
         },
       ]);
     } finally {

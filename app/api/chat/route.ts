@@ -23,6 +23,18 @@ PRESENTATION TRACKS (3 Main Category Tracks):
 2. Poster Presentation: Participants showcase creative technical posters summarizing innovative concepts and societal solutions.
 3. Project Presentation: Live technical working prototype model presentation demonstrating hardware/software innovation to solve real-world problems.
 
+KAGATHON 2026 — THE OFFICIAL CURTAIN RAISER:
+- Event: Kagathon 2026 (Annual mini-marathon & celebration acting as the official curtain raiser for KAGADA 2026)
+- Tagline: "Run the Beat. Feel the Thrill. / Your Only Limit Is You"
+- Date: 18th October, 2026
+- Time: 6:30 AM (Sunrise)
+- Venue: Quadrangle, UVCE, K.R. Circle, Bengaluru
+- What to Expect: High-energy sunrise run, live DJ music & beats, dance, games, refreshments/treats, and official certificate of participation for every runner.
+- T-Shirt Registration Deadline: 8th October, 2026
+- Final Registration Deadline: 13th October, 2026 · 11:59 PM
+- Official Registration Link: https://bit.ly/KAGADA2026-Kagathon
+- Organizers: IEEE UVCE
+
 HUMANITARIAN ACTIVITIES:
 - Ottige Kaliyona: Social initiative conducted every year by IEEE WIE during KAGADA, focused on empowering government school students through hands-on technology education and fun learning activities.
 - Food for Cause: Social responsibility initiative driving hunger relief and food distribution.
@@ -151,16 +163,23 @@ export async function POST(req: Request) {
     const lastUserMsgLower = userMessage.toLowerCase();
     let localReply = "KAGADA 2026 is the 22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE on 24th October, 2026 at UVCE KR Circle, Bengaluru. We have 3 tracks: Paper, Poster, and Project presentations with an overall ₹40,000 total prize pool.";
 
-    if (lastUserMsgLower.includes("when") || lastUserMsgLower.includes("date") || lastUserMsgLower.includes("time")) {
-      localReply = "The provisional date for KAGADA 2026 is 24th October, 2026 at UVCE, KR Circle, Bengaluru.";
+    if (
+      lastUserMsgLower.includes("kagathon") ||
+      lastUserMsgLower.includes("marathon") ||
+      lastUserMsgLower.includes("curtain") ||
+      lastUserMsgLower.includes("run")
+    ) {
+      localReply = "**KAGATHON 2026 — The Curtain Raiser for KAGADA 2026**\n\n• **Date**: 18th October, 2026\n• **Time**: 6:30 AM (Sunrise)\n• **Venue**: Quadrangle, UVCE, K.R. Circle, Bengaluru\n• **Experience**: Live DJ beats, games, dance, refreshments, and official certificates for all participants!\n• **T-Shirt Deadline**: 8th October, 2026\n• **Final Deadline**: 13th October, 2026 (11:59 PM)\n• **Register Online**: [https://bit.ly/KAGADA2026-Kagathon](https://bit.ly/KAGADA2026-Kagathon)";
+    } else if (lastUserMsgLower.includes("when") || lastUserMsgLower.includes("date") || lastUserMsgLower.includes("time")) {
+      localReply = "The provisional date for KAGADA 2026 is 24th October, 2026 at UVCE, KR Circle, Bengaluru. (The curtain-raiser event, Kagathon, is on 18th October, 2026 at 6:30 AM).";
     } else if (lastUserMsgLower.includes("where") || lastUserMsgLower.includes("venue") || lastUserMsgLower.includes("location") || lastUserMsgLower.includes("map")) {
-      localReply = "KAGADA 2026 will take place at University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001.";
+      localReply = "KAGADA 2026 and Kagathon will take place at University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001.";
     } else if (lastUserMsgLower.includes("prize") || lastUserMsgLower.includes("money") || lastUserMsgLower.includes("reward") || lastUserMsgLower.includes("cash")) {
       localReply = "KAGADA 2026 features an overall Total Prize Pool of ₹40,000 cash prizes distributed across Paper, Poster, and Project presentation tracks. All participants receive a Certificate of Participation.";
     } else if (lastUserMsgLower.includes("track") || lastUserMsgLower.includes("event") || lastUserMsgLower.includes("paper") || lastUserMsgLower.includes("poster") || lastUserMsgLower.includes("project")) {
-      localReply = "KAGADA 2026 has 3 main presentation tracks:\n1. Paper Presentation\n2. Poster Presentation\n3. Project Presentation (Live Prototype Demo)\nPlus 2 humanitarian initiatives: Ottige Kaliyona & Food for Cause.";
+      localReply = "KAGADA 2026 has 3 main presentation tracks:\n1. Paper Presentation\n2. Poster Presentation\n3. Project Presentation (Live Prototype Demo)\nPlus the Kagathon mini-marathon on 18th October, and 2 humanitarian initiatives: Ottige Kaliyona & Food for Cause.";
     } else if (lastUserMsgLower.includes("register") || lastUserMsgLower.includes("fee") || lastUserMsgLower.includes("cost") || lastUserMsgLower.includes("participate") || lastUserMsgLower.includes("apply")) {
-      localReply = "Registration for KAGADA 2026 tracks will open soon! Stay tuned to this portal or contact the organizers for early registration announcements.";
+      localReply = "• **Kagathon 2026**: Registrations are currently LIVE! Register at: [https://bit.ly/KAGADA2026-Kagathon](https://bit.ly/KAGADA2026-Kagathon) (T-Shirt deadline: 8th Oct, Final deadline: 13th Oct).\n• **KAGADA 2026 Tracks**: Presentation track registrations will open shortly on this portal.";
     } else if (lastUserMsgLower.includes("contact") || lastUserMsgLower.includes("chair") || lastUserMsgLower.includes("organizer") || lastUserMsgLower.includes("phone") || lastUserMsgLower.includes("email")) {
       localReply = "IEEE UVCE KAGADA 2026 Organizers:\n• Jyothika V (Chairperson): +91 97318 64358 | jyothikav@ieee.org\n• Hegde Punith Ramesh (Vice Chairperson): +91 72041 20818 | hegdepunithramesh@ieee.org\n• Sanjay V Guladakoppa (Treasurer): +91 96320 91399 | sanjayvgk@ieee.org";
     }

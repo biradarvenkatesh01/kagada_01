@@ -13,20 +13,20 @@ interface OrigamiConfig {
 }
 
 const PHONE_CFG: OrigamiConfig = {
-  stagger: 4.2,
-  durMin: 2.95,
-  durVar: 0.95,
-  density: 5.6,
-  jitter: 0.3,
+  stagger: 2.6,
+  durMin: 1.8,
+  durVar: 0.5,
+  density: 4.8,
+  jitter: 0.2,
   focal: { x: 0.5, y: 0.66 },
 };
 
 const DESKTOP_CFG: OrigamiConfig = {
-  stagger: 4.3,
-  durMin: 2.9,
-  durVar: 0.95,
-  density: 7.5,
-  jitter: 0.3,
+  stagger: 2.7,
+  durMin: 1.9,
+  durVar: 0.5,
+  density: 5.6,
+  jitter: 0.2,
   focal: { x: 0.5, y: 0.66 },
 };
 
@@ -72,8 +72,6 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
   const clamp01 = (t: number) => (t < 0 ? 0 : t > 1 ? 1 : t);
   const easeInOutCub = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
   const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-  const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
-  const easeInOutSin = (t: number) => 0.5 * (1 - Math.cos(Math.PI * t));
 
   const handleFinish = useCallback(() => {
     if (hasSkipped) return;
@@ -111,7 +109,6 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
     let DPR = 1;
     let cover = { s: 1, ox: 0, oy: 0, dw: 0, dh: 0 };
     let pieces: Piece[] = [];
-    let order: number[] = [];
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -151,9 +148,9 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
 
     function buildMesh() {
       pieces = [];
-      const target = Math.max(72, Math.min(W, H) / CFG.density);
-      const cols = Math.min(20, Math.max(5, Math.round(W / target)));
-      const rows = Math.min(24, Math.max(5, Math.round(H / target)));
+      const target = Math.max(88, Math.min(W, H) / CFG.density);
+      const cols = Math.min(18, Math.max(5, Math.round(W / target)));
+      const rows = Math.min(22, Math.max(5, Math.round(H / target)));
       const cw = W / cols;
       const ch = H / rows;
 
@@ -230,8 +227,6 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
         bakeTile(p);
         planFlight(p, halfDiag);
       }
-
-      order = pieces.map((_, i) => i);
     }
 
     function bakeTile(p: Piece) {
@@ -281,11 +276,11 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
     }
 
     function planFlight(p: Piece, halfDiag: number) {
-      p.rot0 = rand(-2.2, 2.2);
-      p.scale0 = rand(0.55, 0.85);
+      p.rot0 = rand(-1.2, 1.2);
+      p.scale0 = rand(0.65, 0.88);
 
-      const ang = Math.atan2(p.cy - H / 2, p.cx - W / 2) + rand(-0.42, 0.42);
-      const dist = halfDiag * rand(1.1, 1.85);
+      const ang = Math.atan2(p.cy - H / 2, p.cx - W / 2) + rand(-0.3, 0.3);
+      const dist = halfDiag * rand(1.1, 1.5);
       const sx = W / 2 + Math.cos(ang) * dist;
       const sy = H / 2 + Math.sin(ang) * dist;
 
@@ -294,7 +289,7 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
       const vx = p.cx - sx;
       const vy = p.cy - sy;
       const vl = Math.hypot(vx, vy) || 1;
-      const bend = rand(-0.3, 0.3) * vl;
+      const bend = rand(-0.22, 0.22) * vl;
       const nx = -vy / vl;
       const ny = vx / vl;
       const qx = mx + nx * bend;
@@ -304,7 +299,7 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
       p.sy = sy;
       p.qx = qx;
       p.qy = qy;
-      p.delay = p.rank * CFG.stagger + rand(0, 0.3);
+      p.delay = p.rank * CFG.stagger + rand(0, 0.2);
       p.dur = CFG.durMin + rng() * CFG.durVar;
     }
 
@@ -324,47 +319,39 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
       ctx.clearRect(0, 0, W, H);
 
       let landed = 0;
-      for (const p of pieces) {
+      for (let i = 0; i < pieces.length; i++) {
+        const p = pieces[i];
         p.p = clamp01((t - p.delay) / p.dur);
         if (p.p >= 1) landed++;
       }
 
-      order.sort((i, j) => {
-        const a = pieces[i].p;
-        const b = pieces[j].p;
-        if (a >= 1 && b >= 1) return i - j;
-        if (a >= 1) return -1;
-        if (b >= 1) return 1;
-        return b - a;
-      });
+      // Pass 1: Landed pieces drawn at final coordinates (zero-cost direct blit)
+      for (let i = 0; i < pieces.length; i++) {
+        const p = pieces[i];
+        if (p.p < 1 || !p.tile) continue;
+        ctx.drawImage(p.tile, p.bx, p.by, p.bw, p.bh);
+      }
 
-      for (const idx of order) {
-        const p = pieces[idx];
-        if (p.p <= 0 || !p.tile) continue;
+      // Pass 2: Active pieces in flight with smooth cubic interpolation (no expensive shadow blur)
+      for (let i = 0; i < pieces.length; i++) {
+        const p = pieces[i];
+        if (p.p <= 0 || p.p >= 1 || !p.tile) continue;
 
-        const e = 0.62 * easeInOutSin(p.p) + 0.38 * easeInOutCub(p.p);
-        const e2 = easeOutQuint(clamp01(p.p * 1.12));
-        const u = 1 - e;
+        const e = easeInOutCub(p.p);
         const k = 1 - e;
 
         const x = k * k * p.sx + 2 * k * e * p.qx + e * e * p.cx;
         const y = k * k * p.sy + 2 * k * e * p.qy + e * e * p.cy;
 
-        const rot = p.rot0 * (1 - e2);
-        const sc = p.scale0 + (1 - p.scale0) * e2;
-        const lift = u * u;
+        const rot = p.rot0 * (1 - e);
+        const sc = p.scale0 + (1 - p.scale0) * e;
 
         ctx.save();
-        ctx.globalAlpha = Math.min(1, easeOutCubic(clamp01(p.p / 0.18)));
+        ctx.globalAlpha = Math.min(1, easeOutCubic(clamp01(p.p / 0.16)));
         ctx.translate(x, y);
         ctx.rotate(rot);
         ctx.scale(sc, sc);
         ctx.translate(-p.cx, -p.cy);
-        if (lift > 0.004) {
-          ctx.shadowColor = "rgba(72,52,30,0.30)";
-          ctx.shadowBlur = 5 + lift * 30;
-          ctx.shadowOffsetY = 2 + lift * 20;
-        }
         ctx.drawImage(p.tile, p.bx, p.by, p.bw, p.bh);
         ctx.restore();
       }
@@ -373,7 +360,7 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
         drawFinal();
         running = false;
         setIsDone(true);
-        // Small graceful pause so user can admire the completed artwork before hero components arrive
+        // Graceful pause so user can admire the finished origami artwork
         setTimeout(() => {
           handleFinish();
         }, 650);
@@ -405,7 +392,9 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
       play();
     }
 
-    if (img.complete && img.naturalWidth) {
+    if (img.decode) {
+      img.decode().then(boot).catch(boot);
+    } else if (img.complete && img.naturalWidth) {
       boot();
     } else {
       img.addEventListener("load", boot, { once: true });
