@@ -78,8 +78,8 @@ export const KagathonSection = memo(function KagathonSection() {
                 <li className="flex items-center gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
                   <span>
-                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Included:</strong>{" "}
-                    <span className="font-semibold text-slate-900">Live DJ, Treats & Certificates</span>
+                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Certificates:</strong>{" "}
+                    <span className="font-semibold text-slate-900">Will be provided to all participants</span>
                   </span>
                 </li>
               </ul>

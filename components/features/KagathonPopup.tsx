@@ -174,7 +174,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
             </div>
 
             {/* Actions: Register & Maybe Later */}
-            <div className="w-full flex flex-col items-center gap-2 mt-4 sm:mt-5">
+            <div className="w-full flex flex-col items-center gap-2.5 mt-4 sm:mt-5 pt-1">
               <a
                 href="#kagathon"
                 onClick={handleRegisterClick}
@@ -186,9 +186,9 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
                 ref={maybeLaterBtnRef}
                 type="button"
                 onClick={onClose}
-                className="font-roboto-mono text-[11px] sm:text-xs uppercase tracking-wider text-[#5A182B]/70 hover:text-[#5A182B] transition-colors cursor-pointer py-1 outline-none focus-visible:ring-1 focus-visible:ring-[#5A182B]/40"
+                className="font-roboto-mono text-xs font-semibold tracking-wider text-[#5A182B]/75 hover:text-[#5A182B] transition-colors cursor-pointer py-1.5 px-4 outline-none focus-visible:ring-1 focus-visible:ring-[#5A182B]/40 hover:underline underline-offset-4"
               >
-                MAYBE LATER
+                Maybe later
               </button>
             </div>
           </motion.div>
