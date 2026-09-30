@@ -6,21 +6,22 @@ export const KagathonSection = memo(function KagathonSection() {
   return (
     <section
       id="kagathon"
-      className="relative w-full text-slate-900 flex flex-col items-center justify-center z-20 px-4 py-12 sm:py-16 lg:py-20 scroll-mt-20 sm:scroll-mt-24 overflow-visible"
+      className="relative w-full min-h-screen min-h-[100dvh] text-slate-900 flex flex-col items-center justify-center z-20 px-4 py-16 sm:py-20 lg:py-28 overflow-visible"
     >
-      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center my-auto">
         {/* Section Heading */}
         <h2
           data-reveal
-          className="font-saman text-5xl sm:text-7xl md:text-8xl text-[#D8D3C7] tshadow-lg mb-6 sm:mb-10 tracking-tight text-center select-none"
+          className="font-saman text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-[#D8D3C7] tshadow-lg mb-4 sm:mb-6 lg:mb-8 tracking-tight text-center select-none"
         >
           Kaga<span className="text-amber-400 tshadow-md">thon</span>
         </h2>
 
         {/* Main Showcase Card */}
         <div
+          id="kagathon-card"
           data-reveal
-          className="w-full kagada-paper-card border-2 border-white/95 !rounded-2xl sm:!rounded-3xl shadow-2xl shadow-black/35 overflow-hidden p-5 sm:p-8 lg:p-10 text-left transform-gpu"
+          className="w-full kagada-paper-card border-2 border-white/95 !rounded-2xl sm:!rounded-3xl shadow-2xl shadow-black/35 overflow-hidden p-5 sm:p-7 lg:p-9 text-left transform-gpu"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
             {/* Left Column: Official Poster */}

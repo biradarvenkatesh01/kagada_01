@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, memo } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { scrollToKagathon } from "@/components/ui/smooth-scroll";
 
 interface NavbarProps {
   isIntroActive?: boolean;
@@ -152,6 +153,10 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
         </a>
         <a
           href="#kagathon"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToKagathon();
+          }}
           className="relative whitespace-nowrap shrink-0 px-3.5 py-1 -my-1 rounded-full bg-[#5A182B] hover:bg-[#431220] text-white font-roboto-mono font-bold tracking-wider text-xs xl:text-sm shadow-sm transition-colors duration-200"
         >
           Kagathon
@@ -258,7 +263,11 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
           </a>
           <a
             href="#kagathon"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              setMobileMenuOpen(false);
+              scrollToKagathon();
+            }}
             className="flex items-center justify-between px-3.5 py-2 -mx-1 rounded-xl bg-[#5A182B] hover:bg-[#431220] text-white transition-colors"
           >
             <span className="font-bold">Kagathon</span>

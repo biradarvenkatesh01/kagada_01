@@ -26,6 +26,56 @@ import type Lenis from "lenis";
  * the user can perceive, and kept on pointer devices where `smoothWheel` is the
  * whole point. Native CSS smooth scrolling covers anchor navigation there.
  */
+/**
+ * Accurately centers the Kagathon section card right in the middle of the viewport
+ * so neither the previous section (About) nor the next section (Tracks) intrudes on screen.
+ */
+export function scrollToKagathon() {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+
+  const cardElem =
+    document.getElementById("kagathon-card") ||
+    document.getElementById("kagathon");
+  if (!cardElem) {
+    window.location.hash = "kagathon";
+    return;
+  }
+
+  const rect = cardElem.getBoundingClientRect();
+  const currentScrollY = window.scrollY || window.pageYOffset;
+  const cardHeight = rect.height;
+  const viewportHeight = window.innerHeight;
+
+  let targetScrollY: number;
+  if (cardHeight >= viewportHeight - 80) {
+    // If the card is taller than or close to the viewport (e.g. mobile portrait),
+    // align top of card comfortably below navbar (80px)
+    targetScrollY = currentScrollY + rect.top - 80;
+  } else {
+    // Perfectly center the card vertically in the screen
+    targetScrollY = currentScrollY + rect.top + cardHeight / 2 - viewportHeight / 2;
+  }
+  targetScrollY = Math.max(0, targetScrollY);
+
+  const lenis = (
+    window as unknown as {
+      __lenis?: { scrollTo: (target: number | HTMLElement, opts?: unknown) => void };
+    }
+  ).__lenis;
+
+  if (lenis?.scrollTo) {
+    lenis.scrollTo(targetScrollY, {
+      duration: 1.15,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+  } else {
+    window.scrollTo({
+      top: targetScrollY,
+      behavior: "smooth",
+    });
+  }
+}
+
 export default function SmoothScroll({
   children,
 }: {
@@ -105,6 +155,12 @@ export default function SmoothScroll({
         const elem = document.querySelector(anchor.hash);
         if (!elem) return;
         e.preventDefault();
+
+        if (anchor.hash === "#kagathon") {
+          scrollToKagathon();
+          return;
+        }
+
         // 1.2s felt like the page was dragging itself to the target. 0.85s with
         // an expo-out curve covers the same distance but front-loads the motion,
         // so it reads as responsive rather than slow.
@@ -116,6 +172,11 @@ export default function SmoothScroll({
       };
       document.addEventListener("click", handleAnchorClick);
       cleanupFns.push(() => document.removeEventListener("click", handleAnchorClick));
+
+      // Handle initial load with #kagathon hash
+      if (typeof window !== "undefined" && window.location.hash === "#kagathon") {
+        setTimeout(() => scrollToKagathon(), 350);
+      }
     });
 
     return () => {

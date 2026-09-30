@@ -3,6 +3,7 @@
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { scrollToKagathon } from "@/components/ui/smooth-scroll";
 
 interface KagathonPopupProps {
   isOpen: boolean;
@@ -68,26 +69,7 @@ export default function KagathonPopup({ isOpen, onClose }: KagathonPopupProps) {
     e.preventDefault();
     onClose();
     setTimeout(() => {
-      const elem = document.getElementById("kagathon");
-      if (!elem) {
-        window.location.hash = "kagathon";
-        return;
-      }
-      const lenis = (
-        window as unknown as {
-          __lenis?: { scrollTo: (el: HTMLElement | string, opts?: unknown) => void };
-        }
-      ).__lenis;
-      if (lenis?.scrollTo) {
-        // Position viewport directly over the center of the Kagathon section
-        lenis.scrollTo(elem, {
-          offset: -50,
-          duration: 0.9,
-          easing: (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
-        });
-      } else {
-        elem.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+      scrollToKagathon();
     }, 240);
   };
 
