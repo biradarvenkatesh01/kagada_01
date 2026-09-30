@@ -27,7 +27,7 @@ KAGATHON 2026 — THE OFFICIAL CURTAIN RAISER:
 - Event Name: Kagathon 2026 (Annual mini-marathon & festive celebration acting as the official curtain raiser for KAGADA 2026)
 - Tagline: "Your Only Limit Is You" / "Run the Beat. Feel the Thrill."
 - Date: 18th October, 2026
-- Time: 6:30 AM (Sunrise)
+- Time: 6:30 AM 
 - Venue: Quadrangle, University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001
 - Overview: A high-energy morning mini-marathon & celebration at sunrise in the UVCE Quadrangle. It serves as the official curtain raiser marking the grand beginning of KAGADA 2026.
 - What to Expect / Inclusions:
