@@ -19,9 +19,9 @@ KAGADA 2026 COMPREHENSIVE KNOWLEDGE BASE:
 - Certificates: Every participant receives an official Certificate of Participation.
 
 PRESENTATION TRACKS (3 Main Category Tracks):
-1. Paper Presentation: Participants present original technical research papers across CSE, AI/ML, ECE, EEE, Mechanical, Civil & Architecture (UG/PG categories). Conducted in online presentation format with feedback from domain experts.
-2. Poster Presentation: Participants showcase creative technical posters summarizing innovative concepts and societal solutions.
-3. Project Presentation: Live technical working prototype model presentation demonstrating hardware/software innovation to solve real-world problems.
+1. Paper Presentation: Participants present original technical research papers across CSE, AI/ML, ECE, EEE, Mechanical, Civil & Architecture (UG/PG categories). Conducted online with feedback from domain experts. Fee: ₹200 per team (1-5 members). Official Registration Link: https://docs.google.com/forms/d/e/1FAIpQLSdBk8QFZDtIpaJF-SrUZRJpqAYrtu2XBMA1SdCmV1RMqO94Tg/viewform
+2. Poster Presentation: Participants showcase creative technical posters summarizing innovative concepts and societal solutions. Hybrid mode. Fee: ₹150 per team (1-3 members). Official Registration Link: https://docs.google.com/forms/d/e/1FAIpQLSdyNPuQPJcNduxHnwQ_qViIU9b2gWXlivIrlg-BiId2dAYXdA/viewform
+3. Project Presentation: Live technical working prototype model presentation demonstrating hardware/software innovation to solve real-world problems. Fee: ₹180 per team (1-5 members). Official Registration Link: https://docs.google.com/forms/d/e/1FAIpQLScnegAPfJu4oTQozWFgVV2yQKhcIucp47r9RRh04oLKDTBmgA/viewform?usp=send_form
 
 KAGATHON 2026 — THE OFFICIAL CURTAIN RAISER:
 - Event Name: Kagathon 2026 (Annual mini-marathon & festive celebration acting as the official curtain raiser for KAGADA 2026)
@@ -41,8 +41,8 @@ KAGATHON 2026 — THE OFFICIAL CURTAIN RAISER:
 - Important Deadlines:
   • T-Shirt Registration Deadline: 8th October, 2026
   • Final Registration Deadline: 13th October, 2026 (11:59 PM)
-- Official Registration Link: https://bit.ly/KAGADA2026-Kagathon
-- Registration Status: LIVE NOW! Participants can register directly at https://bit.ly/KAGADA2026-Kagathon
+- Official Registration Link: https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform
+- Registration Status: LIVE NOW! Participants can register directly at https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform
 - Who Can Register: Open to all college students, runners, fitness enthusiasts, and students from any department/institution.
 - Organizers: IEEE UVCE
 
@@ -186,9 +186,9 @@ export async function POST(req: Request) {
 
     if (isKagathonQuery) {
       if (lastUserMsgLower.includes("t-shirt") || lastUserMsgLower.includes("tshirt")) {
-        localReply = "**KAGATHON 2026 T-Shirt Information**\n\n• **T-Shirt Registration Deadline**: 8th October, 2026\n• Participants registered by this date receive official Kagathon T-shirts.\n• **Final Event Registration Deadline**: 13th October, 2026 (11:59 PM)\n• **Register Here**: [https://bit.ly/KAGADA2026-Kagathon](https://bit.ly/KAGADA2026-Kagathon)";
+        localReply = "**KAGATHON 2026 T-Shirt Information**\n\n• **T-Shirt Registration Deadline**: 8th October, 2026\n• Participants registered by this date receive official Kagathon T-shirts.\n• **Final Event Registration Deadline**: 13th October, 2026 (11:59 PM)\n• **Register Here**: [https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform](https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform)";
       } else if (lastUserMsgLower.includes("deadline") || lastUserMsgLower.includes("last date")) {
-        localReply = "**KAGATHON 2026 Registration Deadlines**\n\n• **T-Shirt Registration Deadline**: 8th October, 2026\n• **Final Registration Deadline**: 13th October, 2026 at 11:59 PM\n• **Event Date**: 18th October, 2026 (6:30 AM at UVCE Quadrangle)\n• **Register Now**: [https://bit.ly/KAGADA2026-Kagathon](https://bit.ly/KAGADA2026-Kagathon)";
+        localReply = "**KAGATHON 2026 Registration Deadlines**\n\n• **T-Shirt Registration Deadline**: 8th October, 2026\n• **Final Registration Deadline**: 13th October, 2026 at 11:59 PM\n• **Event Date**: 18th October, 2026 (6:30 AM at UVCE Quadrangle)\n• **Register Now**: [https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform](https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform)";
       } else if (
         lastUserMsgLower.includes("register") ||
         lastUserMsgLower.includes("link") ||
@@ -197,16 +197,16 @@ export async function POST(req: Request) {
         lastUserMsgLower.includes("fee") ||
         lastUserMsgLower.includes("cost")
       ) {
-        localReply = "**How to Register for KAGATHON 2026**\n\nKagathon registrations are officially **LIVE**!\n\n1. Visit the official registration link: [https://bit.ly/KAGADA2026-Kagathon](https://bit.ly/KAGADA2026-Kagathon)\n2. Fill in your participant details and select your T-shirt size.\n3. **Deadlines**:\n   • **T-Shirt Deadline**: 8th October, 2026\n   • **Final Deadline**: 13th October, 2026 (11:59 PM)\n\n*Included with registration*: Live DJ beats, delicious treats & breakfast refreshments, exciting games, dance, and an official Certificate of Participation!";
+        localReply = "**How to Register for KAGATHON 2026**\n\nKagathon registrations are officially **LIVE**!\n\n1. Visit the official registration link: [https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform](https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform)\n2. Fill in your participant details and select your T-shirt size.\n3. **Deadlines**:\n   • **T-Shirt Deadline**: 8th October, 2026\n   • **Final Deadline**: 13th October, 2026 (11:59 PM)\n\n*Included with registration*: Live DJ beats, delicious treats & breakfast refreshments, exciting games, dance, and an official Certificate of Participation!";
       } else if (
         lastUserMsgLower.includes("venue") ||
         lastUserMsgLower.includes("where") ||
         lastUserMsgLower.includes("location") ||
         lastUserMsgLower.includes("place")
       ) {
-        localReply = "**KAGATHON 2026 Venue & Timing**\n\n• **Venue**: Quadrangle, University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001\n• **Date**: 18th October, 2026\n• **Time**: 6:30 AM (Sunrise)\n• **Register Online**: [https://bit.ly/KAGADA2026-Kagathon](https://bit.ly/KAGADA2026-Kagathon)";
+        localReply = "**KAGATHON 2026 Venue & Timing**\n\n• **Venue**: Quadrangle, University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001\n• **Date**: 18th October, 2026\n• **Time**: 6:30 AM (Sunrise)\n• **Register Online**: [https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform](https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform)";
       } else {
-        localReply = "**KAGATHON 2026 — The Official Curtain Raiser for KAGADA 2026**\n\n*Tagline: \"Run the Beat. Feel the Thrill. / Your Only Limit Is You\"*\n\n• **Date**: 18th October, 2026\n• **Time**: 6:30 AM (Sunrise)\n• **Venue**: Quadrangle, UVCE, K.R. Circle, Bengaluru\n• **Experience & Inclusions**: High-energy sunrise run, live DJ music, dance, fun games, delicious breakfast treats, and official participation certificates for all runners!\n• **T-Shirt Deadline**: 8th October, 2026\n• **Final Registration Deadline**: 13th October, 2026 (11:59 PM)\n• **Official Registration Link**: [https://bit.ly/KAGADA2026-Kagathon](https://bit.ly/KAGADA2026-Kagathon)";
+        localReply = "**KAGATHON 2026 — The Official Curtain Raiser for KAGADA 2026**\n\n*Tagline: \"Run the Beat. Feel the Thrill. / Your Only Limit Is You\"*\n\n• **Date**: 18th October, 2026\n• **Time**: 6:30 AM (Sunrise)\n• **Venue**: Quadrangle, UVCE, K.R. Circle, Bengaluru\n• **Experience & Inclusions**: High-energy sunrise run, live DJ music, dance, fun games, delicious breakfast treats, and official participation certificates for all runners!\n• **T-Shirt Deadline**: 8th October, 2026\n• **Final Registration Deadline**: 13th October, 2026 (11:59 PM)\n• **Official Registration Link**: [https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform](https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform)";
       }
     } else if (lastUserMsgLower.includes("when") || lastUserMsgLower.includes("date") || lastUserMsgLower.includes("time")) {
       localReply = "**Important Dates for KAGADA 2026 & Kagathon**:\n\n• **Kagathon (Curtain Raiser)**: 18th October, 2026 at 6:30 AM (Sunrise) at UVCE Quadrangle\n  - T-Shirt Deadline: 8th October, 2026\n  - Final Registration Deadline: 13th October, 2026 (11:59 PM)\n• **KAGADA 2026 National Conference**: 24th October, 2026 at UVCE, Bengaluru.";
@@ -215,9 +215,9 @@ export async function POST(req: Request) {
     } else if (lastUserMsgLower.includes("prize") || lastUserMsgLower.includes("money") || lastUserMsgLower.includes("reward") || lastUserMsgLower.includes("cash")) {
       localReply = "KAGADA 2026 features an overall Total Prize Pool of **₹40,000** in cash prizes distributed across Paper, Poster, and Project presentation tracks. All participants in both KAGADA and Kagathon receive official Certificates of Participation.";
     } else if (lastUserMsgLower.includes("track") || lastUserMsgLower.includes("event") || lastUserMsgLower.includes("paper") || lastUserMsgLower.includes("poster") || lastUserMsgLower.includes("project")) {
-      localReply = "KAGADA 2026 has 3 main presentation tracks:\n1. **Paper Presentation**: Technical paper submissions across engineering disciplines.\n2. **Poster Presentation**: Technical visual research posters.\n3. **Project Presentation**: Live hardware & software working prototype models.\n\nPlus **Kagathon 2026** (the official curtain raiser on 18th October) and two humanitarian initiatives: *Ottige Kaliyona* and *Food for Cause*.";
+      localReply = "KAGADA 2026 has 3 main presentation tracks:\n1. **Paper Presentation**: [Register here](https://docs.google.com/forms/d/e/1FAIpQLSdBk8QFZDtIpaJF-SrUZRJpqAYrtu2XBMA1SdCmV1RMqO94Tg/viewform) (Fee: ₹200)\n2. **Poster Presentation**: [Register here](https://docs.google.com/forms/d/e/1FAIpQLSdyNPuQPJcNduxHnwQ_qViIU9b2gWXlivIrlg-BiId2dAYXdA/viewform) (Fee: ₹150)\n3. **Project Presentation**: [Register here](https://docs.google.com/forms/d/e/1FAIpQLScnegAPfJu4oTQozWFgVV2yQKhcIucp47r9RRh04oLKDTBmgA/viewform?usp=send_form) (Fee: ₹180)\n\nPlus **Kagathon 2026** (the official curtain raiser on 18th October) and two humanitarian initiatives: *Ottige Kaliyona* and *Food for Cause*.";
     } else if (lastUserMsgLower.includes("register") || lastUserMsgLower.includes("fee") || lastUserMsgLower.includes("cost") || lastUserMsgLower.includes("participate") || lastUserMsgLower.includes("apply")) {
-      localReply = "• **Kagathon 2026**: Registrations are currently LIVE! Register at: [https://bit.ly/KAGADA2026-Kagathon](https://bit.ly/KAGADA2026-Kagathon) (T-Shirt deadline: 8th Oct, Final deadline: 13th Oct).\n• **KAGADA 2026 Presentation Tracks**: Registrations will open shortly on this portal.";
+      localReply = "• **Kagathon 2026**: Registrations are currently LIVE! [Register for Kagathon](https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform) (T-Shirt deadline: 8th Oct, Final deadline: 13th Oct).\n• **Paper Presentation**: [Register for Paper Track](https://docs.google.com/forms/d/e/1FAIpQLSdBk8QFZDtIpaJF-SrUZRJpqAYrtu2XBMA1SdCmV1RMqO94Tg/viewform) (Fee: ₹200)\n• **Poster Presentation**: [Register for Poster Track](https://docs.google.com/forms/d/e/1FAIpQLSdyNPuQPJcNduxHnwQ_qViIU9b2gWXlivIrlg-BiId2dAYXdA/viewform) (Fee: ₹150)\n• **Project Presentation**: [Register for Project Track](https://docs.google.com/forms/d/e/1FAIpQLScnegAPfJu4oTQozWFgVV2yQKhcIucp47r9RRh04oLKDTBmgA/viewform?usp=send_form) (Fee: ₹180)";
     } else if (lastUserMsgLower.includes("contact") || lastUserMsgLower.includes("chair") || lastUserMsgLower.includes("organizer") || lastUserMsgLower.includes("phone") || lastUserMsgLower.includes("email")) {
       localReply = "IEEE UVCE KAGADA 2026 Organizers:\n• Jyothika V (Chairperson): +91 97318 64358 | jyothikav@ieee.org\n• Hegde Punith Ramesh (Vice Chairperson): +91 72041 20818 | hegdepunithramesh@ieee.org\n• Sanjay V Guladakoppa (Treasurer): +91 96320 91399 | sanjayvgk@ieee.org\n• General Inquiries: kagada@ieeeuvce.org";
     }

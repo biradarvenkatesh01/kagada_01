@@ -86,6 +86,7 @@ export default function RadialOrbitalTimeline({
     {}
   );
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
   const [slideDirection, setSlideDirection] = useState<number>(0);
   const [isInView, setIsInView] = useState<boolean>(false);
@@ -103,9 +104,23 @@ export default function RadialOrbitalTimeline({
   const rotationAngleRef = useRef<number>(0);
   const expandedItemsRef = useRef(expandedItems);
   const activeNodeIdRef = useRef(activeNodeId);
+  const isHoveredRef = useRef<boolean>(false);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const lastNavigatedRef = useRef<number>(0);
+
+  // Pause rotation when user hovers over any track icon so they don't have to chase moving nodes
+  const handleNodeMouseEnter = useCallback(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches) {
+      isHoveredRef.current = true;
+      setIsHovered(true);
+    }
+  }, []);
+
+  const handleNodeMouseLeave = useCallback(() => {
+    isHoveredRef.current = false;
+    setIsHovered(false);
+  }, []);
 
   // Preload track card images on mount so card renders instantly with zero decode stutter
   useEffect(() => {
@@ -119,6 +134,8 @@ export default function RadialOrbitalTimeline({
 
   // High-performance card close: clean transition, resumes RAF only after modal unmounts
   const closeCard = useCallback(() => {
+    isHoveredRef.current = false;
+    setIsHovered(false);
     activeNodeIdRef.current = null;
     setSlideDirection(0);
     setActiveNodeId(null);
@@ -131,6 +148,8 @@ export default function RadialOrbitalTimeline({
   }, []);
 
   const openCard = useCallback((id: number) => {
+    isHoveredRef.current = false;
+    setIsHovered(false);
     setAutoRotate(false);
     activeNodeIdRef.current = id;
     setSlideDirection(0);
@@ -376,6 +395,12 @@ export default function RadialOrbitalTimeline({
 
     const updateRotation = (time: number) => {
       if (!isTabVisible) return;
+      if (isHoveredRef.current) {
+        // Paused on icon hover - keep timestamp fresh so resuming has zero delta jump
+        lastTimeRef.current = time;
+        rafRef.current = requestAnimationFrame(updateRotation);
+        return;
+      }
       if (lastTimeRef.current !== null) {
         const delta = (time - lastTimeRef.current) / 1000;
         rotationAngleRef.current = (rotationAngleRef.current + delta * 20) % 360;
@@ -525,7 +550,13 @@ export default function RadialOrbitalTimeline({
                   isAnyCardOpen ? "opacity-0" : "opacity-100"
                 }`}
               >
-                <div data-marquee-track className="animate-gear-spin flex items-center justify-center transform-gpu will-change-transform bg-transparent">
+                <div
+                  data-marquee-track
+                  className="animate-gear-spin flex items-center justify-center transform-gpu will-change-transform bg-transparent"
+                  style={{
+                    animationPlayState: isHovered ? "paused" : "running",
+                  }}
+                >
                   <svg
                     viewBox="0 0 32 32"
                     className="w-16 h-16 sm:w-44 sm:h-44 text-[#D8D3C7] fill-current"
@@ -562,13 +593,18 @@ export default function RadialOrbitalTimeline({
                     ref={(el) => {
                       nodeRefs.current[item.id] = el;
                     }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto cursor-pointer transform-gpu will-change-transform"
+                    className="group absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto cursor-pointer transform-gpu will-change-transform"
                     style={nodeStyle}
+                    onMouseEnter={handleNodeMouseEnter}
+                    onMouseLeave={handleNodeMouseLeave}
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleItem(item.id);
                     }}
                   >
+                    {/* Invisible hit padding buffer for comfortable hover detection */}
+                    <div className="absolute -inset-3 sm:-inset-4 rounded-full pointer-events-auto" aria-hidden="true" />
+
                     {/* Circular node button: Off-White Bg with Deep Burgundy Maroon Icon */}
                     <motion.div
                       className={`
@@ -581,8 +617,9 @@ export default function RadialOrbitalTimeline({
                             ? "bg-[#D8D3C7] text-[#5A182B] border-[#5A182B]/50 shadow-lg"
                             : "bg-[#D8D3C7] text-[#5A182B] border-[#5A182B]/30 shadow-md shadow-black/50"
                         }
+                        group-hover:scale-115 group-hover:bg-white group-hover:border-[#5A182B] group-hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]
                         border-2 
-                        transition-glass duration-300 transform-gpu cursor-pointer
+                        transition-all duration-300 transform-gpu cursor-pointer
                       `}
                     >
                       <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75] text-[#5A182B]" />
@@ -594,7 +631,8 @@ export default function RadialOrbitalTimeline({
                         absolute top-11 sm:top-14 left-1/2 -translate-x-1/2 z-20
                         max-w-[105px] sm:max-w-none text-center leading-tight whitespace-normal sm:whitespace-nowrap
                         font-roboto-mono text-xs sm:text-base font-extrabold tracking-wide
-                        transition-glass duration-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]
+                        transition-all duration-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]
+                        group-hover:text-amber-300 group-hover:scale-105
                         ${isExpanded ? "text-[#D8D3C7] scale-115" : "text-[#D8D3C7]/95"}
                       `}
                     >
