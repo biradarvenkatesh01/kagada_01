@@ -13,20 +13,20 @@ interface OrigamiConfig {
 }
 
 const PHONE_CFG: OrigamiConfig = {
-  stagger: 2.6,
-  durMin: 1.8,
-  durVar: 0.5,
-  density: 4.8,
-  jitter: 0.2,
+  stagger: 4.2,
+  durMin: 2.95,
+  durVar: 0.95,
+  density: 5.6,
+  jitter: 0.28,
   focal: { x: 0.5, y: 0.66 },
 };
 
 const DESKTOP_CFG: OrigamiConfig = {
-  stagger: 2.7,
-  durMin: 1.9,
-  durVar: 0.5,
-  density: 5.6,
-  jitter: 0.2,
+  stagger: 4.4,
+  durMin: 3.0,
+  durVar: 0.95,
+  density: 7.2,
+  jitter: 0.28,
   focal: { x: 0.5, y: 0.66 },
 };
 
@@ -148,9 +148,9 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
 
     function buildMesh() {
       pieces = [];
-      const target = Math.max(88, Math.min(W, H) / CFG.density);
-      const cols = Math.min(18, Math.max(5, Math.round(W / target)));
-      const rows = Math.min(22, Math.max(5, Math.round(H / target)));
+      const target = Math.max(76, Math.min(W, H) / CFG.density);
+      const cols = Math.min(20, Math.max(5, Math.round(W / target)));
+      const rows = Math.min(24, Math.max(5, Math.round(H / target)));
       const cw = W / cols;
       const ch = H / rows;
 
@@ -276,11 +276,11 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
     }
 
     function planFlight(p: Piece, halfDiag: number) {
-      p.rot0 = rand(-1.2, 1.2);
-      p.scale0 = rand(0.65, 0.88);
+      p.rot0 = rand(-1.8, 1.8);
+      p.scale0 = rand(0.58, 0.85);
 
-      const ang = Math.atan2(p.cy - H / 2, p.cx - W / 2) + rand(-0.3, 0.3);
-      const dist = halfDiag * rand(1.1, 1.5);
+      const ang = Math.atan2(p.cy - H / 2, p.cx - W / 2) + rand(-0.38, 0.38);
+      const dist = halfDiag * rand(1.1, 1.75);
       const sx = W / 2 + Math.cos(ang) * dist;
       const sy = H / 2 + Math.sin(ang) * dist;
 
@@ -289,7 +289,7 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
       const vx = p.cx - sx;
       const vy = p.cy - sy;
       const vl = Math.hypot(vx, vy) || 1;
-      const bend = rand(-0.22, 0.22) * vl;
+      const bend = rand(-0.28, 0.28) * vl;
       const nx = -vy / vl;
       const ny = vx / vl;
       const qx = mx + nx * bend;
@@ -299,7 +299,7 @@ export default function OrigamiIntro({ onComplete }: OrigamiIntroProps) {
       p.sy = sy;
       p.qx = qx;
       p.qy = qy;
-      p.delay = p.rank * CFG.stagger + rand(0, 0.2);
+      p.delay = p.rank * CFG.stagger + rand(0, 0.25);
       p.dur = CFG.durMin + rng() * CFG.durVar;
     }
 
