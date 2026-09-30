@@ -75,13 +75,12 @@ export const KagathonSection = memo(function KagathonSection() {
                     <span className="font-semibold text-slate-900">Quadrangle, UVCE</span>
                   </span>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
-                  <span>
-                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Certificates will be provided to all participants</strong>
-                  </span>
-                </li>
               </ul>
+
+              {/* Certificate Notice */}
+              <p className="font-jakarta text-xs sm:text-sm lg:text-base text-slate-800 font-medium text-justify leading-relaxed">
+                Certificates will be provided to all participants.
+              </p>
 
               {/* Deadlines Box */}
               <div className="!rounded-xl bg-[#5A182B]/10 border border-[#5A182B]/25 p-3 sm:p-4 text-center space-y-2">
