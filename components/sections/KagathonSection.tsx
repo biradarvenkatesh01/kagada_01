@@ -106,7 +106,7 @@ export const KagathonSection = memo(function KagathonSection() {
               <div id="kagathon-register" className="pt-1 scroll-mt-32">
                 <a
                   id="kagathon-register-btn"
-                  href="https://bit.ly/KAGADA2026-Kagathon"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center py-3.5 px-8 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 text-white font-roboto-mono font-extrabold uppercase tracking-widest text-xs sm:text-sm rounded-none shadow-xl transition-colors select-none text-center"
