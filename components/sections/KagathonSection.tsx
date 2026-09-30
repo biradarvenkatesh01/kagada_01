@@ -78,7 +78,7 @@ export const KagathonSection = memo(function KagathonSection() {
               </ul>
 
               {/* Certificate Notice */}
-              <p className="font-jakarta text-xs sm:text-sm lg:text-base text-slate-800 font-medium text-justify leading-relaxed">
+              <p className="font-jakarta text-xs sm:text-sm lg:text-base text-slate-900 font-bold text-center leading-relaxed">
                 Certificates will be provided to all participants.
               </p>
 
