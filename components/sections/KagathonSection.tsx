@@ -65,7 +65,7 @@ export const KagathonSection = memo(function KagathonSection() {
                   <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
                   <span>
                     <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Time:</strong>{" "}
-                    <span className="font-semibold text-slate-900">6:30 AM (Sunrise)</span>
+                    <span className="font-semibold text-slate-900">6:30 AM</span>
                   </span>
                 </li>
                 <li className="flex items-center gap-2.5">

@@ -62,7 +62,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   const [messages, setMessages] = useState<{ sender: "ai" | "user"; text: string }[]>([
     {
       sender: "ai",
-      text: "Hello! I am your KAGADA 2026 AI Assistant. Ask me anything about presentation tracks, Kagathon (Curtain Raiser), registration, venue, total prize pool, or organizers!",
+      text: "Hello! I am your KAGADA 2026 AI Assistant. Ask me anything about Kagathon (Curtain Raiser), presentation tracks (Paper, Poster, Project), registration links, deadlines, venue, or total prize pool!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -160,10 +160,11 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   // If hidden, don't render
   if (!isVisible) return null;
 
-  const handleSend = async () => {
-    if (!input.trim() || isTyping) return;
+  const handleSend = async (overrideText?: string) => {
+    const rawText = typeof overrideText === "string" ? overrideText : input;
+    if (!rawText.trim() || isTyping) return;
 
-    const userText = input.trim();
+    const userText = rawText.trim();
     const newMessages = [...messages, { sender: "user" as const, text: userText }];
     setMessages(newMessages);
     setInput("");
@@ -320,17 +321,38 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
           )}
         </div>
 
+        {/* Quick Suggestion Chips */}
+        <div className="relative z-10 px-3 py-1.5 bg-[#D8D3C7] border-t border-[#5A182B]/15 flex items-center gap-1.5 overflow-x-auto custom-scrollbar shrink-0 select-none">
+          {[
+            "About Kagathon",
+            "Kagathon Registration",
+            "Kagathon Deadlines",
+            "Presentation Tracks",
+            "Prize Pool",
+          ].map((promptText) => (
+            <button
+              key={promptText}
+              type="button"
+              onClick={() => handleSend(promptText)}
+              disabled={isTyping}
+              className="px-2.5 py-1 text-[11px] font-roboto-mono font-bold bg-[#ECE7DC] hover:bg-white text-[#5A182B] border border-[#5A182B]/30 hover:border-[#5A182B] whitespace-nowrap transition-colors duration-150 cursor-pointer disabled:opacity-50 !rounded-none"
+            >
+              {promptText}
+            </button>
+          ))}
+        </div>
+
         {/* Chat Input Section */}
         <div className="relative z-10 p-3 border-t border-[#5A182B]/20 bg-[#D8D3C7] flex items-center gap-2 shrink-0 !rounded-none">
           <input
             className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white !rounded-none border-2 border-[#5A182B]/20 text-[#420E1E] placeholder:text-stone-500 focus:outline-none focus:border-[#5A182B] font-jakarta font-medium"
-            placeholder="Ask about tracks, date, prizes..."
+            placeholder="Ask about Kagathon, tracks, dates..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
           />
           <button
-            onClick={handleSend}
+            onClick={() => handleSend()}
             disabled={!input.trim() || isTyping}
             className="p-2.5 !rounded-none kagada-paper-card hover:brightness-105 text-[#5A182B] border-2 border-[#5A182B]/30 hover:border-[#5A182B]/60 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 shadow-md font-bold cursor-pointer"
             aria-label="Send Message"
