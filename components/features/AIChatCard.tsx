@@ -197,7 +197,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         ...prev,
         {
           sender: "ai",
-          text: "KAGADA 2026 is scheduled for 24th October 2026, and the Kagathon Curtain Raiser is on 18th October 2026 at UVCE! Ask me about tracks (Paper, Poster, Project), Kagathon registration, or the ₹40,000 prize pool!",
+          text: "KAGADA 2026 is scheduled for 24th October 2026, and the Kagathon Curtain Raiser is on 17th October 2026 at UVCE! Ask me about tracks (Paper, Poster, Project), Kagathon registration, or the ₹40,000 prize pool!",
         },
       ]);
     } finally {
