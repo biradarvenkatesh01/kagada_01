@@ -59,7 +59,7 @@ export const KagathonSection = memo(function KagathonSection() {
                   <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
                   <span>
                     <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Date:</strong>{" "}
-                    <span className="font-semibold text-slate-900">18th October, 2026</span>
+                    <span className="font-semibold text-slate-900">17th October, 2026</span>
                   </span>
                 </li>
                 <li className="flex items-center gap-2.5">
