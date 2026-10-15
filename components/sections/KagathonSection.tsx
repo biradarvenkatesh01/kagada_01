@@ -98,7 +98,7 @@ export const KagathonSection = memo(function KagathonSection() {
                     Final Registration Deadline:{" "}
                   </span>
                   <span className="font-jakarta font-extrabold text-[#5A182B]">
-                    13th October, 2026 &middot; 11:59 PM
+                    15th October, 2026 &middot; 11:59 PM
                   </span>
                 </p>
               </div>
