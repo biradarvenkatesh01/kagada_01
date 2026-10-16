@@ -62,7 +62,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   const [messages, setMessages] = useState<{ sender: "ai" | "user"; text: string }[]>([
     {
       sender: "ai",
-      text: "Hello! I am your KAGADA 2026 AI Assistant. Ask me anything about presentation tracks (Paper, Poster, Project), registration links, deadlines, venue, total prize pool, or Kagathon!",
+      text: "Hello! I am your KAGADA 2026 AI Assistant. Ask me anything about presentation tracks (Paper, Poster, Project), CyberShield Ideathon, registration links, deadlines, venue, total prize pool, or Kagathon!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -325,6 +325,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         <div className="relative z-10 px-3 py-1.5 bg-[#D8D3C7] border-t border-[#5A182B]/15 flex items-center gap-1.5 overflow-x-auto custom-scrollbar shrink-0 select-none">
           {[
             "Presentation Tracks",
+            "CyberShield Ideathon",
             "Paper Track",
             "Poster Track",
             "Project Track",

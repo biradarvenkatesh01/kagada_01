@@ -28,7 +28,7 @@ import type Lenis from "lenis";
  */
 /**
  * Accurately centers the Kagathon section card right in the middle of the viewport
- * so neither the previous section (About) nor the next section (Tracks) intrudes on screen.
+ * so neither the previous section nor the next section intrudes on screen.
  */
 export function scrollToKagathon() {
   if (typeof window === "undefined" || typeof document === "undefined") return;
@@ -53,6 +53,52 @@ export function scrollToKagathon() {
     targetScrollY = currentScrollY + rect.top - 80;
   } else {
     // Perfectly center the card vertically in the screen
+    targetScrollY = currentScrollY + rect.top + cardHeight / 2 - viewportHeight / 2;
+  }
+  targetScrollY = Math.max(0, targetScrollY);
+
+  const lenis = (
+    window as unknown as {
+      __lenis?: { scrollTo: (target: number | HTMLElement, opts?: unknown) => void };
+    }
+  ).__lenis;
+
+  if (lenis?.scrollTo) {
+    lenis.scrollTo(targetScrollY, {
+      duration: 1.15,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+  } else {
+    window.scrollTo({
+      top: targetScrollY,
+      behavior: "smooth",
+    });
+  }
+}
+
+/**
+ * Accurately centers the CyberShield section card right in the middle of the viewport
+ */
+export function scrollToCyberShield() {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+
+  const cardElem =
+    document.getElementById("cybershield-card") ||
+    document.getElementById("cybershield");
+  if (!cardElem) {
+    window.location.hash = "cybershield";
+    return;
+  }
+
+  const rect = cardElem.getBoundingClientRect();
+  const currentScrollY = window.scrollY || window.pageYOffset;
+  const cardHeight = rect.height;
+  const viewportHeight = window.innerHeight;
+
+  let targetScrollY: number;
+  if (cardHeight >= viewportHeight - 80) {
+    targetScrollY = currentScrollY + rect.top - 80;
+  } else {
     targetScrollY = currentScrollY + rect.top + cardHeight / 2 - viewportHeight / 2;
   }
   targetScrollY = Math.max(0, targetScrollY);
@@ -161,6 +207,11 @@ export default function SmoothScroll({
           return;
         }
 
+        if (anchor.hash === "#cybershield") {
+          scrollToCyberShield();
+          return;
+        }
+
         // 1.2s felt like the page was dragging itself to the target. 0.85s with
         // an expo-out curve covers the same distance but front-loads the motion,
         // so it reads as responsive rather than slow.
@@ -173,9 +224,13 @@ export default function SmoothScroll({
       document.addEventListener("click", handleAnchorClick);
       cleanupFns.push(() => document.removeEventListener("click", handleAnchorClick));
 
-      // Handle initial load with #kagathon hash
-      if (typeof window !== "undefined" && window.location.hash === "#kagathon") {
-        setTimeout(() => scrollToKagathon(), 350);
+      // Handle initial load with #kagathon or #cybershield hash
+      if (typeof window !== "undefined") {
+        if (window.location.hash === "#kagathon") {
+          setTimeout(() => scrollToKagathon(), 350);
+        } else if (window.location.hash === "#cybershield") {
+          setTimeout(() => scrollToCyberShield(), 350);
+        }
       }
     });
 
