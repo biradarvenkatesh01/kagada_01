@@ -169,7 +169,7 @@ export const HeroSection = memo(function HeroSection({
       </motion.picture>
 
       {/* Hero Title & Subtitle Glass Box Container */}
-      <div className="absolute top-[46%] sm:top-[47%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center pointer-events-none">
+      <div className="absolute top-[44%] sm:top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-15 w-[95%] sm:w-auto max-w-lg sm:max-w-none flex flex-col items-center justify-center pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           animate={{
@@ -215,7 +215,7 @@ export const HeroSection = memo(function HeroSection({
           </div>
 
           {/* Registration CTA Button */}
-          <div className="mt-3.5 sm:mt-4 md:mt-5 w-full flex justify-center pointer-events-auto px-2">
+          <div className="mt-4 sm:mt-5 md:mt-6 w-full flex justify-center pointer-events-auto px-2">
             <button
               type="button"
               onClick={() => setIsRegisterModalOpen(true)}
@@ -225,36 +225,36 @@ export const HeroSection = memo(function HeroSection({
               <span>Register Now!</span>
             </button>
           </div>
-
-          {/* Explore Tracks CTA Indicator with matching equal gap */}
-          <div className="mt-3.5 sm:mt-4 md:mt-5 w-full flex justify-center pointer-events-auto">
-            <motion.a
-              href="#tracks"
-              initial={{ opacity: 0, y: 28 }}
-              animate={{
-                opacity: isIntroActive ? 0 : 1,
-                y: isIntroActive ? 28 : 0,
-              }}
-              transition={{
-                duration: 1.5,
-                ease: [0.22, 1, 0.36, 1],
-                delay: isIntroActive ? 0 : 0.6,
-              }}
-              style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
-              className="flex flex-col items-center gap-1.5 sm:gap-2 group pointer-events-auto transform-gpu"
-            >
-              <div className="px-6 py-2 sm:px-9 sm:py-3 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
-                <span className="font-roboto-mono text-xs min-[360px]:text-sm sm:text-base font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
-                  Explore Tracks
-                </span>
-              </div>
-
-              <div className="w-10 h-10 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
-                <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.8]" />
-              </div>
-            </motion.a>
-          </div>
         </motion.div>
+      </div>
+
+      {/* Bottom "Explore Tracks" CTA Indicator at the end of hero section */}
+      <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-auto">
+        <motion.a
+          href="#tracks"
+          initial={{ opacity: 0, y: 28 }}
+          animate={{
+            opacity: isIntroActive ? 0 : 1,
+            y: isIntroActive ? 28 : 0,
+          }}
+          transition={{
+            duration: 1.5,
+            ease: [0.22, 1, 0.36, 1],
+            delay: isIntroActive ? 0 : 0.6,
+          }}
+          style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
+          className="flex flex-col items-center gap-1.5 sm:gap-2 group pointer-events-auto transform-gpu"
+        >
+          <div className="px-6 py-2 sm:px-9 sm:py-3 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center transition-glass duration-150 group-hover:border-white">
+            <span className="font-roboto-mono text-xs min-[360px]:text-sm sm:text-base font-extrabold text-[#5A182B] tracking-widest uppercase tshadow-sm select-none whitespace-nowrap">
+              Explore Tracks
+            </span>
+          </div>
+
+          <div className="w-10 h-10 sm:w-12 sm:h-12 !rounded-full kagada-paper-card border-2 border-white/95 shadow-lg shadow-black/15 flex items-center justify-center text-[#5A182B] animate-bounce-subtle transition-glass duration-150 group-hover:border-white">
+            <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.8]" />
+          </div>
+        </motion.a>
       </div>
 
       {/* Track Registration Selection Modal */}
