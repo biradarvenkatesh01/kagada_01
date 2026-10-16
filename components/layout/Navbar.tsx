@@ -157,7 +157,7 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
             e.preventDefault();
             scrollToKagathon();
           }}
-          className="relative whitespace-nowrap shrink-0 px-3.5 py-1 -my-1 rounded-full bg-[#5A182B] hover:bg-[#431220] text-white font-roboto-mono font-bold tracking-wider text-xs xl:text-sm shadow-sm transition-colors duration-200"
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
         >
           Kagathon
         </a>
@@ -268,12 +268,9 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
               setMobileMenuOpen(false);
               scrollToKagathon();
             }}
-            className="flex items-center justify-between px-3.5 py-2 -mx-1 rounded-xl bg-[#5A182B] hover:bg-[#431220] text-white transition-colors"
+            className="hover:opacity-80 transition-opacity"
           >
-            <span className="font-bold">Kagathon</span>
-            <span className="text-[10px] font-roboto-mono uppercase tracking-wider text-white/80 font-bold bg-white/15 px-2 py-0.5 rounded-full">
-              Curtain Raiser
-            </span>
+            Kagathon
           </a>
           <a href="#tracks" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             Tracks
