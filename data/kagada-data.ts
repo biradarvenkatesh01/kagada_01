@@ -76,3 +76,25 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     relatedIds: [4],
   },
 ];
+
+export const CYBERSHIELD_DATA = {
+  title: "CyberShield Ideathon 2026",
+  presentedBy: "IEEE UVCE",
+  conference: "KAGADA 2026",
+  tagline: "Tackle real-world cybersecurity threats, explore emerging digital challenges and develop practical solutions for a safer digital world.",
+  description:
+    "CyberShield Ideathon challenges participants to identify pressing cybersecurity issues, think critically and pitch innovative, practical solutions to real-world digital threats. It provides a platform to showcase creative problem-solving, present ideas before a panel of judges and turn innovative thinking into meaningful impact, with Cash Prizes worth ₹10,000!",
+  date: "24th October, 2026",
+  venue: "UVCE, K R Circle",
+  teamSize: "1 - 3 members",
+  fee: "₹150 per team",
+  prizePool: "Cash Prizes worth ₹10,000/- and Certificates to be Won!",
+  registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSeTWE1TugtSBSe-6629_bYXm8s5PFAR4xHBlAGaupc3L7EP6g/viewform",
+  contacts: [
+    { name: "Yashaswini C Rao", phone: "+91 63606 75258" },
+    { name: "Nikhil Hegde", phone: "+91 84319 27108" },
+    { name: "Dhruv Rathi", phone: "+91 83103 37114" },
+    { name: "Lahari Priya N", phone: "+91 86609 65642" },
+    { name: "Rahita H Puthran", phone: "+91 76760 68408" },
+  ],
+};

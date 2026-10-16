@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { scrollToKagathon } from "@/components/ui/smooth-scroll";
+import { scrollToKagathon, scrollToCyberShield } from "@/components/ui/smooth-scroll";
 
 interface NavbarProps {
   isIntroActive?: boolean;
@@ -152,6 +152,16 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
           About Us
         </a>
         <a
+          href="#cybershield"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToCyberShield();
+          }}
+          className="whitespace-nowrap shrink-0 transition-colors duration-200 hover:text-[#5A182B]/70"
+        >
+          CyberShield
+        </a>
+        <a
           href="#kagathon"
           onClick={(e) => {
             e.preventDefault();
@@ -260,6 +270,17 @@ export const Navbar = memo(function Navbar({ isIntroActive = false }: NavbarProp
       >
           <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:opacity-80 transition-opacity">
             About Us
+          </a>
+          <a
+            href="#cybershield"
+            onClick={(e) => {
+              e.preventDefault();
+              setMobileMenuOpen(false);
+              scrollToCyberShield();
+            }}
+            className="hover:opacity-80 transition-opacity"
+          >
+            CyberShield
           </a>
           <a
             href="#kagathon"

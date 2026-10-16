@@ -1,6 +1,7 @@
 import OrigamiHeroExperience from "@/components/features/OrigamiHeroExperience";
 import Footer from "@/components/layout/Footer";
 import AboutSection from "@/components/sections/AboutSection";
+import CyberShieldSection from "@/components/sections/CyberShieldSection";
 import KagathonSection from "@/components/sections/KagathonSection";
 import TracksSection from "@/components/sections/TracksSection";
 import PrizePoolSection from "@/components/sections/PrizePoolSection";
@@ -37,6 +38,9 @@ export default function Home() {
 
         {/* SECTION 2: ABOUT US */}
         <AboutSection />
+
+        {/* SECTION 2.4: CYBERSHIELD IDEATHON 2026 */}
+        <CyberShieldSection />
 
         {/* SECTION 2.5: KAGATHON CURTAIN RAISER */}
         <KagathonSection />
