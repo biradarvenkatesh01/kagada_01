@@ -83,37 +83,11 @@ export const KagathonSection = memo(function KagathonSection() {
                 Certificates will be provided to all participants.
               </p>
 
-              {/* Deadlines Box */}
-              <div className="!rounded-xl bg-[#5A182B]/10 border border-[#5A182B]/25 p-3 sm:p-4 text-center space-y-2">
-                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B] leading-snug">
-                  <span className="uppercase text-[#5A182B]/80 text-[10px] sm:text-xs tracking-wider block min-[440px]:inline">
-                    T-Shirt Registration Deadline:{" "}
-                  </span>
-                  <span className="font-jakarta font-extrabold text-[#5A182B]">
-                    8th October, 2026
-                  </span>
+              {/* Registration Status Box */}
+              <div className="!rounded-xl bg-[#5A182B]/10 border border-[#5A182B]/25 p-3.5 sm:p-4 text-center">
+                <p className="font-roboto-mono text-sm sm:text-base font-extrabold uppercase tracking-widest text-[#5A182B]">
+                  Registrations Closed
                 </p>
-                <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B] leading-snug">
-                  <span className="uppercase text-[#5A182B]/80 text-[10px] sm:text-xs tracking-wider block min-[440px]:inline">
-                    Final Registration Deadline:{" "}
-                  </span>
-                  <span className="font-jakarta font-extrabold text-[#5A182B]">
-                    13th October, 2026 &middot; 11:59 PM
-                  </span>
-                </p>
-              </div>
-
-              {/* Registration Button */}
-              <div id="kagathon-register" className="pt-1 scroll-mt-32">
-                <a
-                  id="kagathon-register-btn"
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSc9achR9MEk32EWJss9yast69FnfrTLvzRGg9QVZ3i8QCSB_A/viewform"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center py-3.5 px-8 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 text-white font-roboto-mono font-extrabold uppercase tracking-widest text-xs sm:text-sm rounded-none shadow-xl transition-colors select-none text-center"
-                >
-                  <span>REGISTER FOR KAGATHON &rarr;</span>
-                </a>
               </div>
             </div>
           </div>

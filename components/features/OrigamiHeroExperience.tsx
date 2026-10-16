@@ -6,7 +6,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { HeroSection } from "@/components/sections/HeroSection";
 import AIChatCard from "@/components/features/AIChatCard";
 import OrigamiIntro from "@/components/features/OrigamiIntro";
-import KagathonPopup from "@/components/features/KagathonPopup";
 
 const SESSION_KEY = "kagada_origami_intro_seen";
 
@@ -29,26 +28,7 @@ function getServerSnapshot() {
 export default function OrigamiHeroExperience() {
   const sessionStatus = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [dismissed, setDismissed] = useState(false);
-  const [isKagathonOpen, setIsKagathonOpen] = useState(false);
-
   const showIntro = sessionStatus === "unseen" && !dismissed;
-
-  // Open Kagathon announcement popup smoothly after hero settles, but only if user hasn't scrolled away
-  useEffect(() => {
-    if (showIntro) return;
-
-    const timer = setTimeout(() => {
-      if (typeof window !== "undefined" && window.scrollY < 260) {
-        setIsKagathonOpen(true);
-      }
-    }, 4800);
-
-    return () => clearTimeout(timer);
-  }, [showIntro]);
-
-  const handleCloseKagathon = useCallback(() => {
-    setIsKagathonOpen(false);
-  }, []);
 
   // Prevent background page scrolling while the origami intro is assembling without layout shifts
   useEffect(() => {
@@ -135,10 +115,7 @@ export default function OrigamiHeroExperience() {
       <HeroSection isIntroActive={showIntro} />
 
       {/* AI Assistant Chatbot */}
-      <AIChatCard isVisible={!showIntro && !isKagathonOpen} />
-
-      {/* Kagathon Announcement Popup */}
-      <KagathonPopup isOpen={isKagathonOpen} onClose={handleCloseKagathon} />
+      <AIChatCard isVisible={!showIntro} />
     </>
   );
 }
