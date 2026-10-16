@@ -215,12 +215,12 @@ export const HeroSection = memo(function HeroSection({
             </div>
           </div>
 
-          {/* Registration CTA & CyberShield Button */}
-          <div className="mt-4 sm:mt-5 md:mt-6 w-full flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pointer-events-auto px-2">
+          {/* Registration CTA & CyberShield Button Stack */}
+          <div className="mt-3 sm:mt-4 md:mt-5 w-full flex flex-col items-center justify-center gap-2 sm:gap-2.5 pointer-events-auto px-4">
             <button
               type="button"
               onClick={() => setIsRegisterModalOpen(true)}
-              className="w-full sm:w-auto min-w-[190px] sm:min-w-[220px] px-6 sm:px-8 py-2.5 sm:py-3 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
+              className="w-full max-w-[270px] min-[360px]:max-w-[300px] sm:max-w-[340px] px-6 sm:px-8 py-2.5 sm:py-3 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
               aria-label="Register for Kagada 2026 tracks"
             >
               <span>Register Now!</span>
@@ -232,10 +232,10 @@ export const HeroSection = memo(function HeroSection({
                 e.preventDefault();
                 scrollToCyberShield();
               }}
-              className="w-full sm:w-auto min-w-[190px] sm:min-w-[220px] px-6 sm:px-8 py-2.5 sm:py-3 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
-              aria-label="Register for CyberShield Ideathon 2026"
+              className="w-full max-w-[270px] min-[360px]:max-w-[300px] sm:max-w-[340px] px-6 sm:px-8 py-2.5 sm:py-3 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
+              aria-label="CyberShield Ideathon 2026"
             >
-              <span>Register for CyberShield</span>
+              <span>CyberShield &rarr;</span>
             </a>
           </div>
         </motion.div>
