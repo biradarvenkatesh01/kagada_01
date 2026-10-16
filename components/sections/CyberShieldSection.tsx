@@ -54,6 +54,38 @@ export const CyberShieldSection = memo(function CyberShieldSection() {
                 </p>
               </div>
 
+              {/* Event Details as Bullet Points */}
+              <ul className="space-y-2 sm:space-y-2.5 font-jakarta text-xs sm:text-sm lg:text-base text-slate-800 py-1">
+                <li className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
+                  <span>
+                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Date:</strong>{" "}
+                    <span className="font-semibold text-slate-900">24th October, 2026</span>
+                  </span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
+                  <span>
+                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Venue:</strong>{" "}
+                    <span className="font-semibold text-slate-900">UVCE, K R Circle</span>
+                  </span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
+                  <span>
+                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Team Size:</strong>{" "}
+                    <span className="font-semibold text-slate-900">1 – 3 Members</span>
+                  </span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#5A182B] shrink-0" />
+                  <span>
+                    <strong className="font-roboto-mono uppercase text-[#5A182B] tracking-wide text-xs sm:text-sm">Registration Fee:</strong>{" "}
+                    <span className="font-semibold text-slate-900">₹150 per team</span>
+                  </span>
+                </li>
+              </ul>
+
               {/* Prize Highlight Banner */}
               <div className="w-full flex flex-col items-center justify-center text-center bg-[#5A182B]/10 text-[#5A182B] px-4 py-3 sm:py-3.5 !rounded-xl border-2 border-[#5A182B]/25 shadow-xs gap-1 sm:gap-1.5">
                 <p className="font-roboto-mono text-xs sm:text-sm font-extrabold uppercase tracking-wide text-[#5A182B]">
@@ -62,37 +94,6 @@ export const CyberShieldSection = memo(function CyberShieldSection() {
                 <p className="font-roboto-mono text-xs sm:text-sm font-bold text-[#5A182B] leading-snug">
                   Certificates of Participation will be provided to all participants.
                 </p>
-              </div>
-
-              {/* Event Details Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 font-jakarta text-xs sm:text-sm text-slate-800">
-                <div className="bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
-                  <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
-                    Date
-                  </strong>
-                  <span className="font-semibold text-slate-900">24th October, 2026</span>
-                </div>
-
-                <div className="bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
-                  <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
-                    Venue
-                  </strong>
-                  <span className="font-semibold text-slate-900">UVCE, K R Circle</span>
-                </div>
-
-                <div className="bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
-                  <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
-                    Team Size
-                  </strong>
-                  <span className="font-semibold text-slate-900">1 – 3 Members</span>
-                </div>
-
-                <div className="bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
-                  <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
-                    Registration Fee
-                  </strong>
-                  <span className="font-semibold text-slate-900">₹150 per team</span>
-                </div>
               </div>
 
               {/* Registration CTA Button */}
