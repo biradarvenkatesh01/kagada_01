@@ -220,7 +220,7 @@ export const HeroSection = memo(function HeroSection({
             <button
               type="button"
               onClick={() => setIsRegisterModalOpen(true)}
-              className="w-full max-w-[270px] min-[360px]:max-w-[300px] sm:max-w-[340px] px-6 sm:px-8 py-2.5 sm:py-3 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
+              className="w-full max-w-[175px] min-[360px]:max-w-[195px] sm:max-w-[215px] px-3 sm:px-4 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-[15px] uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
               aria-label="Register for Kagada 2026 tracks"
             >
               <span>Register Now!</span>
@@ -232,7 +232,7 @@ export const HeroSection = memo(function HeroSection({
                 e.preventDefault();
                 scrollToCyberShield();
               }}
-              className="w-full max-w-[270px] min-[360px]:max-w-[300px] sm:max-w-[340px] px-6 sm:px-8 py-2.5 sm:py-3 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-base uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
+              className="w-full max-w-[175px] min-[360px]:max-w-[195px] sm:max-w-[215px] px-3 sm:px-4 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-[15px] uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
               aria-label="CyberShield Ideathon 2026"
             >
               <span>CyberShield &rarr;</span>
