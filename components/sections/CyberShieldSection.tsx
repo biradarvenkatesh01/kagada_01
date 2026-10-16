@@ -1,13 +1,7 @@
 "use client";
 
 import { memo } from "react";
-import {
-  Calendar,
-  MapPin,
-  Users,
-  IndianRupee,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export const CyberShieldSection = memo(function CyberShieldSection() {
   return (
@@ -72,44 +66,32 @@ export const CyberShieldSection = memo(function CyberShieldSection() {
 
               {/* Event Details Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 font-jakarta text-xs sm:text-sm text-slate-800">
-                <div className="flex items-center gap-2.5 bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
-                  <Calendar className="w-4 h-4 text-[#5A182B] shrink-0" />
-                  <div>
-                    <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
-                      Date
-                    </strong>
-                    <span className="font-semibold text-slate-900">24th October, 2026</span>
-                  </div>
+                <div className="bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
+                  <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
+                    Date
+                  </strong>
+                  <span className="font-semibold text-slate-900">24th October, 2026</span>
                 </div>
 
-                <div className="flex items-center gap-2.5 bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
-                  <MapPin className="w-4 h-4 text-[#5A182B] shrink-0" />
-                  <div>
-                    <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
-                      Venue
-                    </strong>
-                    <span className="font-semibold text-slate-900">UVCE, K R Circle</span>
-                  </div>
+                <div className="bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
+                  <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
+                    Venue
+                  </strong>
+                  <span className="font-semibold text-slate-900">UVCE, K R Circle</span>
                 </div>
 
-                <div className="flex items-center gap-2.5 bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
-                  <Users className="w-4 h-4 text-[#5A182B] shrink-0" />
-                  <div>
-                    <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
-                      Team Size
-                    </strong>
-                    <span className="font-semibold text-slate-900">1 – 3 Members</span>
-                  </div>
+                <div className="bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
+                  <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
+                    Team Size
+                  </strong>
+                  <span className="font-semibold text-slate-900">1 – 3 Members</span>
                 </div>
 
-                <div className="flex items-center gap-2.5 bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
-                  <IndianRupee className="w-4 h-4 text-[#5A182B] shrink-0" />
-                  <div>
-                    <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
-                      Registration Fee
-                    </strong>
-                    <span className="font-semibold text-slate-900">₹150 per team</span>
-                  </div>
+                <div className="bg-white/60 p-2.5 sm:p-3 !rounded-xl border border-[#5A182B]/15 shadow-sm">
+                  <strong className="block font-roboto-mono uppercase text-[#5A182B] tracking-wider text-[11px]">
+                    Registration Fee
+                  </strong>
+                  <span className="font-semibold text-slate-900">₹150 per team</span>
                 </div>
               </div>
 
