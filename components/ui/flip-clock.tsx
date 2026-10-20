@@ -3,12 +3,11 @@
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import {
-  FC,
   HTMLAttributes,
   memo,
   useEffect,
   useState,
-  useRef,
+  useSyncExternalStore,
 } from "react";
 
 const flipUnitVariants = cva(
@@ -43,7 +42,7 @@ interface FlipUnitProps
   digit: number | string;
 }
 
-const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
+function FlipUnit({
   digit,
   size,
   variant,
@@ -56,14 +55,13 @@ const FlipUnit: FC<FlipUnitProps> = memo(function FlipUnit({
         "flex items-center justify-center font-mono font-bold shadow-sm !rounded-none",
         className
       )}
-      suppressHydrationWarning
     >
-      <span className="leading-none select-none tracking-tight" suppressHydrationWarning>
+      <span className="leading-none select-none tracking-tight">
         {digit}
       </span>
     </div>
   );
-});
+}
 
 interface FlipClockProps
   extends HTMLAttributes<HTMLDivElement> {
@@ -105,6 +103,40 @@ function ClockSeparator({ size = "md" }: { size?: FlipClockSize }) {
   );
 }
 
+// Module-level cache for server time drift calibration across all users globally
+let globalServerOffset = 0;
+let hasRequestedTimeSync = false;
+
+function syncServerTime(onCalibrated?: () => void) {
+  if (hasRequestedTimeSync || typeof window === "undefined") return;
+  hasRequestedTimeSync = true;
+  fetch("/api/time", { cache: "no-store" })
+    .then((r) => r.json())
+    .then((data) => {
+      if (typeof data.now === "number") {
+        globalServerOffset = data.now - Date.now();
+        if (onCalibrated) {
+          onCalibrated();
+        }
+      }
+    })
+    .catch(() => {
+      // Fallback: local client clock
+    });
+}
+
+function emptySubscribe() {
+  return () => {};
+}
+
+function getClientMounted() {
+  return true;
+}
+
+function getServerMounted() {
+  return false;
+}
+
 const FlipClock = memo(function FlipClock({
   countdown = false,
   targetDate,
@@ -114,113 +146,68 @@ const FlipClock = memo(function FlipClock({
   className,
   ...props
 }: FlipClockProps) {
-  const [time, setTime] = useState<TimeLeft>(getTime(countdown, targetDate));
-  const containerRef = useRef<HTMLDivElement>(null);
+  const isMounted = useSyncExternalStore(emptySubscribe, getClientMounted, getServerMounted);
+  const [time, setTime] = useState<TimeLeft>(() =>
+    isMounted ? getTime(countdown, targetDate) : { days: 0, hours: 0, minutes: 0, seconds: 0 }
+  );
 
   useEffect(() => {
     const update = () => {
-      const nextTime = getTime(countdown, targetDate);
-      setTime((prev) => {
-        if (
-          prev.seconds === nextTime.seconds &&
-          prev.minutes === nextTime.minutes &&
-          prev.hours === nextTime.hours &&
-          prev.days === nextTime.days
-        ) {
-          return prev;
-        }
-        return nextTime;
-      });
+      setTime(getTime(countdown, targetDate));
     };
 
     update();
+    syncServerTime(update);
 
-    let timer: NodeJS.Timeout | null = null;
-    let isVisible = !document.hidden;
-    let isInView = true;
-
-    const startTimer = () => {
-      if (!timer && isVisible && isInView) {
-        update();
-        timer = setInterval(update, 1000);
-      }
-    };
-
-    const stopTimer = () => {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
-      }
-    };
-
-    startTimer();
+    const timer = setInterval(update, 1000);
 
     const onVisibilityChange = () => {
-      isVisible = !document.hidden;
-      if (isVisible && isInView) {
-        startTimer();
-      } else {
-        stopTimer();
+      if (!document.hidden) {
+        update();
       }
     };
 
     document.addEventListener("visibilitychange", onVisibilityChange);
 
-    const el = containerRef.current;
-    let io: IntersectionObserver | null = null;
-    if (el && typeof IntersectionObserver !== "undefined") {
-      io = new IntersectionObserver(
-        ([entry]) => {
-          isInView = entry.isIntersecting;
-          if (isInView && isVisible) {
-            startTimer();
-          } else {
-            stopTimer();
-          }
-        },
-        { rootMargin: "0px 0px 50px 0px", threshold: 0 }
-      );
-      io.observe(el);
-    }
-
     return () => {
-      stopTimer();
-      if (io) io.disconnect();
+      clearInterval(timer);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [countdown, targetDate]);
 
-  // 2 digits for days (e.g. 44)
+  // Digits formatted with leading zeroes
   const daysStr = String(time.days).padStart(2, "0");
   const hoursStr = String(time.hours).padStart(2, "0");
   const minutesStr = String(time.minutes).padStart(2, "0");
   const secondsStr = String(time.seconds).padStart(2, "0");
 
+  const displayDays = isMounted ? daysStr : "00";
+  const displayHours = isMounted ? hoursStr : "00";
+  const displayMinutes = isMounted ? minutesStr : "00";
+  const displaySeconds = isMounted ? secondsStr : "00";
+
   const shouldShowDays =
     countdown &&
-    (showDays === "always" || (showDays === "auto" && time.days > 0));
+    (showDays === "always" || (showDays === "auto" && (time.days > 0 || !isMounted)));
 
   return (
     <div
-      ref={containerRef}
       className={cn("w-full max-w-full flex items-center justify-center overflow-hidden", className)}
-      suppressHydrationWarning
     >
       <div
         className="w-fit flex items-start justify-center space-x-0.5 min-[340px]:space-x-1 sm:space-x-2 md:space-x-3 font-mono font-medium shrink-0"
         aria-live="polite"
-        suppressHydrationWarning
         {...props}
       >
-        <span className="sr-only absolute" suppressHydrationWarning>
-          {`${time.days} days ${time.hours}:${time.minutes}:${time.seconds}`}
+        <span className="sr-only absolute">
+          {`${displayDays} days ${displayHours}:${displayMinutes}:${displaySeconds}`}
         </span>
 
         {/* Days Group */}
         {shouldShowDays && (
-          <div className="flex flex-col items-center shrink-0" suppressHydrationWarning>
-            <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
-              {daysStr.split("").map((digit, i) => (
+          <div className="flex flex-col items-center shrink-0">
+            <div className="flex items-center space-x-0.5 sm:space-x-1">
+              {displayDays.split("").map((digit, i) => (
                 <FlipUnit
                   key={`d-${i}`}
                   digit={digit}
@@ -238,9 +225,9 @@ const FlipClock = memo(function FlipClock({
         {shouldShowDays && <ClockSeparator size={size} />}
 
         {/* Hours Group */}
-        <div className="flex flex-col items-center shrink-0" suppressHydrationWarning>
-          <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
-            {hoursStr.split("").map((digit, index) => (
+        <div className="flex flex-col items-center shrink-0">
+          <div className="flex items-center space-x-0.5 sm:space-x-1">
+            {displayHours.split("").map((digit, index) => (
               <FlipUnit
                 key={`hour-${index}`}
                 digit={digit}
@@ -257,9 +244,9 @@ const FlipClock = memo(function FlipClock({
         <ClockSeparator size={size} />
 
         {/* Minutes Group */}
-        <div className="flex flex-col items-center shrink-0" suppressHydrationWarning>
-          <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
-            {minutesStr.split("").map((digit, index) => (
+        <div className="flex flex-col items-center shrink-0">
+          <div className="flex items-center space-x-0.5 sm:space-x-1">
+            {displayMinutes.split("").map((digit, index) => (
               <FlipUnit
                 key={`minute-${index}`}
                 digit={digit}
@@ -276,9 +263,9 @@ const FlipClock = memo(function FlipClock({
         <ClockSeparator size={size} />
 
         {/* Seconds Group */}
-        <div className="flex flex-col items-center shrink-0" suppressHydrationWarning>
-          <div className="flex items-center space-x-0.5 sm:space-x-1" suppressHydrationWarning>
-            {secondsStr.split("").map((digit, index) => (
+        <div className="flex flex-col items-center shrink-0">
+          <div className="flex items-center space-x-0.5 sm:space-x-1">
+            {displaySeconds.split("").map((digit, index) => (
               <FlipUnit
                 key={`second-${index}`}
                 digit={digit}
@@ -297,19 +284,21 @@ const FlipClock = memo(function FlipClock({
 });
 
 function getTime(countdown: boolean, targetDate?: Date): TimeLeft {
-  const now = new Date();
+  const now = Date.now() + globalServerOffset;
 
   if (!countdown) {
+    const nowDate = new Date(now);
     return {
       days: 0,
-      hours: now.getHours(),
-      minutes: now.getMinutes(),
-      seconds: now.getSeconds(),
+      hours: nowDate.getHours(),
+      minutes: nowDate.getMinutes(),
+      seconds: nowDate.getSeconds(),
     };
   }
 
   if (!targetDate) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-  const diff = Math.max(0, targetDate.getTime() - now.getTime());
+  const targetTime = targetDate.getTime();
+  const diff = Math.max(0, targetTime - now);
 
   return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
