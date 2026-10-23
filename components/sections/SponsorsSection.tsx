@@ -39,7 +39,7 @@ const SPONSORS_BASE_2: SponsorItem[] = [
   { id: 5, src: "/optimized/sponsors/vtpc-karnataka.webp", alt: "VTPC Karnataka – Visvesvaraya Trade Promotion Centre", width: 587, height: 220 },
   { id: 6, src: "/optimized/sponsors/ieee-cybersecurity-stc.webp", alt: "IEEE Cybersecurity STC", width: 397, height: 172 },
   { id: 7, src: "/optimized/sponsors/ieee-wie-bangalore.webp", alt: "IEEE Women in Engineering Bangalore Section", width: 184, height: 185, url: "https://wie.ieeebangalore.org/" },
-  { id: 8, src: "/optimized/sponsors/olemiq.webp", alt: "OLEMIQ", width: 286, height: 220 },
+  { id: 8, src: "/optimized/sponsors/olemiq.webp", alt: "OLEMIQ", width: 286, height: 220, url: "https://olemiq.com/" },
 ];
 
 // Replicated so each marquee block spans wider than 4K screens for seamless,
