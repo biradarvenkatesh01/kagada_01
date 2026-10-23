@@ -6,8 +6,11 @@ interface SponsorItem {
   id: number
   src: string
   alt: string
-  url: string
-  invertWhite?: boolean
+  /** Intrinsic size of the optimized logo, reserved up front to avoid layout shift. */
+  width: number
+  height: number
+  /** Official site; sponsors without a confirmed one render as a plain card. */
+  url?: string
 }
 
 interface MarqueeSponsor extends SponsorItem {
@@ -24,20 +27,70 @@ function replicate(base: SponsorItem[], copies: number): MarqueeSponsor[] {
   ).flat()
 }
 
-// Real Kagada Sponsor Image Assets & Official External Links
+// KAGADA 2026 sponsors — transparent logos live in /public/optimized/sponsors
 const SPONSORS_BASE_1: SponsorItem[] = [
-  // Add new sponsors of this year here
+  { id: 1, src: "/optimized/sponsors/ieee-bangalore-section.webp", alt: "IEEE Bangalore Section", width: 640, height: 134, url: "https://ieeebangalore.org/" },
+  { id: 2, src: "/optimized/sponsors/ieee-sight.webp", alt: "IEEE SIGHT – Special Interest Group on Humanitarian Technology", width: 564, height: 220, url: "https://sight.ieee.org/" },
+  { id: 3, src: "/optimized/sponsors/insights-ias.webp", alt: "InsightsIAS", width: 640, height: 162, url: "https://www.insightsonindia.com/" },
+  { id: 4, src: "/optimized/sponsors/ieee-cs-bangalore.webp", alt: "IEEE Computer Society Bangalore Chapter", width: 499, height: 220, url: "https://cs.ieeebangalore.org/" },
 ];
 
 const SPONSORS_BASE_2: SponsorItem[] = [
-  // Add new sponsors of this year here
+  { id: 5, src: "/optimized/sponsors/vtpc-karnataka.webp", alt: "VTPC Karnataka – Visvesvaraya Trade Promotion Centre", width: 587, height: 220 },
+  { id: 6, src: "/optimized/sponsors/ieee-cybersecurity-stc.webp", alt: "IEEE Cybersecurity STC", width: 397, height: 172 },
+  { id: 7, src: "/optimized/sponsors/ieee-wie-bangalore.webp", alt: "IEEE Women in Engineering Bangalore Section", width: 184, height: 185, url: "https://wie.ieeebangalore.org/" },
+  { id: 8, src: "/optimized/sponsors/olemiq.webp", alt: "OLEMIQ", width: 286, height: 220 },
 ];
 
-// Replicated to 12 items to ensure seamless, gap-free infinite looping on all
-// screen widths up to 4K. Copies beyond the first are hidden below 640px, where
-// a single copy is already ~3x the viewport width (see globals.css).
+// Replicated so each marquee block spans wider than 4K screens for seamless,
+// gap-free looping. Copies beyond the first are hidden below 640px, where a
+// single copy is already ~3x the viewport width (see globals.css).
 const SPONSORS_ROW_1: MarqueeSponsor[] = replicate(SPONSORS_BASE_1, SPONSOR_COPIES);
 const SPONSORS_ROW_2: MarqueeSponsor[] = replicate(SPONSORS_BASE_2, SPONSOR_COPIES);
+
+const cardClassName = cn(
+  "relative shrink-0 overflow-hidden group p-3.5 sm:p-6 flex items-center justify-center text-center rounded-3xl",
+  "kagada-paper-card border-2 border-white/95 shadow-md shadow-black/15",
+  "transition-glass duration-500 hover:shadow-xl hover:border-white",
+  "w-[210px] min-[360px]:w-[260px] sm:w-[320px] h-[100px] sm:h-[135px]"
+)
+
+function SponsorCard({ item }: { item: MarqueeSponsor }) {
+  const logo = (
+    <img
+      src={item.src}
+      alt={item.alt}
+      width={item.width}
+      height={item.height}
+      loading="lazy"
+      decoding="async"
+      draggable={false}
+      className="max-h-full max-w-full w-auto h-auto object-contain select-none drop-shadow-sm transition-transform duration-500 group-hover:scale-[1.04]"
+    />
+  )
+
+  // Repeated copies are decorative duplicates: keep them out of the tab order
+  // and the accessibility tree so each sponsor is announced once.
+  const hidden = item.copy > 0
+
+  return item.url ? (
+    <a
+      data-marquee-copy={item.copy}
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-hidden={hidden || undefined}
+      tabIndex={hidden ? -1 : undefined}
+      className={cn(cardClassName, "cursor-pointer")}
+    >
+      {logo}
+    </a>
+  ) : (
+    <div data-marquee-copy={item.copy} aria-hidden={hidden || undefined} className={cardClassName}>
+      {logo}
+    </div>
+  )
+}
 
 export function SponsorsSection() {
   return (
@@ -60,56 +113,14 @@ export function SponsorsSection() {
       <div className="w-full flex flex-col gap-4 sm:gap-6">
         <Marquee speed={48} mobileSpeed={48 / SPONSOR_COPIES} pauseOnHover={false} direction="left">
           {SPONSORS_ROW_1.map((item, idx) => (
-            <a
-              key={`sponsor-r1-${item.id}-${idx}`}
-              data-marquee-copy={item.copy}
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "relative shrink-0 overflow-hidden cursor-pointer group p-3.5 sm:p-6 flex items-center justify-center text-center rounded-3xl",
-                "kagada-paper-card border-2 border-white/95 shadow-md shadow-black/15",
-                "transition-glass duration-500 hover:shadow-xl hover:border-white",
-                "min-w-[210px] min-[360px]:min-w-[260px] sm:min-w-[320px] h-[100px] sm:h-[135px]"
-              )}
-            >
-              {/* Perfectly Centered Prominent Sponsor Logo Image */}
-              <img
-                src={item.src}
-                alt={item.alt}
-                loading="lazy"
-                decoding="async"
-                className="max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-sm"
-              />
-            </a>
+            <SponsorCard key={`sponsor-r1-${item.id}-${idx}`} item={item} />
           ))}
         </Marquee>
 
         {/* Sponsor Image Marquee Loop Row 2 */}
         <Marquee speed={52} mobileSpeed={52 / SPONSOR_COPIES} pauseOnHover={false} direction="right">
           {SPONSORS_ROW_2.map((item, idx) => (
-            <a
-              key={`sponsor-r2-${item.id}-${idx}`}
-              data-marquee-copy={item.copy}
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "relative shrink-0 overflow-hidden cursor-pointer group p-3.5 sm:p-6 flex items-center justify-center text-center rounded-3xl",
-                "kagada-paper-card border-2 border-white/95 shadow-md shadow-black/15",
-                "transition-glass duration-500 hover:shadow-xl hover:border-white",
-                "min-w-[210px] min-[360px]:min-w-[260px] sm:min-w-[320px] h-[100px] sm:h-[135px]"
-              )}
-            >
-              {/* Perfectly Centered Prominent Sponsor Logo Image */}
-              <img
-                src={item.src}
-                alt={item.alt}
-                loading="lazy"
-                decoding="async"
-                className="max-h-20 sm:max-h-24 max-w-[85%] w-auto h-auto object-contain mx-auto my-auto select-none drop-shadow-sm"
-              />
-            </a>
+            <SponsorCard key={`sponsor-r2-${item.id}-${idx}`} item={item} />
           ))}
         </Marquee>
       </div>

@@ -8,7 +8,7 @@ import PrizePoolSection from "@/components/sections/PrizePoolSection";
 import WinnersSection from "@/components/sections/WinnersSection";
 import GallerySection from "@/components/sections/GallerySection";
 import VideosSection from "@/components/sections/VideosSection";
-// import SponsorsSection from "@/components/sections/SponsorsSection";
+import SponsorsSection from "@/components/sections/SponsorsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import ContactSection from "@/components/sections/ContactSection";
 import BurgundyTexturedBackground from "@/components/ui/burgundy-textured-background";
@@ -60,9 +60,8 @@ export default function Home() {
         {/* SECTION 7: AFTERMOVIES */}
         <VideosSection />
 
-        {/* SECTION 8: SPONSORS 
+        {/* SECTION 8: SPONSORS */}
         <SponsorsSection />
-        */}
 
         {/* SECTION 9: FAQ ACCORDION */}
         <FAQSection />
