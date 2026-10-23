@@ -12,7 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import FlipClock from "@/components/ui/flip-clock";
-import { KAGADA_EVENT_DATE } from "@/data/kagada-data";
+import { KAGADA_EVENT_DATE, REGISTRATIONS_CLOSED } from "@/data/kagada-data";
 import { scrollToCyberShield } from "@/components/ui/smooth-scroll";
 
 interface HeroSectionProps {
@@ -217,14 +217,24 @@ export const HeroSection = memo(function HeroSection({
 
           {/* Registration CTA & CyberShield Button Stack */}
           <div className="mt-3 sm:mt-4 md:mt-5 w-full flex flex-col items-center justify-center gap-2 sm:gap-2.5 pointer-events-auto px-4">
-            <button
-              type="button"
-              onClick={() => setIsRegisterModalOpen(true)}
-              className="w-full max-w-[175px] min-[360px]:max-w-[195px] sm:max-w-[215px] px-3 sm:px-4 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-[15px] uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
-              aria-label="Register for Kagada 2026 tracks"
-            >
-              <span>Register Now!</span>
-            </button>
+            {REGISTRATIONS_CLOSED ? (
+              <button
+                type="button"
+                disabled
+                className="w-full max-w-[175px] min-[360px]:max-w-[195px] sm:max-w-[215px] px-2 sm:px-3 py-2 sm:py-2.5 bg-[#5A182B]/75 border-2 border-white/60 text-white/85 font-roboto-mono font-extrabold text-[11px] min-[360px]:text-xs sm:text-[13px] uppercase tracking-normal sm:tracking-wide shadow-xl shadow-black/35 flex items-center justify-center cursor-not-allowed rounded-none select-none whitespace-nowrap text-center"
+              >
+                <span>Registrations Stopped</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsRegisterModalOpen(true)}
+                className="w-full max-w-[175px] min-[360px]:max-w-[195px] sm:max-w-[215px] px-3 sm:px-4 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-[15px] uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
+                aria-label="Register for Kagada 2026 tracks"
+              >
+                <span>Register Now!</span>
+              </button>
+            )}
 
             <a
               href="#cybershield"

@@ -4,6 +4,9 @@ import { TimelineItem } from "@/components/ui/radial-orbital-timeline";
 
 export const KAGADA_EVENT_DATE = new Date("2026-10-24T00:00:00+05:30");
 
+/** Flip to false to bring every "Register" button back. */
+export const REGISTRATIONS_CLOSED = true;
+
 // Exactly 3 Rich About Section Cards
 export const ABOUT_CARDS: CardStackItem[] = [
   { id: 1, type: "uvce", title: "About UVCE" },
@@ -25,6 +28,7 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     fee: 200,
     teamSize: "1-5 members",
     hasRegistration: true,
+    registrationsClosed: REGISTRATIONS_CLOSED,
     registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSdBk8QFZDtIpaJF-SrUZRJpqAYrtu2XBMA1SdCmV1RMqO94Tg/viewform",
   },
   {
@@ -39,6 +43,7 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     fee: 150,
     teamSize: "1-3 members",
     hasRegistration: true,
+    registrationsClosed: REGISTRATIONS_CLOSED,
     registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSdyNPuQPJcNduxHnwQ_qViIU9b2gWXlivIrlg-BiId2dAYXdA/viewform",
   },
   {
@@ -53,6 +58,7 @@ export const TRACKS_TIMELINE_DATA: TimelineItem[] = [
     fee: 180,
     teamSize: "1-5 members",
     hasRegistration: true,
+    registrationsClosed: REGISTRATIONS_CLOSED,
     registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLScnegAPfJu4oTQozWFgVV2yQKhcIucp47r9RRh04oLKDTBmgA/viewform?usp=send_form",
   },
   {

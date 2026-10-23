@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import { ArrowRight } from "lucide-react";
+import { REGISTRATIONS_CLOSED } from "@/data/kagada-data";
 
 export const CyberShieldSection = memo(function CyberShieldSection() {
   return (
@@ -98,15 +99,24 @@ export const CyberShieldSection = memo(function CyberShieldSection() {
 
               {/* Registration CTA Button */}
               <div className="w-full">
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSeTWE1TugtSBSe-6629_bYXm8s5PFAR4xHBlAGaupc3L7EP6g/viewform"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3.5 px-6 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 text-white font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-widest shadow-xl hover:shadow-2xl hover:brightness-110 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer !rounded-none select-none text-center group"
-                >
-                  <span>Register</span>
-                  <ArrowRight className="w-4 h-4 text-amber-300 group-hover:translate-x-1.5 transition-transform" />
-                </a>
+                {REGISTRATIONS_CLOSED ? (
+                  <p
+                    aria-disabled="true"
+                    className="w-full py-3.5 px-6 bg-[#5A182B]/75 border-2 border-white/60 text-white/85 font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-widest shadow-xl flex items-center justify-center cursor-not-allowed !rounded-none select-none text-center"
+                  >
+                    Registrations Stopped
+                  </p>
+                ) : (
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSeTWE1TugtSBSe-6629_bYXm8s5PFAR4xHBlAGaupc3L7EP6g/viewform"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3.5 px-6 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 text-white font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-widest shadow-xl hover:shadow-2xl hover:brightness-110 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer !rounded-none select-none text-center group"
+                  >
+                    <span>Register</span>
+                    <ArrowRight className="w-4 h-4 text-amber-300 group-hover:translate-x-1.5 transition-transform" />
+                  </a>
+                )}
               </div>
             </div>
           </div>

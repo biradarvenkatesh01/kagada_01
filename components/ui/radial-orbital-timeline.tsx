@@ -17,6 +17,7 @@ export interface TimelineItem {
   teamSize?: string;
   hasRegistration?: boolean;
   registrationLink?: string;
+  registrationsClosed?: boolean;
 }
 
 interface RadialOrbitalTimelineProps {
@@ -513,7 +514,15 @@ export default function RadialOrbitalTimeline({
             )}
 
             {/* Registration Button */}
-            {item.hasRegistration && (
+            {item.hasRegistration && item.registrationsClosed && (
+              <p
+                aria-disabled="true"
+                className="w-full bg-[#D8D3C7]/60 text-[#5A182B]/70 font-roboto-mono font-bold py-3 sm:py-3.5 rounded-none text-[0.75rem] sm:text-[0.85rem] uppercase tracking-widest mt-1 border-2 border-dashed border-[#5A182B]/30 flex items-center justify-center gap-2 cursor-not-allowed select-none text-center"
+              >
+                Registrations Stopped
+              </p>
+            )}
+            {item.hasRegistration && !item.registrationsClosed && (
               <a
                 href={item.registrationLink || "#"}
                 target={item.registrationLink ? "_blank" : undefined}
