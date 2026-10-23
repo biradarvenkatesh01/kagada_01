@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import FlipClock from "@/components/ui/flip-clock";
+import { RegistrationsClosed } from "@/components/ui/registrations-closed";
 import { KAGADA_EVENT_DATE, REGISTRATIONS_CLOSED } from "@/data/kagada-data";
 import { scrollToCyberShield } from "@/components/ui/smooth-scroll";
 
@@ -218,13 +219,7 @@ export const HeroSection = memo(function HeroSection({
           {/* Registration CTA & CyberShield Button Stack (single closed notice once registrations end) */}
           <div className="mt-3 sm:mt-4 md:mt-5 w-full flex flex-col items-center justify-center gap-2 sm:gap-2.5 pointer-events-auto px-4">
             {REGISTRATIONS_CLOSED ? (
-              <button
-                type="button"
-                disabled
-                className="w-auto px-4 sm:px-5 py-2 sm:py-2.5 bg-[#5A182B] border-2 border-white/95 text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-[15px] uppercase tracking-wider sm:tracking-widest shadow-xl shadow-black/35 flex items-center justify-center cursor-default rounded-none select-none whitespace-nowrap text-center"
-              >
-                <span>Registrations Closed</span>
-              </button>
+              <RegistrationsClosed />
             ) : (
               <button
                 type="button"

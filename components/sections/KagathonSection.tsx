@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { RegistrationsClosed } from "@/components/ui/registrations-closed";
 
 export const KagathonSection = memo(function KagathonSection() {
   return (
@@ -84,11 +85,7 @@ export const KagathonSection = memo(function KagathonSection() {
               </p>
 
               {/* Registration Status Box */}
-              <div className="!rounded-xl bg-[#5A182B]/10 border border-[#5A182B]/25 p-3.5 sm:p-4 text-center">
-                <p className="font-roboto-mono text-sm sm:text-base font-extrabold uppercase tracking-widest text-[#5A182B]">
-                  Registrations Closed
-                </p>
-              </div>
+              <RegistrationsClosed className="w-full py-3.5" />
             </div>
           </div>
         </div>

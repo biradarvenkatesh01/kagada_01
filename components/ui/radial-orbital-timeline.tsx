@@ -4,6 +4,7 @@ import { useState, useEffect, useLayoutEffect, useRef, useCallback, useSyncExter
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { RegistrationsClosed } from "@/components/ui/registrations-closed";
 
 export interface TimelineItem {
   id: number;
@@ -515,12 +516,7 @@ export default function RadialOrbitalTimeline({
 
             {/* Registration Button */}
             {item.hasRegistration && item.registrationsClosed && (
-              <p
-                aria-disabled="true"
-                className="w-full bg-[#D8D3C7]/60 text-[#5A182B]/70 font-roboto-mono font-bold py-3 sm:py-3.5 rounded-none text-[0.75rem] sm:text-[0.85rem] uppercase tracking-widest mt-1 border-2 border-dashed border-[#5A182B]/30 flex items-center justify-center gap-2 cursor-not-allowed select-none text-center"
-              >
-                Registrations Closed
-              </p>
+              <RegistrationsClosed className="w-full mt-1 py-3 sm:py-3.5" />
             )}
             {item.hasRegistration && !item.registrationsClosed && (
               <a
