@@ -221,7 +221,7 @@ export const HeroSection = memo(function HeroSection({
               <button
                 type="button"
                 disabled
-                className="w-full max-w-[175px] min-[360px]:max-w-[195px] sm:max-w-[215px] px-2 sm:px-3 py-2 sm:py-2.5 bg-[#5A182B]/75 border-2 border-white/60 text-white/85 font-roboto-mono font-extrabold text-[11px] min-[360px]:text-xs sm:text-[13px] uppercase tracking-normal sm:tracking-wide shadow-xl shadow-black/35 flex items-center justify-center cursor-not-allowed rounded-none select-none whitespace-nowrap text-center"
+                className="w-auto px-4 sm:px-5 py-2 sm:py-2.5 bg-[#5A182B] border-2 border-white/95 text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-[15px] uppercase tracking-wider sm:tracking-widest shadow-xl shadow-black/35 flex items-center justify-center cursor-default rounded-none select-none whitespace-nowrap text-center"
               >
                 <span>Registrations Closed</span>
               </button>
