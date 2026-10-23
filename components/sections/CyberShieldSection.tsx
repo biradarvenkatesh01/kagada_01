@@ -104,7 +104,7 @@ export const CyberShieldSection = memo(function CyberShieldSection() {
                     aria-disabled="true"
                     className="w-full py-3.5 px-6 bg-[#5A182B]/75 border-2 border-white/60 text-white/85 font-roboto-mono font-extrabold text-xs sm:text-sm uppercase tracking-widest shadow-xl flex items-center justify-center cursor-not-allowed !rounded-none select-none text-center"
                   >
-                    Registrations Stopped
+                    Registrations Closed
                   </p>
                 ) : (
                   <a

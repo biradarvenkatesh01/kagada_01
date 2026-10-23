@@ -215,7 +215,7 @@ export const HeroSection = memo(function HeroSection({
             </div>
           </div>
 
-          {/* Registration CTA & CyberShield Button Stack */}
+          {/* Registration CTA & CyberShield Button Stack (single closed notice once registrations end) */}
           <div className="mt-3 sm:mt-4 md:mt-5 w-full flex flex-col items-center justify-center gap-2 sm:gap-2.5 pointer-events-auto px-4">
             {REGISTRATIONS_CLOSED ? (
               <button
@@ -223,7 +223,7 @@ export const HeroSection = memo(function HeroSection({
                 disabled
                 className="w-full max-w-[175px] min-[360px]:max-w-[195px] sm:max-w-[215px] px-2 sm:px-3 py-2 sm:py-2.5 bg-[#5A182B]/75 border-2 border-white/60 text-white/85 font-roboto-mono font-extrabold text-[11px] min-[360px]:text-xs sm:text-[13px] uppercase tracking-normal sm:tracking-wide shadow-xl shadow-black/35 flex items-center justify-center cursor-not-allowed rounded-none select-none whitespace-nowrap text-center"
               >
-                <span>Registrations Stopped</span>
+                <span>Registrations Closed</span>
               </button>
             ) : (
               <button
@@ -236,17 +236,19 @@ export const HeroSection = memo(function HeroSection({
               </button>
             )}
 
-            <a
-              href="#cybershield"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToCyberShield();
-              }}
-              className="w-full max-w-[175px] min-[360px]:max-w-[195px] sm:max-w-[215px] px-3 sm:px-4 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-[15px] uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
-              aria-label="CyberShield Ideathon 2026"
-            >
-              <span>CyberShield &rarr;</span>
-            </a>
+            {!REGISTRATIONS_CLOSED && (
+              <a
+                href="#cybershield"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToCyberShield();
+                }}
+                className="w-full max-w-[175px] min-[360px]:max-w-[195px] sm:max-w-[215px] px-3 sm:px-4 py-2 sm:py-2.5 bg-[#5A182B] hover:bg-[#431220] border-2 border-white/95 hover:border-white text-white font-roboto-mono font-extrabold text-xs min-[360px]:text-sm sm:text-[15px] uppercase tracking-wider sm:tracking-widest shadow-xl hover:shadow-2xl shadow-black/35 hover:brightness-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer rounded-none select-none whitespace-nowrap text-center"
+                aria-label="CyberShield Ideathon 2026"
+              >
+                <span>CyberShield &rarr;</span>
+              </a>
+            )}
           </div>
         </motion.div>
       </div>

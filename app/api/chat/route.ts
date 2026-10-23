@@ -8,7 +8,8 @@ YOUR STRICT DIRECTIVES:
 1. You MUST ONLY answer questions related to KAGADA 2026, IEEE UVCE, presentation tracks, event dates, registration, venue, total prize pool, organizers, and humanitarian activities.
 2. If asked about unrelated topics (e.g., general coding, weather, sports, politics), politely decline and state that you are specifically tuned to assist with KAGADA 2026.
 3. Be helpful, clear, and professional. Do NOT use emojis in your responses.
-4. Format your responses with clean, structured markdown: use **bold** headers and keywords, organized bullet points, and clean tables where relevant. Provide complete, fully-detailed answers without truncating or cutting off prematurely.
+4. ALL REGISTRATIONS ARE CLOSED (Paper, Poster and Project tracks, CyberShield Ideathon and Kagathon). Never share or invent registration links or forms, and never suggest that registration is still possible. For anything registration-related, direct people to the organizer contacts below.
+5. Format your responses with clean, structured markdown: use **bold** headers and keywords, organized bullet points, and clean tables where relevant. Provide complete, fully-detailed answers without truncating or cutting off prematurely.
 
 KAGADA 2026 COMPREHENSIVE KNOWLEDGE BASE:
 - Event Name: KAGADA 2026 (22nd Annual National-Level Technical Student Conference)
@@ -17,6 +18,7 @@ KAGADA 2026 COMPREHENSIVE KNOWLEDGE BASE:
 - Organizer: IEEE UVCE (Institute of Electrical and Electronics Engineers - UVCE Student Branch)
 - Total Prize Pool: Overall ₹40,000 cash prizes distributed across Paper, Poster, and Project presentations.
 - Certificates: Every participant receives an official Certificate of Participation.
+- Registration Status: REGISTRATIONS CLOSED for every track and event (Paper, Poster, Project, CyberShield Ideathon and Kagathon).
 
 PRESENTATION TRACKS (3 Main Category Tracks):
 1. Paper Presentation: Participants present original technical research papers across CSE, AI/ML, ECE, EEE, Mechanical, Civil & Architecture (UG/PG categories). Conducted online with feedback from domain experts. Fee: ₹200 per team (1-5 members). Registration Status: CLOSED.
@@ -43,7 +45,7 @@ CYBERSHIELD IDEATHON 2026:
 KAGATHON 2026 — THE OFFICIAL CURTAIN RAISER:
 - Event Name: Kagathon 2026 (Annual mini-marathon & festive celebration acting as the official curtain raiser for KAGADA 2026)
 - Tagline: "Your Only Limit Is You" / "Run the Beat. Feel the Thrill."
-- Date: 17th October, 2026
+- Date: 17th October, 2026 (already held)
 - Time: 6:30 AM 
 - Venue: Quadrangle, University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001
 - Overview: A high-energy morning mini-marathon & celebration at sunrise in the UVCE Quadrangle. It serves as the official curtain raiser marking the grand beginning of KAGADA 2026.
@@ -54,9 +56,14 @@ KAGATHON 2026 — THE OFFICIAL CURTAIN RAISER:
   • Fun games & interactive activities
   • Delicious breakfast treats & refreshments
   • Official Certificate of Participation for every registered participant
-- Registration Status: REGISTRATIONS CLOSED. Kagathon registrations have officially ended.
-- Who Can Attend: All registered participants and students can join the morning celebration at UVCE Quadrangle.
+- Registration Status: REGISTRATIONS CLOSED. Kagathon 2026 was successfully held on 17th October, 2026.
 - Organizers: IEEE UVCE
+
+KAGADA 2026 SPONSORS:
+- General Sponsors: VTPC Karnataka (Visvesvaraya Trade Promotion Centre) and InsightsIAS
+- Ideathon Sponsors (CyberShield Ideathon): IEEE Computer Society Bangalore Chapter and IEEE Cybersecurity STC
+- Sponsor for Ottige Kaliyona & Food for Cause: IEEE SIGHT (Special Interest Group on Humanitarian Technology)
+- Also supported by: IEEE Bangalore Section, IEEE Women in Engineering (WIE) Bangalore Section, and OLEMIQ (Amitabh Development Lab LLP, quantum computing)
 
 HUMANITARIAN ACTIVITIES:
 - Ottige Kaliyona: Social initiative conducted every year by IEEE WIE during KAGADA, focused on empowering government school students through hands-on technology education and fun learning activities.
@@ -184,7 +191,7 @@ export async function POST(req: Request) {
 
     // Fallback: Local Instant KAGADA 2026 Knowledge Engine
     const lastUserMsgLower = userMessage.toLowerCase();
-    let localReply = "KAGADA 2026 is the 22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE on 24th October, 2026 at UVCE KR Circle, Bengaluru. Kagathon (the official curtain raiser) takes place on 17th October, 2026 at 6:30 AM at the UVCE Quadrangle. Feel free to ask about Kagathon, tracks, registration, or prize pool!";
+    let localReply = "KAGADA 2026 is the 22nd Annual National-Level Technical Student Conference conducted by IEEE UVCE on 24th October, 2026 at UVCE KR Circle, Bengaluru. Kagathon (the official curtain raiser) was held on 17th October, 2026 at the UVCE Quadrangle. Registrations for all events are now closed. Feel free to ask about tracks, sponsors, prize pool, or venue!";
 
     const isCyberShieldQuery =
       lastUserMsgLower.includes("cybershield") ||
@@ -203,13 +210,20 @@ export async function POST(req: Request) {
       lastUserMsgLower.includes("quadrangle") ||
       (lastUserMsgLower.includes("run") && !lastUserMsgLower.includes("running"));
 
-    if (isCyberShieldQuery) {
+    const isSponsorQuery =
+      lastUserMsgLower.includes("sponsor") ||
+      lastUserMsgLower.includes("partner") ||
+      lastUserMsgLower.includes("supported by");
+
+    if (isSponsorQuery) {
+      localReply = "**KAGADA 2026 Sponsors**\n\n• **General Sponsors**: VTPC Karnataka (Visvesvaraya Trade Promotion Centre) and InsightsIAS\n• **Ideathon Sponsors**: IEEE Computer Society Bangalore Chapter and IEEE Cybersecurity STC\n• **Ottige Kaliyona & Food for Cause**: IEEE SIGHT\n• **Also supported by**: IEEE Bangalore Section, IEEE WIE Bangalore Section and OLEMIQ\n\nThank you to all our sponsors for supporting KAGADA 2026!";
+    } else if (isCyberShieldQuery) {
       localReply = "**CyberShield Ideathon 2026 — Part of KAGADA 2026**\n\n*Presented by IEEE UVCE*\n\n• **About**: An ideation challenge inviting aspiring innovators to tackle real-world cybersecurity threats, explore emerging digital challenges, and pitch practical solutions to an expert panel of judges.\n• **Date**: 24th October, 2026\n• **Venue**: UVCE, K R Circle, Bengaluru\n• **Team Size**: 1 – 3 Members\n• **Registration Fee**: ₹150 per team\n• **Prize Pool**: Cash Prizes worth **₹10,000/-** and Certificates to be Won!\n• **Registration Status**: Registrations are now **CLOSED**.\n\n**For Further Queries, Contact**:\n• Yashaswini C Rao: +91 63606 75258\n• Nikhil Hegde: +91 84319 27108\n• Dhruv Rathi: +91 83103 37114\n• Lahari Priya N: +91 86609 65642\n• Rahita H Puthran: +91 76760 68408";
     } else if (isKagathonQuery) {
       if (lastUserMsgLower.includes("t-shirt") || lastUserMsgLower.includes("tshirt")) {
-        localReply = "**KAGATHON 2026 T-Shirt Information**\n\n• Kagathon registrations are now **CLOSED**.\n• T-shirts are reserved for participants who registered prior to the deadline.";
+        localReply = "**KAGATHON 2026 T-Shirt Information**\n\n• Kagathon 2026 was held on 17th October and registrations are **CLOSED**.\n• T-shirts were reserved for participants who registered before the deadline.";
       } else if (lastUserMsgLower.includes("deadline") || lastUserMsgLower.includes("last date")) {
-        localReply = "**KAGATHON 2026 Status**\n\n• **Registration Status**: Registrations are now **CLOSED**.\n• **Event Date**: 17th October, 2026 (6:30 AM at UVCE Quadrangle)";
+        localReply = "**KAGATHON 2026 Status**\n\n• **Registration Status**: Registrations are **CLOSED**.\n• **Event Date**: Held on 17th October, 2026 (6:30 AM at UVCE Quadrangle)";
       } else if (
         lastUserMsgLower.includes("register") ||
         lastUserMsgLower.includes("link") ||
@@ -218,27 +232,27 @@ export async function POST(req: Request) {
         lastUserMsgLower.includes("fee") ||
         lastUserMsgLower.includes("cost")
       ) {
-        localReply = "**KAGATHON 2026 Registration Status**\n\nRegistrations for Kagathon 2026 are now **CLOSED**.\n\nThank you to everyone who registered! We look forward to seeing all participants on 17th October at 6:30 AM at the UVCE Quadrangle.";
+        localReply = "**KAGATHON 2026 Registration Status**\n\nRegistrations for Kagathon 2026 are now **CLOSED**.\n\nKagathon was held on 17th October at the UVCE Quadrangle. Thank you to everyone who ran with us!";
       } else if (
         lastUserMsgLower.includes("venue") ||
         lastUserMsgLower.includes("where") ||
         lastUserMsgLower.includes("location") ||
         lastUserMsgLower.includes("place")
       ) {
-        localReply = "**KAGATHON 2026 Venue & Timing**\n\n• **Venue**: Quadrangle, University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001\n• **Date**: 17th October, 2026\n• **Time**: 6:30 AM (Sunrise)\n• **Status**: Registrations are closed.";
+        localReply = "**KAGATHON 2026 Venue & Timing**\n\n• **Venue**: Quadrangle, University Visvesvaraya College of Engineering (UVCE), K.R. Circle, Bengaluru, Karnataka 560001\n• **Date**: 17th October, 2026\n• **Time**: 6:30 AM (Sunrise)\n• **Status**: Event completed; registrations are closed.";
       } else {
-        localReply = "**KAGATHON 2026 — The Official Curtain Raiser for KAGADA 2026**\n\n*Tagline: \"Run the Beat. Feel the Thrill. / Your Only Limit Is You\"*\n\n• **Date**: 17th October, 2026\n• **Time**: 6:30 AM (Sunrise)\n• **Venue**: Quadrangle, UVCE, K.R. Circle, Bengaluru\n• **Experience & Inclusions**: High-energy sunrise run, live DJ music, dance, fun games, delicious breakfast treats, and official participation certificates for all registered runners!\n• **Status**: Registrations are officially CLOSED.";
+        localReply = "**KAGATHON 2026 — The Official Curtain Raiser for KAGADA 2026**\n\n*Tagline: \"Run the Beat. Feel the Thrill. / Your Only Limit Is You\"*\n\n• **Date**: 17th October, 2026\n• **Time**: 6:30 AM (Sunrise)\n• **Venue**: Quadrangle, UVCE, K.R. Circle, Bengaluru\n• **Experience & Inclusions**: High-energy sunrise run, live DJ music, dance, fun games, delicious breakfast treats, and official participation certificates for all registered runners!\n• **Status**: Event completed; registrations are CLOSED.";
       }
     } else if (lastUserMsgLower.includes("when") || lastUserMsgLower.includes("date") || lastUserMsgLower.includes("time")) {
-      localReply = "**Important Dates for KAGADA 2026, CyberShield & Kagathon**:\n\n• **CyberShield Ideathon**: 24th October, 2026 at UVCE, Bengaluru\n• **KAGADA 2026 National Conference**: 24th October, 2026 at UVCE, Bengaluru\n• **Kagathon (Curtain Raiser)**: 17th October, 2026 at 6:30 AM at UVCE Quadrangle (Registrations Closed).";
+      localReply = "**Important Dates for KAGADA 2026, CyberShield & Kagathon**:\n\n• **CyberShield Ideathon**: 24th October, 2026 at UVCE, Bengaluru\n• **KAGADA 2026 National Conference**: 24th October, 2026 at UVCE, Bengaluru\n• **Kagathon (Curtain Raiser)**: Held on 17th October, 2026 at UVCE Quadrangle.\n\nRegistrations for all events are **CLOSED**.";
     } else if (lastUserMsgLower.includes("where") || lastUserMsgLower.includes("venue") || lastUserMsgLower.includes("location") || lastUserMsgLower.includes("map")) {
-      localReply = "Both **KAGADA 2026**, **CyberShield Ideathon**, and **Kagathon** will take place at:\n\n**University Visvesvaraya College of Engineering (UVCE)**\nK.R. Circle, Bengaluru, Karnataka 560001.\n\n• Kagathon starts at the **UVCE Quadrangle** on 17th October at 6:30 AM.";
+      localReply = "**KAGADA 2026** and the **CyberShield Ideathon** take place at:\n\n**University Visvesvaraya College of Engineering (UVCE)**\nK.R. Circle, Bengaluru, Karnataka 560001.\n\n• Kagathon was held at the **UVCE Quadrangle** on 17th October.";
     } else if (lastUserMsgLower.includes("prize") || lastUserMsgLower.includes("money") || lastUserMsgLower.includes("reward") || lastUserMsgLower.includes("cash")) {
       localReply = "• **KAGADA 2026 Presentation Tracks**: Overall Total Prize Pool of **₹40,000** in cash prizes across Paper, Poster, and Project presentations.\n• **CyberShield Ideathon 2026**: Cash Prizes worth **₹10,000/-** and Certificates to be Won!\n\nAll participants receive official Certificates of Participation.";
     } else if (lastUserMsgLower.includes("track") || lastUserMsgLower.includes("event") || lastUserMsgLower.includes("paper") || lastUserMsgLower.includes("poster") || lastUserMsgLower.includes("project")) {
-      localReply = "KAGADA 2026 has 3 main presentation tracks plus special events:\n1. **Paper Presentation** (Fee: ₹200)\n2. **Poster Presentation** (Fee: ₹150)\n3. **Project Presentation** (Fee: ₹180)\n\n4. **CyberShield Ideathon 2026** (Fee: ₹150 per team)\n\nRegistrations for all tracks and CyberShield are now **CLOSED**.\n\nPlus **Kagathon 2026** (the official curtain raiser on 17th October, registrations closed) and two humanitarian initiatives: *Ottige Kaliyona* and *Food for Cause*.";
+      localReply = "KAGADA 2026 has 3 main presentation tracks plus special events:\n1. **Paper Presentation** (Fee: ₹200)\n2. **Poster Presentation** (Fee: ₹150)\n3. **Project Presentation** (Fee: ₹180)\n\n4. **CyberShield Ideathon 2026** (Fee: ₹150 per team)\n\nRegistrations for all tracks and CyberShield are now **CLOSED**.\n\nPlus **Kagathon 2026** (the official curtain raiser, held on 17th October) and two humanitarian initiatives: *Ottige Kaliyona* and *Food for Cause*.";
     } else if (lastUserMsgLower.includes("register") || lastUserMsgLower.includes("fee") || lastUserMsgLower.includes("cost") || lastUserMsgLower.includes("participate") || lastUserMsgLower.includes("apply")) {
-      localReply = "**Registrations for KAGADA 2026 are now CLOSED.**\n\nThis includes the Paper, Poster and Project presentation tracks, CyberShield Ideathon and Kagathon 2026. Thank you to everyone who registered — see you on 24th October at UVCE!";
+      localReply = "**Registrations for KAGADA 2026 are now CLOSED.**\n\nThis includes the Paper, Poster and Project presentation tracks, CyberShield Ideathon and Kagathon 2026. Thank you to everyone who registered — see you on 24th October at UVCE!\n\nFor any queries, contact the organizers: Jyothika V (+91 97318 64358) or Hegde Punith Ramesh (+91 72041 20818).";
     } else if (lastUserMsgLower.includes("contact") || lastUserMsgLower.includes("chair") || lastUserMsgLower.includes("organizer") || lastUserMsgLower.includes("phone") || lastUserMsgLower.includes("email")) {
       localReply = "IEEE UVCE KAGADA 2026 Organizers:\n• Jyothika V (Chairperson): +91 97318 64358 | jyothikav@ieee.org\n• Hegde Punith Ramesh (Vice Chairperson): +91 72041 20818 | hegdepunithramesh@ieee.org\n• Sanjay V Guladakoppa (Treasurer): +91 96320 91399 | sanjayvgk@ieee.org\n• General Inquiries: kagada@ieeeuvce.org";
     }
@@ -249,7 +263,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("AI Chat Route Error:", error);
     return NextResponse.json(
-      { reply: "KAGADA 2026 is provisionally scheduled for 24th October 2026 at UVCE, KR Circle, Bengaluru. Feel free to ask about tracks, prize pool, or venue details.", model: "Error Fallback" },
+      { reply: "KAGADA 2026 is scheduled for 24th October 2026 at UVCE, KR Circle, Bengaluru. Registrations are closed. Feel free to ask about tracks, sponsors, prize pool, or venue details.", model: "Error Fallback" },
       { status: 200 }
     );
   }

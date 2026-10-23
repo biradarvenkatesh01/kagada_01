@@ -62,7 +62,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
   const [messages, setMessages] = useState<{ sender: "ai" | "user"; text: string }[]>([
     {
       sender: "ai",
-      text: "Hello! I am your KAGADA 2026 AI Assistant. Ask me anything about presentation tracks (Paper, Poster, Project), CyberShield Ideathon, registration status, deadlines, venue, total prize pool, or Kagathon!",
+      text: "Hello! I am your KAGADA 2026 AI Assistant. Ask me anything about presentation tracks (Paper, Poster, Project), CyberShield Ideathon, sponsors, registration status, venue, total prize pool, or Kagathon!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -197,7 +197,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         ...prev,
         {
           sender: "ai",
-          text: "KAGADA 2026 is scheduled for 24th October 2026 at UVCE! Ask me about presentation tracks (Paper, Poster, Project), registration, the ₹40,000 prize pool, or Kagathon!",
+          text: "KAGADA 2026 is scheduled for 24th October 2026 at UVCE! Ask me about presentation tracks (Paper, Poster, Project), sponsors, the ₹40,000 prize pool, or Kagathon!",
         },
       ]);
     } finally {
@@ -330,6 +330,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
             "Poster Track",
             "Project Track",
             "Prize Pool",
+            "Sponsors",
             "About Kagathon",
           ].map((promptText) => (
             <button
@@ -348,7 +349,7 @@ export default function AIChatCard({ className, isVisible = true }: AIChatCardPr
         <div className="relative z-10 p-3 border-t border-[#5A182B]/20 bg-[#D8D3C7] flex items-center gap-2 shrink-0 !rounded-none">
           <input
             className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white !rounded-none border-2 border-[#5A182B]/20 text-[#420E1E] placeholder:text-stone-500 focus:outline-none focus:border-[#5A182B] font-jakarta font-medium"
-            placeholder="Ask about tracks, registration, dates, Kagathon..."
+            placeholder="Ask about tracks, sponsors, dates, venue..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
